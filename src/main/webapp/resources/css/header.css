@@ -1,0 +1,101 @@
+header {
+    background: linear-gradient(45deg, #000000, #ff3669);
+}
+header .h-regular-info {
+    border-top: 2px solid rgba(0, 0, 0, 0.05);
+    border-bottom: 2px solid rgba(0, 0, 0, 0.05);
+    background: rgba(0, 0, 0, 0.125);
+}
+
+header h1, header h2{
+    color: #fcfcfc;
+    font-weight: bold;
+}
+header h1{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+header h2 {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+header .logo {
+    text-decoration: none;
+}
+header .logo:hover h1 {
+    color: #f2f2f2;
+}
+
+header .h-main-container {
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+header .h-main-container h1 {
+    font-size: 36px;
+}
+
+header .h-regular-container {
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+header .h-regular-container h1 {
+    font-size: 14px;
+}
+
+header .h-regular-info {
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+header .h-regular-info h2 {
+    font-size: 20px;
+}
+
+header .auth {
+    color: #fcfcfc;
+    font-weight: bold;
+
+    margin-top: 10px;
+    margin-bottom: 10px;
+
+    float: right;
+    text-align: right;
+}
+header .h-main-container .auth {
+    font-size: 24px;
+}
+header .h-regular-container .auth {
+    font-size: 20px;
+}
+
+header .auth a {
+    color: #fcfcfc;
+    text-decoration: none;
+
+    display: block;
+}
+header .auth a:hover {
+    color: #f2f2f2;
+    cursor: pointer;
+}
+
+header .auth-completed a:first-child {
+    border-bottom: 2px solid #fcfcfc;
+}
+header .auth-completed a:last-child {
+    padding-top: 4px;
+}
+
+header .h-main-container .auth-completed a:last-child {
+    font-size: 18px;
+}
+header .h-regular-container .auth-completed a:last-child {
+    font-size: 16px;
+}
+
+header .auth a p {
+    padding-left: 5px;
+    margin: 0;
+
+    display: inline-block;
+}

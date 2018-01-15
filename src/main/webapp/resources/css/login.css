@@ -1,0 +1,61 @@
+html {
+    min-height: 100%;
+}
+
+body {
+    min-height: 100%;
+
+    background: linear-gradient(45deg, #000000, #ff3669);
+}
+
+.buffer {
+    height: 40px;
+}
+
+header {
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+header .logo {
+    text-decoration: none;
+
+    color: #fcfcfc;
+    font-weight: bold;
+}
+header .logo.hidden-xs {
+    font-size: 25px;
+}
+header .logo.visible-xs {
+    font-size: 20px;
+}
+header .logo:hover {
+    color: #f2f2f2;
+}
+header .logo h1 {
+    font: inherit;
+    line-height: normal;
+    margin: 0;
+}
+
+.login-form .login-label {
+    color: #fcfcfc;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.login-form .login-button {
+    margin-top: 10px;
+    margin-right: 5px;
+}
+.login-form .login-button:last-child {
+    margin-right: 0;
+}
+
+.login-form .login-link {
+    text-decoration: none;
+
+    color: #fcfcfc;
+}
+.login-form .login-link:hover {
+    color: #f2f2f2;
+}

@@ -1,0 +1,96 @@
+footer {
+    bottom: 0;
+
+    background: linear-gradient(45deg, #ff3669, #000000);
+}
+footer .f-container .f-upper {
+    padding: 20px 0 20px 0;
+}
+footer .f-container .f-lower {
+    padding: 10px 0 80px 0;
+
+    border-top: 2px solid rgba(0, 0, 0, 0.05);
+    background: rgba(0, 0, 0, 0.125);
+}
+
+footer .f-container a {
+    font-size: 20px;
+    font-weight: bold;
+
+    color: #fcfcfc;
+    text-decoration: none;
+}
+footer .f-container a:hover {
+    color: #f2f2f2;
+    cursor: pointer;
+}
+
+footer .f-container .f-upper .col-md-9 a:first-child {
+    margin-right: 20px;
+}
+footer .f-container .f-upper .col-md-9 a i {
+    margin-right: 10px;
+}
+
+footer .f-container .f-upper .col-md-3 {
+    text-align: right;
+}
+footer .f-container .f-upper .col-md-3 a i {
+    margin-left: 10px;
+}
+
+footer .f-container .f-upper .col-sm-12 {
+    text-align: center;
+}
+footer .f-container .f-upper .col-sm-12 a i {
+    margin-right: 10px;
+}
+footer .f-container .f-upper .col-sm-12 a {
+    margin-right: 20px;
+}
+footer .f-container .f-upper .col-sm-12 a:last-child {
+    margin-right: 0;
+}
+
+footer .f-container .f-upper .container .row:last-child {
+    margin-top: 5px;
+}
+
+footer .f-container .link-ext {
+    margin-top: 10px;
+}
+footer .f-container .link-ext a img {
+    margin-right: 5px;
+
+    display: inline;
+    vertical-align: middle;
+}
+footer .f-container .link-ext a p {
+    padding: 0;
+    margin: 0;
+
+    display: inline;
+    vertical-align: middle;
+}
+
+footer .f-container .col-sm-12.link-ext {
+    text-align: center;
+}
+
+footer .f-container .col-md-3.link-soc {
+    text-align: right;
+}
+footer .f-container .col-sm-12.link-soc {
+    text-align: center;
+}
+footer .f-container .link-soc a {
+    margin-left: 10px;
+    font-size: 35px;
+}
+footer .f-container .link-soc a:first-child {
+    margin-left: 0;
+}
+
+footer .f-container .f-lower .container .row:last-child {
+    margin-top: 5px;
+}

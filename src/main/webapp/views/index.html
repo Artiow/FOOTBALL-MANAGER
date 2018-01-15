@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Большой Воронежский Спортивный Портал</title>
+    <style type="text/css">
+        body {
+            background: url(img/background-main.jpg) fixed;
+            background-size: cover;
+        }
+    </style>
+    <script src="/libs/vue.js"></script>
+    <script src="/libs/jquery-3.2.1.js"></script>
+    <link rel="stylesheet" href="/libs/bootstrap/css/bootstrap.css"/>
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.css"/>
+    <link rel="stylesheet" href="/css/header.css"/>
+    <link rel="stylesheet" href="/css/nav.css"/>
+    <link rel="stylesheet" href="/css/footer.css"/>
+</head>
+<body>
+
+<header><header-main>
+    <auth-failed sec:authorize="!isAuthenticated()"></auth-failed>
+    <auth-completed sec:authorize="isAuthenticated()"><p sec:authentication="name">USERNAME</p></auth-completed>
+</header-main></header>
+<script src="/components/HeaderMain.js"></script>
+<script src="/components/HeaderAuth.js"></script>
+
+<nav><nav-main></nav-main></nav>
+<script src="/components/NavMain.js"></script>
+
+<footer><footer-regular link-service="#"
+                        link-contacts="#"
+                        link-feedback="#"
+                        src-vldf-logo="/img/logo-vldf-sm.png"
+                        link-vldf="http://www.vldf.ru/"
+                        link-vldf-vk="https://vk.com/vldfru"
+                        link-vldf-instagram="https://www.instagram.com/vldf2009/"
+                        link-vldf-youtube="https://www.youtube.com/channel/UCgWjF5d6O3ORXolcr1HO-cQ">
+</footer-regular></footer>
+<script src="/components/FooterRegular.js"></script>
+
+</body>
+<script src="/js/padding.js"></script>
+</html>
