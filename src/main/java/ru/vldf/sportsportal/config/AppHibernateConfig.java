@@ -23,17 +23,17 @@ public class AppHibernateConfig {
     }
 
     @Bean(name = "sessionFactory")
-    public SessionFactory getSessionFactory() {
+    public LocalSessionFactoryBean getSessionFactory() {
         LocalSessionFactoryBean sessionFactoryBean = new LocalSessionFactoryBean();
         sessionFactoryBean.setDataSource(getDataSource());
 
-        return sessionFactoryBean.getObject();
+        return sessionFactoryBean;
     }
 
     @Bean(name = "transactionManager")
     public HibernateTransactionManager getTransactionManager() {
         HibernateTransactionManager transactionManager = new HibernateTransactionManager();
-        transactionManager.setSessionFactory(getSessionFactory());
+        transactionManager.setSessionFactory(getSessionFactory().getObject());
 
         return transactionManager;
     }
