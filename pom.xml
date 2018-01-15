@@ -7,7 +7,7 @@
   <artifactId>sportsportal</artifactId>
   <packaging>war</packaging>
   <version>1.0-SNAPSHOT</version>
-  <name>SportsPortal Maven Webapp</name>
+  <name>SportsPortal Webapp</name>
   <url>http://maven.apache.org</url>
 
   <properties>
@@ -94,6 +94,18 @@
       <version>1.0</version>
     </dependency>
 
+    <!-- MYSQL CONNECTORS -->
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <version>6.0.6</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-dbcp</groupId>
+      <artifactId>commons-dbcp</artifactId>
+      <version>1.4</version>
+    </dependency>
+
     <!-- HIBERNATE -->
     <dependency>
       <groupId>org.hibernate</groupId>
@@ -109,6 +121,18 @@
       <groupId>org.hibernate</groupId>
       <artifactId>hibernate-commons-annotations</artifactId>
       <version>3.3.0.ga</version>
+    </dependency>
+
+    <!-- SPRING TRANSACTIONAL -->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-orm</artifactId>
+      <version>4.3.13.RELEASE</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-tx</artifactId>
+      <version>4.3.13.RELEASE</version>
     </dependency>
 
   </dependencies>

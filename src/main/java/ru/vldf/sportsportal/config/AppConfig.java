@@ -6,17 +6,18 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-
+import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
 import org.thymeleaf.spring4.SpringTemplateEngine;
 import org.thymeleaf.spring4.view.ThymeleafViewResolver;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
-import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
-
-@Configuration
 @EnableWebMvc
-@ComponentScan({"ru.vldf.sportsportal.config", "ru.vldf.sportsportal.controller"})
+@Configuration
+@ComponentScan({"ru.vldf.sportsportal.config"})
 public class AppConfig extends WebMvcConfigurerAdapter {
+
+//    ==================================================================================
+//    === THYMELEAF VIEW RESOLVER
 
     @Bean(name = "templateResolver")
     public ServletContextTemplateResolver getTemplateResolver() {
@@ -46,6 +47,9 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 
         return resolver;
     }
+
+//    ==================================================================================
+//    === RESOURCE HANDLERS
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
