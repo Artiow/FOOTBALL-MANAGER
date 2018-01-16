@@ -13,10 +13,13 @@ import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
 
-@Configuration
 @EnableWebMvc
+@Configuration
 @ComponentScan({"ru.vldf.sportsportal.config", "ru.vldf.sportsportal.controller"})
-public class AppConfig extends WebMvcConfigurerAdapter {
+public class WebAppConfig extends WebMvcConfigurerAdapter {
+
+//    ==================================================================================
+//    === THYMELEAF VIEW RESOLVER
 
     @Bean(name = "templateResolver")
     public ServletContextTemplateResolver getTemplateResolver() {
@@ -46,6 +49,9 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 
         return resolver;
     }
+
+//    ==================================================================================
+//    === RESOURCE HANDLERS
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
