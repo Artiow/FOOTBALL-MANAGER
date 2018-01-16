@@ -1,8 +1,11 @@
 package ru.vldf.sportsportal.config;
 
 import org.apache.commons.dbcp.BasicDataSource;
+import org.hibernate.SessionFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.orm.hibernate5.HibernateTransactionManager;
+import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
@@ -18,4 +21,20 @@ public class HibernateConfig {
 
         return dataSource;
     }
+
+    @Bean(name = "sessionFactory")
+    public SessionFactory getSessionFactory() {
+        LocalSessionFactoryBean sessionFactoryBean = new LocalSessionFactoryBean();
+        sessionFactoryBean.setDataSource(getDataSource());
+
+        return sessionFactoryBean.getObject();
+    }
+
+//    @Bean(name = "transactionManager")
+//    public HibernateTransactionManager getTransactionManager() {
+//        HibernateTransactionManager transactionManager = new HibernateTransactionManager();
+//        transactionManager.setSessionFactory(getSessionFactory());
+//
+//        return transactionManager;
+//    }
 }
