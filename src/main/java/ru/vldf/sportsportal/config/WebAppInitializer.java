@@ -2,9 +2,9 @@ package ru.vldf.sportsportal.config;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
-public class AppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
+public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
     protected Class<?>[] getRootConfigClasses() {
-        return new Class[] {AppConfig.class};
+        return new Class[] {WebAppConfig.class};
     }
 
     protected Class<?>[] getServletConfigClasses() {
