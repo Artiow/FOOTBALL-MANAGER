@@ -6,18 +6,17 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
+
 import org.thymeleaf.spring4.SpringTemplateEngine;
 import org.thymeleaf.spring4.view.ThymeleafViewResolver;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
-@EnableWebMvc
-@Configuration
-@ComponentScan({"ru.vldf.sportsportal.config"})
-public class AppConfig extends WebMvcConfigurerAdapter {
+import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
 
-//    ==================================================================================
-//    === THYMELEAF VIEW RESOLVER
+@Configuration
+@EnableWebMvc
+@ComponentScan({"ru.vldf.sportsportal.config", "ru.vldf.sportsportal.controller"})
+public class AppConfig extends WebMvcConfigurerAdapter {
 
     @Bean(name = "templateResolver")
     public ServletContextTemplateResolver getTemplateResolver() {
@@ -48,14 +47,11 @@ public class AppConfig extends WebMvcConfigurerAdapter {
         return resolver;
     }
 
-//    ==================================================================================
-//    === RESOURCE HANDLERS
-
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/libs/**").addResourceLocations("/libs/");
-        registry.addResourceHandler("/css/**").addResourceLocations("/resources/css/");
         registry.addResourceHandler("/img/**").addResourceLocations("/resources/img/");
+        registry.addResourceHandler("/css/**").addResourceLocations("/resources/css/");
         registry.addResourceHandler("/js/**").addResourceLocations("/resources/js/");
         registry.addResourceHandler("/components/**").addResourceLocations("/resources/js/components/");
     }
