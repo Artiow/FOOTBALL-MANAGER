@@ -29,6 +29,9 @@ public class RoleEntity {
         this.name = name;
     }
 
+    //    ==================================================================================
+    //    === OBJECTS METHODS
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
