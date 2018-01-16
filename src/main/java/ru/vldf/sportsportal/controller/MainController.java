@@ -11,11 +11,6 @@ public class MainController {
         return "index";
     }
 
-    @GetMapping(value = {"/login"})
-    public String loginPage(ModelMap map) {
-        return "login";
-    }
-
     @GetMapping(value = {"/personalpage"})
     public String personalPage(ModelMap map) {
         return "personalpage";

@@ -8,11 +8,15 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+
+import java.util.Properties;
 
 @Configuration
 @EnableWebSecurity
 public class AppSpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
+//    TODO: remove this method
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication().withUser("Username").password("1234").roles("USER");
@@ -35,10 +39,10 @@ public class AppSpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .formLogin()
                     .loginPage("/login")
-                    .loginProcessingUrl("/j_spring_security_check")
                     .failureUrl("/login?error")
-                    .usernameParameter("j_username")
-                    .passwordParameter("j_password")
+                    .loginProcessingUrl("/security_check")
+                    .usernameParameter("username")
+                    .passwordParameter("password")
                     .permitAll()
                     .and()
 
