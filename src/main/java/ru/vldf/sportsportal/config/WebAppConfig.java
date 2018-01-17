@@ -15,7 +15,12 @@ import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
 
 @EnableWebMvc
 @Configuration
-@ComponentScan("ru.vldf.sportsportal")
+@ComponentScan({
+        "ru.vldf.sportsportal.config",
+        "ru.vldf.sportsportal.controller",
+        "ru.vldf.sportsportal.dao.impl",
+        "ru.vldf.sportsportal.service"
+})
 public class WebAppConfig extends WebMvcConfigurerAdapter {
 
 //    ==================================================================================

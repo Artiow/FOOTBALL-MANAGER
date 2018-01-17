@@ -1,11 +1,11 @@
 package ru.vldf.sportsportal.service;
 
+import ru.vldf.sportsportal.model.RoleEntity;
 import ru.vldf.sportsportal.dao.impl.RoleDAO;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import ru.vldf.sportsportal.model.RoleEntity;
 
 import java.util.List;
 
