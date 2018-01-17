@@ -5,6 +5,7 @@ import org.apache.commons.dbcp.BasicDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.orm.hibernate5.HibernateExceptionTranslator;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -19,9 +20,8 @@ public class HibernateConfig {
         return new Properties() {
             {
                 setProperty("show_sql", "false");
-                setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
-                setProperty("hibernate.hbm2ddl.auto", "create-drop");
                 setProperty("hibernate.globally_quoted_identifiers", "true");
+                setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
             }
         };
     }
@@ -48,9 +48,11 @@ public class HibernateConfig {
 //    @Autowired
 //    @Bean(name = "transactionManager")
 //    public HibernateTransactionManager getTransactionManager(SessionFactory sessionFactory) {
-//        HibernateTransactionManager transactionManager = new HibernateTransactionManager();
-//        transactionManager.setSessionFactory(sessionFactory);
-//
-//        return transactionManager;
+//        return new HibernateTransactionManager(sessionFactory);
 //    }
+
+    @Bean
+    public HibernateExceptionTranslator hibernateExceptionTranslator(){
+        return new HibernateExceptionTranslator();
+    }
 }
