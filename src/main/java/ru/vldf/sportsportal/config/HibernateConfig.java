@@ -37,19 +37,20 @@ public class HibernateConfig {
     }
 
     @Bean(name = "sessionFactory")
-    public SessionFactory getSessionFactory() {
+    public LocalSessionFactoryBean getSessionFactory() {
         LocalSessionFactoryBean sessionFactoryBean = new LocalSessionFactoryBean();
+        sessionFactoryBean.setPackagesToScan("ru.vldf.sportsportal.model");
         sessionFactoryBean.setHibernateProperties(hibernateProperties());
         sessionFactoryBean.setDataSource(getDataSource());
 
-        return sessionFactoryBean.getObject();
+        return sessionFactoryBean;
     }
 
-//    @Autowired
-//    @Bean(name = "transactionManager")
-//    public HibernateTransactionManager getTransactionManager(SessionFactory sessionFactory) {
-//        return new HibernateTransactionManager(sessionFactory);
-//    }
+    @Autowired
+    @Bean(name = "transactionManager")
+    public HibernateTransactionManager getTransactionManager(SessionFactory sessionFactory) {
+        return new HibernateTransactionManager(sessionFactory);
+    }
 
     @Bean
     public HibernateExceptionTranslator hibernateExceptionTranslator(){

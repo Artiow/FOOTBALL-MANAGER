@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<html xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
     <title>Личный кабинет</title>
@@ -22,7 +23,12 @@
 <script src="/components/HeaderRegular.js"></script>
 <script src="/components/HeaderAuth.js"></script>
 
-<nav style="height: 800px"></nav>
+<nav style="height: 800px">
+    <!--TODO: print list-->
+    <!--<ul th:each="user : ${list}">-->
+        <!--<li th:text="${user.toString()}"></li>-->
+    <!--</ul>-->
+</nav>
 
 <footer id="footer-regular">
     <footer-regular link-service="#"
