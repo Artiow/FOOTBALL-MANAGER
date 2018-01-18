@@ -5,12 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.ui.ModelMap;
 
 @Controller
-public class TmpController {
-
-    @GetMapping(value = {"/lease"})
-    public String leasePage(ModelMap map) {
-        return "lease";
-    }
+public class TmpControllers {
 
     @GetMapping(value = {"/matches"})
     public String matchesPage(ModelMap map) {
@@ -20,10 +15,5 @@ public class TmpController {
     @GetMapping(value = {"/playgrounds"})
     public String playgroundsPage(ModelMap map) {
         return "playgrounds";
-    }
-
-    @GetMapping(value = {"/personalpage"})
-    public String personalPage(ModelMap map) {
-        return "personalpage";
     }
 }
