@@ -13,16 +13,8 @@ import java.util.List;
 @Controller
 public class PersonalPageController {
 
-    private UserService userService;
-    @Autowired
-    public void setUserService(UserService userService) {
-        this.userService = userService;
-    }
-
     @GetMapping(value = {"/personalpage"})
     public String personalPage(ModelMap map) {
-        List<UserEntity> list = userService.listUsers();
-        map.addAttribute("list", list);
         return "personalpage";
     }
 }

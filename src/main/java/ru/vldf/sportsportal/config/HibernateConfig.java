@@ -3,8 +3,11 @@ package ru.vldf.sportsportal.config;
 import org.hibernate.SessionFactory;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.orm.hibernate5.HibernateExceptionTranslator;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
@@ -20,12 +23,16 @@ import java.util.Properties;
 @EnableTransactionManagement
 public class HibernateConfig {
 
+    @Value("${hibernate-property.show_sql}")
+    private String SHOW_SQL;
+    @Value("${hibernate-property.hibernate.dialect}")
+    private String HIBERNATE_DIALECT;
+
     private Properties hibernateProperties() {
         return new Properties() {
             {
-                setProperty("show_sql", "false");
-                setProperty("hibernate.globally_quoted_identifiers", "true");
-                setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
+                setProperty("show_sql", SHOW_SQL);
+                setProperty("hibernate.dialect", HIBERNATE_DIALECT);
             }
         };
     }
@@ -36,15 +43,13 @@ public class HibernateConfig {
         dataSource.setDriverClassName("com.mysql.jdbc.Driver");
 
         String URL = "jdbc:mysql://localhost:3306/sportsportal?"
-                + "useUnicode=true&"
-                + "useJDBCCompliantTimezoneShift=true&"
+                + "useUnicode=true&useJDBCCompliantTimezoneShift=true&"
                 + "useLegacyDatetimeCode=false&"
                 + "serverTimezone=Europe/Moscow";
 
         dataSource.setUrl(URL);
         dataSource.setUsername("root");
         dataSource.setPassword("");
-
         return dataSource;
     }
 
