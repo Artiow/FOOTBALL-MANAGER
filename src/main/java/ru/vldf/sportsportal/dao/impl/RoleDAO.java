@@ -5,7 +5,7 @@ import ru.vldf.sportsportal.model.RoleEntity;
 
 import org.springframework.stereotype.Repository;
 
-@Repository("RoleDAO")
+@Repository
 public class RoleDAO extends GenericDAOImpl<RoleEntity, Integer>{
     public RoleDAO() {
         super(RoleEntity.class);

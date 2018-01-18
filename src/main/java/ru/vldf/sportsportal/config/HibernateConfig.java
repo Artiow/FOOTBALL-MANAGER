@@ -8,8 +8,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.orm.hibernate5.HibernateExceptionTranslator;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
+import org.springframework.orm.jpa.JpaTransactionManager;
+import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import java.util.Properties;
 
 @Configuration
@@ -30,8 +34,16 @@ public class HibernateConfig {
     public BasicDataSource getDataSource() {
         BasicDataSource dataSource = new BasicDataSource();
         dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/sportsportal");
+
+        String URL = "jdbc:mysql://localhost:3306/sportsportal?"
+                + "useUnicode=true&"
+                + "useJDBCCompliantTimezoneShift=true&"
+                + "useLegacyDatetimeCode=false&"
+                + "serverTimezone=Europe/Moscow";
+
+        dataSource.setUrl(URL);
         dataSource.setUsername("root");
+        dataSource.setPassword("");
 
         return dataSource;
     }

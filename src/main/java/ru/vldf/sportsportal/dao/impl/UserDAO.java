@@ -4,7 +4,7 @@ import org.springframework.stereotype.Repository;
 import ru.vldf.sportsportal.dao.generic.GenericDAOImpl;
 import ru.vldf.sportsportal.model.UserEntity;
 
-@Repository("UserDAO")
+@Repository
 public class UserDAO extends GenericDAOImpl<UserEntity, Integer> {
     public UserDAO() {
         super(UserEntity.class);

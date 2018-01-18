@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Transactional
 @Service
 public class UserService {
     private UserDAO userDAO;
@@ -19,6 +18,7 @@ public class UserService {
         this.userDAO = userDAO;
     }
 
+    @Transactional
     public List<UserEntity> listUsers() {
         return userDAO.list();
     }

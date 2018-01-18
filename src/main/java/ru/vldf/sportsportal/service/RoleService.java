@@ -9,8 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
-@Transactional
-@Service("RoleService")
+@Service
 public class RoleService {
     private RoleDAO roleDAO;
 
@@ -19,6 +18,7 @@ public class RoleService {
         this.roleDAO = roleDAO;
     }
 
+    @Transactional
     public List<RoleEntity> listRoles() {
         return roleDAO.list();
     }
