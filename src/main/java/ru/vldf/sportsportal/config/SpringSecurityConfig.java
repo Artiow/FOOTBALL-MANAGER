@@ -15,13 +15,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
 //    TODO: remove this method
     @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+    public void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication().withUser("Username").password("1234").roles("USER");
-    }
-
-    @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
     }
 
     @Override
@@ -37,9 +32,9 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                     .loginPage("/login")
                     .failureUrl("/login?error")
-                    .loginProcessingUrl("/spring_security_check")
-                    .usernameParameter("spring_security_username")
-                    .passwordParameter("spring_security_password")
+                    .loginProcessingUrl("/security_check")
+                    .usernameParameter("security_email")
+                    .passwordParameter("security_password")
                     .permitAll()
                     .and()
 
@@ -48,5 +43,10 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                     .logoutSuccessUrl("/login?logout")
                     .invalidateHttpSession(true)
                     .permitAll();
+    }
+
+    @Bean
+    public BCryptPasswordEncoder getPasswordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }

@@ -14,7 +14,7 @@ public class UserEntity {
     private RoleEntity role;
 
     @Id
-    @Column(name = "ID", nullable = false)
+    @Column(name = "ID", nullable = false, unique = true)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer getId() {
         return id;
