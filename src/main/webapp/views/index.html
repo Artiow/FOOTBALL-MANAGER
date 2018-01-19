@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<html xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
     <title>Большой Воронежский Спортивный Портал</title>
@@ -21,7 +22,7 @@
 
 <header><header-main>
     <auth-failed sec:authorize="!isAuthenticated()"></auth-failed>
-    <auth-completed sec:authorize="isAuthenticated()"><p sec:authentication="name">USERNAME</p></auth-completed>
+    <auth-completed sec:authorize="isAuthenticated()"><p th:text="${name}">USERNAME</p></auth-completed>
 </header-main></header>
 <script src="/components/HeaderMain.js"></script>
 <script src="/components/HeaderAuth.js"></script>
