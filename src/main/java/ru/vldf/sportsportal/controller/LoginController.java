@@ -11,4 +11,9 @@ public class LoginController {
     public String loginPage(ModelMap map) {
         return "login";
     }
+
+    @GetMapping(value = {"/register"})
+    public String registerPage(ModelMap map) {
+        return "register";
+    }
 }
