@@ -4,33 +4,22 @@ import javax.persistence.*;
 import java.util.Collection;
 
 @Entity
-@Table(name = "Role", schema = "sportsportal")
-public class RoleEntity {
+@Table(name = "Sport", schema = "sportsportal")
+public class SportEntity {
     private Integer id;
-    private String code;
     private String name;
 
-    private Collection<UserEntity> users;
+    private Collection<UserSpecializationEntity> userSpecializations;
+    private Collection<PlaygroundSpecializationEntity> playgroundSpecializations;
 
     @Id
     @Column(name = "ID", nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer getId() {
         return id;
     }
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    @Basic
-    @Column(name = "Code", nullable = false, length = 45)
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
     }
 
     @Basic
@@ -46,13 +35,22 @@ public class RoleEntity {
 //    ==================================================================================
 //    === ONE-TO-MANY REFERENCES
 
-    @OneToMany(mappedBy = "role")
-    public Collection<UserEntity> getUsers() {
-        return users;
+    @OneToMany(mappedBy = "sport")
+    public Collection<UserSpecializationEntity> getUserSpecializations() {
+        return userSpecializations;
     }
 
-    public void setUsers(Collection<UserEntity> users) {
-        this.users = users;
+    public void setUserSpecializations(Collection<UserSpecializationEntity> userSpecializations) {
+        this.userSpecializations = userSpecializations;
+    }
+
+    @OneToMany(mappedBy = "sport")
+    public Collection<PlaygroundSpecializationEntity> getPlaygroundSpecializations() {
+        return playgroundSpecializations;
+    }
+
+    public void setPlaygroundSpecializations(Collection<PlaygroundSpecializationEntity> playgroundSpecializations) {
+        this.playgroundSpecializations = playgroundSpecializations;
     }
 
 //    ==================================================================================
@@ -63,10 +61,10 @@ public class RoleEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        RoleEntity that = (RoleEntity) o;
+        SportEntity that = (SportEntity) o;
 
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
-        if (code != null ? !code.equals(that.code) : that.code != null) return false;
+        if (name != null ? !name.equals(that.name) : that.name != null) return false;
 
         return true;
     }
@@ -74,7 +72,7 @@ public class RoleEntity {
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (code != null ? code.hashCode() : 0);
+        result = 31 * result + (name != null ? name.hashCode() : 0);
         return result;
     }
 }

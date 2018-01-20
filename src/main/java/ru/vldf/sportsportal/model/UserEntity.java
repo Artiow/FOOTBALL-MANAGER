@@ -1,6 +1,7 @@
 package ru.vldf.sportsportal.model;
 
 import javax.persistence.*;
+import java.util.Collection;
 
 @Entity
 @Table(name = "User", schema = "sportsportal")
@@ -11,10 +12,12 @@ public class UserEntity {
     private String email;
     private String password;
 
+    private Collection<UserSpecializationEntity> specializations;
+
     private RoleEntity role;
 
     @Id
-    @Column(name = "ID", nullable = false, unique = true)
+    @Column(name = "ID", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer getId() {
         return id;
@@ -62,6 +65,18 @@ public class UserEntity {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+//    ==================================================================================
+//    === ONE-TO-MANY REFERENCES
+
+    @OneToMany(mappedBy = "user")
+    public Collection<UserSpecializationEntity> getSpecializations() {
+        return specializations;
+    }
+
+    public void setSpecializations(Collection<UserSpecializationEntity> specializations) {
+        this.specializations = specializations;
     }
 
 //    ==================================================================================
