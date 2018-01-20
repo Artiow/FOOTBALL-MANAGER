@@ -1,4 +1,4 @@
-package ru.vldf.sportsportal.model;
+package ru.vldf.sportsportal.model.playground;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;

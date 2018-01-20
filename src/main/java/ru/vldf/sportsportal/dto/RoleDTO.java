@@ -1,6 +1,6 @@
 package ru.vldf.sportsportal.dto;
 
-import ru.vldf.sportsportal.model.RoleEntity;
+import ru.vldf.sportsportal.model.user.RoleEntity;
 
 public class RoleDTO {
     private String code;

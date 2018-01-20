@@ -3,22 +3,22 @@ package ru.vldf.sportsportal.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.vldf.sportsportal.dao.impl.user.UserDAO;
-import ru.vldf.sportsportal.model.user.UserEntity;
+import ru.vldf.sportsportal.dao.impl.SportDAO;
+import ru.vldf.sportsportal.model.SportEntity;
 
 import java.util.List;
 
 @Service
-public class UserService {
-    private UserDAO userDAO;
+public class SportService {
+    private SportDAO sportDAO;
 
     @Autowired
-    public void setUserDAO(UserDAO userDAO) {
-        this.userDAO = userDAO;
+    public void setSportDAO(SportDAO sportDAO) {
+        this.sportDAO = sportDAO;
     }
 
     @Transactional(readOnly = true)
-    public List<UserEntity> listUsers() {
-        return userDAO.list();
+    public List<SportEntity> listSports() {
+        return sportDAO.list();
     }
 }

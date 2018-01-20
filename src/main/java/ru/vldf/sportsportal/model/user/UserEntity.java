@@ -1,4 +1,4 @@
-package ru.vldf.sportsportal.model;
+package ru.vldf.sportsportal.model.user;
 
 import javax.persistence.*;
 import java.util.Collection;

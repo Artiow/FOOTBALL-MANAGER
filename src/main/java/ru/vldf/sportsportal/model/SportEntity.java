@@ -1,5 +1,8 @@
 package ru.vldf.sportsportal.model;
 
+import ru.vldf.sportsportal.model.playground.PlaygroundSpecializationEntity;
+import ru.vldf.sportsportal.model.user.UserSpecializationEntity;
+
 import javax.persistence.*;
 import java.util.Collection;
 

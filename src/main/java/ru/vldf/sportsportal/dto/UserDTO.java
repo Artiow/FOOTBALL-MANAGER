@@ -1,6 +1,6 @@
 package ru.vldf.sportsportal.dto;
 
-import ru.vldf.sportsportal.model.UserEntity;
+import ru.vldf.sportsportal.model.user.UserEntity;
 
 public class UserDTO {
     private String name;

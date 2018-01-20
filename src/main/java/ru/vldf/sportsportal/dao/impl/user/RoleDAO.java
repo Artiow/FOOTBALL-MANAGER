@@ -1,7 +1,7 @@
-package ru.vldf.sportsportal.dao.impl;
+package ru.vldf.sportsportal.dao.impl.user;
 
 import ru.vldf.sportsportal.dao.generic.GenericDAOImpl;
-import ru.vldf.sportsportal.model.RoleEntity;
+import ru.vldf.sportsportal.model.user.RoleEntity;
 
 import org.springframework.stereotype.Repository;
 

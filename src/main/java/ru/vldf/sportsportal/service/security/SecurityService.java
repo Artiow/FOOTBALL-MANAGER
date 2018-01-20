@@ -5,9 +5,9 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import ru.vldf.sportsportal.model.RoleEntity;
-import ru.vldf.sportsportal.model.UserEntity;
-import ru.vldf.sportsportal.dao.impl.UserDAO;
+import ru.vldf.sportsportal.model.user.RoleEntity;
+import ru.vldf.sportsportal.model.user.UserEntity;
+import ru.vldf.sportsportal.dao.impl.user.UserDAO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

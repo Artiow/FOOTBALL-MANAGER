@@ -1,26 +1,28 @@
-package ru.vldf.sportsportal.model;
+package ru.vldf.sportsportal.model.user;
+
+import ru.vldf.sportsportal.model.SportEntity;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "PlaygroundSpecialization", schema = "sportsportal")
-public class PlaygroundSpecializationEntity {
+@Table(name = "UserSpecialization", schema = "sportsportal")
+public class UserSpecializationEntity {
     @EmbeddedId
-    private PlaygroundSpecializationEntityPK pk;
+    private UserSpecializationEntityPK pk;
 
     @ManyToOne
-    @MapsId("playgroundId")
-    private PlaygroundEntity playground;
+    @MapsId("userId")
+    private UserEntity user;
 
     @ManyToOne
     @MapsId("sportId")
     private SportEntity sport;
 
-    public PlaygroundSpecializationEntityPK getPk() {
+    public UserSpecializationEntityPK getPk() {
         return pk;
     }
 
-    public void setPk(PlaygroundSpecializationEntityPK pk) {
+    public void setPk(UserSpecializationEntityPK pk) {
         this.pk = pk;
     }
 
@@ -28,13 +30,13 @@ public class PlaygroundSpecializationEntity {
 //    === MANY-TO-ONE REFERENCES
 
     @ManyToOne
-    @JoinColumn(name = "Playground_ID", referencedColumnName = "ID", nullable = false)
-    public PlaygroundEntity getPlayground() {
-        return playground;
+    @JoinColumn(name = "User_ID", referencedColumnName = "ID", nullable = false)
+    public UserEntity getUser() {
+        return user;
     }
 
-    public void setPlayground(PlaygroundEntity playground) {
-        this.playground = playground;
+    public void setUser(UserEntity playground) {
+        this.user = playground;
     }
 
     @ManyToOne
@@ -55,7 +57,7 @@ public class PlaygroundSpecializationEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        PlaygroundSpecializationEntity that = (PlaygroundSpecializationEntity) o;
+        UserSpecializationEntity that = (UserSpecializationEntity) o;
 
         if (pk != null ? !pk.equals(that.pk) : that.pk != null) return false;
 
@@ -64,7 +66,7 @@ public class PlaygroundSpecializationEntity {
 
     @Override
     public int hashCode() {
-        int result = playground.getId() != null ? playground.getId().hashCode() : 0;
+        int result = user.getId() != null ? user.getId().hashCode() : 0;
         result = 31 * result + (sport.getId() != null ? sport.getId().hashCode() : 0);
         return result;
     }
