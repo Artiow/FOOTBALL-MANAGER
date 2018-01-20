@@ -4,14 +4,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.ui.ModelMap;
 import ru.vldf.sportsportal.controller.security.SecurityController;
-import ru.vldf.sportsportal.service.security.UserPrincipal;
+import ru.vldf.sportsportal.service.security.SecurityPrincipal;
 
 @Controller
 public class TmpControllers extends SecurityController {
 
     @GetMapping(value = {"/matches"})
     public String matchesPage(ModelMap map) {
-        UserPrincipal principal = getPrincipal();
+        SecurityPrincipal principal = getPrincipal();
 
         String name;
         if (principal != null) name = principal.getUser().getName() + " " + principal.getUser().getSurname();
@@ -23,7 +23,7 @@ public class TmpControllers extends SecurityController {
 
     @GetMapping(value = {"/playgrounds"})
     public String playgroundsPage(ModelMap map) {
-        UserPrincipal principal = getPrincipal();
+        SecurityPrincipal principal = getPrincipal();
 
         String name;
         if (principal != null) name = principal.getUser().getName() + " " + principal.getUser().getSurname();

@@ -7,15 +7,15 @@ import ru.vldf.sportsportal.model.UserEntity;
 
 import java.util.Collection;
 
-public class UserPrincipal extends User {
+public class SecurityPrincipal extends User {
     private UserDTO userDTO;
 
-    public UserPrincipal(UserEntity user, Collection<? extends GrantedAuthority> authorities) {
+    public SecurityPrincipal(UserEntity user, Collection<? extends GrantedAuthority> authorities) {
         super(user.getEmail(), user.getPassword(), authorities);
         userDTO = new UserDTO(user);
     }
 
-    public UserPrincipal(UserEntity user, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities) {
+    public SecurityPrincipal(UserEntity user, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities) {
         super(user.getEmail(), user.getPassword(), enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
         userDTO = new UserDTO(user);
     }

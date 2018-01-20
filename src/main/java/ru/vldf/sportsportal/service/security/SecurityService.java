@@ -2,11 +2,9 @@ package ru.vldf.sportsportal.service.security;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import ru.vldf.sportsportal.dto.UserDTO;
 import ru.vldf.sportsportal.model.RoleEntity;
 import ru.vldf.sportsportal.model.UserEntity;
 import ru.vldf.sportsportal.dao.impl.UserDAO;
@@ -19,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class UserServiceSecurity implements UserDetailsService {
+public class SecurityService implements UserDetailsService {
     private UserDAO userDAO;
 
     @Autowired
@@ -30,7 +28,7 @@ public class UserServiceSecurity implements UserDetailsService {
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         UserEntity user = userDAO.findByEMail(s);
-        return new UserPrincipal(user, buildUserAuthority(user.getRole()));
+        return new SecurityPrincipal(user, buildUserAuthority(user.getRole()));
     }
 
     private List<GrantedAuthority> buildUserAuthority(RoleEntity role) {
