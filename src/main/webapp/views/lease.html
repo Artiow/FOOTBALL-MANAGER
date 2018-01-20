@@ -23,7 +23,17 @@
 <script src="/components/HeaderRegular.js"></script>
 <script src="/components/HeaderAuth.js"></script>
 
-<nav style="height: 800px"></nav>
+<nav style="padding: 50px">
+    <ul th:each="playground : ${playgrounds}">
+        <li>
+            <p th:text="'Площадка: ' + ${playground.getName()}"></p>
+            <p>Виды спорта:</p>
+            <ul th:each="specialization : ${playground.getSpecializations()}">
+                <li th:text="${specialization.getSport().getName()}"></li>
+            </ul>
+        </li>
+    </ul>
+</nav>
 
 <footer id="footer-regular">
     <footer-regular link-service="#"

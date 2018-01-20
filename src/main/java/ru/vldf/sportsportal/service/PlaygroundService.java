@@ -1,5 +1,6 @@
 package ru.vldf.sportsportal.service;
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +20,13 @@ public class PlaygroundService {
 
     @Transactional(readOnly = true)
     public List<PlaygroundEntity> listPlaygrounds() {
-        return playgroundDAO.list();
+        return listPlaygrounds(true);
+    }
+
+    @Transactional(readOnly = true)
+    public List<PlaygroundEntity> listPlaygrounds(boolean lazy) {
+        List<PlaygroundEntity> list = playgroundDAO.list();
+        for (PlaygroundEntity item: list) Hibernate.initialize(item.getSpecializations());
+        return list;
     }
 }

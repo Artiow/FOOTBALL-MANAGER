@@ -1,10 +1,12 @@
 package ru.vldf.sportsportal.dao.generic;
 
 import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.io.Serializable;
 import java.util.List;
@@ -23,7 +25,8 @@ public class GenericDAOImpl<T, PK extends Serializable> implements GenericDAO<T,
     }
 
     protected Session getSession() {
-        return sessionFactory.getCurrentSession();
+        try { return sessionFactory.getCurrentSession(); }
+        catch (HibernateException e) { return sessionFactory.openSession(); }
     }
 
     protected Criteria createCriteria() {
