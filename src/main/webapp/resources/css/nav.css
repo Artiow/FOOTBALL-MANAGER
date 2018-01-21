@@ -1,15 +1,17 @@
-nav {
+/*MAIN*/
+
+nav.nav-main {
     background: linear-gradient(135deg, rgba(103, 0, 31, 0.8), rgba(34, 101, 163, .5));
 }
 
-nav .tile h2 {
+nav.nav-main .tile h2 {
     margin-top: 5px;
 }
-nav .tile p {
+nav.nav-main .tile p {
     font-size: 20px;
 }
 
-nav .tile {
+nav.nav-main .tile {
     display: block;
 
     color: #fcfcfc;
@@ -20,33 +22,113 @@ nav .tile {
 
     background: rgba(0, 0, 0, 0.25);
 }
-nav .tile:hover {
+nav.nav-main .tile:hover {
     color: #f2f2f2;
     background: rgba(0, 0, 0, 0.4375);
 
     cursor: pointer;
 }
 
-nav .container .row:last-child .tile-lg {
+nav.nav-main .container .row:last-child .tile-lg {
     margin-top: 0;
 }
 
-nav .tile {
+nav.nav-main .tile {
     height: 300px;
 }
-nav .container .row:first-child .tile-lg {
+nav.nav-main .container .row:first-child .tile-lg {
     height: 630px;
 }
 
-nav .tile-sm {
+nav.nav-main .tile-sm {
     text-align: right;
 }
-nav .container .row.visible-sm .col-sm-6:last-child .tile-sm {
+nav.nav-main .container .row.visible-sm .col-sm-6:last-child .tile-sm {
     text-align: left;
 }
 
-nav .container .row:last-child .tile-lg h2 {
+nav.nav-main .container .row:last-child .tile-lg h2 {
     margin-top: 0;
     text-align: right;
 }
 
+/*LEASE*/
+
+nav.nav-lease {
+    margin: 20px 0;
+}
+nav.nav-lease .row {
+    padding: 15px 0;
+
+    background: linear-gradient(135deg, rgba(103, 0, 31, 0.16), rgba(34, 101, 163, 0.1));
+}
+
+nav.nav-lease .filter {
+    background-color: rgba(0, 255, 0, 0.2);
+}
+
+nav.nav-lease .lease-head-wrapper {
+    background: linear-gradient(45deg, #ff3669, #000000);
+}
+nav.nav-lease .lease-head {
+    margin-bottom: 10px;
+    padding: 5px 10px;
+
+    font-size: 18px;
+    color: #fcfcfc;
+
+    border: 2px solid rgba(0, 0, 0, 0.05);
+}
+
+nav.nav-lease .lease-list {
+    /*display: block;*/
+    margin: 0;
+    padding: 0;
+}
+
+nav.nav-lease .lease-list .lease-item {
+    display: block;
+    margin: 10px 0;
+    background: linear-gradient(45deg, #ff3669, #000000);
+}
+nav.nav-lease .lease-list .lease-item:first-child {
+    margin-top: 0;
+}
+nav.nav-lease .lease-list .lease-item:last-child {
+    margin-bottom: 0;
+}
+
+nav.nav-lease .lease-list .lease-item .lease-item-content {
+    display: block;
+    height: 124px;
+    padding: 10px;
+
+    font-size: 18px;
+    color: #fcfcfc;
+    text-decoration: none;
+
+    border: 2px solid rgba(0, 0, 0, 0.05);
+    background: rgba(0, 0, 0, 0.125);
+}
+nav.nav-lease .lease-list .lease-item .lease-item-content:hover {
+    background: 0;
+    cursor: pointer;
+}
+
+nav.nav-lease .lease-list .lease-item .lease-item-pic {
+    display: inline-block;
+
+    width: 100px;
+    height: 100px;
+    background: rgba(0, 0, 255, 0.2);
+}
+
+nav.nav-lease .lease-list .lease-item .lease-item-description {
+    display: inline-block;
+    vertical-align: top;
+
+    background: rgba(255, 0, 0, 0.2);
+}
+nav.nav-lease .lease-list .lease-item .lease-item-description h3 {
+    margin: 0;
+}

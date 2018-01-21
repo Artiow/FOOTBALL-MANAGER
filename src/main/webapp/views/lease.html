@@ -4,12 +4,31 @@
 <head>
     <meta charset="UTF-8"/>
     <title>Онлайн аренда</title>
-    <script src="/libs/vue.js"></script>
-    <script src="/libs/jquery-3.2.1.js"></script>
-    <link rel="stylesheet" href="/libs/bootstrap/css/bootstrap.css"/>
-    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.css"/>
-    <link rel="stylesheet" href="/css/header.css"/>
-    <link rel="stylesheet" href="/css/footer.css"/>
+
+    <script src="../libs/vue.js" th:src="@{libs/vue.js}"></script>
+    <script src="../libs/jquery-3.2.1.js" th:src="@{libs/jquery-3.2.1.js}"></script>
+
+    <link rel="stylesheet"
+          href="../libs/bootstrap/css/bootstrap.css"
+          th:href="@{/libs/bootstrap/css/bootstrap.css}"
+    />
+    <link rel="stylesheet"
+          href="../libs/font-awesome/css/font-awesome.css"
+          th:href="@{/libs/font-awesome/css/font-awesome.css}"
+    />
+    <link rel="stylesheet"
+          href="../resources/css/header.css"
+          th:href="@{/css/header.css}"
+    />
+    <link rel="stylesheet"
+          href="../resources/css/nav.css"
+          th:href="@{/css/nav.css}"
+    />
+    <link rel="stylesheet"
+          href="../resources/css/footer.css"
+          th:href="@{/css/footer.css}"
+    />
+
 </head>
 <body>
 
@@ -17,22 +36,70 @@
     <header-regular id="header-auth"
                     caption="ОНЛАЙН АРЕНДА">
         <auth-failed sec:authorize="!isAuthenticated()"></auth-failed>
-        <auth-completed sec:authorize="isAuthenticated()"><p th:text="${name}">USERNAME</p></auth-completed>
+        <!--<auth-completed sec:authorize="isAuthenticated()"><p th:text="${name}">USERNAME</p></auth-completed>-->
     </header-regular>
 </header>
-<script src="/components/HeaderRegular.js"></script>
-<script src="/components/HeaderAuth.js"></script>
+<script src="../resources/js/components/HeaderRegular.js" th:src="@{/components/HeaderRegular.js}"></script>
+<script src="../resources/js/components/HeaderAuth.js" th:src="@{/components/HeaderAuth.js}"></script>
 
-<nav style="padding: 50px">
-    <ul th:each="playground : ${playgrounds}">
-        <li>
-            <p th:text="'Площадка: ' + ${playground.getName()}"></p>
-            <p>Виды спорта:</p>
-            <ul th:each="specialization : ${playground.getSpecializations()}">
-                <li th:text="${specialization.getSport().getName()}"></li>
-            </ul>
-        </li>
-    </ul>
+<!--<nav style="padding: 50px">-->
+    <!--<ul th:each="playground : ${playgrounds}">-->
+        <!--<li>-->
+            <!--<p th:text="'Площадка: ' + ${playground.getName()}"></p>-->
+            <!--<p>Виды спорта:</p>-->
+            <!--<ul th:each="specialization : ${playground.getSpecializations()}">-->
+                <!--<li th:text="${specialization.getSport().getName()}"></li>-->
+            <!--</ul>-->
+        <!--</li>-->
+    <!--</ul>-->
+<!--</nav>-->
+
+<nav class="nav-lease">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="filter">
+                    фильтры фильтры фильтры
+                    фильтры фильтры фильтры
+                    фильтры фильтры фильтры
+                    фильтры фильтры фильтры
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="lease-head-wrapper">
+                    <div class="lease-head">
+                        Найдено ХХ площадок
+                    </div>
+                </div>
+                <ul class="lease-list">
+                    <li class="lease-item">
+                        <a href="#" class="lease-item-content">
+                            <div class="lease-item-pic"></div>
+                            <div class="lease-item-description">
+                                <h3>Площадка А1</h3>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="lease-item">
+                        <a href="#" class="lease-item-content">
+                            <div class="lease-item-pic"></div>
+                            <div class="lease-item-description">
+                                <h3>Площадка А1</h3>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="lease-item">
+                        <a href="#" class="lease-item-content">
+                            <div class="lease-item-pic"></div>
+                            <div class="lease-item-description">
+                                <h3>Площадка А1</h3>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </nav>
 
 <footer id="footer-regular">
@@ -46,8 +113,8 @@
                     link-vldf-youtube="https://www.youtube.com/channel/UCgWjF5d6O3ORXolcr1HO-cQ">
     </footer-regular>
 </footer>
-<script src="/components/FooterRegular.js"></script>
+<script src="../resources/js/components/FooterRegular.js" th:src="@{/components/FooterRegular.js}"></script>
 
 </body>
-<script src="/js/padding.js"></script>
+<script src="../resources/js/padding.js" th:src="@{/js/padding.js}"></script>
 </html>
