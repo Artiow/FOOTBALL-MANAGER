@@ -64,14 +64,14 @@ nav.nav-lease .row {
 }
 
 nav.nav-lease .filter {
-    background-color: rgba(0, 255, 0, 0.2);
+    background-color: rgba(255, 0, 0, 0.2);
 }
 
-nav.nav-lease .lease-head-wrapper {
+nav.nav-lease .lease-head-wrapper, nav.nav-lease .lease-footer-wrapper {
     background: linear-gradient(45deg, #ff3669, #000000);
 }
-nav.nav-lease .lease-head {
-    margin-bottom: 10px;
+nav.nav-lease .lease-head, nav.nav-lease .lease-footer {
+    margin: 0;
     padding: 5px 10px;
 
     font-size: 18px;
@@ -81,7 +81,6 @@ nav.nav-lease .lease-head {
 }
 
 nav.nav-lease .lease-list {
-    /*display: block;*/
     margin: 0;
     padding: 0;
 }
@@ -90,12 +89,6 @@ nav.nav-lease .lease-list .lease-item {
     display: block;
     margin: 10px 0;
     background: linear-gradient(45deg, #ff3669, #000000);
-}
-nav.nav-lease .lease-list .lease-item:first-child {
-    margin-top: 0;
-}
-nav.nav-lease .lease-list .lease-item:last-child {
-    margin-bottom: 0;
 }
 
 nav.nav-lease .lease-list .lease-item .lease-item-content {
@@ -116,7 +109,10 @@ nav.nav-lease .lease-list .lease-item .lease-item-content:hover {
 }
 
 nav.nav-lease .lease-list .lease-item .lease-item-pic {
-    display: inline-block;
+    display: block;
+    float: left;
+
+    margin-right: 10px;
 
     width: 100px;
     height: 100px;
@@ -124,11 +120,15 @@ nav.nav-lease .lease-list .lease-item .lease-item-pic {
 }
 
 nav.nav-lease .lease-list .lease-item .lease-item-description {
-    display: inline-block;
-    vertical-align: top;
-
-    background: rgba(255, 0, 0, 0.2);
+    float: left;
+    height: 100px;
 }
 nav.nav-lease .lease-list .lease-item .lease-item-description h3 {
+    margin: 0 0 4px;
+}
+nav.nav-lease .lease-list .lease-item .lease-item-description p {
     margin: 0;
+}
+nav.nav-lease .lease-list .lease-item .lease-item-description p:last-child {
+    margin-top: 20px;
 }

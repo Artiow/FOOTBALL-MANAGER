@@ -36,67 +36,43 @@
     <header-regular id="header-auth"
                     caption="ОНЛАЙН АРЕНДА">
         <auth-failed sec:authorize="!isAuthenticated()"></auth-failed>
-        <!--<auth-completed sec:authorize="isAuthenticated()"><p th:text="${name}">USERNAME</p></auth-completed>-->
+        <auth-completed sec:authorize="isAuthenticated()"><p th:text="${name}">USERNAME</p></auth-completed>
     </header-regular>
 </header>
 <script src="../resources/js/components/HeaderRegular.js" th:src="@{/components/HeaderRegular.js}"></script>
 <script src="../resources/js/components/HeaderAuth.js" th:src="@{/components/HeaderAuth.js}"></script>
-
-<!--<nav style="padding: 50px">-->
-    <!--<ul th:each="playground : ${playgrounds}">-->
-        <!--<li>-->
-            <!--<p th:text="'Площадка: ' + ${playground.getName()}"></p>-->
-            <!--<p>Виды спорта:</p>-->
-            <!--<ul th:each="specialization : ${playground.getSpecializations()}">-->
-                <!--<li th:text="${specialization.getSport().getName()}"></li>-->
-            <!--</ul>-->
-        <!--</li>-->
-    <!--</ul>-->
-<!--</nav>-->
 
 <nav class="nav-lease">
     <div class="container">
         <div class="row">
             <div class="col-md-3">
                 <div class="filter">
-                    фильтры фильтры фильтры
-                    фильтры фильтры фильтры
-                    фильтры фильтры фильтры
-                    фильтры фильтры фильтры
+
                 </div>
             </div>
             <div class="col-md-9">
                 <div class="lease-head-wrapper">
                     <div class="lease-head">
-                        Найдено ХХ площадок
+                        Найдено площадок:
                     </div>
                 </div>
-                <ul class="lease-list">
+                <ul class="lease-list" th:each="playground : ${playgrounds}">
                     <li class="lease-item">
                         <a href="#" class="lease-item-content">
                             <div class="lease-item-pic"></div>
                             <div class="lease-item-description">
-                                <h3>Площадка А1</h3>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="lease-item">
-                        <a href="#" class="lease-item-content">
-                            <div class="lease-item-pic"></div>
-                            <div class="lease-item-description">
-                                <h3>Площадка А1</h3>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="lease-item">
-                        <a href="#" class="lease-item-content">
-                            <div class="lease-item-pic"></div>
-                            <div class="lease-item-description">
-                                <h3>Площадка А1</h3>
+                                <h3 th:text="${playground.getName()}">PLAYGROUND_NAME</h3>
+                                <p>Адрес</p>
+                                <p>Цена часа:</p>
                             </div>
                         </a>
                     </li>
                 </ul>
+                <div class="lease-footer-wrapper">
+                    <div class="lease-footer">
+                        :
+                    </div>
+                </div>
             </div>
         </div>
     </div>
