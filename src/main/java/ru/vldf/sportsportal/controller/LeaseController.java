@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import ru.vldf.sportsportal.controller.security.SecurityController;
 import ru.vldf.sportsportal.dao.impl.user.UserDAO;
 import ru.vldf.sportsportal.model.playground.PlaygroundEntity;
@@ -37,5 +38,20 @@ public class LeaseController extends SecurityController {
         map.addAttribute("playgrounds", list);
 
         return "lease";
+    }
+
+    @GetMapping(value = {"/lease/{id}"})
+    public String playgroundPage(@PathVariable("id") int id, ModelMap map) {
+        SecurityPrincipal principal = getPrincipal();
+
+        String name;
+        if (principal != null) name = principal.getUser().getName() + " " + principal.getUser().getSurname();
+        else name = "ERROR";
+        map.addAttribute("name", name);
+
+        PlaygroundEntity playground = playgroundService.getPlaygroundByID(id);
+        map.addAttribute("playground", playground);
+
+        return "leaseitem";
     }
 }

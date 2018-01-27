@@ -42,40 +42,8 @@
 <script src="../resources/js/components/HeaderRegular.js" th:src="@{/components/HeaderRegular.js}"></script>
 <script src="../resources/js/components/HeaderAuth.js" th:src="@{/components/HeaderAuth.js}"></script>
 
-<nav class="nav-lease">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-3">
-                <div class="filter">
-
-                </div>
-            </div>
-            <div class="col-md-9">
-                <div class="lease-head-wrapper">
-                    <div class="lease-head">
-                        Найдено площадок:
-                    </div>
-                </div>
-                <ul class="lease-list" th:each="playground : ${playgrounds}">
-                    <li class="lease-item">
-                        <a th:href="${'/lease/' + playground.getId()}" class="lease-item-content">
-                            <div class="lease-item-pic"></div>
-                            <div class="lease-item-description">
-                                <h3 th:text="${playground.getName()}">PLAYGROUND_NAME</h3>
-                                <p th:text="${playground.getAddress()}">PLAYGROUND_ADDRESS</p>
-                                <p>Цена часа:</p>
-                            </div>
-                        </a>
-                    </li>
-                </ul>
-                <div class="lease-footer-wrapper">
-                    <div class="lease-footer">
-                        :
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+<nav>
+    <p th:text="${playground.getName()}"></p>
 </nav>
 
 <footer id="footer-regular">

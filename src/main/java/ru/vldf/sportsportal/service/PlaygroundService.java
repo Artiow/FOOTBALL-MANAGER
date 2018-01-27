@@ -29,4 +29,9 @@ public class PlaygroundService {
         for (PlaygroundEntity item: list) Hibernate.initialize(item.getSpecializations());
         return list;
     }
+
+    @Transactional(readOnly = true)
+    public PlaygroundEntity getPlaygroundByID(Integer id) {
+        return playgroundDAO.get(id);
+    }
 }
