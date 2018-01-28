@@ -132,3 +132,14 @@ nav.nav-lease .lease-list .lease-item .lease-item-description p {
 nav.nav-lease .lease-list .lease-item .lease-item-description p:last-child {
     margin-top: 20px;
 }
+
+/*LEASEITEM*/
+
+nav.nav-leaseitem {
+    margin: 20px 0;
+}
+nav.nav-leaseitem .row {
+    padding: 15px 0;
+
+    background: linear-gradient(135deg, rgba(103, 0, 31, 0.16), rgba(34, 101, 163, 0.1));
+}

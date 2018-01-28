@@ -3,7 +3,7 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>Онлайн аренда</title>
+    <title th:text="${playground.getName()}">PLAYGROUND_NAME</title>
 
     <script src="../libs/vue.js" th:src="@{/libs/vue.js}"></script>
     <script src="../libs/jquery-3.2.1.js" th:src="@{/libs/jquery-3.2.1.js}"></script>
@@ -42,8 +42,14 @@
 <script src="../resources/js/components/HeaderRegular.js" th:src="@{/components/HeaderRegular.js}"></script>
 <script src="../resources/js/components/HeaderAuth.js" th:src="@{/components/HeaderAuth.js}"></script>
 
-<nav>
-    <p th:text="${playground.getName()}"></p>
+<nav class="nav-leaseitem">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <p th:text="${playground.getName()}">PLAYGROUND_NAME</p>
+            </div>
+        </div>
+    </div>
 </nav>
 
 <footer id="footer-regular">
