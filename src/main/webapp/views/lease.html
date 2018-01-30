@@ -58,7 +58,7 @@
                 </div>
                 <ul class="lease-list" th:each="playground : ${playgrounds}">
                     <li class="lease-item">
-                        <a th:href="${'/lease/' + playground.getId()}" class="lease-item-content">
+                        <a th:href="${'/lease/pg' + playground.getId()}" class="lease-item-content">
                             <div class="lease-item-pic"></div>
                             <div class="lease-item-description">
                                 <h3 th:text="${playground.getName()}">PLAYGROUND_NAME</h3>

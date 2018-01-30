@@ -42,11 +42,21 @@
 <script src="../resources/js/components/HeaderRegular.js" th:src="@{/components/HeaderRegular.js}"></script>
 <script src="../resources/js/components/HeaderAuth.js" th:src="@{/components/HeaderAuth.js}"></script>
 
-<nav class="nav-leaseitem">
+<nav class="nav-lease">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <p th:text="${playground.getName()}">PLAYGROUND_NAME</p>
+                <div>
+                    <a th:href="@{/lease}">НАЗАД</a>
+                </div>
+                <div class="lease-head-wrapper">
+                    <div class="lease-head">
+                        <h3 th:text="${playground.getName()}">PLAYGROUND_NAME</h3>
+                        <hr/>
+                        <p><i class="fa fa-map-marker" aria-hidden="true"></i><span th:text="' ' + ${playground.getAddress()}"> PLAYGROUND_ADDRESS</span></p>
+                        <p><i class="fa fa-clock-o" aria-hidden="true"></i> XX:XX - XX:XX</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

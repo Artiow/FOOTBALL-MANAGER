@@ -40,7 +40,7 @@ public class LeaseController extends SecurityController {
         return "lease";
     }
 
-    @GetMapping(value = {"/lease/{id}"})
+    @GetMapping(value = {"/lease/pg{id}"})
     public String playgroundPage(@PathVariable("id") int id, ModelMap map) {
         SecurityPrincipal principal = getPrincipal();
 
