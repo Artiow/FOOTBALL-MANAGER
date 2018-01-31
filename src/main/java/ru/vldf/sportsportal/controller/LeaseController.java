@@ -5,52 +5,36 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import ru.vldf.sportsportal.controller.security.SecurityController;
-import ru.vldf.sportsportal.dao.impl.user.UserDAO;
-import ru.vldf.sportsportal.model.playground.PlaygroundEntity;
-import ru.vldf.sportsportal.model.playground.PlaygroundSpecializationEntity;
-import ru.vldf.sportsportal.service.PlaygroundService;
-import ru.vldf.sportsportal.service.security.SecurityPrincipal;
-
-import java.util.Collection;
-import java.util.List;
+import ru.vldf.sportsportal.service.LeaseService;
+import ru.vldf.sportsportal.service.UserService;
 
 @Controller
-public class LeaseController extends SecurityController {
-
-    private PlaygroundService playgroundService;
+public class LeaseController {
+    private UserService userService;
+    private LeaseService leaseService;
 
     @Autowired
-    public void setPlaygroundService(PlaygroundService playgroundService) {
-        this.playgroundService = playgroundService;
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
+
+    @Autowired
+    public void setLeaseService(LeaseService leaseService) {
+        this.leaseService = leaseService;
     }
 
     @GetMapping(value = {"/lease"})
     public String leasePage(ModelMap map) {
-        SecurityPrincipal principal = getPrincipal();
-
-        String name;
-        if (principal != null) name = principal.getUser().getName() + " " + principal.getUser().getSurname();
-        else name = "ERROR";
-        map.addAttribute("name", name);
-
-        List<PlaygroundEntity> list = playgroundService.listPlaygrounds(false);
-        map.addAttribute("playgrounds", list);
+        userService.setAuthUserIn(map, "name");
+        map.addAttribute("playgrounds", leaseService.getPlaygroundList());
 
         return "lease";
     }
 
     @GetMapping(value = {"/lease/pg{id}"})
     public String playgroundPage(@PathVariable("id") int id, ModelMap map) {
-        SecurityPrincipal principal = getPrincipal();
-
-        String name;
-        if (principal != null) name = principal.getUser().getName() + " " + principal.getUser().getSurname();
-        else name = "ERROR";
-        map.addAttribute("name", name);
-
-        PlaygroundEntity playground = playgroundService.getPlaygroundByID(id);
-        map.addAttribute("playground", playground);
+        userService.setAuthUserIn(map, "name");
+        map.addAttribute("playground", leaseService.getPlayground(id));
 
         return "leaseitem";
     }

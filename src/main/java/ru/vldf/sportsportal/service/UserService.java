@@ -1,24 +1,40 @@
 package ru.vldf.sportsportal.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import ru.vldf.sportsportal.dao.impl.user.UserDAO;
-import ru.vldf.sportsportal.model.user.UserEntity;
-
-import java.util.List;
+import org.springframework.ui.ModelMap;
+import ru.vldf.sportsportal.dto.UserDTO;
+import ru.vldf.sportsportal.service.security.SecurityPrincipal;
 
 @Service
 public class UserService {
-    private UserDAO userDAO;
 
-    @Autowired
-    public void setUserDAO(UserDAO userDAO) {
-        this.userDAO = userDAO;
+//    ==================================================================================
+//    === AUTH
+
+    private final String ROLE_ANONYMOUS = "anonymousUser";
+
+    private Authentication getAuthentication() {
+        return SecurityContextHolder.getContext().getAuthentication();
     }
 
-    @Transactional(readOnly = true)
-    public List<UserEntity> listUsers() {
-        return userDAO.list();
+    public UserDTO getAuthUser() {
+        Authentication auth = getAuthentication();
+
+        Object principal = auth.getPrincipal();
+        if ((principal == null) || (principal.equals(ROLE_ANONYMOUS))) return null;
+        else return ((SecurityPrincipal) principal).getUser();
+    }
+
+    public ModelMap setAuthUserIn(ModelMap map, String attributeName) {
+        UserDTO user = getAuthUser();
+
+        String attributeValue;
+        if (user != null) attributeValue = user.getName() + " " + user.getSurname();
+        else attributeValue = "ERROR";
+        map.addAttribute(attributeName, attributeValue);
+
+        return map;
     }
 }

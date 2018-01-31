@@ -1,23 +1,24 @@
 package ru.vldf.sportsportal.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
-import ru.vldf.sportsportal.controller.security.SecurityController;
-import ru.vldf.sportsportal.service.security.SecurityPrincipal;
+import ru.vldf.sportsportal.service.UserService;
 
 @Controller
-public class IndexController extends SecurityController {
+public class IndexController {
+    private UserService userService;
+
+    @Autowired
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping(value = {"/", "/index"})
     public String indexPage(ModelMap map) {
-        SecurityPrincipal principal = getPrincipal();
+        userService.setAuthUserIn(map, "name");
 
-        String name;
-        if (principal != null) name = principal.getUser().getName() + " " + principal.getUser().getSurname();
-        else name = "ERROR";
-
-        map.addAttribute("name", name);
         return "index";
     }
 }

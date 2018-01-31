@@ -3,6 +3,7 @@ package ru.vldf.sportsportal.dto;
 import ru.vldf.sportsportal.model.user.UserEntity;
 
 public class UserDTO {
+    private Integer id;
     private String name;
     private String surname;
     private String email;
@@ -10,11 +11,20 @@ public class UserDTO {
     private RoleDTO role;
 
     public UserDTO(UserEntity user) {
+        id = user.getId();
         name = user.getName();
         surname = user.getSurname();
         email = user.getEmail();
 
         role = new RoleDTO(user.getRole());
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getId() {
+        return id;
     }
 
     public void setName(String name) {
