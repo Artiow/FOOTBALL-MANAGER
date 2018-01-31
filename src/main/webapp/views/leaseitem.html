@@ -36,25 +36,27 @@
     <header-regular id="header-auth"
                     caption="ОНЛАЙН АРЕНДА">
         <auth-failed sec:authorize="!isAuthenticated()"></auth-failed>
-        <auth-completed sec:authorize="isAuthenticated()"><p th:text="${name}">USERNAME</p></auth-completed>
+        <auth-completed sec:authorize="isAuthenticated()"><p th:text="${username}">USERNAME</p></auth-completed>
     </header-regular>
 </header>
 <script src="../resources/js/components/HeaderRegular.js" th:src="@{/components/HeaderRegular.js}"></script>
 <script src="../resources/js/components/HeaderAuth.js" th:src="@{/components/HeaderAuth.js}"></script>
 
-<nav class="nav-lease">
+<nav class="nav-lease nav-leaseitem">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <div>
-                    <a th:href="@{/lease}">НАЗАД</a>
-                </div>
+                <a class="button-back" href="./lease.html" th:href="@{/lease}">
+                    <i class="fa fa-reply" aria-hidden="true"></i>НАЗАД
+                </a>
                 <div class="lease-head-wrapper">
                     <div class="lease-head">
                         <h3 th:text="${playground.getName()}">PLAYGROUND_NAME</h3>
                         <hr/>
-                        <p><i class="fa fa-map-marker" aria-hidden="true"></i><span th:text="' ' + ${playground.getAddress()}"> PLAYGROUND_ADDRESS</span></p>
-                        <p><i class="fa fa-clock-o" aria-hidden="true"></i> XX:XX - XX:XX</p>
+                        <div>
+                            <p><i class="fa fa-map-marker" aria-hidden="true"></i><span th:text="${playground.getAddress()}">PLAYGROUND_ADDRESS</span></p>
+                            <p><i class="fa fa-clock-o" aria-hidden="true"></i>XX:XX - XX:XX</p>
+                        </div>
                     </div>
                 </div>
             </div>

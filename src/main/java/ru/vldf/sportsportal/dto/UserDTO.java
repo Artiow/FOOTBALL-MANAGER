@@ -58,4 +58,9 @@ public class UserDTO {
     public RoleDTO getRole() {
         return role;
     }
+
+    @Override
+    public String toString() {
+        return name + ' ' + surname;
+    }
 }

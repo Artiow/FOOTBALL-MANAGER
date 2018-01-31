@@ -17,7 +17,7 @@ public class IndexController {
 
     @GetMapping(value = {"/", "/index"})
     public String indexPage(ModelMap map) {
-        userService.setAuthUserIn(map, "name");
+        map.addAttribute("username", userService.getAuthUsername());
 
         return "index";
     }

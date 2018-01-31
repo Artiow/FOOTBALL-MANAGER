@@ -17,7 +17,7 @@ public class PersonalPageController {
 
     @GetMapping(value = {"/personalpage"})
     public String personalPage(ModelMap map) {
-        userService.setAuthUserIn(map, "name");
+        map.addAttribute("username", userService.getAuthUsername());
 
         return "personalpage";
     }

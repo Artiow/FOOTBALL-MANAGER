@@ -79,6 +79,9 @@ nav.nav-lease .lease-head, nav.nav-lease .lease-footer {
 
     border: 2px solid rgba(0, 0, 0, 0.05);
 }
+nav.nav-lease .lease-head p, nav.nav-lease .lease-footer p {
+    margin: 0;
+}
 
 nav.nav-lease .lease-list {
     margin: 0;
@@ -101,10 +104,9 @@ nav.nav-lease .lease-list .lease-item .lease-item-content {
     text-decoration: none;
 
     border: 2px solid rgba(0, 0, 0, 0.05);
-    background: rgba(0, 0, 0, 0.125);
 }
 nav.nav-lease .lease-list .lease-item .lease-item-content:hover {
-    background: 0;
+    background: rgba(0, 0, 0, 0.125);
     cursor: pointer;
 }
 
@@ -116,7 +118,7 @@ nav.nav-lease .lease-list .lease-item .lease-item-pic {
 
     width: 100px;
     height: 100px;
-    background: rgba(0, 0, 255, 0.2);
+    background: #ffffff;
 }
 
 nav.nav-lease .lease-list .lease-item .lease-item-description {
@@ -135,11 +137,44 @@ nav.nav-lease .lease-list .lease-item .lease-item-description p:last-child {
 
 /*LEASEITEM*/
 
-nav.nav-leaseitem {
-    margin: 20px 0;
-}
-nav.nav-leaseitem .row {
-    padding: 15px 0;
+nav.nav-leaseitem .button-back {
+    display: block;
 
-    background: linear-gradient(135deg, rgba(103, 0, 31, 0.16), rgba(34, 101, 163, 0.1));
+    margin: 0;
+    padding: 10px;
+
+    color: #202020;
+    font-size: 18px;
+    font-weight: bold;
+    text-decoration: none;
+}
+nav.nav-leaseitem .button-back:hover {
+    background: rgba(0, 0, 0, 0.1);
+}
+nav.nav-leaseitem .button-back i {
+    margin-right: 10px;
+}
+
+nav.nav-leaseitem .lease-head {
+    padding: 10px;
+}
+
+nav.nav-leaseitem .lease-head h3 {
+    margin: 10px 0 0;
+}
+nav.nav-leaseitem .lease-head hr {
+    margin-top: 20px;
+    margin-bottom: 15px;
+}
+
+nav.nav-leaseitem .lease-head p {
+    margin: 5px 0 0;
+}
+nav.nav-leaseitem .lease-head p:first-child i {
+    margin-left: 3px;
+    margin-right: 7px;
+}
+nav.nav-leaseitem .lease-head p:last-child i {
+    margin-left: 0;
+    margin-right: 5px;
 }

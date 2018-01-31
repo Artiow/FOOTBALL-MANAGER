@@ -27,14 +27,10 @@ public class UserService {
         else return ((SecurityPrincipal) principal).getUser();
     }
 
-    public ModelMap setAuthUserIn(ModelMap map, String attributeName) {
+    public String getAuthUsername() {
         UserDTO user = getAuthUser();
 
-        String attributeValue;
-        if (user != null) attributeValue = user.getName() + " " + user.getSurname();
-        else attributeValue = "ERROR";
-        map.addAttribute(attributeName, attributeValue);
-
-        return map;
+        if (user != null) return user.toString();
+        else return "ERROR";
     }
 }

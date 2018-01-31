@@ -17,14 +17,14 @@ public class TmpControllers {
 
     @GetMapping(value = {"/matches"})
     public String matchesPage(ModelMap map) {
-        userService.setAuthUserIn(map, "name");
+        map.addAttribute("username", userService.getAuthUsername());
 
         return "matches";
     }
 
     @GetMapping(value = {"/playgrounds"})
     public String playgroundsPage(ModelMap map) {
-        userService.setAuthUserIn(map, "name");
+        map.addAttribute("username", userService.getAuthUsername());
 
         return "playgrounds";
     }

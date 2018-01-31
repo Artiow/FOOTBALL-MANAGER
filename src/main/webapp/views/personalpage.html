@@ -17,7 +17,7 @@
     <header-regular id="header-auth"
                     caption="ЛИЧНЫЙ КАБИНЕТ">
         <auth-failed sec:authorize="!isAuthenticated()"></auth-failed>
-        <auth-completed sec:authorize="isAuthenticated()"><p th:text="${name}">USERNAME</p></auth-completed>
+        <auth-completed sec:authorize="isAuthenticated()"><p th:text="${username}">USERNAME</p></auth-completed>
     </header-regular>
 </header>
 <script src="/components/HeaderRegular.js"></script>

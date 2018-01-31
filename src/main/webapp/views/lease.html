@@ -36,7 +36,7 @@
     <header-regular id="header-auth"
                     caption="ОНЛАЙН АРЕНДА">
         <auth-failed sec:authorize="!isAuthenticated()"></auth-failed>
-        <auth-completed sec:authorize="isAuthenticated()"><p th:text="${name}">USERNAME</p></auth-completed>
+        <auth-completed sec:authorize="isAuthenticated()"><p th:text="${username}">USERNAME</p></auth-completed>
     </header-regular>
 </header>
 <script src="../resources/js/components/HeaderRegular.js" th:src="@{/components/HeaderRegular.js}"></script>
@@ -53,24 +53,24 @@
             <div class="col-md-9">
                 <div class="lease-head-wrapper">
                     <div class="lease-head">
-                        Найдено площадок:
+                        <p th:text="${'Найдено площадок: ' + playgroundListSize}">PLAYGROUND_LIST_SIZE</p>
                     </div>
                 </div>
-                <ul class="lease-list" th:each="playground : ${playgrounds}">
+                <ul class="lease-list" th:each="playground : ${playgroundList}">
                     <li class="lease-item">
-                        <a th:href="${'/lease/pg' + playground.getId()}" class="lease-item-content">
+                        <a href="./leaseitem.html" th:href="${'/lease/pg' + playground.getId()}" class="lease-item-content">
                             <div class="lease-item-pic"></div>
                             <div class="lease-item-description">
                                 <h3 th:text="${playground.getName()}">PLAYGROUND_NAME</h3>
                                 <p th:text="${playground.getAddress()}">PLAYGROUND_ADDRESS</p>
-                                <p>Цена часа:</p>
+                                <p>HOUR_COST</p>
                             </div>
                         </a>
                     </li>
                 </ul>
                 <div class="lease-footer-wrapper">
                     <div class="lease-footer">
-                        :
+                        <p><br/></p>
                     </div>
                 </div>
             </div>

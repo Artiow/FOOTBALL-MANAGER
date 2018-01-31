@@ -5,8 +5,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import ru.vldf.sportsportal.dto.PlaygroundDTO;
 import ru.vldf.sportsportal.service.LeaseService;
 import ru.vldf.sportsportal.service.UserService;
+
+import java.util.List;
 
 @Controller
 public class LeaseController {
@@ -25,15 +28,18 @@ public class LeaseController {
 
     @GetMapping(value = {"/lease"})
     public String leasePage(ModelMap map) {
-        userService.setAuthUserIn(map, "name");
-        map.addAttribute("playgrounds", leaseService.getPlaygroundList());
+        map.addAttribute("username", userService.getAuthUsername());
+
+        List playgroundList = leaseService.getPlaygroundList();
+        map.addAttribute("playgroundList", playgroundList);
+        map.addAttribute("playgroundListSize", playgroundList.size());
 
         return "lease";
     }
 
     @GetMapping(value = {"/lease/pg{id}"})
     public String playgroundPage(@PathVariable("id") int id, ModelMap map) {
-        userService.setAuthUserIn(map, "name");
+        map.addAttribute("username", userService.getAuthUsername());
         map.addAttribute("playground", leaseService.getPlayground(id));
 
         return "leaseitem";
