@@ -14,12 +14,12 @@ public class UserDAO extends GenericDAOImpl<UserEntity, Integer> {
     }
 
     public UserEntity findByEMail(String eMail) {
-        List<UserEntity> users = getSession()
+        List users = getSession()
                 .createQuery("from UserEntity where email=?")
                 .setParameter(0, eMail)
                 .list();
 
-        if ((users != null) && (users.size() > 0)) return users.get(0);
+        if ((users != null) && (users.size() > 0)) return (UserEntity) users.get(0);
         else return null;
     }
 }
