@@ -1,23 +1,47 @@
 package ru.vldf.sportsportal.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
-import ru.vldf.sportsportal.controller.security.SecurityController;
-import ru.vldf.sportsportal.service.security.UserPrincipal;
+import org.springframework.web.bind.annotation.PathVariable;
+import ru.vldf.sportsportal.dto.PlaygroundDTO;
+import ru.vldf.sportsportal.service.LeaseService;
+import ru.vldf.sportsportal.service.UserService;
+
+import java.util.List;
 
 @Controller
-public class LeaseController extends SecurityController {
+public class LeaseController {
+    private UserService userService;
+    private LeaseService leaseService;
+
+    @Autowired
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
+
+    @Autowired
+    public void setLeaseService(LeaseService leaseService) {
+        this.leaseService = leaseService;
+    }
 
     @GetMapping(value = {"/lease"})
     public String leasePage(ModelMap map) {
-        UserPrincipal principal = getPrincipal();
+        map.addAttribute("username", userService.getAuthUsername());
 
-        String name;
-        if (principal != null) name = principal.getUser().getName() + " " + principal.getUser().getSurname();
-        else name = "ERROR";
+        List playgroundList = leaseService.getPlaygroundList();
+        map.addAttribute("playgroundList", playgroundList);
+        map.addAttribute("playgroundListSize", playgroundList.size());
 
-        map.addAttribute("name", name);
         return "lease";
+    }
+
+    @GetMapping(value = {"/lease/pg{id}"})
+    public String playgroundPage(@PathVariable("id") int id, ModelMap map) {
+        map.addAttribute("username", userService.getAuthUsername());
+        map.addAttribute("playground", leaseService.getPlayground(id));
+
+        return "leaseitem";
     }
 }

@@ -3,7 +3,7 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>Онлайн аренда</title>
+    <title th:text="${playground.getName()}">PLAYGROUND_NAME</title>
 
     <script src="../libs/vue.js" th:src="@{/libs/vue.js}"></script>
     <script src="../libs/jquery-3.2.1.js" th:src="@{/libs/jquery-3.2.1.js}"></script>
@@ -42,35 +42,21 @@
 <script src="../resources/js/components/HeaderRegular.js" th:src="@{/components/HeaderRegular.js}"></script>
 <script src="../resources/js/components/HeaderAuth.js" th:src="@{/components/HeaderAuth.js}"></script>
 
-<nav class="nav-lease">
+<nav class="nav-lease nav-leaseitem">
     <div class="container">
         <div class="row">
-            <div class="col-md-3">
-                <div class="filter">
-
-                </div>
-            </div>
-            <div class="col-md-9">
+            <div class="col-md-12">
+                <a class="button-back" href="./lease.html" th:href="@{/lease}">
+                    <i class="fa fa-reply" aria-hidden="true"></i>НАЗАД
+                </a>
                 <div class="lease-head-wrapper">
                     <div class="lease-head">
-                        <p th:text="${'Найдено площадок: ' + playgroundListSize}">PLAYGROUND_LIST_SIZE</p>
-                    </div>
-                </div>
-                <ul class="lease-list" th:each="playground : ${playgroundList}">
-                    <li class="lease-item">
-                        <a href="./leaseitem.html" th:href="${'/lease/pg' + playground.getId()}" class="lease-item-content">
-                            <div class="lease-item-pic"></div>
-                            <div class="lease-item-description">
-                                <h3 th:text="${playground.getName()}">PLAYGROUND_NAME</h3>
-                                <p th:text="${playground.getAddress()}">PLAYGROUND_ADDRESS</p>
-                                <p>HOUR_COST</p>
-                            </div>
-                        </a>
-                    </li>
-                </ul>
-                <div class="lease-footer-wrapper">
-                    <div class="lease-footer">
-                        <p><br/></p>
+                        <h3 th:text="${playground.getName()}">PLAYGROUND_NAME</h3>
+                        <hr/>
+                        <div>
+                            <p><i class="fa fa-map-marker" aria-hidden="true"></i><span th:text="${playground.getAddress()}">PLAYGROUND_ADDRESS</span></p>
+                            <p><i class="fa fa-clock-o" aria-hidden="true"></i>XX:XX - XX:XX</p>
+                        </div>
                     </div>
                 </div>
             </div>

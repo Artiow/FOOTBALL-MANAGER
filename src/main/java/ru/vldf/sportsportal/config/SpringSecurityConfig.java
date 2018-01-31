@@ -33,7 +33,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .formLogin()
                     .loginPage("/login")
-                    .failureUrl("/login?error")
+                    .failureUrl("/login?error=true")
                     .loginProcessingUrl("/security_check")
                     .usernameParameter("security_email")
                     .passwordParameter("security_password")
@@ -42,7 +42,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .logout()
                     .logoutUrl("/logout")
-                    .logoutSuccessUrl("/login?logout")
+                    .logoutSuccessUrl("/login?logout=true")
                     .invalidateHttpSession(true)
                     .permitAll();
     }

@@ -1,6 +1,7 @@
 package ru.vldf.sportsportal.model;
 
 import javax.persistence.*;
+import java.util.Collection;
 
 @Entity
 @Table(name = "User", schema = "sportsportal")
@@ -13,8 +14,10 @@ public class UserEntity {
 
     private RoleEntity role;
 
+    private Collection<SportEntity> sports;
+
     @Id
-    @Column(name = "ID", nullable = false, unique = true)
+    @Column(name = "ID", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer getId() {
         return id;
@@ -68,13 +71,34 @@ public class UserEntity {
 //    === MANY-TO-ONE REFERENCES
 
     @ManyToOne
-    @JoinColumn(name = "Role_ID", referencedColumnName = "ID", nullable = false)
+    @JoinColumn(
+            name = "Role_ID",
+            referencedColumnName = "ID",
+            nullable = false
+    )
     public RoleEntity getRole() {
         return role;
     }
 
     public void setRole(RoleEntity role) {
         this.role = role;
+    }
+
+//    ==================================================================================
+//    === MANY-TO-MANY REFERENCES
+
+    @ManyToMany
+    @JoinTable(
+            name = "UserSpecialization",
+            joinColumns = @JoinColumn(name = "User_ID"),
+            inverseJoinColumns = @JoinColumn(name = "Sport_ID")
+    )
+    public Collection<SportEntity> getSports() {
+        return sports;
+    }
+
+    public void setSports(Collection<SportEntity> sports) {
+        this.sports = sports;
     }
 
 //    ==================================================================================

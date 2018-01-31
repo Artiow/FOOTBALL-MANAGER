@@ -22,12 +22,12 @@
 
 <header><header-main>
     <auth-failed sec:authorize="!isAuthenticated()"></auth-failed>
-    <auth-completed sec:authorize="isAuthenticated()"><p th:text="${name}">USERNAME</p></auth-completed>
+    <auth-completed sec:authorize="isAuthenticated()"><p th:text="${username}">USERNAME</p></auth-completed>
 </header-main></header>
 <script src="/components/HeaderMain.js"></script>
 <script src="/components/HeaderAuth.js"></script>
 
-<nav><nav-main></nav-main></nav>
+<nav class="nav-main"><nav-main></nav-main></nav>
 <script src="/components/NavMain.js"></script>
 
 <footer><footer-regular link-service="#"
