@@ -1,4 +1,4 @@
-package ru.vldf.sportsportal.model.user;
+package ru.vldf.sportsportal.model;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -76,5 +76,10 @@ public class RoleEntity {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (code != null ? code.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

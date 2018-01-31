@@ -1,4 +1,4 @@
-package ru.vldf.sportsportal.model.user;
+package ru.vldf.sportsportal.model;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -12,9 +12,9 @@ public class UserEntity {
     private String email;
     private String password;
 
-    private Collection<UserSpecializationEntity> specializations;
-
     private RoleEntity role;
+
+    private Collection<SportEntity> sports;
 
     @Id
     @Column(name = "ID", nullable = false)
@@ -68,28 +68,37 @@ public class UserEntity {
     }
 
 //    ==================================================================================
-//    === ONE-TO-MANY REFERENCES
-
-    @OneToMany(mappedBy = "user")
-    public Collection<UserSpecializationEntity> getSpecializations() {
-        return specializations;
-    }
-
-    public void setSpecializations(Collection<UserSpecializationEntity> specializations) {
-        this.specializations = specializations;
-    }
-
-//    ==================================================================================
 //    === MANY-TO-ONE REFERENCES
 
     @ManyToOne
-    @JoinColumn(name = "Role_ID", referencedColumnName = "ID", nullable = false)
+    @JoinColumn(
+            name = "Role_ID",
+            referencedColumnName = "ID",
+            nullable = false
+    )
     public RoleEntity getRole() {
         return role;
     }
 
     public void setRole(RoleEntity role) {
         this.role = role;
+    }
+
+//    ==================================================================================
+//    === MANY-TO-MANY REFERENCES
+
+    @ManyToMany
+    @JoinTable(
+            name = "UserSpecialization",
+            joinColumns = @JoinColumn(name = "User_ID"),
+            inverseJoinColumns = @JoinColumn(name = "Sport_ID")
+    )
+    public Collection<SportEntity> getSports() {
+        return sports;
+    }
+
+    public void setSports(Collection<SportEntity> sports) {
+        this.sports = sports;
     }
 
 //    ==================================================================================

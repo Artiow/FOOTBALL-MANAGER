@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.vldf.sportsportal.dao.impl.PlaygroundDAO;
 import ru.vldf.sportsportal.dto.PlaygroundDTO;
-import ru.vldf.sportsportal.model.playground.PlaygroundEntity;
+import ru.vldf.sportsportal.model.PlaygroundEntity;
 
 import java.util.ArrayList;
 import java.util.List;

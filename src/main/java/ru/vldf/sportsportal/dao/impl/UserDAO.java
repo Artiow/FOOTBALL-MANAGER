@@ -2,7 +2,7 @@ package ru.vldf.sportsportal.dao.impl;
 
 import org.springframework.stereotype.Repository;
 import ru.vldf.sportsportal.dao.generic.GenericDAOImpl;
-import ru.vldf.sportsportal.model.user.UserEntity;
+import ru.vldf.sportsportal.model.UserEntity;
 
 import java.util.List;
 

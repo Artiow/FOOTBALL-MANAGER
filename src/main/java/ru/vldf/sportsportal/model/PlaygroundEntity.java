@@ -1,4 +1,4 @@
-package ru.vldf.sportsportal.model.playground;
+package ru.vldf.sportsportal.model;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -10,7 +10,7 @@ public class PlaygroundEntity {
     private String name;
     private String address;
 
-    private Collection<PlaygroundSpecializationEntity> specializations;
+    private Collection<SportEntity> sports;
 
     @Id
     @Column(name = "ID", nullable = false)
@@ -44,15 +44,20 @@ public class PlaygroundEntity {
     }
 
 //    ==================================================================================
-//    === ONE-TO-MANY REFERENCES
+//    === MANY-TO-MANY REFERENCES
 
-    @OneToMany(mappedBy = "playground")
-    public Collection<PlaygroundSpecializationEntity> getSpecializations() {
-        return specializations;
+    @ManyToMany
+    @JoinTable(
+            name = "PlaygroundSpecialization",
+            joinColumns = @JoinColumn(name = "Playground_ID"),
+            inverseJoinColumns = @JoinColumn(name = "Sport_ID")
+    )
+    public Collection<SportEntity> getSports() {
+        return sports;
     }
 
-    public void setSpecializations(Collection<PlaygroundSpecializationEntity> specializations) {
-        this.specializations = specializations;
+    public void setSports(Collection<SportEntity> sports) {
+        this.sports = sports;
     }
 
 //    ==================================================================================
@@ -78,5 +83,10 @@ public class PlaygroundEntity {
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (address != null ? address.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

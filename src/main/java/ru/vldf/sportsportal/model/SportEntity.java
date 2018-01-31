@@ -1,8 +1,5 @@
 package ru.vldf.sportsportal.model;
 
-import ru.vldf.sportsportal.model.playground.PlaygroundSpecializationEntity;
-import ru.vldf.sportsportal.model.user.UserSpecializationEntity;
-
 import javax.persistence.*;
 import java.util.Collection;
 
@@ -12,8 +9,8 @@ public class SportEntity {
     private Integer id;
     private String name;
 
-    private Collection<UserSpecializationEntity> userSpecializations;
-    private Collection<PlaygroundSpecializationEntity> playgroundSpecializations;
+    private Collection<UserEntity> users;
+    private Collection<PlaygroundEntity> playgrounds;
 
     @Id
     @Column(name = "ID", nullable = false)
@@ -36,24 +33,34 @@ public class SportEntity {
     }
 
 //    ==================================================================================
-//    === ONE-TO-MANY REFERENCES
+//    === MANY-TO-MANY REFERENCES
 
-    @OneToMany(mappedBy = "sport")
-    public Collection<UserSpecializationEntity> getUserSpecializations() {
-        return userSpecializations;
+    @ManyToMany
+    @JoinTable(
+            name = "UserSpecialization",
+            joinColumns = @JoinColumn(name = "Sport_ID"),
+            inverseJoinColumns = @JoinColumn(name = "User_ID")
+    )
+    public Collection<UserEntity> getUsers() {
+        return users;
     }
 
-    public void setUserSpecializations(Collection<UserSpecializationEntity> userSpecializations) {
-        this.userSpecializations = userSpecializations;
+    public void setUsers(Collection<UserEntity> users) {
+        this.users = users;
     }
 
-    @OneToMany(mappedBy = "sport")
-    public Collection<PlaygroundSpecializationEntity> getPlaygroundSpecializations() {
-        return playgroundSpecializations;
+    @ManyToMany
+    @JoinTable(
+            name = "PlaygroundSpecialization",
+            joinColumns = @JoinColumn(name = "Sport_ID"),
+            inverseJoinColumns = @JoinColumn(name = "Playground_ID")
+    )
+    public Collection<PlaygroundEntity> getPlaygrounds() {
+        return playgrounds;
     }
 
-    public void setPlaygroundSpecializations(Collection<PlaygroundSpecializationEntity> playgroundSpecializations) {
-        this.playgroundSpecializations = playgroundSpecializations;
+    public void setPlaygrounds(Collection<PlaygroundEntity> playgrounds) {
+        this.playgrounds = playgrounds;
     }
 
 //    ==================================================================================
@@ -77,5 +84,10 @@ public class SportEntity {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }
