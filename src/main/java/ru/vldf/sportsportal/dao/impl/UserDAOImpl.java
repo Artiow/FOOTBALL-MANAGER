@@ -1,15 +1,15 @@
 package ru.vldf.sportsportal.dao.impl;
 
 import org.springframework.stereotype.Repository;
-import ru.vldf.sportsportal.dao.generic.GenericDAOImpl;
+import ru.vldf.sportsportal.dao.generic.UserDAO;
+import ru.vldf.sportsportal.dao.generic.abstrct.AbstractDAOImpl;
 import ru.vldf.sportsportal.model.UserEntity;
 
 import java.util.List;
 
 @Repository
-public class UserDAO extends GenericDAOImpl<UserEntity, Integer> {
-
-    public UserDAO() {
+public class UserDAOImpl extends AbstractDAOImpl<UserEntity, Integer> implements UserDAO {
+    public UserDAOImpl() {
         super(UserEntity.class);
     }
 

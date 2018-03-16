@@ -8,7 +8,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.vldf.sportsportal.dao.impl.UserDAO;
+import ru.vldf.sportsportal.dao.generic.UserDAO;
 import ru.vldf.sportsportal.model.RoleEntity;
 import ru.vldf.sportsportal.model.UserEntity;
 

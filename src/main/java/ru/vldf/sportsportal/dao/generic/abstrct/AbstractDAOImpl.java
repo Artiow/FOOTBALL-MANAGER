@@ -1,21 +1,19 @@
-package ru.vldf.sportsportal.dao.generic;
+package ru.vldf.sportsportal.dao.generic.abstrct;
 
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 
 import java.io.Serializable;
 import java.util.List;
 
-public class GenericDAOImpl<T, PK extends Serializable> implements GenericDAO<T, PK> {
+public class AbstractDAOImpl<T, PK extends Serializable> implements AbstractDAO<T, PK> {
     private Class<T> aClass;
     private SessionFactory sessionFactory;
 
-    public GenericDAOImpl(Class<T> aClass) {
+    public AbstractDAOImpl(Class<T> aClass) {
         this.aClass = aClass;
     }
 
@@ -36,12 +34,12 @@ public class GenericDAOImpl<T, PK extends Serializable> implements GenericDAO<T,
 //    ==================================================================================
 //    === BASIC REQUESTS
 
-    public PK save(T entity) {
-        return (PK) getSession().save(entity);
-    }
-
     public T get(PK id) {
         return getSession().get(aClass, id);
+    }
+
+    public PK save(T entity) {
+        return (PK) getSession().save(entity);
     }
 
     public void update(T entity) {
