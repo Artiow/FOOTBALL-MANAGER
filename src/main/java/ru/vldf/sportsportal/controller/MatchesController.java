@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import ru.vldf.sportsportal.service.UserService;
 
 @Controller
-public class TmpControllers {
+public class MatchesController {
     private UserService userService;
 
     @Autowired
@@ -16,16 +16,9 @@ public class TmpControllers {
     }
 
     @GetMapping(value = {"/matches"})
-    public String matchesPage(ModelMap map) {
+    public String coverPage(ModelMap map) {
         map.addAttribute("username", userService.getAuthUsername());
 
-        return "matches";
-    }
-
-    @GetMapping(value = {"/playgrounds"})
-    public String playgroundsPage(ModelMap map) {
-        map.addAttribute("username", userService.getAuthUsername());
-
-        return "playgrounds";
+        return "matches/cover";
     }
 }

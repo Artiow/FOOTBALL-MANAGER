@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import ru.vldf.sportsportal.service.UserService;
 
 @Controller
-public class PersonalPageController {
+public class TourneyController {
     private UserService userService;
 
     @Autowired
@@ -15,10 +15,10 @@ public class PersonalPageController {
         this.userService = userService;
     }
 
-    @GetMapping(value = {"/personalpage"})
-    public String personalPage(ModelMap map) {
+    @GetMapping(value = {"/tourney"})
+    public String coverPage(ModelMap map) {
         map.addAttribute("username", userService.getAuthUsername());
 
-        return "personalpage";
+        return "tourney/cover";
     }
 }

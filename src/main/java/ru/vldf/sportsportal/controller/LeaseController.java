@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import ru.vldf.sportsportal.dto.PlaygroundDTO;
 import ru.vldf.sportsportal.service.LeaseService;
 import ru.vldf.sportsportal.service.UserService;
 
@@ -26,14 +27,14 @@ public class LeaseController {
     }
 
     @GetMapping(value = {"/lease"})
-    public String leasePage(ModelMap map) {
+    public String catalogPage(ModelMap map) {
         map.addAttribute("username", userService.getAuthUsername());
 
-        List playgroundList = leaseService.getPlaygroundList();
+        List<PlaygroundDTO> playgroundList = leaseService.getPlaygroundList();
         map.addAttribute("playgroundList", playgroundList);
         map.addAttribute("playgroundListSize", playgroundList.size());
 
-        return "lease";
+        return "lease/catalog";
     }
 
     @GetMapping(value = {"/lease/pg{id}"})
@@ -41,6 +42,6 @@ public class LeaseController {
         map.addAttribute("username", userService.getAuthUsername());
         map.addAttribute("playground", leaseService.getPlayground(id));
 
-        return "leaseitem";
+        return "lease/playground";
     }
 }
