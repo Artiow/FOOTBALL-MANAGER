@@ -1,5 +1,7 @@
 package ru.vldf.sportsportal.model;
 
+import ru.vldf.sportsportal.dto.RoleDTO;
+
 import javax.persistence.*;
 import java.util.Collection;
 

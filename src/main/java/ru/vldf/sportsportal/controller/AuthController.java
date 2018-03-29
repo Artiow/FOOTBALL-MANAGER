@@ -3,11 +3,10 @@ package ru.vldf.sportsportal.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestAttribute;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import ru.vldf.sportsportal.dto.UserDTO;
 import ru.vldf.sportsportal.service.UserService;
+import ru.vldf.sportsportal.service.security.SecurityService;
 
 @Controller
 public class AuthController {
@@ -32,7 +31,23 @@ public class AuthController {
     }
 
     @GetMapping(value = {"/registration"})
-    public String registerPage(ModelMap map) {
+    public String registerPage(@RequestParam(value = "error", required = false) String error, ModelMap map) {
+        map.addAttribute("error", (error != null));
+
+        UserDTO user = new UserDTO();
+        map.addAttribute("user", user);
+
         return "auth/registration";
+    }
+
+    @PostMapping(value = {"/registration"})
+    public String register(
+            @ModelAttribute(value="user") UserDTO user
+    ) {
+        //TODO: confirm password!
+
+        userService.registerUser(user);
+
+        return "redirect:/index";
     }
 }

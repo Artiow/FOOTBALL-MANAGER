@@ -1,5 +1,7 @@
 package ru.vldf.sportsportal.model;
 
+import ru.vldf.sportsportal.dto.UserDTO;
+
 import javax.persistence.*;
 import java.util.Collection;
 
@@ -15,6 +17,20 @@ public class UserEntity {
     private RoleEntity role;
 
     private Collection<SportEntity> sports;
+
+    public UserEntity() {
+
+    }
+
+    public UserEntity(UserDTO userDTO, RoleEntity roleEntity) {
+        name = userDTO.getName();
+        surname = userDTO.getSurname();
+        email = userDTO.getEmail();
+        password = userDTO.getPassword();
+
+        role = roleEntity;
+        sports = null;
+    }
 
     @Id
     @Column(name = "ID", nullable = false)

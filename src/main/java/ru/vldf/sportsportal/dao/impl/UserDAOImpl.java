@@ -13,6 +13,10 @@ public class UserDAOImpl extends AbstractDAOImpl<UserEntity, Integer> implements
         super(UserEntity.class);
     }
 
+    public Integer saveUser(UserEntity user) {
+        return this.save(user);
+    }
+
     public UserEntity findByEMail(String eMail) {
         List users = getSession()
                 .createQuery("from UserEntity where email=?")

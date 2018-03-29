@@ -7,8 +7,13 @@ public class UserDTO {
     private String name;
     private String surname;
     private String email;
+    private String password;
 
     private RoleDTO role;
+
+    public UserDTO() {
+
+    }
 
     public UserDTO(UserEntity user) {
         id = user.getId();
@@ -49,6 +54,14 @@ public class UserDTO {
 
     public String getEmail() {
         return email;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     public void setRole(RoleDTO role) {
