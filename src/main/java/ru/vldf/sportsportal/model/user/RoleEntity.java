@@ -1,28 +1,36 @@
-package ru.vldf.sportsportal.model;
-
-import ru.vldf.sportsportal.model.lease.PlaygroundEntity;
-import ru.vldf.sportsportal.model.user.UserEntity;
+package ru.vldf.sportsportal.model.user;
 
 import javax.persistence.*;
 import java.util.Collection;
 
 @Entity
-@Table(name = "Sport", schema = "sportsportal")
-public class SportEntity {
+@Table(name = "Role", schema = "sportsportal")
+public class RoleEntity {
     private Integer id;
+    private String code;
     private String name;
 
     private Collection<UserEntity> users;
-    private Collection<PlaygroundEntity> playgrounds;
 
     @Id
     @Column(name = "ID", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer getId() {
         return id;
     }
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    @Basic
+    @Column(name = "Code", nullable = false, length = 45)
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     @Basic
@@ -36,34 +44,15 @@ public class SportEntity {
     }
 
 //    ==================================================================================
-//    === MANY-TO-MANY REFERENCES
+//    === ONE-TO-MANY REFERENCES
 
-    @ManyToMany
-    @JoinTable(
-            name = "UserSpecialization",
-            joinColumns = @JoinColumn(name = "Sport_ID"),
-            inverseJoinColumns = @JoinColumn(name = "User_ID")
-    )
+    @OneToMany(mappedBy = "role")
     public Collection<UserEntity> getUsers() {
         return users;
     }
 
     public void setUsers(Collection<UserEntity> users) {
         this.users = users;
-    }
-
-    @ManyToMany
-    @JoinTable(
-            name = "PlaygroundSpecialization",
-            joinColumns = @JoinColumn(name = "Sport_ID"),
-            inverseJoinColumns = @JoinColumn(name = "Playground_ID")
-    )
-    public Collection<PlaygroundEntity> getPlaygrounds() {
-        return playgrounds;
-    }
-
-    public void setPlaygrounds(Collection<PlaygroundEntity> playgrounds) {
-        this.playgrounds = playgrounds;
     }
 
 //    ==================================================================================
@@ -74,10 +63,10 @@ public class SportEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        SportEntity that = (SportEntity) o;
+        RoleEntity that = (RoleEntity) o;
 
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
+        if (code != null ? !code.equals(that.code) : that.code != null) return false;
 
         return true;
     }
@@ -85,7 +74,7 @@ public class SportEntity {
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (code != null ? code.hashCode() : 0);
         return result;
     }
 

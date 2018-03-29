@@ -2,8 +2,8 @@ package ru.vldf.sportsportal.service.security;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
-import ru.vldf.sportsportal.dto.UserDTO;
-import ru.vldf.sportsportal.model.UserEntity;
+import ru.vldf.sportsportal.dto.user.UserDTO;
+import ru.vldf.sportsportal.model.user.UserEntity;
 
 import java.util.Collection;
 

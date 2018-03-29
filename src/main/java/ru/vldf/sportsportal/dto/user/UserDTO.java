@@ -1,6 +1,6 @@
-package ru.vldf.sportsportal.dto;
+package ru.vldf.sportsportal.dto.user;
 
-import ru.vldf.sportsportal.model.UserEntity;
+import ru.vldf.sportsportal.model.user.UserEntity;
 
 public class UserDTO {
     private Integer id;

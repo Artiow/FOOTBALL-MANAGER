@@ -1,6 +1,6 @@
-package ru.vldf.sportsportal.dto;
+package ru.vldf.sportsportal.dto.lease;
 
-import ru.vldf.sportsportal.model.PlaygroundEntity;
+import ru.vldf.sportsportal.model.lease.PlaygroundEntity;
 
 public class PlaygroundDTO {
     private Integer id;

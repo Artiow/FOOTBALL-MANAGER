@@ -1,4 +1,6 @@
-package ru.vldf.sportsportal.model;
+package ru.vldf.sportsportal.model.lease;
+
+import ru.vldf.sportsportal.model.SportEntity;
 
 import javax.persistence.*;
 import java.util.Collection;

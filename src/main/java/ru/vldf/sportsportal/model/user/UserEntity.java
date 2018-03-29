@@ -1,6 +1,8 @@
-package ru.vldf.sportsportal.model;
+package ru.vldf.sportsportal.model.user;
 
-import ru.vldf.sportsportal.dto.UserDTO;
+import ru.vldf.sportsportal.dto.user.UserDTO;
+import ru.vldf.sportsportal.model.SportEntity;
+import ru.vldf.sportsportal.model.tourney.TeamTourneyEntity;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -17,6 +19,7 @@ public class UserEntity {
     private RoleEntity role;
 
     private Collection<SportEntity> sports;
+    private Collection<TeamTourneyEntity> teamsTourney;
 
     public UserEntity() {
 
@@ -29,6 +32,7 @@ public class UserEntity {
         password = userDTO.getPassword();
 
         role = roleEntity;
+
         sports = null;
     }
 
@@ -82,6 +86,19 @@ public class UserEntity {
     public void setPassword(String password) {
         this.password = password;
     }
+
+//    ==================================================================================
+//    === ONE-TO-MANY REFERENCES
+
+    @OneToMany(mappedBy = "captain")
+    public Collection<TeamTourneyEntity> getTeamsTourney() {
+        return teamsTourney;
+    }
+
+    public void setTeamsTourney(Collection<TeamTourneyEntity> teamsTourney) {
+        this.teamsTourney = teamsTourney;
+    }
+
 
 //    ==================================================================================
 //    === MANY-TO-ONE REFERENCES

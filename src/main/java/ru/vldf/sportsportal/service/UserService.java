@@ -5,13 +5,16 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.ModelMap;
-import ru.vldf.sportsportal.dao.generic.RoleDAO;
-import ru.vldf.sportsportal.dao.generic.UserDAO;
-import ru.vldf.sportsportal.dto.RoleDTO;
-import ru.vldf.sportsportal.dto.UserDTO;
-import ru.vldf.sportsportal.model.RoleEntity;
-import ru.vldf.sportsportal.model.UserEntity;
+import ru.vldf.sportsportal.dao.generic.definite.tourney.TeamTourneyDAO;
+import ru.vldf.sportsportal.dao.generic.definite.tourney.TeamTourneyStatusDAO;
+import ru.vldf.sportsportal.dao.generic.definite.user.RoleDAO;
+import ru.vldf.sportsportal.dao.generic.definite.user.UserDAO;
+import ru.vldf.sportsportal.dto.tourney.TeamTourneyDTO;
+import ru.vldf.sportsportal.dto.user.UserDTO;
+import ru.vldf.sportsportal.model.tourney.TeamTourneyEntity;
+import ru.vldf.sportsportal.model.tourney.TeamTourneyStatusEntity;
+import ru.vldf.sportsportal.model.user.RoleEntity;
+import ru.vldf.sportsportal.model.user.UserEntity;
 import ru.vldf.sportsportal.service.security.SecurityPrincipal;
 
 @Service
@@ -20,6 +23,9 @@ public class UserService {
 
     private UserDAO userDAO;
     private RoleDAO roleDAO;
+
+    private TeamTourneyDAO teamTourneyDAO;
+    private TeamTourneyStatusDAO teamTourneyStatusDAO;
 
     @Autowired
     public void setBCryptPasswordEncoder(BCryptPasswordEncoder bCryptPasswordEncoder) {
@@ -36,7 +42,27 @@ public class UserService {
         this.userDAO = userDAO;
     }
 
-    //    ==================================================================================
+    @Autowired
+    public void setTeamTourneyDAO(TeamTourneyDAO teamTourneyDAO) {
+        this.teamTourneyDAO = teamTourneyDAO;
+    }
+
+    @Autowired
+    public void setTeamTourneyStatusDAO(TeamTourneyStatusDAO teamTourneyStatusDAO) {
+        this.teamTourneyStatusDAO = teamTourneyStatusDAO;
+    }
+
+//    ==================================================================================
+//    === TOURNEY
+
+    public void createTeam(TeamTourneyDTO teamTourneyDTO) {
+        TeamTourneyStatusEntity status = teamTourneyStatusDAO.findByCode("TEAM_AWAITING");
+        UserEntity captain = userDAO.findByID(getAuthUser().getId());
+
+        teamTourneyDAO.saveTeamTourney(new TeamTourneyEntity(teamTourneyDTO, captain, status));
+    }
+
+//    ==================================================================================
 //    === AUTH
 
     private final String ROLE_ANONYMOUS = "anonymousUser";

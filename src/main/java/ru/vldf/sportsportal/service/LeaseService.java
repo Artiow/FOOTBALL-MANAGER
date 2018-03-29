@@ -3,9 +3,9 @@ package ru.vldf.sportsportal.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.vldf.sportsportal.dao.generic.PlaygroundDAO;
-import ru.vldf.sportsportal.dto.PlaygroundDTO;
-import ru.vldf.sportsportal.model.PlaygroundEntity;
+import ru.vldf.sportsportal.dao.generic.definite.lease.PlaygroundDAO;
+import ru.vldf.sportsportal.dto.lease.PlaygroundDTO;
+import ru.vldf.sportsportal.model.lease.PlaygroundEntity;
 
 import java.util.ArrayList;
 import java.util.List;

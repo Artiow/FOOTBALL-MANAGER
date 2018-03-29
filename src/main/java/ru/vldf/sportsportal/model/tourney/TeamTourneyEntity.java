@@ -1,22 +1,34 @@
-package ru.vldf.sportsportal.model;
+package ru.vldf.sportsportal.model.tourney;
 
-import ru.vldf.sportsportal.model.lease.PlaygroundEntity;
+import ru.vldf.sportsportal.dto.tourney.TeamTourneyDTO;
 import ru.vldf.sportsportal.model.user.UserEntity;
 
 import javax.persistence.*;
-import java.util.Collection;
 
 @Entity
-@Table(name = "Sport", schema = "sportsportal")
-public class SportEntity {
+@Table(name = "TeamTourney", schema = "sportsportal")
+public class TeamTourneyEntity {
     private Integer id;
     private String name;
 
-    private Collection<UserEntity> users;
-    private Collection<PlaygroundEntity> playgrounds;
+    private UserEntity captain;
+    private TeamTourneyStatusEntity status;
+
+    public TeamTourneyEntity() {
+
+    }
+
+    public TeamTourneyEntity(TeamTourneyDTO teamTourneyDTO, UserEntity captain, TeamTourneyStatusEntity status) {
+        id = teamTourneyDTO.getId();
+        name = teamTourneyDTO.getName();
+
+        this.captain = captain;
+        this.status = status;
+    }
 
     @Id
     @Column(name = "ID", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer getId() {
         return id;
     }
@@ -36,34 +48,34 @@ public class SportEntity {
     }
 
 //    ==================================================================================
-//    === MANY-TO-MANY REFERENCES
+//    === MANY-TO-ONE REFERENCES
 
-    @ManyToMany
-    @JoinTable(
-            name = "UserSpecialization",
-            joinColumns = @JoinColumn(name = "Sport_ID"),
-            inverseJoinColumns = @JoinColumn(name = "User_ID")
+    @ManyToOne
+    @JoinColumn(
+            name = "Captain_ID",
+            referencedColumnName = "ID",
+            nullable = false
     )
-    public Collection<UserEntity> getUsers() {
-        return users;
+    public UserEntity getCaptain() {
+        return captain;
     }
 
-    public void setUsers(Collection<UserEntity> users) {
-        this.users = users;
+    public void setCaptain(UserEntity captain) {
+        this.captain = captain;
     }
 
-    @ManyToMany
-    @JoinTable(
-            name = "PlaygroundSpecialization",
-            joinColumns = @JoinColumn(name = "Sport_ID"),
-            inverseJoinColumns = @JoinColumn(name = "Playground_ID")
+    @ManyToOne
+    @JoinColumn(
+            name = "Status_ID",
+            referencedColumnName = "ID",
+            nullable = false
     )
-    public Collection<PlaygroundEntity> getPlaygrounds() {
-        return playgrounds;
+    public TeamTourneyStatusEntity getStatus() {
+        return status;
     }
 
-    public void setPlaygrounds(Collection<PlaygroundEntity> playgrounds) {
-        this.playgrounds = playgrounds;
+    public void setStatus(TeamTourneyStatusEntity status) {
+        this.status = status;
     }
 
 //    ==================================================================================
@@ -74,7 +86,7 @@ public class SportEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        SportEntity that = (SportEntity) o;
+        TeamTourneyEntity that = (TeamTourneyEntity) o;
 
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
