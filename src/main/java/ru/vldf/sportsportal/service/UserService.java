@@ -45,7 +45,7 @@ public class UserService {
         return SecurityContextHolder.getContext().getAuthentication();
     }
 
-    public void registerUser(UserDTO userDTO) {
+    public void register(UserDTO userDTO) {
         userDTO.setPassword(bCryptPasswordEncoder.encode(userDTO.getPassword()));
         RoleEntity role = roleDAO.findByCode("ROLE_USER");
 

@@ -6,7 +6,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import ru.vldf.sportsportal.dto.UserDTO;
 import ru.vldf.sportsportal.service.UserService;
-import ru.vldf.sportsportal.service.security.SecurityService;
 
 @Controller
 public class AuthController {
@@ -46,8 +45,8 @@ public class AuthController {
     ) {
         //TODO: confirm password!
 
-        userService.registerUser(user);
+        userService.register(user);
 
-        return "redirect:/index";
+        return "redirect:/auth/login";
     }
 }
