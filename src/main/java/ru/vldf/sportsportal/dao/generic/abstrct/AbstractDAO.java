@@ -4,9 +4,9 @@ import java.io.Serializable;
 import java.util.List;
 
 public interface AbstractDAO<T, PK extends Serializable> {
-    PK save(T entity);
-
     T get(PK id);
+
+    PK save(T entity);
 
     void update(T entity);
 

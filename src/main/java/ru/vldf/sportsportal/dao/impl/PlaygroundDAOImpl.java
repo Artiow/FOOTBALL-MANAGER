@@ -9,7 +9,7 @@ import ru.vldf.sportsportal.model.PlaygroundEntity;
 import java.util.List;
 
 @Repository
-public class PlaygroundDAOImpl extends AbstractDAOImpl<PlaygroundEntity, Integer> implements PlaygroundDAO{
+public class PlaygroundDAOImpl extends AbstractDAOImpl<PlaygroundEntity, Integer> implements PlaygroundDAO {
     public PlaygroundDAOImpl() {
         super(PlaygroundEntity.class);
     }
