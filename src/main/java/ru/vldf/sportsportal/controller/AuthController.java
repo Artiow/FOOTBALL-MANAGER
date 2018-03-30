@@ -5,15 +5,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import ru.vldf.sportsportal.dto.user.UserDTO;
-import ru.vldf.sportsportal.service.UserService;
+import ru.vldf.sportsportal.service.AuthService;
 
 @Controller
 public class AuthController {
-    private UserService userService;
+    private AuthService authService;
 
     @Autowired
-    public void setUserService(UserService userService) {
-        this.userService = userService;
+    public void setAuthService(AuthService authService) {
+        this.authService = authService;
     }
 
     @GetMapping(value = {"/login"})
@@ -36,7 +36,7 @@ public class AuthController {
     public String register(@ModelAttribute(value="user") UserDTO user) {
         //TODO: confirm password!
 
-        userService.register(user);
+        authService.register(user);
 
         return "redirect:/login";
     }

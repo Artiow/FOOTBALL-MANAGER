@@ -7,18 +7,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import ru.vldf.sportsportal.dto.lease.PlaygroundDTO;
 import ru.vldf.sportsportal.service.LeaseService;
-import ru.vldf.sportsportal.service.UserService;
+import ru.vldf.sportsportal.service.AuthService;
 
 import java.util.List;
 
 @Controller
 public class LeaseController {
-    private UserService userService;
+    private AuthService authService;
     private LeaseService leaseService;
 
     @Autowired
-    public void setUserService(UserService userService) {
-        this.userService = userService;
+    public void setAuthService(AuthService authService) {
+        this.authService = authService;
     }
 
     @Autowired
@@ -28,7 +28,7 @@ public class LeaseController {
 
     @GetMapping(value = {"/lease"})
     public String catalogPage(ModelMap map) {
-        map.addAttribute("username", userService.getAuthUsername());
+        map.addAttribute("username", authService.getAuthUsername());
 
         List<PlaygroundDTO> playgroundList = leaseService.getPlaygroundList();
         map.addAttribute("playgroundList", playgroundList);
@@ -39,7 +39,7 @@ public class LeaseController {
 
     @GetMapping(value = {"/lease/pg{id}"})
     public String playgroundPage(@PathVariable("id") int id, ModelMap map) {
-        map.addAttribute("username", userService.getAuthUsername());
+        map.addAttribute("username", authService.getAuthUsername());
         map.addAttribute("playground", leaseService.getPlayground(id));
 
         return "lease/playground";

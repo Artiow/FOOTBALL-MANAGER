@@ -10,6 +10,10 @@ public class TeamTourneyDTO {
     private UserDTO captain;
     private TeamTourneyStatusDTO status;
 
+    public TeamTourneyDTO() {
+
+    }
+
     public TeamTourneyDTO(TeamTourneyEntity teamTourney) {
         id = teamTourney.getId();
         name = teamTourney.getName();

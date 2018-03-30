@@ -7,22 +7,21 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.NoHandlerFoundException;
-import ru.vldf.sportsportal.service.UserService;
+import ru.vldf.sportsportal.service.AuthService;
 
 @Controller
 @ControllerAdvice
 public class AdviseController {
-    private UserService userService;
+    private AuthService authService;
 
     @Autowired
-    public void setUserService(UserService userService) {
-        this.userService = userService;
+    public void setAuthService(AuthService authService) {
+        this.authService = authService;
     }
 
     @GetMapping(value = {"/", "/index"})
     public String indexPage(ModelMap map) {
-        map.addAttribute("username", userService.getAuthUsername());
-
+        map.addAttribute("username", authService.getAuthUsername());
         return "index";
     }
 
