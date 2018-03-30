@@ -22,13 +22,6 @@ public class AuthController {
         return "auth/login";
     }
 
-    @GetMapping(value = {"/personalpage"})
-    public String personalPage(ModelMap map) {
-        map.addAttribute("username", userService.getAuthUsername());
-
-        return "auth/personalpage";
-    }
-
     @GetMapping(value = {"/registration"})
     public String registerPage(@RequestParam(value = "error", required = false) String error, ModelMap map) {
         map.addAttribute("error", (error != null));
@@ -40,9 +33,7 @@ public class AuthController {
     }
 
     @PostMapping(value = {"/registration"})
-    public String register(
-            @ModelAttribute(value="user") UserDTO user
-    ) {
+    public String register(@ModelAttribute(value="user") UserDTO user) {
         //TODO: confirm password!
 
         userService.register(user);
