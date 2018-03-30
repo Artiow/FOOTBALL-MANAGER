@@ -4,15 +4,15 @@
     <meta charset="UTF-8"/>
     <title>Регистрация</title>
     <link rel="stylesheet"
-          href="../libs/bootstrap/css/bootstrap.css"
+          href="../../libs/bootstrap/css/bootstrap.css"
           th:href="@{/libs/bootstrap/css/bootstrap.css}"
     />
     <link rel="stylesheet"
-          href="../libs/font-awesome/css/font-awesome.css"
+          href="../../libs/font-awesome/css/font-awesome.css"
           th:href="@{/libs/font-awesome/css/font-awesome.css}"
     />
     <link rel="stylesheet"
-          href="../resources/css/login.css"
+          href="../../resources/css/login.css"
           th:href="@{/css/login.css}"
     />
 </head>
@@ -30,7 +30,7 @@
     </header>
     <div class="row">
         <div class="col-md-4 col-md-offset-4 col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
-            <form class="login-form" role="form" th:action="@{/registration}" th:object="${user}" method="post">
+            <form class="login-form" role="form" th:action="@{/registration}" th:object="${user_dto}" method="post">
                 <div class="form-group">
                     <label class="login-label" for="input-name"><i class="fa fa-user" aria-hidden="true"></i> Имя</label>
                     <input class="form-control" id="input-name" type="text" th:field="*{name}" placeholder="name" required="required" autofocus="autofocus"/>
@@ -47,10 +47,6 @@
                     <label class="login-label" for="input-password"><i class="fa fa-lock" aria-hidden="true"></i> Пароль</label>
                     <input class="form-control" id="input-password" type="password" th:field="*{password}" placeholder="password" required="required"/>
                 </div>
-                <!--<div class="form-group">-->
-                    <!--<label class="login-label" for="input-password-confirm"><i class="fa fa-lock" aria-hidden="true"></i> Подтвердите пароль</label>-->
-                    <!--<input class="form-control" id="input-password-confirm" type="password" th:field="${passwordConfirm}" placeholder="password confirm" required="required"/>-->
-                <!--</div>-->
                 <div class="login-error" th:if="${error}">
                     <p><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Ошибка!</p>
                 </div>

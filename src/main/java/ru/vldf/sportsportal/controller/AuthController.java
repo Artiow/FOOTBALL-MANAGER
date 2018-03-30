@@ -27,13 +27,13 @@ public class AuthController {
         map.addAttribute("error", (error != null));
 
         UserDTO user = new UserDTO();
-        map.addAttribute("user", user);
+        map.addAttribute("user_dto", user);
 
         return "auth/registration";
     }
 
     @PostMapping(value = {"/registration"})
-    public String register(@ModelAttribute(value="user") UserDTO user) {
+    public String register(@ModelAttribute(value="user_dto") UserDTO user) {
         //TODO: confirm password!
 
         authService.register(user);

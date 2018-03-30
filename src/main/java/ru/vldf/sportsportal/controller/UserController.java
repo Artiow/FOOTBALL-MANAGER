@@ -28,14 +28,17 @@ public class UserController {
     @GetMapping(value = {"/personalpage"})
     public String personalPage(ModelMap map) {
         map.addAttribute("username", authService.getAuthUsername());
-        map
-                .addAttribute("teamTourney", new TeamTourneyDTO());
-
-        return "auth/personalpage";
+        return "user/personalpage";
     }
 
-    @PostMapping(value = {"/create-team"})
-    public String register(@ModelAttribute(value="teamTourney") TeamTourneyDTO teamTourneyDTO) {
+    @GetMapping(value = {"/personalpage/create-team-tourney"})
+    public String createTeamTourneyPage(ModelMap map) {
+        map.addAttribute("team_tourney", new TeamTourneyDTO());
+        return "user/create-team-tourney";
+    }
+
+    @PostMapping(value = {"/personalpage/create-team-tourney"})
+    public String createTeamTourney(@ModelAttribute(value="teamTourney") TeamTourneyDTO teamTourneyDTO) {
         userService.createTeam(teamTourneyDTO);
         return "redirect:/personalpage";
     }

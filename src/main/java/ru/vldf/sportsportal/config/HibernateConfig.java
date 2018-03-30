@@ -37,7 +37,9 @@ public class HibernateConfig {
         dataSource.setDriverClassName("com.mysql.jdbc.Driver");
 
         String URL = "jdbc:mysql://localhost:3306/sportsportal?"
-                + "useUnicode=true&useJDBCCompliantTimezoneShift=true&"
+                + "useUnicode=true&"
+                + "characterEncoding=utf-8&"
+                + "useJDBCCompliantTimezoneShift=true&"
                 + "useLegacyDatetimeCode=false&"
                 + "serverTimezone=Europe/Moscow";
 
