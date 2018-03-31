@@ -21,12 +21,15 @@ public class HibernateConfig {
     private String SHOW_SQL;
     @Value("${hibernate-property.hibernate.dialect}")
     private String HIBERNATE_DIALECT;
+    @Value("${hibernate-property.hibernate.connection.characterEncoding}")
+    private String HIBERNATE_CHARACTER_ENCODING;
 
     private Properties getHibernateProperties() {
         return new Properties() {
             {
                 setProperty("show_sql", SHOW_SQL);
                 setProperty("hibernate.dialect", HIBERNATE_DIALECT);
+                setProperty("hibernate.connection.characterEncoding", HIBERNATE_CHARACTER_ENCODING);
             }
         };
     }
