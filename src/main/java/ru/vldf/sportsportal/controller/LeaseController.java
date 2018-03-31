@@ -31,8 +31,8 @@ public class LeaseController {
         map.addAttribute("username", authService.getAuthUsername());
 
         List<PlaygroundDTO> playgroundList = leaseService.getPlaygroundList();
-        map.addAttribute("playgroundList", playgroundList);
-        map.addAttribute("playgroundListSize", playgroundList.size());
+        map.addAttribute("playground_list", playgroundList);
+        map.addAttribute("playground_list_size", playgroundList.size());
 
         return "lease/catalog";
     }

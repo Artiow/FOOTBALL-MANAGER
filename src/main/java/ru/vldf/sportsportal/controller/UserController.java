@@ -27,7 +27,10 @@ public class UserController {
 
     @GetMapping(value = {"/personalpage"})
     public String personalPage(ModelMap map) {
-        map.addAttribute("username", authService.getAuthUsername());
+        map
+                .addAttribute("username", authService.getAuthUsername())
+                .addAttribute("team_tourney_list", userService.getTeamTourneyList());
+
         return "user/personalpage";
     }
 
@@ -39,7 +42,7 @@ public class UserController {
 
     @PostMapping(value = {"/personalpage/create-team-tourney"})
     public String createTeamTourney(@ModelAttribute(value="teamTourney") TeamTourneyDTO teamTourneyDTO) {
-        userService.createTeam(teamTourneyDTO);
+        userService.createTeamTourney(teamTourneyDTO);
         return "redirect:/personalpage";
     }
 }
