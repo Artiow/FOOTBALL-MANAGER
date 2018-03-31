@@ -13,5 +13,7 @@ public interface TeamTourneyDAO {
 
     List<TeamTourneyEntity> getTeamTourneyListByUser(UserEntity user);
 
+    List<TeamTourneyEntity> getTeamTourneyListByStatus(String status);
+
     List<TeamTourneyEntity> getTeamTourneyListByStatus(TeamTourneyStatusEntity status);
 }

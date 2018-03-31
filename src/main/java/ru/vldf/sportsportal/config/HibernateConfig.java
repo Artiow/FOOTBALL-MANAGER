@@ -21,6 +21,9 @@ public class HibernateConfig {
     private String SHOW_SQL;
     @Value("${hibernate-property.hibernate.dialect}")
     private String HIBERNATE_DIALECT;
+
+    @Value("${hibernate-property.hibernate.connection.useUnicode}")
+    private String HIBERNATE_USE_UNICODE;
     @Value("${hibernate-property.hibernate.connection.characterEncoding}")
     private String HIBERNATE_CHARACTER_ENCODING;
 
@@ -29,6 +32,8 @@ public class HibernateConfig {
             {
                 setProperty("show_sql", SHOW_SQL);
                 setProperty("hibernate.dialect", HIBERNATE_DIALECT);
+
+                setProperty("hibernate.connection.useUnicode", HIBERNATE_USE_UNICODE);
                 setProperty("hibernate.connection.characterEncoding", HIBERNATE_CHARACTER_ENCODING);
             }
         };
@@ -40,8 +45,8 @@ public class HibernateConfig {
         dataSource.setDriverClassName("com.mysql.jdbc.Driver");
 
         String URL = "jdbc:mysql://localhost:3306/sportsportal?"
-                + "useUnicode=true&"
-                + "characterEncoding=utf-8&"
+                + "autoReconnect=true&"
+                + "autoReconnectForPools=true&"
                 + "useJDBCCompliantTimezoneShift=true&"
                 + "useLegacyDatetimeCode=false&"
                 + "serverTimezone=Europe/Moscow";

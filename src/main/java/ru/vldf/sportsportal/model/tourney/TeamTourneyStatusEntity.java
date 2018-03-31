@@ -82,6 +82,6 @@ public class TeamTourneyStatusEntity {
 
     @Override
     public String toString() {
-        return description;
+        return code;
     }
 }

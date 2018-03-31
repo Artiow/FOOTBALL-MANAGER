@@ -80,6 +80,6 @@ public class RoleEntity {
 
     @Override
     public String toString() {
-        return name;
+        return code;
     }
 }

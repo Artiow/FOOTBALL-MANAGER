@@ -33,6 +33,16 @@ public class TeamTourneyDAOImpl extends AbstractDAOImpl<TeamTourneyEntity, Integ
         else return null;
     }
 
+    public List<TeamTourneyEntity> getTeamTourneyListByStatus(String status) {
+        List teams = getSession()
+                .createQuery("from TeamTourneyEntity where status.code=?")
+                .setParameter(0, status)
+                .list();
+
+        if ((teams != null) && (teams.size() > 0)) return (List<TeamTourneyEntity>) teams;
+        else return null;
+    }
+
     public List<TeamTourneyEntity> getTeamTourneyListByStatus(TeamTourneyStatusEntity status) {
         List teams = getSession()
                 .createQuery("from TeamTourneyEntity where status=?")

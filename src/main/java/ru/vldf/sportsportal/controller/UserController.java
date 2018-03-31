@@ -7,17 +7,25 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import ru.vldf.sportsportal.dto.tourney.TeamTourneyDTO;
+import ru.vldf.sportsportal.service.AdminService;
 import ru.vldf.sportsportal.service.AuthService;
 import ru.vldf.sportsportal.service.UserService;
 
 @Controller
 public class UserController {
     private AuthService authService;
+
+    private AdminService adminService;
     private UserService userService;
 
     @Autowired
     public void setAuthService(AuthService authService) {
         this.authService = authService;
+    }
+
+    @Autowired
+    public void setAdminService(AdminService adminService) {
+        this.adminService = adminService;
     }
 
     @Autowired
@@ -29,20 +37,46 @@ public class UserController {
     public String personalPage(ModelMap map) {
         map
                 .addAttribute("username", authService.getAuthUsername())
-                .addAttribute("team_tourney_list", userService.getTeamTourneyList());
+                .addAttribute("user", authService.getAuthUser());
 
         return "user/personalpage";
     }
 
-    @GetMapping(value = {"/personalpage/create-team-tourney"})
+//    ==================================================================================
+//    === ADMIN
+
+    @GetMapping(value = {"/pp/admin"})
+    public String adminPage(ModelMap map) {
+        map
+                .addAttribute("username", authService.getAuthUsername())
+
+                .addAttribute("team_tourney_list", adminService.getAwaitingTeamTourneyList());
+
+        return "user/adminpage";
+    }
+
+//    ==================================================================================
+//    === TOURNEY
+
+    @GetMapping(value = {"/pp/tourney"})
+    public String tourneyPage(ModelMap map) {
+        map
+                .addAttribute("username", authService.getAuthUsername())
+
+                .addAttribute("team_tourney_list", userService.getTeamTourneyList());
+
+        return "user/tourneypage";
+    }
+
+    @GetMapping(value = {"/pp/tourney/create-team-tourney"})
     public String createTeamTourneyPage(ModelMap map) {
         map.addAttribute("team_tourney", new TeamTourneyDTO());
         return "user/create-team-tourney";
     }
 
-    @PostMapping(value = {"/personalpage/create-team-tourney"})
+    @PostMapping(value = {"/pp/tourney/create-team-tourney"})
     public String createTeamTourney(@ModelAttribute(value="teamTourney") TeamTourneyDTO teamTourneyDTO) {
         userService.createTeamTourney(teamTourneyDTO);
-        return "redirect:/personalpage";
+        return "redirect:/pp/tourney";
     }
 }
