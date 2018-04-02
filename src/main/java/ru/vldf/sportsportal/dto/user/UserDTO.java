@@ -4,10 +4,13 @@ import ru.vldf.sportsportal.model.user.UserEntity;
 
 public class UserDTO {
     private Integer id;
-    private String name;
-    private String surname;
+    private String login;
     private String email;
     private String password;
+    private String name;
+    private String surname;
+    private String patronymic;
+    private String phone;
 
     private RoleDTO role;
 
@@ -17,9 +20,13 @@ public class UserDTO {
 
     public UserDTO(UserEntity user) {
         id = user.getId();
+        login = user.getLogin();
+        email = user.getEmail();
+        password = user.getPassword();
         name = user.getName();
         surname = user.getSurname();
-        email = user.getEmail();
+        patronymic = user.getPatronymic();
+        phone = user.getPhone();
 
         role = new RoleDTO(user.getRole());
     }
@@ -30,6 +37,30 @@ public class UserDTO {
 
     public Integer getId() {
         return id;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     public void setName(String name) {
@@ -48,20 +79,20 @@ public class UserDTO {
         return surname;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public String getPatronymic() {
+        return patronymic;
     }
 
-    public String getEmail() {
-        return email;
+    public void setPatronymic(String patronymic) {
+        this.patronymic = patronymic;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public String getPhone() {
+        return phone;
     }
 
-    public String getPassword() {
-        return password;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public void setRole(RoleDTO role) {
