@@ -16,7 +16,7 @@ public class MatchesController {
     }
 
     @GetMapping(value = {"/matches"})
-    public String coverPage(ModelMap map) {
+    public String toCoverPage(ModelMap map) {
         map.addAttribute("username", authService.getAuthUsername());
 
         return "matches/cover";

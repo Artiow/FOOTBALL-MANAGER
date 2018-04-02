@@ -5,31 +5,31 @@
     <meta charset="UTF-8"/>
     <title>Личный кабинет</title>
     <script
-            src="../../libs/vue.js"
+            src="../../../libs/vue.js"
             th:src="@{/libs/vue.js}"
     ></script>
     <script
-            src="../../libs/jquery-3.2.1.js"
+            src="../../../libs/jquery-3.2.1.js"
             th:src="@{/libs/jquery-3.2.1.js}"
     ></script>
     <link rel="stylesheet"
-          href="../../libs/bootstrap/css/bootstrap.css"
+          href="../../../libs/bootstrap/css/bootstrap.css"
           th:href="@{/libs/bootstrap/css/bootstrap.css}"
     />
     <link rel="stylesheet"
-          href="../../libs/font-awesome/css/font-awesome.css"
+          href="../../../libs/font-awesome/css/font-awesome.css"
           th:href="@{/libs/font-awesome/css/font-awesome.css}"
     />
     <link rel="stylesheet"
-          href="../../resources/css/personalpage.css"
+          href="../../../resources/css/personalpage.css"
           th:href="@{/css/personalpage.css}"
     />
     <link rel="stylesheet"
-          href="../../resources/css/header.css"
+          href="../../../resources/css/header.css"
           th:href="@{/css/header.css}"
     />
     <link rel="stylesheet"
-          href="../../resources/css/footer.css"
+          href="../../../resources/css/footer.css"
           th:href="@{/css/footer.css}"
     />
 </head>
@@ -43,11 +43,11 @@
     </header-regular>
 </header>
 <script
-        src="../../resources/js/components/HeaderRegular.js"
+        src="../../../resources/js/components/HeaderRegular.js"
         th:src="@{/components/HeaderRegular.js}"
 ></script>
 <script
-        src="../../resources/js/components/HeaderAuth.js"
+        src="../../../resources/js/components/HeaderAuth.js"
         th:src="@{/components/HeaderAuth.js}"
 ></script>
 
@@ -63,10 +63,17 @@
     <div class="container">
         <div class="row">
             <div class="col-md-5 col-md-offset-1">
-                <div style="padding: 10px 0 10px 0">
-                    <h3>Заявки на создание турнирной команды:</h3>
-                    <div style="height: 150px"></div>
+                <div style="padding: 10px 0 10px 0" th:object="${unconfirmedUser}">
+                    <h3 th:text="*{name}">NAME</h3>
+                    <h3 th:text="*{surname}">SURNAME</h3>
+                    <h3 th:text="*{patronymic}">PATRONYMIC</h3>
+                    <p th:text="*{login}">LOGIN</p>
+                    <p th:text="*{email}">EMAIL</p>
+                    <p th:text="*{phone}">PHONE</p>
                 </div>
+                <form role="form" th:action="${'/pp/admin/confirm-user/user' + unconfirmedUser.getId()}" method="post">
+                    <button type="submit" class="btn btn-default">Подтвердить</button>
+                </form>
             </div>
         </div>
     </div>
@@ -84,13 +91,13 @@
     </footer-regular>
 </footer>
 <script
-        src="../../resources/js/components/FooterRegular.js"
+        src="../../../resources/js/components/FooterRegular.js"
         th:src="@{/components/FooterRegular.js}"
 ></script>
 
 </body>
 <script
-        src="../../resources/js/padding.js"
+        src="../../../resources/js/padding.js"
         th:src="@{/js/padding.js}"
 ></script>
 </html>

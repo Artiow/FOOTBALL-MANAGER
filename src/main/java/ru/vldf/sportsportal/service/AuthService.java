@@ -45,7 +45,7 @@ public class AuthService {
 
     public void register(UserDTO userDTO) {
         userDTO.setPassword(bCryptPasswordEncoder.encode(userDTO.getPassword()));
-        RoleEntity role = roleDAO.findByCode("ROLE_UNCONFIRMED_USER"); //TODO: remove this in DAO
+        RoleEntity role = roleDAO.findByCode("ROLE_UNCONFIRMED"); //TODO: remove this in DAO
 
         userDAO.saveUser(new UserEntity(userDTO, role));
     }

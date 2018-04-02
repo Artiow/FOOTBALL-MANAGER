@@ -19,7 +19,7 @@ public class RoleDAOImpl extends AbstractDAOImpl<RoleEntity, Integer> implements
                 .setParameter(0, code)
                 .list();
 
-        if ((roles != null) && (roles.size() > 0)) return (RoleEntity) roles.get(0);
+        if ((roles != null) && (roles.size() == 1)) return (RoleEntity) roles.get(0);
         else return null;
     }
 }

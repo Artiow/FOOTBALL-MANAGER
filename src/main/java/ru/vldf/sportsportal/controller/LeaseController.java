@@ -27,7 +27,7 @@ public class LeaseController {
     }
 
     @GetMapping(value = {"/lease"})
-    public String catalogPage(ModelMap map) {
+    public String toCatalogPage(ModelMap map) {
         map.addAttribute("username", authService.getAuthUsername());
 
         List<PlaygroundDTO> playgroundList = leaseService.getPlaygroundList();

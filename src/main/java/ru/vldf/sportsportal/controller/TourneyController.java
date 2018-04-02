@@ -16,7 +16,7 @@ public class TourneyController {
     }
 
     @GetMapping(value = {"/tourney"})
-    public String coverPage(ModelMap map) {
+    public String toCoverPage(ModelMap map) {
         map.addAttribute("username", authService.getAuthUsername());
 
         return "tourney/cover";

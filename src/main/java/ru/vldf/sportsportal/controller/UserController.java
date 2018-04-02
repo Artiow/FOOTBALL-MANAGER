@@ -5,9 +5,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import ru.vldf.sportsportal.dto.tourney.TeamTourneyConfirmDTO;
 import ru.vldf.sportsportal.dto.tourney.TeamTourneyDTO;
+import ru.vldf.sportsportal.dto.user.UserDTO;
 import ru.vldf.sportsportal.service.AdminService;
 import ru.vldf.sportsportal.service.AuthService;
 import ru.vldf.sportsportal.service.UserService;
@@ -37,7 +39,7 @@ public class UserController {
     }
 
     @GetMapping(value = {"/personalpage"})
-    public String personalPage(ModelMap map) {
+    public String toPersonalPage(ModelMap map) {
         map
                 .addAttribute("username", authService.getAuthUsername())
                 .addAttribute("user", authService.getAuthUser());
@@ -49,22 +51,44 @@ public class UserController {
 //    === ADMIN
 
     @GetMapping(value = {"/pp/admin"})
-    public String adminPage(ModelMap map) {
+    public String toAdminPage(ModelMap map) {
         map
                 .addAttribute("username", authService.getAuthUsername())
-                .addAttribute("team_tourney_list", adminService.getAwaitingTeamTourneyList());
+                .addAttribute("numOfUnconfirmedUsers", adminService.getUnconfirmedUsersNum());
 
-        return "user/adminpage";
+        return "user/admin/adminpage";
     }
 
-    @PostMapping(value = {"/pp/admin/tourney/confirm-team-tourney"})
-    public String confirmTeamTourney(@ModelAttribute(value="team_tourney_list") ArrayList<TeamTourneyConfirmDTO> listTeamTourneyConfirmDTO) {
-        adminService.confirmAwaitingTeamTourneyList(listTeamTourneyConfirmDTO);
-        return "redirect:/pp/admin";
+    @GetMapping(value = {"/pp/admin/confirm-user"})
+    public String toConfirmPage(ModelMap map) {
+        int num = adminService.getUnconfirmedUsersNum();
+        if (num == 0) return "redirect:/pp/admin";
+
+        UserDTO user = adminService.getFirstUnconfirmedUser();
+        String id = user.getId().toString();
+
+        return "redirect:/pp/admin/confirm-user/user" + id;
+    }
+
+    @GetMapping(value = {"/pp/admin/confirm-user/user{id}"})
+    public String toConfirmPageByUser(@PathVariable("id") int id, ModelMap map) {
+        map
+                .addAttribute("username", authService.getAuthUsername())
+                .addAttribute("unconfirmedUser", adminService.getUser(id));
+
+        return "user/admin/confirm-user";
+    }
+
+    @PostMapping(value = {"/pp/admin/confirm-user/user{id}"})
+    public String confirmUser(@PathVariable("id") int id) {
+        adminService.confirmUser(id);
+        return "redirect:/pp/admin/confirm-user";
     }
 
 //    ==================================================================================
 //    === TOURNEY
+
+//    TODO: redesign!
 
     @GetMapping(value = {"/pp/tourney"})
     public String tourneyPage(ModelMap map) {

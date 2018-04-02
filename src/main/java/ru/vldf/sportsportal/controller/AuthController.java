@@ -17,13 +17,13 @@ public class AuthController {
     }
 
     @GetMapping(value = {"/login"})
-    public String loginPage(@RequestParam(value = "error", required = false) String error, ModelMap map) {
+    public String toLoginPage(@RequestParam(value = "error", required = false) String error, ModelMap map) {
         map.addAttribute("error", (error != null));
         return "auth/login";
     }
 
     @GetMapping(value = {"/registration"})
-    public String registerPage(@RequestParam(value = "error", required = false) String error, ModelMap map) {
+    public String toRegisterPage(@RequestParam(value = "error", required = false) String error, ModelMap map) {
         map.addAttribute("error", (error != null));
 
         UserDTO user = new UserDTO();

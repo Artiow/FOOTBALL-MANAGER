@@ -20,7 +20,7 @@ public class AdviseController {
     }
 
     @GetMapping(value = {"/", "/index"})
-    public String indexPage(ModelMap map) {
+    public String toIndexPage(ModelMap map) {
         map.addAttribute("username", authService.getAuthUsername());
         return "index";
     }
