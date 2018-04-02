@@ -26,13 +26,14 @@ public class SecurityService implements UserDetailsService {
 
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        UserEntity user = userDAO.findByEMail(s);
+        UserEntity user = userDAO.findByLogin(s);
         return new SecurityPrincipal(user, buildUserAuthorities(user.getRole()));
     }
 
     private Collection<GrantedAuthority> buildUserAuthorities(RoleEntity role) {
         Collection<GrantedAuthority> auth = new ArrayList<GrantedAuthority>();
 
+//        TODO: add multiple roles!
         auth.add(new SimpleGrantedAuthority(role.getCode()));
         return auth;
     }

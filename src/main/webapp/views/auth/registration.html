@@ -37,11 +37,23 @@
                 </div>
                 <div class="form-group">
                     <label class="login-label" for="input-surname"><i class="fa fa-user" aria-hidden="true"></i> Фамилия</label>
-                    <input class="form-control" id="input-surname" type="text" th:field="*{surname}" placeholder="surname" required="required" autofocus="autofocus"/>
+                    <input class="form-control" id="input-surname" type="text" th:field="*{surname}" placeholder="surname" required="required"/>
                 </div>
                 <div class="form-group">
-                    <label class="login-label" for="input-username"><i class="fa fa-user" aria-hidden="true"></i> Электронная почта</label>
-                    <input class="form-control" id="input-username" type="text" th:field="*{email}" placeholder="email" required="required" autofocus="autofocus"/>
+                    <label class="login-label" for="input-patronymic"><i class="fa fa-user" aria-hidden="true"></i> Отчество</label>
+                    <input class="form-control" id="input-patronymic" type="text" th:field="*{patronymic}" placeholder="patronymic"/>
+                </div>
+                <div class="form-group">
+                    <label class="login-label" for="input-phone"><i class="fa fa-phone" aria-hidden="true"></i> Телефон</label>
+                    <input class="form-control" id="input-phone" type="text" th:field="*{phone}" placeholder="phone"/>
+                </div>
+                <div class="form-group">
+                    <label class="login-label" for="input-email"><i class="fa fa-envelope-o" aria-hidden="true"></i> Электронная почта</label>
+                    <input class="form-control" id="input-email" type="text" th:field="*{email}" placeholder="email" required="required"/>
+                </div>
+                <div class="form-group">
+                    <label class="login-label" for="input-login"><i class="fa fa-key" aria-hidden="true"></i> Логин</label>
+                    <input class="form-control" id="input-login" type="text" th:field="*{login}" placeholder="login" required="required"/>
                 </div>
                 <div class="form-group">
                     <label class="login-label" for="input-password"><i class="fa fa-lock" aria-hidden="true"></i> Пароль</label>

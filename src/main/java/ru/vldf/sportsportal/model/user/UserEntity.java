@@ -29,14 +29,16 @@ public class UserEntity {
     }
 
     public UserEntity(UserDTO userDTO, RoleEntity roleEntity) {
-        name = userDTO.getName();
-        surname = userDTO.getSurname();
+        id = userDTO.getId();
+        login = userDTO.getLogin();
         email = userDTO.getEmail();
         password = userDTO.getPassword();
+        name = userDTO.getName();
+        surname = userDTO.getSurname();
+        patronymic = userDTO.getPatronymic();
+        phone = userDTO.getPhone();
 
         role = roleEntity;
-
-        sports = null;
     }
 
     @Id

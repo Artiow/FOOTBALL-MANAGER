@@ -13,7 +13,6 @@ import ru.vldf.sportsportal.service.AuthService;
 import ru.vldf.sportsportal.service.UserService;
 
 import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 public class UserController {
@@ -58,7 +57,7 @@ public class UserController {
         return "user/adminpage";
     }
 
-    @PostMapping(value = {"/pp/tourney/confirm-team-tourney"})
+    @PostMapping(value = {"/pp/admin/tourney/confirm-team-tourney"})
     public String confirmTeamTourney(@ModelAttribute(value="team_tourney_list") ArrayList<TeamTourneyConfirmDTO> listTeamTourneyConfirmDTO) {
         adminService.confirmAwaitingTeamTourneyList(listTeamTourneyConfirmDTO);
         return "redirect:/pp/admin";

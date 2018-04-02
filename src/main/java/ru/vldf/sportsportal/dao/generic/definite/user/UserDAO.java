@@ -7,5 +7,7 @@ public interface UserDAO {
 
     UserEntity findByID(Integer id);
 
+    UserEntity findByLogin(String login);
+
     UserEntity findByEMail(String eMail);
 }

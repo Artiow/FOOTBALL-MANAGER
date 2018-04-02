@@ -23,6 +23,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+//        TODO: add protected pages!
+
         http
                 .csrf()
                     .disable()
@@ -35,7 +37,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                     .loginPage("/login")
                     .failureUrl("/login?error=true")
                     .loginProcessingUrl("/security_check")
-                    .usernameParameter("security_email")
+                    .usernameParameter("security_login")
                     .passwordParameter("security_password")
                     .permitAll()
                     .and()

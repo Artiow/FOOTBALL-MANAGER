@@ -23,7 +23,17 @@ public class UserDAOImpl extends AbstractDAOImpl<UserEntity, Integer> implements
                 .setParameter(0, id)
                 .list();
 
-        if ((users != null) && (users.size() > 0)) return (UserEntity) users.get(0);
+        if ((users != null) && (users.size() == 1)) return (UserEntity) users.get(0);
+        else return null;
+    }
+
+    public UserEntity findByLogin(String login) {
+        List users = getSession()
+                .createQuery("from UserEntity where login=?")
+                .setParameter(0, login)
+                .list();
+
+        if ((users != null) && (users.size() == 1)) return (UserEntity) users.get(0);
         else return null;
     }
 
@@ -33,7 +43,7 @@ public class UserDAOImpl extends AbstractDAOImpl<UserEntity, Integer> implements
                 .setParameter(0, eMail)
                 .list();
 
-        if ((users != null) && (users.size() > 0)) return (UserEntity) users.get(0);
+        if ((users != null) && (users.size() == 1)) return (UserEntity) users.get(0);
         else return null;
     }
 }

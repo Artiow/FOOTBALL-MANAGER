@@ -34,10 +34,11 @@ public class AuthController {
 
     @PostMapping(value = {"/registration"})
     public String register(@ModelAttribute(value="user_dto") UserDTO user) {
-        //TODO: confirm password!
 
+        //TODO: confirm password check!
         authService.register(user);
 
+        //TODO: add various error message!
         return "redirect:/login";
     }
 }

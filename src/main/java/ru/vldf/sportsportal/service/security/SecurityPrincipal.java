@@ -11,12 +11,12 @@ public class SecurityPrincipal extends User {
     private UserDTO userDTO;
 
     SecurityPrincipal(UserEntity user, Collection<? extends GrantedAuthority> authorities) {
-        super(user.getEmail(), user.getPassword(), authorities);
+        super(user.getLogin(), user.getPassword(), authorities);
         userDTO = new UserDTO(user);
     }
 
     SecurityPrincipal(UserEntity user, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities) {
-        super(user.getEmail(), user.getPassword(), enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
+        super(user.getLogin(), user.getPassword(), enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
         userDTO = new UserDTO(user);
     }
 
