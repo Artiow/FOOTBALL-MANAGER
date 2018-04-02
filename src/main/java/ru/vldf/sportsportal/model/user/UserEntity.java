@@ -11,10 +11,13 @@ import java.util.Collection;
 @Table(name = "User", schema = "sportsportal")
 public class UserEntity {
     private Integer id;
-    private String name;
-    private String surname;
+    private String login;
     private String email;
     private String password;
+    private String name;
+    private String surname;
+    private String patronymic;
+    private String phone;
 
     private RoleEntity role;
 
@@ -48,23 +51,13 @@ public class UserEntity {
     }
 
     @Basic
-    @Column(name = "Name", nullable = false, length = 45)
-    public String getName() {
-        return name;
+    @Column(name = "Login", nullable = false, length = 45)
+    public String getLogin() {
+        return login;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @Basic
-    @Column(name = "Surname", nullable = false, length = 45)
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
+    public void setLogin(String login) {
+        this.login = login;
     }
 
     @Basic
@@ -85,6 +78,46 @@ public class UserEntity {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Basic
+    @Column(name = "Name", nullable = false, length = 45)
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Basic
+    @Column(name = "Surname", nullable = false, length = 45)
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    @Basic
+    @Column(name = "Patronymic", length = 45)
+    public String getPatronymic() {
+        return patronymic;
+    }
+
+    public void setPatronymic(String patronomic) {
+        this.patronymic = patronomic;
+    }
+
+    @Basic
+    @Column(name = "Phone", length = 10)
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
 //    ==================================================================================

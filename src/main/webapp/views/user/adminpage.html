@@ -65,13 +65,6 @@
             <div class="col-md-5 col-md-offset-1">
                 <div style="padding: 10px 0 10px 0">
                     <h3>Заявки на создание турнирной команды:</h3>
-                    <table class="table table-hover">
-                        <tr th:each="team_tourney: ${team_tourney_list}" th:object="${team_tourney}">
-                            <td><p style="margin: 5px" th:text="*{name}">NAME</p></td>
-                            <td th:if="*{status.code == 'TEAM_AWAITING'}" class="warning"><p style="margin: 5px">ОЖИДАЕТ ПОДТВЕРЖДЕНИЯ</p></td>
-                        </tr>
-                    </table>
-                    <a th:href="@{/}" type="button" class="btn btn-default">Подтвердить выделенные</a>
                     <div style="height: 150px"></div>
                 </div>
             </div>
