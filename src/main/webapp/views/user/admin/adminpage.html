@@ -62,10 +62,10 @@
 <main style="height: 600px">
     <div class="container">
         <div class="row">
-            <div class="col-md-5 col-md-offset-1">
-                <div style="padding: 10px 0 10px 0">
-                    <a th:href="@{/pp/admin/unconfirmed-user}" th:text="'Заявки на регистрацию (' + ${numOfUnconfirmedUsers} + ')'"></a>
-                </div>
+            <div style="padding: 10px 0 10px 0" class="col-md-5 col-md-offset-1">
+                <a th:href="@{/pp/admin/unconfirmed-user}" th:text="'Заявки на регистрацию (' + ${numOfUnconfirmedUsers} + ')'"></a>
+                <br/>
+                <a th:href="@{/pp/admin/unconfirmed-teams}" th:text="'Заявки на создание команды (' + ${numOfUnconfirmedTeams} + ')'"></a>
             </div>
         </div>
     </div>

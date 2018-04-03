@@ -19,9 +19,20 @@ public interface TeamDAO {
 
     List<TeamEntity> findByUser(UserEntity user);
 
+    Long numByStatus(Integer statusID);
+
+    Long numByStatus(String statusCode);
+
+    Long numByStatus(TeamStatusEntity status);
+
     List<TeamEntity> findByStatus(Integer statusID);
 
     List<TeamEntity> findByStatus(String statusCode);
 
     List<TeamEntity> findByStatus(TeamStatusEntity status);
+
+//    ==================================================================================
+//    === UPDATE
+
+    Integer updateStatusByID(Integer id, TeamStatusEntity status);
 }

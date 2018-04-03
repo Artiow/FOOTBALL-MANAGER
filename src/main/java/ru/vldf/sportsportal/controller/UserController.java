@@ -55,10 +55,14 @@ public class UserController {
     public String toAdminPage(ModelMap map) {
         map
                 .addAttribute("username", authService.getAuthUsername())
-                .addAttribute("numOfUnconfirmedUsers", adminService.getUnconfirmedUsersNum());
+                .addAttribute("numOfUnconfirmedUsers", adminService.getUnconfirmedUsersNum())
+                .addAttribute("numOfUnconfirmedTeams", adminService.getUnconfirmedTeamsNum());
 
         return "user/admin/adminpage";
     }
+
+//    ----------------------------------------------------------------------------------
+//    --- USER
 
     @GetMapping(value = {"/pp/admin/unconfirmed-user"})
     public String toConfirmUserPage(ModelMap map) {
@@ -101,6 +105,33 @@ public class UserController {
     public String deleteTeamPlayer(@PathVariable("id") int id) {
         adminService.deleteDuplicate(id);
         return "redirect:/pp/admin/unconfirmed-user";
+    }
+
+//    ----------------------------------------------------------------------------------
+//    --- TOURNEY
+
+    @GetMapping(value = {"/pp/admin/unconfirmed-teams"})
+    public String toConfirmTeamPage(ModelMap map) {
+        int num = adminService.getUnconfirmedTeamsNum();
+        if (num == 0) return "redirect:/pp/admin";
+
+        map
+                .addAttribute("username", authService.getAuthUsername())
+                .addAttribute("teams", adminService.getUnconfirmedTeams());
+
+        return "user/admin/unconfirmed-teams";
+    }
+
+    @GetMapping(value = {"/pp/admin/unconfirmed-teams/team{id}/confirm"})
+    public String confirmTeam(@PathVariable("id") int id) {
+        adminService.confirmTeam(id);
+        return "redirect:/pp/admin/unconfirmed-teams";
+    }
+
+    @GetMapping(value = {"/pp/admin/unconfirmed-teams/team{id}/reject"})
+    public String rejectTeam(@PathVariable("id") int id) {
+        adminService.rejectTeam(id);
+        return "redirect:/pp/admin/unconfirmed-teams";
     }
 
 //    ==================================================================================

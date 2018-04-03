@@ -59,32 +59,22 @@
     </div>
 </nav>
 
-<main style="height: 600px">
+<main style="min-height: 600px">
     <div class="container">
         <div class="row">
-            <div class="col-md-5 col-md-offset-1">
-                <h2>Заявка:</h2>
-                <div style="padding: 10px 0 10px 0" th:object="${unconfirmedUser}">
-                    <h3 style="margin-bottom: 25px" th:text="*{name + ' ' + surname + ' ' + patronymic}">NAME SURNAME PATRONYMIC</h3>
-                    <p th:text="*{login}">LOGIN</p>
-                    <p th:text="*{email}">EMAIL</p>
-                    <p th:text="*{phone}">PHONE</p>
-                </div>
-                <a style="margin-right: 10px" class="btn btn-default" th:href="${'/pp/admin/unconfirmed-user/user' + unconfirmedUser.getId() + '/confirm'}">Подтвердить</a>
-                <a style="margin-left: 10px" class="btn btn-danger" th:href="${'/pp/admin/unconfirmed-user/user' + unconfirmedUser.getId() + '/reject'}">Отклонить</a>
-            </div>
-            <div class="col-md-5" th:if="${duplicates != null}">
-                <h2>Найденные дубликаты:</h2>
-                <ul style="margin: 0; padding: 10px 0 10px 0" th:each="duplicate: ${duplicates}">
-                    <li style="display: inline-block" th:object="${duplicate}">
-                        <h3 style="margin-bottom: 5px" th:text="*{name + ' ' + surname + ' ' + patronymic}">NAME SURNAME PATRONYMIC</h3>
-                        <p th:text="*{phone}">PHONE</p>
-                        <a class="btn btn-danger" th:href="${'/pp/admin/unconfirmed-user/duplicate' + duplicate.getId() + '/delete'}">Удалить</a>
+            <div class="col-md-5 col-md-offset-1" th:if="${teams != null}">
+                <h2>Заявки на создание команды:</h2>
+                <ul style="margin: 0; padding: 10px 0 10px 0" th:each="team: ${teams}">
+                    <li style="display: inline-block" th:object="${team}">
+                        <h3 style="margin-bottom: 5px" th:text="*{name}">TEAM NAME</h3>
+                        <p th:text="*{captain.name + ' ' + captain.surname + ' ' + captain.patronymic}">CAPTAIN NAME</p>
+                        <a style="margin-right: 10px" class="btn btn-default" th:href="${'/pp/admin/unconfirmed-teams/team' + team.id + '/confirm'}">Подтвердить</a>
+                        <a style="margin-left: 10px" class="btn btn-danger" th:href="${'/pp/admin/unconfirmed-teams/team' + team.id + '/reject'}">Отклонить</a>
                     </li>
                 </ul>
             </div>
-            <div class="col-md-5" th:unless="${duplicates != null}">
-                <h2>Дубликатов не найдено</h2>
+            <div class="col-md-5" th:unless="${teams != null}">
+                <h2>Заявок нет</h2>
             </div>
         </div>
     </div>

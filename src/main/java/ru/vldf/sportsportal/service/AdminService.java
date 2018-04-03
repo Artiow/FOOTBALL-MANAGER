@@ -5,10 +5,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.vldf.sportsportal.dao.generic.definite.tourney.TeamDAO;
 import ru.vldf.sportsportal.dao.generic.definite.tourney.TeamPlayerDAO;
+import ru.vldf.sportsportal.dao.generic.definite.tourney.TeamStatusDAO;
 import ru.vldf.sportsportal.dao.generic.definite.user.UserRoleDAO;
 import ru.vldf.sportsportal.dao.generic.definite.user.UserDAO;
+import ru.vldf.sportsportal.dto.tourney.TeamDTO;
 import ru.vldf.sportsportal.dto.tourney.TeamPlayerDTO;
 import ru.vldf.sportsportal.dto.user.UserDTO;
+import ru.vldf.sportsportal.model.tourney.TeamEntity;
 import ru.vldf.sportsportal.model.tourney.TeamPlayerEntity;
 import ru.vldf.sportsportal.model.user.UserEntity;
 
@@ -80,9 +83,6 @@ public class AdminService {
         );
     }
 
-//    ==================================================================================
-//    === TEAM PLAYER
-
     private TeamPlayerDAO teamPlayerDAO;
 
     @Autowired
@@ -109,11 +109,50 @@ public class AdminService {
 //    === TOURNEY
 
     private TeamDAO teamDAO;
+    private TeamStatusDAO teamStatusDAO;
 
     @Autowired
     public void setTeamDAO(TeamDAO teamDAO) {
         this.teamDAO = teamDAO;
     }
 
-//    TODO: confirm team methods!
+    @Autowired
+    public void setTeamStatusDAO(TeamStatusDAO teamStatusDAO) {
+        this.teamStatusDAO = teamStatusDAO;
+    }
+
+    private String TEAM_AWAITING_CODE = "TEAM_AWAITING";
+
+    @Transactional(readOnly = true)
+    public int getUnconfirmedTeamsNum() {
+        return teamDAO.numByStatus(TEAM_AWAITING_CODE).intValue();
+    }
+
+    @Transactional(readOnly = true)
+    public List<TeamDTO> getUnconfirmedTeams() {
+        List<TeamEntity> entityList = teamDAO.findByStatus(TEAM_AWAITING_CODE);
+        if (entityList == null) return null;
+
+        List<TeamDTO> dtoList = new ArrayList<TeamDTO>();
+        for (TeamEntity entity: entityList) dtoList.add(new TeamDTO(entity));
+        return dtoList;
+    }
+
+    @Transactional
+    public void confirmTeam(Integer id) {
+        String TEAM_CONFIRMED_CODE = "TEAM_CONFIRMED";
+        teamDAO.updateStatusByID(
+                id,
+                teamStatusDAO.findByCode(TEAM_CONFIRMED_CODE)
+        );
+    }
+
+    @Transactional
+    public void rejectTeam(Integer id) {
+        String TEAM_REJECTED_CODE = "TEAM_REJECTED";
+        teamDAO.updateStatusByID(
+                id,
+                teamStatusDAO.findByCode(TEAM_REJECTED_CODE)
+        );
+    }
 }

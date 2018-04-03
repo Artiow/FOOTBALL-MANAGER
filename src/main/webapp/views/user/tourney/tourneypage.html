@@ -68,7 +68,8 @@
                     <tr th:each="team: ${teamList}" th:object="${team}">
                         <td><p style="margin: 5px" th:text="*{name}">NAME</p></td>
                         <td th:if="*{status.code == 'TEAM_AWAITING'}" class="warning"><p style="margin: 5px">ОЖИДАЕТ ПОДТВЕРЖДЕНИЯ</p></td>
-                        <td th:unless="*{status.code == 'TEAM_AWAITING'}"></td>
+                        <td th:if="*{status.code == 'TEAM_REJECTED'}" class="danger"><p style="margin: 5px">ЗАЯВКА ОТКЛОНЕНА</p></td>
+                        <td th:unless="*{(status.code == 'TEAM_AWAITING') || (status.code == 'TEAM_REJECTED')}"></td>
                     </tr>
                 </table>
                 <a th:href="@{/pp/tourney/create-team}" type="button" class="btn btn-default">Создать турнирную команду</a>
