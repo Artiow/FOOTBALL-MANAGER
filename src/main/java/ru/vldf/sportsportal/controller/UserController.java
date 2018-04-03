@@ -43,7 +43,7 @@ public class UserController {
     public String toPersonalPage(ModelMap map) {
         map
                 .addAttribute("username", authService.getAuthUsername())
-                .addAttribute("user", authService.getAuthUser());
+                .addAttribute("authUser", authService.getAuthUser());
 
         return "user/personalpage";
     }
