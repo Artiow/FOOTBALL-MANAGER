@@ -8,10 +8,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import ru.vldf.sportsportal.dto.tourney.TeamDTO;
+import ru.vldf.sportsportal.dto.tourney.TeamPlayerDTO;
 import ru.vldf.sportsportal.dto.user.UserDTO;
 import ru.vldf.sportsportal.service.AdminService;
 import ru.vldf.sportsportal.service.AuthService;
 import ru.vldf.sportsportal.service.UserService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class UserController {
@@ -69,9 +73,14 @@ public class UserController {
 
     @GetMapping(value = {"/pp/admin/unconfirmed-user/user{id}"})
     public String toConfirmUserPageByUser(@PathVariable("id") int id, ModelMap map) {
+        map.addAttribute("username", authService.getAuthUsername());
+
+        UserDTO user = adminService.getUser(id);
+        List<TeamPlayerDTO> duplicates = adminService.getDuplicate(user);
+
         map
-                .addAttribute("username", authService.getAuthUsername())
-                .addAttribute("unconfirmedUser", adminService.getUser(id));
+                .addAttribute("unconfirmedUser", user)
+                .addAttribute("duplicates", duplicates);
 
         return "user/admin/unconfirmed-user";
     }
@@ -79,6 +88,18 @@ public class UserController {
     @GetMapping(value = {"/pp/admin/unconfirmed-user/user{id}/confirm"})
     public String confirmUser(@PathVariable("id") int id) {
         adminService.confirmUser(id);
+        return "redirect:/pp/admin/unconfirmed-user";
+    }
+
+    @GetMapping(value = {"/pp/admin/unconfirmed-user/user{id}/reject"})
+    public String rejectUser(@PathVariable("id") int id) {
+        adminService.rejectUser(id);
+        return "redirect:/pp/admin/unconfirmed-user";
+    }
+
+    @GetMapping(value = {"/pp/admin/unconfirmed-user/duplicate{id}/delete"})
+    public String deleteTeamPlayer(@PathVariable("id") int id) {
+        adminService.deleteDuplicate(id);
         return "redirect:/pp/admin/unconfirmed-user";
     }
 

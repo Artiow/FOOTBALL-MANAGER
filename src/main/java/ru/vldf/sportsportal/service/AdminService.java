@@ -4,9 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.vldf.sportsportal.dao.generic.definite.tourney.TeamDAO;
+import ru.vldf.sportsportal.dao.generic.definite.tourney.TeamPlayerDAO;
 import ru.vldf.sportsportal.dao.generic.definite.user.UserRoleDAO;
 import ru.vldf.sportsportal.dao.generic.definite.user.UserDAO;
+import ru.vldf.sportsportal.dto.tourney.TeamPlayerDTO;
 import ru.vldf.sportsportal.dto.user.UserDTO;
+import ru.vldf.sportsportal.model.tourney.TeamPlayerEntity;
 import ru.vldf.sportsportal.model.user.UserEntity;
 
 import java.util.ArrayList;
@@ -47,8 +50,9 @@ public class AdminService {
     @Transactional(readOnly = true)
     public List<UserDTO> getUnconfirmedUsers() {
         List<UserEntity> entityList = userDAO.findByRole(ROLE_UNCONFIRMED_CODE);
-        List<UserDTO> dtoList = new ArrayList<UserDTO>();
+        if (entityList == null) return null;
 
+        List<UserDTO> dtoList = new ArrayList<UserDTO>();
         for (UserEntity entity: entityList) dtoList.add(new UserDTO(entity));
         return dtoList;
     }
@@ -65,6 +69,40 @@ public class AdminService {
                 id,
                 userRoleDAO.findByCode(ROLE_CONFIRMED_CODE)
         );
+    }
+
+    @Transactional
+    public void rejectUser(Integer id) {
+        String ROLE_REJECTED_CODE = "ROLE_REJECTED";
+        userDAO.updateRoleByID(
+                id,
+                userRoleDAO.findByCode(ROLE_REJECTED_CODE)
+        );
+    }
+
+//    ==================================================================================
+//    === TEAM PLAYER
+
+    private TeamPlayerDAO teamPlayerDAO;
+
+    @Autowired
+    public void setTeamPlayerDAO(TeamPlayerDAO teamPlayerDAO) {
+        this.teamPlayerDAO = teamPlayerDAO;
+    }
+
+    @Transactional(readOnly = true)
+    public List<TeamPlayerDTO> getDuplicate(UserDTO user) {
+        List<TeamPlayerEntity> entityList = teamPlayerDAO.findByFullName(user.getName(), user.getSurname(), user.getPatronymic());
+        if (entityList == null) return null;
+
+        List<TeamPlayerDTO> dtoList = new ArrayList<TeamPlayerDTO>();
+        for (TeamPlayerEntity entity: entityList) dtoList.add(new TeamPlayerDTO(entity));
+        return dtoList;
+    }
+
+    @Transactional
+    public void deleteDuplicate(Integer id) {
+        teamPlayerDAO.deleteByID(id);
     }
 
 //    ==================================================================================

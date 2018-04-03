@@ -47,9 +47,8 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public List<TeamDTO> getTeamList() {
-        List<TeamEntity> entityList = teamDAO.findByUser(
-                authService.getAuthUser().getId()
-        );
+        List<TeamEntity> entityList = teamDAO.findByUser(authService.getAuthUser().getId());
+        if (entityList == null) return null;
 
         List<TeamDTO> dtoList = new ArrayList<TeamDTO>();
         for (TeamEntity entity: entityList) dtoList.add(new TeamDTO(entity));

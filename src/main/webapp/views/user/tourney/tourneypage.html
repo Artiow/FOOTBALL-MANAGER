@@ -62,19 +62,20 @@
 <main style="height: 600px">
     <div class="container">
         <div class="row">
-            <div class="col-md-5 col-md-offset-1">
-                <div style="padding: 10px 0 10px 0">
-                    <h3>Мои турнирные команды:</h3>
-                    <table class="table table-hover">
-                        <tr th:each="team: ${teamList}" th:object="${team}">
-                            <td><p style="margin: 5px" th:text="*{name}">NAME</p></td>
-                            <td th:if="*{status.code == 'TEAM_AWAITING'}" class="warning"><p style="margin: 5px">ОЖИДАЕТ ПОДТВЕРЖДЕНИЯ</p></td>
-                            <td th:unless="*{status.code == 'TEAM_AWAITING'}"></td>
-                        </tr>
-                    </table>
-                    <a th:href="@{/pp/tourney/create-team}" type="button" class="btn btn-default">Создать турнирную команду</a>
-                    <div style="height: 150px"></div>
-                </div>
+            <div style="padding: 10px 0 10px 0" class="col-md-5 col-md-offset-1" th:if="${teamList != null}">
+                <h3>Мои турнирные команды:</h3>
+                <table class="table table-hover">
+                    <tr th:each="team: ${teamList}" th:object="${team}">
+                        <td><p style="margin: 5px" th:text="*{name}">NAME</p></td>
+                        <td th:if="*{status.code == 'TEAM_AWAITING'}" class="warning"><p style="margin: 5px">ОЖИДАЕТ ПОДТВЕРЖДЕНИЯ</p></td>
+                        <td th:unless="*{status.code == 'TEAM_AWAITING'}"></td>
+                    </tr>
+                </table>
+                <a th:href="@{/pp/tourney/create-team}" type="button" class="btn btn-default">Создать турнирную команду</a>
+            </div>
+            <div style="padding: 10px 0 10px 0" class="col-md-5 col-md-offset-1" th:unless="${teamList != null}">
+                <h3>Нет турнирных команд!</h3>
+                <a th:href="@{/pp/tourney/create-team}" type="button" class="btn btn-default">Создать турнирную команду</a>
             </div>
         </div>
     </div>

@@ -22,8 +22,9 @@ public class LeaseService {
     @Transactional(readOnly = true)
     public List<PlaygroundDTO> getPlaygroundList() {
         List<PlaygroundEntity> entityList = playgroundDAO.findAll();
-        List<PlaygroundDTO> dtoList = new ArrayList<PlaygroundDTO>();
+        if (entityList == null) return null;
 
+        List<PlaygroundDTO> dtoList = new ArrayList<PlaygroundDTO>();
         for (PlaygroundEntity entity: entityList) dtoList.add(new PlaygroundDTO(entity));
         return dtoList;
     }
