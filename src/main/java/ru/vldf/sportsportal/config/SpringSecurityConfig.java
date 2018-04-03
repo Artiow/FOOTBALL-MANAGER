@@ -23,14 +23,14 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-//        TODO: add protected pages!
-
         http
                 .csrf()
                     .disable()
 
                 .authorizeRequests()
                     .antMatchers("/personalpage/**").authenticated()
+                    .antMatchers("/pp/tourney/**").hasAuthority("ROLE_USER")
+                    .antMatchers("/pp/admin/**").hasAuthority("ROLE_ADMIN")
                     .and()
 
                 .formLogin()
