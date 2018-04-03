@@ -1,8 +1,7 @@
 package ru.vldf.sportsportal.model.user;
 
 import ru.vldf.sportsportal.dto.user.UserDTO;
-import ru.vldf.sportsportal.model.SportEntity;
-import ru.vldf.sportsportal.model.tourney.TeamTourneyEntity;
+import ru.vldf.sportsportal.model.tourney.TeamEntity;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -19,16 +18,15 @@ public class UserEntity {
     private String patronymic;
     private String phone;
 
-    private RoleEntity role;
+    private UserRoleEntity role;
 
-    private Collection<SportEntity> sports;
-    private Collection<TeamTourneyEntity> teamsTourney;
+    private Collection<TeamEntity> teamsTourney;
 
     public UserEntity() {
 
     }
 
-    public UserEntity(UserDTO userDTO, RoleEntity roleEntity) {
+    public UserEntity(UserDTO userDTO, UserRoleEntity role) {
         id = userDTO.getId();
         login = userDTO.getLogin();
         email = userDTO.getEmail();
@@ -38,7 +36,7 @@ public class UserEntity {
         patronymic = userDTO.getPatronymic();
         phone = userDTO.getPhone();
 
-        role = roleEntity;
+        this.role = role;
     }
 
     @Id
@@ -126,11 +124,11 @@ public class UserEntity {
 //    === ONE-TO-MANY REFERENCES
 
     @OneToMany(mappedBy = "captain")
-    public Collection<TeamTourneyEntity> getTeamsTourney() {
+    public Collection<TeamEntity> getTeamsTourney() {
         return teamsTourney;
     }
 
-    public void setTeamsTourney(Collection<TeamTourneyEntity> teamsTourney) {
+    public void setTeamsTourney(Collection<TeamEntity> teamsTourney) {
         this.teamsTourney = teamsTourney;
     }
 
@@ -140,33 +138,16 @@ public class UserEntity {
 
     @ManyToOne
     @JoinColumn(
-            name = "Role_ID",
+            name = "UserRole_ID",
             referencedColumnName = "ID",
             nullable = false
     )
-    public RoleEntity getRole() {
+    public UserRoleEntity getRole() {
         return role;
     }
 
-    public void setRole(RoleEntity role) {
+    public void setRole(UserRoleEntity role) {
         this.role = role;
-    }
-
-//    ==================================================================================
-//    === MANY-TO-MANY REFERENCES
-
-    @ManyToMany
-    @JoinTable(
-            name = "UserSpecialization",
-            joinColumns = @JoinColumn(name = "User_ID"),
-            inverseJoinColumns = @JoinColumn(name = "Sport_ID")
-    )
-    public Collection<SportEntity> getSports() {
-        return sports;
-    }
-
-    public void setSports(Collection<SportEntity> sports) {
-        this.sports = sports;
     }
 
 //    ==================================================================================

@@ -3,12 +3,12 @@ package ru.vldf.sportsportal.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.vldf.sportsportal.dao.generic.definite.tourney.TeamTourneyDAO;
-import ru.vldf.sportsportal.dao.generic.definite.tourney.TeamTourneyStatusDAO;
+import ru.vldf.sportsportal.dao.generic.definite.tourney.TeamDAO;
+import ru.vldf.sportsportal.dao.generic.definite.tourney.TeamStatusDAO;
 import ru.vldf.sportsportal.dao.generic.definite.user.UserDAO;
-import ru.vldf.sportsportal.dto.tourney.TeamTourneyDTO;
-import ru.vldf.sportsportal.model.tourney.TeamTourneyEntity;
-import ru.vldf.sportsportal.model.tourney.TeamTourneyStatusEntity;
+import ru.vldf.sportsportal.dto.tourney.TeamDTO;
+import ru.vldf.sportsportal.model.tourney.TeamEntity;
+import ru.vldf.sportsportal.model.tourney.TeamStatusEntity;
 import ru.vldf.sportsportal.model.user.UserEntity;
 
 import java.util.ArrayList;
@@ -32,41 +32,37 @@ public class UserService {
 //    ==================================================================================
 //    === TOURNEY
 
-    private TeamTourneyDAO teamTourneyDAO;
-    private TeamTourneyStatusDAO teamTourneyStatusDAO;
+    private TeamDAO teamDAO;
+    private TeamStatusDAO teamStatusDAO;
 
     @Autowired
-    public void setTeamTourneyDAO(TeamTourneyDAO teamTourneyDAO) {
-        this.teamTourneyDAO = teamTourneyDAO;
+    public void setTeamDAO(TeamDAO teamDAO) {
+        this.teamDAO = teamDAO;
     }
 
     @Autowired
-    public void setTeamTourneyStatusDAO(TeamTourneyStatusDAO teamTourneyStatusDAO) {
-        this.teamTourneyStatusDAO = teamTourneyStatusDAO;
+    public void setTeamStatusDAO(TeamStatusDAO teamStatusDAO) {
+        this.teamStatusDAO = teamStatusDAO;
     }
 
     @Transactional(readOnly = true)
-    protected UserEntity getSelf() {
-        return userDAO.findByID(
+    public List<TeamDTO> getTeamList() {
+        List<TeamEntity> entityList = teamDAO.findByUser(
                 authService.getAuthUser().getId()
         );
-    }
 
-    @Transactional(readOnly = true)
-    public List<TeamTourneyDTO> getTeamTourneyList() {
-        List<TeamTourneyEntity> entityList = teamTourneyDAO.getTeamTourneyListByUser(getSelf());
-        List<TeamTourneyDTO> dtoList = new ArrayList<TeamTourneyDTO>();
-
-        for (TeamTourneyEntity entity: entityList) dtoList.add(new TeamTourneyDTO(entity));
-//        TODO: impl not lazy init
-
+        List<TeamDTO> dtoList = new ArrayList<TeamDTO>();
+        for (TeamEntity entity: entityList) dtoList.add(new TeamDTO(entity));
         return dtoList;
     }
 
     @Transactional
-    public void createTeamTourney(TeamTourneyDTO teamTourneyDTO) {
-        UserEntity captain = getSelf();
-        TeamTourneyStatusEntity status = teamTourneyStatusDAO.findByCode("TEAM_AWAITING");
-        teamTourneyDAO.saveTeamTourney(new TeamTourneyEntity(teamTourneyDTO, captain, status));
+    public void createTeam(TeamDTO teamDTO) {
+        UserEntity captain = userDAO.findByID(
+                authService.getAuthUser().getId()
+        );
+
+        TeamStatusEntity status = teamStatusDAO.findByCode("TEAM_AWAITING");
+        teamDAO.save(new TeamEntity(teamDTO, captain, status));
     }
 }

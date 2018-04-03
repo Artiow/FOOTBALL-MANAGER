@@ -13,11 +13,19 @@ public class PlaygroundDAOImpl extends AbstractDAOImpl<PlaygroundEntity, Integer
         super(PlaygroundEntity.class);
     }
 
-    public PlaygroundEntity findPlaygroundByID(Integer id) {
-        return this.get(id);
+    @Override
+    public Integer save(PlaygroundEntity playground) {
+        return super.save(playground);
     }
 
-    public List<PlaygroundEntity> getPlaygroundList() {
-        return this.list();
+//    ==================================================================================
+//    === FIND
+
+    public PlaygroundEntity findByID(Integer id) {
+        return super.get(id);
+    }
+
+    public List<PlaygroundEntity> findAll() {
+        return super.list();
     }
 }

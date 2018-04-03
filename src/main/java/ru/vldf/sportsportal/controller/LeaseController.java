@@ -38,7 +38,7 @@ public class LeaseController {
     }
 
     @GetMapping(value = {"/lease/pg{id}"})
-    public String playgroundPage(@PathVariable("id") int id, ModelMap map) {
+    public String toPlaygroundPage(@PathVariable("id") int id, ModelMap map) {
         map.addAttribute("username", authService.getAuthUsername());
         map.addAttribute("playground", leaseService.getPlayground(id));
 

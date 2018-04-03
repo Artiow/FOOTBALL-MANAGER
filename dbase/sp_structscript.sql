@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS `sportsportal`.`User` (
   INDEX `fk_User_Role1_idx` (`Role_ID` ASC),
   CONSTRAINT `fk_User_Role1`
     FOREIGN KEY (`Role_ID`)
-    REFERENCES `sportsportal`.`Role` (`ID`)
+    REFERENCES `sportsportal`.UserRole (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;

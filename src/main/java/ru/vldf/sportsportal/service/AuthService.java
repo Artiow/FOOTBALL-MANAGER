@@ -5,15 +5,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import ru.vldf.sportsportal.dao.generic.definite.tourney.TeamTourneyDAO;
-import ru.vldf.sportsportal.dao.generic.definite.tourney.TeamTourneyStatusDAO;
-import ru.vldf.sportsportal.dao.generic.definite.user.RoleDAO;
+import org.springframework.transaction.annotation.Transactional;
+import ru.vldf.sportsportal.dao.generic.definite.user.UserRoleDAO;
 import ru.vldf.sportsportal.dao.generic.definite.user.UserDAO;
-import ru.vldf.sportsportal.dto.tourney.TeamTourneyDTO;
 import ru.vldf.sportsportal.dto.user.UserDTO;
-import ru.vldf.sportsportal.model.tourney.TeamTourneyEntity;
-import ru.vldf.sportsportal.model.tourney.TeamTourneyStatusEntity;
-import ru.vldf.sportsportal.model.user.RoleEntity;
+import ru.vldf.sportsportal.model.user.UserRoleEntity;
 import ru.vldf.sportsportal.model.user.UserEntity;
 import ru.vldf.sportsportal.service.security.SecurityPrincipal;
 
@@ -22,7 +18,7 @@ public class AuthService {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     private UserDAO userDAO;
-    private RoleDAO roleDAO;
+    private UserRoleDAO userRoleDAO;
 
     @Autowired
     public void setBCryptPasswordEncoder(BCryptPasswordEncoder bCryptPasswordEncoder) {
@@ -30,8 +26,8 @@ public class AuthService {
     }
 
     @Autowired
-    public void setRoleDAO(RoleDAO roleDAO) {
-        this.roleDAO = roleDAO;
+    public void setUserRoleDAO(UserRoleDAO userRoleDAO) {
+        this.userRoleDAO = userRoleDAO;
     }
 
     @Autowired
@@ -43,11 +39,17 @@ public class AuthService {
         return SecurityContextHolder.getContext().getAuthentication();
     }
 
+    @Transactional
     public void register(UserDTO userDTO) {
+        String ROLE_UNCONFIRMED_CODE = "ROLE_UNCONFIRMED";
         userDTO.setPassword(bCryptPasswordEncoder.encode(userDTO.getPassword()));
-        RoleEntity role = roleDAO.findByCode("ROLE_UNCONFIRMED"); //TODO: remove this in DAO
 
-        userDAO.saveUser(new UserEntity(userDTO, role));
+        userDAO.save(
+                new UserEntity(
+                        userDTO,
+                        userRoleDAO.findByCode(ROLE_UNCONFIRMED_CODE)
+                )
+        );
     }
 
     public UserDTO getAuthUser() {
@@ -60,7 +62,6 @@ public class AuthService {
 
     public String getAuthUsername() {
         UserDTO user = getAuthUser();
-
         if (user != null) return user.toString();
         else return "ERROR";
     }

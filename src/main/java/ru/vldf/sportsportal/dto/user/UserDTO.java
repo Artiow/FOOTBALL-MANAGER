@@ -12,7 +12,7 @@ public class UserDTO {
     private String patronymic;
     private String phone;
 
-    private RoleDTO role;
+    private UserRoleDTO role;
 
     public UserDTO() {
 
@@ -28,7 +28,7 @@ public class UserDTO {
         patronymic = user.getPatronymic();
         phone = user.getPhone();
 
-        role = new RoleDTO(user.getRole());
+        role = new UserRoleDTO(user.getRole());
     }
 
     public void setId(Integer id) {
@@ -95,11 +95,11 @@ public class UserDTO {
         this.phone = phone;
     }
 
-    public void setRole(RoleDTO role) {
+    public void setRole(UserRoleDTO role) {
         this.role = role;
     }
 
-    public RoleDTO getRole() {
+    public UserRoleDTO getRole() {
         return role;
     }
 

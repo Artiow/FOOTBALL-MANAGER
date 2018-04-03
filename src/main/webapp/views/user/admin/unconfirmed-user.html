@@ -71,9 +71,7 @@
                     <p th:text="*{email}">EMAIL</p>
                     <p th:text="*{phone}">PHONE</p>
                 </div>
-                <form role="form" th:action="${'/pp/admin/confirm-user/user' + unconfirmedUser.getId()}" method="post">
-                    <button type="submit" class="btn btn-default">Подтвердить</button>
-                </form>
+                <a class="btn btn-default" th:href="${'/pp/admin/unconfirmed-user/user' + unconfirmedUser.getId() + '/confirm'}">Подтвердить</a>
             </div>
         </div>
     </div>

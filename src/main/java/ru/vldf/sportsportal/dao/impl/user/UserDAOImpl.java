@@ -3,7 +3,7 @@ package ru.vldf.sportsportal.dao.impl.user;
 import org.springframework.stereotype.Repository;
 import ru.vldf.sportsportal.dao.generic.definite.user.UserDAO;
 import ru.vldf.sportsportal.dao.generic.abstrct.AbstractDAOImpl;
-import ru.vldf.sportsportal.model.user.RoleEntity;
+import ru.vldf.sportsportal.model.user.UserRoleEntity;
 import ru.vldf.sportsportal.model.user.UserEntity;
 
 import java.util.List;
@@ -14,8 +14,9 @@ public class UserDAOImpl extends AbstractDAOImpl<UserEntity, Integer> implements
         super(UserEntity.class);
     }
 
-    public Integer saveUser(UserEntity user) {
-        return this.save(user);
+    @Override
+    public Integer save(UserEntity user) {
+        return super.save(user);
     }
 
 //    ==================================================================================
@@ -51,20 +52,60 @@ public class UserDAOImpl extends AbstractDAOImpl<UserEntity, Integer> implements
         else return null;
     }
 
-    public Long numByRoleCode(String code) {
+    public Long numByRole(Integer roleID) {
         List count = getSession()
-                .createQuery("select count(*) from UserEntity where role.code=?")
-                .setParameter(0, code)
+                .createQuery("select count(*) from UserEntity where role.id=?")
+                .setParameter(0, roleID)
                 .list(); //TODO: list?
 
         if ((count != null) && (count.size() > 0)) return ((Long) count.get(0));
-        return null;
+        else return null;
     }
 
-    public List<UserEntity> findByRoleCode(String code) {
+    public Long numByRole(String roleCode) {
+        List count = getSession()
+                .createQuery("select count(*) from UserEntity where role.code=?")
+                .setParameter(0, roleCode)
+                .list(); //TODO: list?
+
+        if ((count != null) && (count.size() > 0)) return ((Long) count.get(0));
+        else return null;
+    }
+
+    public Long numByRole(UserRoleEntity role) {
+        List count = getSession()
+                .createQuery("select count(*) from UserEntity where role=?")
+                .setParameter(0, role)
+                .list(); //TODO: list?
+
+        if ((count != null) && (count.size() > 0)) return ((Long) count.get(0));
+        else return null;
+    }
+
+    public List<UserEntity> findByRole(Integer roleID) {
+        List users = getSession()
+                .createQuery("from UserEntity where role.id=?")
+                .setParameter(0, roleID)
+                .list();
+
+        if ((users != null) && (users.size() > 0)) return ((List<UserEntity>) users);
+        else return null;
+    }
+
+    public List<UserEntity> findByRole(String roleCode) {
         List users = getSession()
                 .createQuery("from UserEntity where role.code=?")
-                .setParameter(0, code)
+                .setParameter(0, roleCode)
+                .list();
+
+        if ((users != null) && (users.size() > 0)) return ((List<UserEntity>) users);
+        else return null;
+    }
+
+    public List<UserEntity> findByRole(UserRoleEntity role) {
+        List users = getSession()
+                .createQuery("from UserEntity where role=?")
+                .setParameter(0, role)
                 .list();
 
         if ((users != null) && (users.size() > 0)) return ((List<UserEntity>) users);
@@ -74,7 +115,7 @@ public class UserDAOImpl extends AbstractDAOImpl<UserEntity, Integer> implements
 //    ==================================================================================
 //    === UPDATE
 
-    public Integer updateRoleByID(Integer id, RoleEntity role) {
+    public Integer updateRoleByID(Integer id, UserRoleEntity role) {
         return getSession()
                 .createQuery("update UserEntity set role=? where id=?")
                 .setParameter(0, role)

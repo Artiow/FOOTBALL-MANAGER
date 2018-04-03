@@ -21,22 +21,15 @@ public class LeaseService {
 
     @Transactional(readOnly = true)
     public List<PlaygroundDTO> getPlaygroundList() {
-        return getPlaygroundList(true);
-    }
-
-    @Transactional(readOnly = true)
-    public List<PlaygroundDTO> getPlaygroundList(boolean lazy) {
-        List<PlaygroundEntity> entityList = playgroundDAO.getPlaygroundList();
+        List<PlaygroundEntity> entityList = playgroundDAO.findAll();
         List<PlaygroundDTO> dtoList = new ArrayList<PlaygroundDTO>();
 
         for (PlaygroundEntity entity: entityList) dtoList.add(new PlaygroundDTO(entity));
-//        TODO: impl not lazy init
-
         return dtoList;
     }
 
     @Transactional(readOnly = true)
     public PlaygroundDTO getPlayground(Integer id) {
-        return new PlaygroundDTO(playgroundDAO.findPlaygroundByID(id));
+        return new PlaygroundDTO(playgroundDAO.findByID(id));
     }
 }

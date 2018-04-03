@@ -1,26 +1,26 @@
 package ru.vldf.sportsportal.model.tourney;
 
-import ru.vldf.sportsportal.dto.tourney.TeamTourneyDTO;
+import ru.vldf.sportsportal.dto.tourney.TeamDTO;
 import ru.vldf.sportsportal.model.user.UserEntity;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "TeamTourney", schema = "sportsportal")
-public class TeamTourneyEntity {
+@Table(name = "Team", schema = "sportsportal")
+public class TeamEntity {
     private Integer id;
     private String name;
 
     private UserEntity captain;
-    private TeamTourneyStatusEntity status;
+    private TeamStatusEntity status;
 
-    public TeamTourneyEntity() {
+    public TeamEntity() {
 
     }
 
-    public TeamTourneyEntity(TeamTourneyDTO teamTourneyDTO, UserEntity captain, TeamTourneyStatusEntity status) {
-        id = teamTourneyDTO.getId();
-        name = teamTourneyDTO.getName();
+    public TeamEntity(TeamDTO teamDTO, UserEntity captain, TeamStatusEntity status) {
+        id = teamDTO.getId();
+        name = teamDTO.getName();
 
         this.captain = captain;
         this.status = status;
@@ -70,11 +70,11 @@ public class TeamTourneyEntity {
             referencedColumnName = "ID",
             nullable = false
     )
-    public TeamTourneyStatusEntity getStatus() {
+    public TeamStatusEntity getStatus() {
         return status;
     }
 
-    public void setStatus(TeamTourneyStatusEntity status) {
+    public void setStatus(TeamStatusEntity status) {
         this.status = status;
     }
 
@@ -86,19 +86,14 @@ public class TeamTourneyEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        TeamTourneyEntity that = (TeamTourneyEntity) o;
+        TeamEntity that = (TeamEntity) o;
 
-        if (id != null ? !id.equals(that.id) : that.id != null) return false;
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
-
-        return true;
+        return id.equals(that.id);
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        return result;
+        return id.hashCode();
     }
 
     @Override

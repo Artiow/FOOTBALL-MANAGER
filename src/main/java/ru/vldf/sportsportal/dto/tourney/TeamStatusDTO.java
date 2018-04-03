@@ -1,13 +1,13 @@
 package ru.vldf.sportsportal.dto.tourney;
 
-import ru.vldf.sportsportal.model.tourney.TeamTourneyStatusEntity;
+import ru.vldf.sportsportal.model.tourney.TeamStatusEntity;
 
-public class TeamTourneyStatusDTO {
+public class TeamStatusDTO {
     private Integer id;
     private String code;
     private String description;
 
-    public TeamTourneyStatusDTO(TeamTourneyStatusEntity teamTourneyStatus) {
+    public TeamStatusDTO(TeamStatusEntity teamTourneyStatus) {
         id = teamTourneyStatus.getId();
         code = teamTourneyStatus.getCode();
         description = teamTourneyStatus.getDescription();

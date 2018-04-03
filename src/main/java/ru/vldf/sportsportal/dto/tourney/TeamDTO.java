@@ -1,25 +1,25 @@
 package ru.vldf.sportsportal.dto.tourney;
 
 import ru.vldf.sportsportal.dto.user.UserDTO;
-import ru.vldf.sportsportal.model.tourney.TeamTourneyEntity;
+import ru.vldf.sportsportal.model.tourney.TeamEntity;
 
-public class TeamTourneyDTO {
+public class TeamDTO {
     private Integer id;
     private String name;
 
     private UserDTO captain;
-    private TeamTourneyStatusDTO status;
+    private TeamStatusDTO status;
 
-    public TeamTourneyDTO() {
+    public TeamDTO() {
 
     }
 
-    public TeamTourneyDTO(TeamTourneyEntity teamTourney) {
+    public TeamDTO(TeamEntity teamTourney) {
         id = teamTourney.getId();
         name = teamTourney.getName();
 
         captain = new UserDTO(teamTourney.getCaptain());
-        status = new TeamTourneyStatusDTO(teamTourney.getStatus());
+        status = new TeamStatusDTO(teamTourney.getStatus());
     }
 
     public void setId(Integer id) {
@@ -46,11 +46,11 @@ public class TeamTourneyDTO {
         return captain;
     }
 
-    public void setStatus(TeamTourneyStatusDTO status) {
+    public void setStatus(TeamStatusDTO status) {
         this.status = status;
     }
 
-    public TeamTourneyStatusDTO getStatus() {
+    public TeamStatusDTO getStatus() {
         return status;
     }
 }

@@ -1,13 +1,13 @@
 package ru.vldf.sportsportal.dao.generic.definite.user;
 
-import ru.vldf.sportsportal.model.user.RoleEntity;
+import ru.vldf.sportsportal.model.user.UserRoleEntity;
 import ru.vldf.sportsportal.model.user.UserEntity;
 
 import java.util.List;
 
 public interface UserDAO {
 
-    Integer saveUser(UserEntity user);
+    Integer save(UserEntity user);
 
 //    ==================================================================================
 //    === FIND
@@ -18,12 +18,20 @@ public interface UserDAO {
 
     UserEntity findByEMail(String eMail);
 
-    Long numByRoleCode(String code);
+    Long numByRole(Integer roleID);
 
-    List<UserEntity> findByRoleCode(String code);
+    Long numByRole(String roleCode);
+
+    Long numByRole(UserRoleEntity role);
+
+    List<UserEntity> findByRole(Integer roleID);
+
+    List<UserEntity> findByRole(String roleCode);
+
+    List<UserEntity> findByRole(UserRoleEntity role);
 
 //    ==================================================================================
 //    === UPDATE
 
-    Integer updateRoleByID(Integer id, RoleEntity role);
+    Integer updateRoleByID(Integer id, UserRoleEntity role);
 }

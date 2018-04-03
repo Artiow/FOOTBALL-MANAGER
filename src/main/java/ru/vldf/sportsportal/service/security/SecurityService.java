@@ -9,7 +9,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.vldf.sportsportal.dao.generic.definite.user.UserDAO;
-import ru.vldf.sportsportal.model.user.RoleEntity;
+import ru.vldf.sportsportal.model.user.UserRoleEntity;
 import ru.vldf.sportsportal.model.user.UserEntity;
 
 import java.util.ArrayList;
@@ -30,7 +30,7 @@ public class SecurityService implements UserDetailsService {
         return new SecurityPrincipal(user, buildUserAuthorities(user.getRole()));
     }
 
-    private Collection<GrantedAuthority> buildUserAuthorities(RoleEntity role) {
+    private Collection<GrantedAuthority> buildUserAuthorities(UserRoleEntity role) {
         Collection<GrantedAuthority> auth = new ArrayList<GrantedAuthority>();
 
 //        TODO: add multiple roles!

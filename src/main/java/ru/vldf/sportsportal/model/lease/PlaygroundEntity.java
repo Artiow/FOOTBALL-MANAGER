@@ -1,7 +1,5 @@
 package ru.vldf.sportsportal.model.lease;
 
-import ru.vldf.sportsportal.model.SportEntity;
-
 import javax.persistence.*;
 import java.util.Collection;
 
@@ -50,7 +48,7 @@ public class PlaygroundEntity {
 
     @ManyToMany
     @JoinTable(
-            name = "PlaygroundSpecialization",
+            name = "PlaygroundSpec",
             joinColumns = @JoinColumn(name = "Playground_ID"),
             inverseJoinColumns = @JoinColumn(name = "Sport_ID")
     )
@@ -65,6 +63,7 @@ public class PlaygroundEntity {
 //    ==================================================================================
 //    === OBJECTS METHODS
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -72,19 +71,12 @@ public class PlaygroundEntity {
 
         PlaygroundEntity that = (PlaygroundEntity) o;
 
-        if (id != null ? !id.equals(that.id) : that.id != null) return false;
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        if (address != null ? !address.equals(that.address) : that.address != null) return false;
-
-        return true;
+        return id.equals(that.id);
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (address != null ? address.hashCode() : 0);
-        return result;
+        return id.hashCode();
     }
 
     @Override

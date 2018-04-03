@@ -1,13 +1,13 @@
 package ru.vldf.sportsportal.dto.user;
 
-import ru.vldf.sportsportal.model.user.RoleEntity;
+import ru.vldf.sportsportal.model.user.UserRoleEntity;
 
-public class RoleDTO {
+public class UserRoleDTO {
     private Integer id;
     private String code;
     private String name;
 
-    public RoleDTO(RoleEntity role) {
+    public UserRoleDTO(UserRoleEntity role) {
         id = role.getId();
         code = role.getCode();
         name = role.getName();

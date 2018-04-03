@@ -4,13 +4,13 @@ import javax.persistence.*;
 import java.util.Collection;
 
 @Entity
-@Table(name = "TeamTourneyStatus", schema = "sportsportal")
-public class TeamTourneyStatusEntity {
+@Table(name = "TeamStatus", schema = "sportsportal")
+public class TeamStatusEntity {
     private Integer id;
     private String code;
     private String description;
 
-    private Collection<TeamTourneyEntity> teams;
+    private Collection<TeamEntity> teams;
 
     @Id
     @Column(name = "ID", nullable = false)
@@ -34,7 +34,7 @@ public class TeamTourneyStatusEntity {
     }
 
     @Basic
-    @Column(name = "Description", nullable = false, length = 45)
+    @Column(name = "Description", length = 90)
     public String getDescription() {
         return description;
     }
@@ -47,11 +47,11 @@ public class TeamTourneyStatusEntity {
 //    === ONE-TO-MANY REFERENCES
 
     @OneToMany(mappedBy = "status")
-    public Collection<TeamTourneyEntity> getTeams() {
+    public Collection<TeamEntity> getTeams() {
         return teams;
     }
 
-    public void setTeams(Collection<TeamTourneyEntity> users) {
+    public void setTeams(Collection<TeamEntity> teams) {
         this.teams = teams;
     }
 
@@ -63,21 +63,14 @@ public class TeamTourneyStatusEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        TeamTourneyStatusEntity that = (TeamTourneyStatusEntity) o;
+        TeamStatusEntity that = (TeamStatusEntity) o;
 
-        if (id != null ? !id.equals(that.id) : that.id != null) return false;
-        if (code != null ? !code.equals(that.code) : that.code != null) return false;
-        if (description != null ? !description.equals(that.description) : that.description != null) return false;
-
-        return true;
+        return id.equals(that.id);
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (code != null ? code.hashCode() : 0);
-        result = 31 * result + (description != null ? description.hashCode() : 0);
-        return result;
+        return id.hashCode();
     }
 
     @Override

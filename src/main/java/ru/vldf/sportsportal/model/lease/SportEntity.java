@@ -1,16 +1,15 @@
-package ru.vldf.sportsportal.model.user;
+package ru.vldf.sportsportal.model.lease;
 
 import javax.persistence.*;
 import java.util.Collection;
 
 @Entity
-@Table(name = "Role", schema = "sportsportal")
-public class RoleEntity {
+@Table(name = "Sport", schema = "sportsportal")
+public class SportEntity {
     private Integer id;
-    private String code;
     private String name;
 
-    private Collection<UserEntity> users;
+    private Collection<PlaygroundEntity> playgrounds;
 
     @Id
     @Column(name = "ID", nullable = false)
@@ -24,16 +23,6 @@ public class RoleEntity {
     }
 
     @Basic
-    @Column(name = "Code", nullable = false, length = 45)
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    @Basic
     @Column(name = "Name", nullable = false, length = 45)
     public String getName() {
         return name;
@@ -44,42 +33,43 @@ public class RoleEntity {
     }
 
 //    ==================================================================================
-//    === ONE-TO-MANY REFERENCES
+//    === MANY-TO-MANY REFERENCES
 
-    @OneToMany(mappedBy = "role")
-    public Collection<UserEntity> getUsers() {
-        return users;
+    @ManyToMany
+    @JoinTable(
+            name = "PlaygroundSpec",
+            joinColumns = @JoinColumn(name = "Sport_ID"),
+            inverseJoinColumns = @JoinColumn(name = "Playground_ID")
+    )
+    public Collection<PlaygroundEntity> getPlaygrounds() {
+        return playgrounds;
     }
 
-    public void setUsers(Collection<UserEntity> users) {
-        this.users = users;
+    public void setPlaygrounds(Collection<PlaygroundEntity> playgrounds) {
+        this.playgrounds = playgrounds;
     }
 
 //    ==================================================================================
 //    === OBJECTS METHODS
+
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        RoleEntity that = (RoleEntity) o;
+        SportEntity that = (SportEntity) o;
 
-        if (id != null ? !id.equals(that.id) : that.id != null) return false;
-        if (code != null ? !code.equals(that.code) : that.code != null) return false;
-
-        return true;
+        return id.equals(that.id);
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (code != null ? code.hashCode() : 0);
-        return result;
+        return id.hashCode();
     }
 
     @Override
     public String toString() {
-        return code;
+        return name;
     }
 }
