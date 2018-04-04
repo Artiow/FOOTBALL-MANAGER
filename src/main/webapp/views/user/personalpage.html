@@ -51,7 +51,7 @@
         th:src="@{/components/HeaderAuth.js}"
 ></script>
 
-<nav class="nav-ppage">
+<nav class="nav-ppage" th:unless="${(authUser.role.code == 'ROLE_REJECTED') || (authUser.role.code == 'ROLE_UNCONFIRMED')}">
     <div class="container">
         <ul class="list-inline">
             <li th:if="${(authUser.role.code == 'ROLE_ADMIN')}"><a th:href="@{/pp/admin}">Администрирование</a></li>
@@ -60,13 +60,35 @@
     </div>
 </nav>
 
-<main style="height: 600px">
+<main class="main-ppage" style="min-height: 600px">
+    <div class="alert-danger" th:if="${(authUser.role.code == 'ROLE_REJECTED')}">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h3>ОТКАЗАНО В РЕГИСТРАЦИИ</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="alert-warning" th:if="${(authUser.role.code == 'ROLE_UNCONFIRMED')}">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h3>УЧЕТНАЯ ЗАПИСЬ НЕ ПОДТВЕРЖДЕНА</h3>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="container">
         <div class="row">
-            <div class="col-md-5 col-md-offset-1">
-                <div style="padding: 10px 0 10px 0">
-                    <h1 th:text="${username}">USERNAME</h1>
+            <div class="col-md-2 col-md-offset-1">
+                <div style="width: 100%; height: 100%">
                 </div>
+            </div>
+            <div class="col-md-3" th:object="${authUser}">
+                <h3 th:text="*{surname}">SURNAME</h3>
+                <h3 th:text="*{name}">NAME</h3>
+                <h3 th:text="*{patronymic}">PATRONYMIC</h3>
             </div>
         </div>
     </div>

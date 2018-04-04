@@ -105,6 +105,6 @@ public class UserDTO {
 
     @Override
     public String toString() {
-        return name + ' ' + surname;
+        return login;
     }
 }

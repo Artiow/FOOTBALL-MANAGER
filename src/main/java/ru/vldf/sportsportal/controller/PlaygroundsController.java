@@ -17,7 +17,7 @@ public class PlaygroundsController {
 
     @GetMapping(value = {"/playgrounds"})
     public String toCatalogPage(ModelMap map) {
-        map.addAttribute("username", authService.getAuthUsername());
+        map.addAttribute("username", authService.getAuthUserShortName());
 
         return "playgrounds/catalog";
     }

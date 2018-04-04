@@ -14,7 +14,6 @@ import ru.vldf.sportsportal.service.AdminService;
 import ru.vldf.sportsportal.service.AuthService;
 import ru.vldf.sportsportal.service.UserService;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -42,7 +41,7 @@ public class UserController {
     @GetMapping(value = {"/personalpage"})
     public String toPersonalPage(ModelMap map) {
         map
-                .addAttribute("username", authService.getAuthUsername())
+                .addAttribute("username", authService.getAuthUserShortName())
                 .addAttribute("authUser", authService.getAuthUser());
 
         return "user/personalpage";
@@ -54,7 +53,7 @@ public class UserController {
     @GetMapping(value = {"/pp/admin"})
     public String toAdminPage(ModelMap map) {
         map
-                .addAttribute("username", authService.getAuthUsername())
+                .addAttribute("username", authService.getAuthUserShortName())
                 .addAttribute("numOfUnconfirmedUsers", adminService.getUnconfirmedUsersNum())
                 .addAttribute("numOfUnconfirmedTeams", adminService.getUnconfirmedTeamsNum());
 
@@ -77,7 +76,7 @@ public class UserController {
 
     @GetMapping(value = {"/pp/admin/unconfirmed-user/user{id}"})
     public String toConfirmUserPageByUser(@PathVariable("id") int id, ModelMap map) {
-        map.addAttribute("username", authService.getAuthUsername());
+        map.addAttribute("username", authService.getAuthUserShortName());
 
         UserDTO user = adminService.getUser(id);
         List<TeamPlayerDTO> duplicates = adminService.getDuplicate(user);
@@ -116,7 +115,7 @@ public class UserController {
         if (num == 0) return "redirect:/pp/admin";
 
         map
-                .addAttribute("username", authService.getAuthUsername())
+                .addAttribute("username", authService.getAuthUserShortName())
                 .addAttribute("teams", adminService.getUnconfirmedTeams());
 
         return "user/admin/unconfirmed-teams";
@@ -140,7 +139,7 @@ public class UserController {
     @GetMapping(value = {"/pp/tourney"})
     public String toTourneyPage(ModelMap map) {
         map
-                .addAttribute("username", authService.getAuthUsername())
+                .addAttribute("username", authService.getAuthUserShortName())
                 .addAttribute("teamList", userService.getTeamList());
 
         return "user/tourney/tourneypage";

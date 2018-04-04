@@ -28,7 +28,7 @@ public class LeaseController {
 
     @GetMapping(value = {"/lease"})
     public String toCatalogPage(ModelMap map) {
-        map.addAttribute("username", authService.getAuthUsername());
+        map.addAttribute("username", authService.getAuthUserShortName());
 
         List<PlaygroundDTO> playgroundList = leaseService.getPlaygroundList();
         map.addAttribute("playground_list", playgroundList);
@@ -39,7 +39,7 @@ public class LeaseController {
 
     @GetMapping(value = {"/lease/pg{id}"})
     public String toPlaygroundPage(@PathVariable("id") int id, ModelMap map) {
-        map.addAttribute("username", authService.getAuthUsername());
+        map.addAttribute("username", authService.getAuthUserShortName());
         map.addAttribute("playground", leaseService.getPlayground(id));
 
         return "lease/playground";

@@ -60,9 +60,9 @@ public class AuthService {
         else return ((SecurityPrincipal) principal).getUser();
     }
 
-    public String getAuthUsername() {
+    public String getAuthUserShortName() {
         UserDTO user = getAuthUser();
-        if (user != null) return user.toString();
+        if (user != null) return (user.getName() + ' ' + user.getSurname());
         else return "ERROR";
     }
 }
