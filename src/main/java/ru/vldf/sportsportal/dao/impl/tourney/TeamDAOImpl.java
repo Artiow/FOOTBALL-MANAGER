@@ -23,6 +23,10 @@ public class TeamDAOImpl extends AbstractDAOImpl<TeamEntity, Integer> implements
 //    ==================================================================================
 //    === FIND
 
+    public TeamEntity findByID(Integer id) {
+        return super.get(id);
+    }
+
     public List<TeamEntity> findByUser(Integer userID) {
         List teams = getSession()
                 .createQuery("from TeamEntity where captain.id=?")

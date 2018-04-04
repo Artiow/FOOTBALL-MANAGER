@@ -7,6 +7,7 @@ import ru.vldf.sportsportal.dao.generic.definite.tourney.TeamDAO;
 import ru.vldf.sportsportal.dao.generic.definite.tourney.TeamStatusDAO;
 import ru.vldf.sportsportal.dao.generic.definite.user.UserDAO;
 import ru.vldf.sportsportal.dto.tourney.TeamDTO;
+import ru.vldf.sportsportal.dto.user.UserDTO;
 import ru.vldf.sportsportal.model.tourney.TeamEntity;
 import ru.vldf.sportsportal.model.tourney.TeamStatusEntity;
 import ru.vldf.sportsportal.model.user.UserEntity;
@@ -63,5 +64,14 @@ public class UserService {
 
         TeamStatusEntity status = teamStatusDAO.findByCode("TEAM_AWAITING");
         teamDAO.save(new TeamEntity(teamDTO, captain, status));
+    }
+
+    @Transactional(readOnly = true)
+    public TeamDTO getTeamByIDForAuthUser(int teamID) {
+        UserDTO user = authService.getAuthUser();
+        TeamDTO team = new TeamDTO(teamDAO.findByID(teamID));
+
+        if (user.equals(team.getCaptain())) return team;
+        else return null;
     }
 }

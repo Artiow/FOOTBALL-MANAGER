@@ -156,4 +156,13 @@ public class UserController {
         userService.createTeam(teamDTO);
         return "redirect:/pp/tourney";
     }
+
+    @GetMapping(value = {"/pp/tourney/team{id}"})
+    public String toTeamPage(@PathVariable("id") int id, ModelMap map) {
+        map
+                .addAttribute("username", authService.getAuthUserShortName())
+                .addAttribute("team", userService.getTeamByIDForAuthUser(id));
+
+        return "user/tourney/teampage";
+    }
 }

@@ -28,3 +28,17 @@ nav.nav-ppage ul li a {
 main.main-ppage .alert-danger h3, main.main-ppage .alert-warning h3 {
     margin: 10px;
 }
+
+main.main-tourneypage table tr {
+    cursor: pointer
+}
+main.main-tourneypage table td {
+    padding: 0;
+}
+main.main-tourneypage table a {
+    display: block;
+    padding: 8px;
+
+    color: inherit;
+    text-decoration: inherit;
+}

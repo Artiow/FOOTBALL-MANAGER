@@ -13,6 +13,8 @@ public interface TeamDAO {
 //    ==================================================================================
 //    === FIND
 
+    TeamEntity findByID(Integer id);
+
     List<TeamEntity> findByUser(Integer userID);
 
     List<TeamEntity> findByUser(String userLogin);
