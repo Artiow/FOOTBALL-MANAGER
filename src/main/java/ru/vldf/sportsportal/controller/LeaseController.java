@@ -5,20 +5,20 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import ru.vldf.sportsportal.dto.PlaygroundDTO;
+import ru.vldf.sportsportal.dto.lease.PlaygroundDTO;
 import ru.vldf.sportsportal.service.LeaseService;
-import ru.vldf.sportsportal.service.UserService;
+import ru.vldf.sportsportal.service.AuthService;
 
 import java.util.List;
 
 @Controller
 public class LeaseController {
-    private UserService userService;
+    private AuthService authService;
     private LeaseService leaseService;
 
     @Autowired
-    public void setUserService(UserService userService) {
-        this.userService = userService;
+    public void setAuthService(AuthService authService) {
+        this.authService = authService;
     }
 
     @Autowired
@@ -27,21 +27,21 @@ public class LeaseController {
     }
 
     @GetMapping(value = {"/lease"})
-    public String leasePage(ModelMap map) {
-        map.addAttribute("username", userService.getAuthUsername());
+    public String toCatalogPage(ModelMap map) {
+        map.addAttribute("username", authService.getAuthUserShortName());
 
-        List playgroundList = leaseService.getPlaygroundList();
-        map.addAttribute("playgroundList", playgroundList);
-        map.addAttribute("playgroundListSize", playgroundList.size());
+        List<PlaygroundDTO> playgroundList = leaseService.getPlaygroundList();
+        map.addAttribute("playground_list", playgroundList);
+        map.addAttribute("playground_list_size", playgroundList.size());
 
-        return "lease";
+        return "lease/catalog";
     }
 
     @GetMapping(value = {"/lease/pg{id}"})
-    public String playgroundPage(@PathVariable("id") int id, ModelMap map) {
-        map.addAttribute("username", userService.getAuthUsername());
+    public String toPlaygroundPage(@PathVariable("id") int id, ModelMap map) {
+        map.addAttribute("username", authService.getAuthUserShortName());
         map.addAttribute("playground", leaseService.getPlayground(id));
 
-        return "leaseitem";
+        return "lease/playground";
     }
 }

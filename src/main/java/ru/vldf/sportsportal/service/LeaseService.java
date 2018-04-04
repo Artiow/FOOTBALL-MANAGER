@@ -3,9 +3,9 @@ package ru.vldf.sportsportal.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.vldf.sportsportal.dao.impl.PlaygroundDAO;
-import ru.vldf.sportsportal.dto.PlaygroundDTO;
-import ru.vldf.sportsportal.model.PlaygroundEntity;
+import ru.vldf.sportsportal.dao.generic.definite.lease.PlaygroundDAO;
+import ru.vldf.sportsportal.dto.lease.PlaygroundDTO;
+import ru.vldf.sportsportal.model.lease.PlaygroundEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,22 +21,16 @@ public class LeaseService {
 
     @Transactional(readOnly = true)
     public List<PlaygroundDTO> getPlaygroundList() {
-        return getPlaygroundList(true);
-    }
+        List<PlaygroundEntity> entityList = playgroundDAO.findAll();
+        if (entityList == null) return null;
 
-    @Transactional(readOnly = true)
-    public List<PlaygroundDTO> getPlaygroundList(boolean lazy) {
-        List<PlaygroundEntity> entityList = playgroundDAO.list();
         List<PlaygroundDTO> dtoList = new ArrayList<PlaygroundDTO>();
-
         for (PlaygroundEntity entity: entityList) dtoList.add(new PlaygroundDTO(entity));
-//        TODO: impl not lazy init
-
         return dtoList;
     }
 
     @Transactional(readOnly = true)
     public PlaygroundDTO getPlayground(Integer id) {
-        return new PlaygroundDTO(playgroundDAO.get(id));
+        return new PlaygroundDTO(playgroundDAO.findByID(id));
     }
 }

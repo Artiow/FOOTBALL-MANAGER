@@ -1,36 +1,77 @@
 package ru.vldf.sportsportal.service;
 
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.ModelMap;
-import ru.vldf.sportsportal.dto.UserDTO;
-import ru.vldf.sportsportal.service.security.SecurityPrincipal;
+import org.springframework.transaction.annotation.Transactional;
+import ru.vldf.sportsportal.dao.generic.definite.tourney.TeamDAO;
+import ru.vldf.sportsportal.dao.generic.definite.tourney.TeamStatusDAO;
+import ru.vldf.sportsportal.dao.generic.definite.user.UserDAO;
+import ru.vldf.sportsportal.dto.tourney.TeamDTO;
+import ru.vldf.sportsportal.dto.user.UserDTO;
+import ru.vldf.sportsportal.model.tourney.TeamEntity;
+import ru.vldf.sportsportal.model.tourney.TeamStatusEntity;
+import ru.vldf.sportsportal.model.user.UserEntity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class UserService {
+    private AuthService authService;
+    private UserDAO userDAO;
+
+    @Autowired
+    public void setAuthService(AuthService authService) {
+        this.authService = authService;
+    }
+
+    @Autowired
+    public void setUserDAO(UserDAO userDAO) {
+        this.userDAO = userDAO;
+    }
 
 //    ==================================================================================
-//    === AUTH
+//    === TOURNEY
 
-    private final String ROLE_ANONYMOUS = "anonymousUser";
+    private TeamDAO teamDAO;
+    private TeamStatusDAO teamStatusDAO;
 
-    private Authentication getAuthentication() {
-        return SecurityContextHolder.getContext().getAuthentication();
+    @Autowired
+    public void setTeamDAO(TeamDAO teamDAO) {
+        this.teamDAO = teamDAO;
     }
 
-    public UserDTO getAuthUser() {
-        Authentication auth = getAuthentication();
-
-        Object principal = auth.getPrincipal();
-        if ((principal == null) || (principal.equals(ROLE_ANONYMOUS))) return null;
-        else return ((SecurityPrincipal) principal).getUser();
+    @Autowired
+    public void setTeamStatusDAO(TeamStatusDAO teamStatusDAO) {
+        this.teamStatusDAO = teamStatusDAO;
     }
 
-    public String getAuthUsername() {
-        UserDTO user = getAuthUser();
+    @Transactional(readOnly = true)
+    public List<TeamDTO> getTeamList() {
+        List<TeamEntity> entityList = teamDAO.findByUser(authService.getAuthUser().getId());
+        if (entityList == null) return null;
 
-        if (user != null) return user.toString();
-        else return "ERROR";
+        List<TeamDTO> dtoList = new ArrayList<TeamDTO>();
+        for (TeamEntity entity: entityList) dtoList.add(new TeamDTO(entity));
+        return dtoList;
+    }
+
+    @Transactional
+    public void createTeam(TeamDTO teamDTO) {
+        UserEntity captain = userDAO.findByID(
+                authService.getAuthUser().getId()
+        );
+
+        TeamStatusEntity status = teamStatusDAO.findByCode("TEAM_AWAITING");
+        teamDAO.save(new TeamEntity(teamDTO, captain, status));
+    }
+
+    @Transactional(readOnly = true)
+    public TeamDTO getTeamByIDForAuthUser(int teamID) {
+        UserDTO user = authService.getAuthUser();
+        TeamDTO team = new TeamDTO(teamDAO.findByID(teamID));
+
+        if (user.equals(team.getCaptain())) return team;
+        else return null;
     }
 }

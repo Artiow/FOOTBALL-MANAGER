@@ -6,17 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.core.env.Environment;
 import org.springframework.orm.hibernate5.HibernateExceptionTranslator;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
-import org.springframework.orm.jpa.JpaTransactionManager;
-import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import java.util.Properties;
 
 @Configuration
@@ -28,11 +22,19 @@ public class HibernateConfig {
     @Value("${hibernate-property.hibernate.dialect}")
     private String HIBERNATE_DIALECT;
 
-    private Properties hibernateProperties() {
+    @Value("${hibernate-property.hibernate.connection.useUnicode}")
+    private String HIBERNATE_USE_UNICODE;
+    @Value("${hibernate-property.hibernate.connection.characterEncoding}")
+    private String HIBERNATE_CHARACTER_ENCODING;
+
+    private Properties getHibernateProperties() {
         return new Properties() {
             {
                 setProperty("show_sql", SHOW_SQL);
                 setProperty("hibernate.dialect", HIBERNATE_DIALECT);
+
+                setProperty("hibernate.connection.useUnicode", HIBERNATE_USE_UNICODE);
+                setProperty("hibernate.connection.characterEncoding", HIBERNATE_CHARACTER_ENCODING);
             }
         };
     }
@@ -43,7 +45,9 @@ public class HibernateConfig {
         dataSource.setDriverClassName("com.mysql.jdbc.Driver");
 
         String URL = "jdbc:mysql://localhost:3306/sportsportal?"
-                + "useUnicode=true&useJDBCCompliantTimezoneShift=true&"
+                + "autoReconnect=true&"
+                + "autoReconnectForPools=true&"
+                + "useJDBCCompliantTimezoneShift=true&"
                 + "useLegacyDatetimeCode=false&"
                 + "serverTimezone=Europe/Moscow";
 
@@ -57,7 +61,7 @@ public class HibernateConfig {
     public LocalSessionFactoryBean getSessionFactory() {
         LocalSessionFactoryBean sessionFactoryBean = new LocalSessionFactoryBean();
         sessionFactoryBean.setPackagesToScan("ru.vldf.sportsportal.model");
-        sessionFactoryBean.setHibernateProperties(hibernateProperties());
+        sessionFactoryBean.setHibernateProperties(getHibernateProperties());
         sessionFactoryBean.setDataSource(getDataSource());
 
         return sessionFactoryBean;

@@ -29,13 +29,15 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .authorizeRequests()
                     .antMatchers("/personalpage/**").authenticated()
+                    .antMatchers("/pp/admin/**").hasRole("ADMIN")
+                    .antMatchers("/pp/tourney/**").hasAnyRole("ADMIN", "USER")
                     .and()
 
                 .formLogin()
                     .loginPage("/login")
                     .failureUrl("/login?error=true")
                     .loginProcessingUrl("/security_check")
-                    .usernameParameter("security_email")
+                    .usernameParameter("security_login")
                     .passwordParameter("security_password")
                     .permitAll()
                     .and()

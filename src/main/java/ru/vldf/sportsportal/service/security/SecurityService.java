@@ -8,9 +8,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.vldf.sportsportal.dao.impl.UserDAO;
-import ru.vldf.sportsportal.model.RoleEntity;
-import ru.vldf.sportsportal.model.UserEntity;
+import ru.vldf.sportsportal.dao.generic.definite.user.UserDAO;
+import ru.vldf.sportsportal.model.user.UserRoleEntity;
+import ru.vldf.sportsportal.model.user.UserEntity;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -26,13 +26,14 @@ public class SecurityService implements UserDetailsService {
 
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        UserEntity user = userDAO.findByEMail(s);
+        UserEntity user = userDAO.findByLogin(s);
         return new SecurityPrincipal(user, buildUserAuthorities(user.getRole()));
     }
 
-    private Collection<GrantedAuthority> buildUserAuthorities(RoleEntity role) {
+    private Collection<GrantedAuthority> buildUserAuthorities(UserRoleEntity role) {
         Collection<GrantedAuthority> auth = new ArrayList<GrantedAuthority>();
 
+//        TODO: add multiple roles!
         auth.add(new SimpleGrantedAuthority(role.getCode()));
         return auth;
     }

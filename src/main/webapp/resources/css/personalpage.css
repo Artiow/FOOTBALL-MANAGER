@@ -1,0 +1,44 @@
+nav.nav-ppage {
+    background: rgba(0,0,0,0.025);
+    border-bottom: 1px solid gray;
+}
+
+nav.nav-ppage ul {
+    margin: 0;
+    padding: 0;
+}
+nav.nav-ppage ul li {
+    margin: 0 6px 0 6px;
+    padding: 10px;
+    display: inline-block;
+
+    text-align: center;
+}
+nav.nav-ppage ul li:hover {
+    background: rgba(0,0,0,0.025);
+    cursor: pointer;
+}
+nav.nav-ppage ul li a {
+    color: #0f0f0f;
+    font-size: 18px;
+    vertical-align: middle;
+    text-decoration: none;
+}
+
+main.main-ppage .alert-danger h3, main.main-ppage .alert-warning h3 {
+    margin: 10px;
+}
+
+main.main-tourneypage table tr {
+    cursor: pointer
+}
+main.main-tourneypage table td {
+    padding: 0;
+}
+main.main-tourneypage table a {
+    display: block;
+    padding: 8px;
+
+    color: inherit;
+    text-decoration: inherit;
+}

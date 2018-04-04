@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Личный кабинет</title>
+    <script
+            src="../../libs/vue.js"
+            th:src="@{/libs/vue.js}"
+    ></script>
+    <script
+            src="../../libs/jquery-3.2.1.js"
+            th:src="@{/libs/jquery-3.2.1.js}"
+    ></script>
+    <link rel="stylesheet"
+          href="../../libs/bootstrap/css/bootstrap.css"
+          th:href="@{/libs/bootstrap/css/bootstrap.css}"
+    />
+    <link rel="stylesheet"
+          href="../../libs/font-awesome/css/font-awesome.css"
+          th:href="@{/libs/font-awesome/css/font-awesome.css}"
+    />
+    <link rel="stylesheet"
+          href="../../resources/css/personalpage.css"
+          th:href="@{/css/personalpage.css}"
+    />
+    <link rel="stylesheet"
+          href="../../resources/css/header.css"
+          th:href="@{/css/header.css}"
+    />
+    <link rel="stylesheet"
+          href="../../resources/css/footer.css"
+          th:href="@{/css/footer.css}"
+    />
+</head>
+<body>
+
+<header id="header-regular">
+    <header-regular id="header-auth"
+                    caption="ЛИЧНЫЙ КАБИНЕТ">
+        <auth-failed sec:authorize="!isAuthenticated()"></auth-failed>
+        <auth-completed sec:authorize="isAuthenticated()"><p th:text="${username}">USERNAME</p></auth-completed>
+    </header-regular>
+</header>
+<script
+        src="../../resources/js/components/HeaderRegular.js"
+        th:src="@{/components/HeaderRegular.js}"
+></script>
+<script
+        src="../../resources/js/components/HeaderAuth.js"
+        th:src="@{/components/HeaderAuth.js}"
+></script>
+
+<nav class="nav-ppage" th:unless="${(authUser.role.code == 'ROLE_REJECTED') || (authUser.role.code == 'ROLE_UNCONFIRMED')}">
+    <div class="container">
+        <ul class="list-inline">
+            <li th:if="${(authUser.role.code == 'ROLE_ADMIN')}"><a th:href="@{/pp/admin}">Администрирование</a></li>
+            <li th:if="${(authUser.role.code == 'ROLE_ADMIN') || (authUser.role.code == 'ROLE_USER')}"><a th:href="@{/pp/tourney}">Турниры</a></li>
+        </ul>
+    </div>
+</nav>
+
+<main class="main-ppage" style="min-height: 600px">
+    <div class="alert-danger" th:if="${(authUser.role.code == 'ROLE_REJECTED')}">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h3>ОТКАЗАНО В РЕГИСТРАЦИИ</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="alert-warning" th:if="${(authUser.role.code == 'ROLE_UNCONFIRMED')}">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h3>УЧЕТНАЯ ЗАПИСЬ НЕ ПОДТВЕРЖДЕНА</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2 col-md-offset-1">
+                <div style="width: 100%; height: 100%">
+                </div>
+            </div>
+            <div class="col-md-3" th:object="${authUser}">
+                <h3 th:text="*{surname}">SURNAME</h3>
+                <h3 th:text="*{name}">NAME</h3>
+                <h3 th:text="*{patronymic}">PATRONYMIC</h3>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer id="footer-regular">
+    <footer-regular link-service="#"
+                    link-contacts="#"
+                    link-feedback="#"
+                    src-vldf-logo="/img/logo-vldf-sm.png"
+                    link-vldf="http://www.vldf.ru/"
+                    link-vldf-vk="https://vk.com/vldfru"
+                    link-vldf-instagram="https://www.instagram.com/vldf2009/"
+                    link-vldf-youtube="https://www.youtube.com/channel/UCgWjF5d6O3ORXolcr1HO-cQ">
+    </footer-regular>
+</footer>
+<script
+        src="../../resources/js/components/FooterRegular.js"
+        th:src="@{/components/FooterRegular.js}"
+></script>
+
+</body>
+<script
+        src="../../resources/js/padding.js"
+        th:src="@{/js/padding.js}"
+></script>
+</html>
