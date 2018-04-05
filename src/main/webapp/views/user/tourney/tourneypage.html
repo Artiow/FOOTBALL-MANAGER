@@ -66,24 +66,30 @@
                 <h3>Мои турнирные команды:</h3>
                 <table class="table table-hover">
                     <tr th:each="team: ${teamList}" th:object="${team}">
+                        <td style="width: 95px">
+                            <a class="pic-href" th:href="${'/pp/tourney/team' + team.id}">
+                                <!--TODO: pic here!-->
+                                <div style="width: 85px; height: 85px; background: grey"></div>
+                            </a>
+                        </td>
                         <td>
                             <a th:href="${'/pp/tourney/team' + team.id}">
-                                <p style="margin: 5px" th:text="*{name}">NAME</p>
+                                <p th:text="*{name}">NAME</p>
                             </a>
                         </td>
                         <td th:if="*{status.code == 'TEAM_AWAITING'}" class="warning">
                             <a th:href="${'/pp/tourney/team' + team.id}">
-                                <p style="margin: 5px">ОЖИДАЕТ ПОДТВЕРЖДЕНИЯ</p>
+                                <p>ОЖИДАЕТ ПОДТВЕРЖДЕНИЯ</p>
                             </a>
                         </td>
                         <td th:if="*{status.code == 'TEAM_REJECTED'}" class="danger">
-                            <a th:href="${'/pp/tourney/team' + team.id}">
-                                <p style="margin: 5px">ЗАЯВКА ОТКЛОНЕНА</p>
+                            <a class="cell" th:href="${'/pp/tourney/team' + team.id}">
+                                <p>ЗАЯВКА ОТКЛОНЕНА</p>
                             </a>
                         </td>
                         <td th:unless="*{(status.code == 'TEAM_AWAITING') || (status.code == 'TEAM_REJECTED')}">
-                            <a th:href="${'/pp/tourney/team' + team.id}">
-
+                            <a class="cell" th:href="${'/pp/tourney/team' + team.id}">
+                                <p></p>
                             </a>
                         </td>
                     </tr>
