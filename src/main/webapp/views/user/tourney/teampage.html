@@ -60,12 +60,30 @@
 </nav>
 
 <main style="min-height: 600px">
-    <div class="container">
-        <div class="row alert-danger" th:unless="${team != null}">
-            <h3>НЕТ ДОСТУПА</h3>
+    <div class="alert-danger" th:unless="${team != null}">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3">
+                    <h3 style="margin: 20px 0 20px 0">НЕТ ДОСТУПА</h3>
+                </div>
+            </div>
         </div>
-        <div class="row" th:if="${team != null}">
-            <h3 th:text="${team.name}">TEAM NAME</h3>
+    </div>
+    <div class="container" th:if="${team != null}">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <h3 th:text="${team.name}">TEAM NAME</h3>
+            </div>
+        </div>
+        <div class="row" th:if="${true}">
+            <div style="padding: 10px 0 10px 0" class="col-md-6 col-md-offset-3">
+                <!--TODO: team composition table-->
+            </div>
+        </div>
+        <div class="row" th:unless="${true}">
+            <div style="padding: 10px 0 10px 0" class="col-md-6 col-md-offset-3">
+                <!--TODO: else-->
+            </div>
         </div>
     </div>
 </main>

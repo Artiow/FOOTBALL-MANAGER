@@ -29,6 +29,16 @@ main.main-ppage .alert-danger h3, main.main-ppage .alert-warning h3 {
     margin: 10px;
 }
 
+main.main-adminpage a {
+    display: inline-block;
+    margin-top: 10px;
+
+    font-size: 20px;
+
+    text-decoration: none;
+    cursor: pointer
+}
+
 main.main-tourneypage table tr {
     cursor: pointer
 }

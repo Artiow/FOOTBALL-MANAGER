@@ -61,14 +61,14 @@
 
 <main style="min-height: 600px">
     <div class="container">
-        <div class="row">
-            <div class="col-md-5 col-md-offset-1" th:if="${teams != null}">
-                <h2>Заявки на создание команды:</h2>
+        <div class="row" th:if="${teams != null}">
+            <div class="col-md-6 col-md-offset-3">
+                <h2 style="width: 100%; text-align: justify">Заявки на создание команды:</h2>
                 <table style="margin-top: 30px" class="table">
                     <tr th:each="team: ${teams}" th:object="${team}">
-                        <td>
+                        <td style="width: 121px">
                             <!--TODO: pic here!-->
-                            <div style="width: 100px; height: 100px"></div>
+                            <div style="width: 105px; height: 105px; margin-top: 5px; background: grey"></div>
                         </td>
                         <td>
                             <h3 style="margin-top: 10px; margin-bottom: 5px" th:text="*{name}">TEAM NAME</h3>
@@ -79,7 +79,9 @@
                     </tr>
                 </table>
             </div>
-            <div class="col-md-5" th:unless="${teams != null}">
+        </div>
+        <div class="row" th:unless="${teams != null}">
+            <div class="col-md-6 col-md-offset-3">
                 <h2>Заявок нет</h2>
             </div>
         </div>

@@ -81,14 +81,15 @@
     </div>
     <div class="container">
         <div class="row">
-            <div class="col-md-2 col-md-offset-1">
-                <div style="width: 100%; height: 100%">
-                </div>
+            <div class="col-md-3 col-md-offset-3">
+                <!--TODO: pic here!-->
+                <div style="width: 175px; height: 175px; float: right; margin-top: 20px; background: grey"></div>
             </div>
             <div class="col-md-3" th:object="${authUser}">
                 <h3 th:text="*{surname}">SURNAME</h3>
                 <h3 th:text="*{name}">NAME</h3>
                 <h3 th:text="*{patronymic}">PATRONYMIC</h3>
+                <h4 style="margin-top: 20px" th:text="*{login}">login</h4>
             </div>
         </div>
     </div>

@@ -14,7 +14,6 @@ import ru.vldf.sportsportal.service.AdminService;
 import ru.vldf.sportsportal.service.AuthService;
 import ru.vldf.sportsportal.service.UserService;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller

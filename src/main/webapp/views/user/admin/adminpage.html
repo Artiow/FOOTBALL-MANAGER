@@ -59,13 +59,13 @@
     </div>
 </nav>
 
-<main style="min-height: 600px">
+<main style="min-height: 600px" class="main-adminpage">
     <div class="container">
         <div class="row">
-            <div style="padding: 10px 0 10px 0" class="col-md-5 col-md-offset-1">
-                <a th:href="@{/pp/admin/unconfirmed-user}" th:text="'Заявки на регистрацию (' + ${numOfUnconfirmedUsers} + ')'"></a>
+            <div style="padding: 10px 0 10px 0" class="col-md-6 col-md-offset-3">
+                <a th:href="@{/pp/admin/unconfirmed-user}" th:text="'Заявки на регистрацию (' + ${numOfUnconfirmedUsers} + ')'">Заявки на регистрацию (NULL)</a>
                 <br/>
-                <a th:href="@{/pp/admin/unconfirmed-teams}" th:text="'Заявки на создание команды (' + ${numOfUnconfirmedTeams} + ')'"></a>
+                <a th:href="@{/pp/admin/unconfirmed-teams}" th:text="'Заявки на создание команды (' + ${numOfUnconfirmedTeams} + ')'">Заявки на создание команды (NULL)</a>
             </div>
         </div>
     </div>

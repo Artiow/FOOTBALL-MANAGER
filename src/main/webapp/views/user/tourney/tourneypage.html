@@ -61,8 +61,8 @@
 
 <main style="min-height: 600px" class="main-tourneypage">
     <div class="container">
-        <div class="row">
-            <div style="padding: 10px 0 10px 0" class="col-md-5 col-md-offset-1" th:if="${teamList != null}">
+        <div class="row" th:if="${teamList != null}">
+            <div style="padding: 10px 0 10px 0" class="col-md-6 col-md-offset-3">
                 <h3>Мои турнирные команды:</h3>
                 <table class="table table-hover">
                     <tr th:each="team: ${teamList}" th:object="${team}">
@@ -90,7 +90,9 @@
                 </table>
                 <a th:href="@{/pp/tourney/create-team}" type="button" class="btn btn-default">Создать турнирную команду</a>
             </div>
-            <div style="padding: 10px 0 10px 0" class="col-md-5 col-md-offset-1" th:unless="${teamList != null}">
+        </div>
+        <div class="row" th:unless="${teamList != null}">
+            <div style="padding: 10px 0 10px 0" class="col-md-6 col-md-offset-3" th:unless="${teamList != null}">
                 <h3>Нет турнирных команд!</h3>
                 <a th:href="@{/pp/tourney/create-team}" type="button" class="btn btn-default">Создать турнирную команду</a>
             </div>
