@@ -14,6 +14,7 @@ import ru.vldf.sportsportal.service.AdminService;
 import ru.vldf.sportsportal.service.AuthService;
 import ru.vldf.sportsportal.service.UserService;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
@@ -38,12 +39,18 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping(value = {"/personalpage"})
-    public String toPersonalPage(ModelMap map) {
-        map
-                .addAttribute("username", authService.getAuthUserShortName())
-                .addAttribute("authUser", authService.getAuthUser());
+    @ModelAttribute("authUser")
+    public UserDTO getAuthUser() {
+        return authService.getAuthUser();
+    }
 
+    @ModelAttribute("authUserShortName")
+    public String getAuthUserShortName() {
+        return authService.getAuthUserShortName();
+    }
+
+    @GetMapping(value = {"/personalpage"})
+    public String toPersonalPage() {
         return "user/personalpage";
     }
 
@@ -53,7 +60,6 @@ public class UserController {
     @GetMapping(value = {"/pp/admin"})
     public String toAdminPage(ModelMap map) {
         map
-                .addAttribute("username", authService.getAuthUserShortName())
                 .addAttribute("numOfUnconfirmedUsers", adminService.getUnconfirmedUsersNum())
                 .addAttribute("numOfUnconfirmedTeams", adminService.getUnconfirmedTeamsNum());
 
@@ -64,26 +70,23 @@ public class UserController {
 //    --- USER
 
     @GetMapping(value = {"/pp/admin/unconfirmed-user"})
-    public String toConfirmUserPage(ModelMap map) {
+    public String toConfirmUserPage() {
         int num = adminService.getUnconfirmedUsersNum();
         if (num == 0) return "redirect:/pp/admin";
 
         UserDTO user = adminService.getFirstUnconfirmedUser();
         String id = user.getId().toString();
-
         return "redirect:/pp/admin/unconfirmed-user/user" + id;
     }
 
     @GetMapping(value = {"/pp/admin/unconfirmed-user/user{id}"})
     public String toConfirmUserPageByUser(@PathVariable("id") int id, ModelMap map) {
-        map.addAttribute("username", authService.getAuthUserShortName());
-
         UserDTO user = adminService.getUser(id);
         List<TeamPlayerDTO> duplicates = adminService.getDuplicate(user);
 
         map
-                .addAttribute("unconfirmedUser", user)
-                .addAttribute("duplicates", duplicates);
+                .addAttribute("duplicates", duplicates)
+                .addAttribute("unconfirmedUser", user);
 
         return "user/admin/unconfirmed-user";
     }
@@ -114,10 +117,7 @@ public class UserController {
         int num = adminService.getUnconfirmedTeamsNum();
         if (num == 0) return "redirect:/pp/admin";
 
-        map
-                .addAttribute("username", authService.getAuthUserShortName())
-                .addAttribute("teams", adminService.getUnconfirmedTeams());
-
+        map.addAttribute("teams", adminService.getUnconfirmedTeams());
         return "user/admin/unconfirmed-teams";
     }
 
@@ -138,10 +138,7 @@ public class UserController {
 
     @GetMapping(value = {"/pp/tourney"})
     public String toTourneyPage(ModelMap map) {
-        map
-                .addAttribute("username", authService.getAuthUserShortName())
-                .addAttribute("teamList", userService.getTeamList());
-
+        map.addAttribute("teamList", userService.getTeamList());
         return "user/tourney/tourneypage";
     }
 
@@ -159,10 +156,7 @@ public class UserController {
 
     @GetMapping(value = {"/pp/tourney/team{id}"})
     public String toTeamPage(@PathVariable("id") int id, ModelMap map) {
-        map
-                .addAttribute("username", authService.getAuthUserShortName())
-                .addAttribute("team", userService.getTeamByIDForAuthUser(id));
-
+        map.addAttribute("team", userService.getTeamByIDForAuthUser(id));
         return "user/tourney/teampage";
     }
 }

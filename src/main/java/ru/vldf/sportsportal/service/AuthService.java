@@ -52,6 +52,7 @@ public class AuthService {
         );
     }
 
+//    TODO: get by HttpServletRequest
     public UserDTO getAuthUser() {
         final String ROLE_ANONYMOUS = "anonymousUser";
 

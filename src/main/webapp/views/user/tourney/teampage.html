@@ -39,7 +39,7 @@
     <header-regular id="header-auth"
                     caption="ТУРНИР">
         <auth-failed sec:authorize="!isAuthenticated()"></auth-failed>
-        <auth-completed sec:authorize="isAuthenticated()"><p th:text="${username}">USERNAME</p></auth-completed>
+        <auth-completed sec:authorize="isAuthenticated()"><p th:text="${authUserShortName}">USERNAME</p></auth-completed>
     </header-regular>
 </header>
 <script
@@ -61,11 +61,11 @@
 
 <main style="min-height: 600px">
     <div class="container">
-        <div class="row" th:if="${team != null}">
-            <h3 th:text="${team.name}">TEAM NAME</h3>
-        </div>
         <div class="row alert-danger" th:unless="${team != null}">
             <h3>НЕТ ДОСТУПА</h3>
+        </div>
+        <div class="row" th:if="${team != null}">
+            <h3 th:text="${team.name}">TEAM NAME</h3>
         </div>
     </div>
 </main>
