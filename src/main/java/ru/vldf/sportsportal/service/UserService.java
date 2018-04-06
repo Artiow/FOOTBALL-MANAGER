@@ -56,6 +56,15 @@ public class UserService {
         return dtoList;
     }
 
+    @Transactional(readOnly = true)
+    public TeamDTO getTeam(int teamID) {
+        TeamDTO team = new TeamDTO(teamDAO.findByID(teamID));
+
+        UserDTO user = authService.getAuthUser();
+        if (user.equals(team.getCaptain())) return team;
+        else return null;
+    }
+
     @Transactional
     public void createTeam(TeamDTO teamDTO) {
         UserEntity captain = userDAO.findByID(
@@ -64,14 +73,5 @@ public class UserService {
 
         TeamStatusEntity status = teamStatusDAO.findByCode("TEAM_AWAITING");
         teamDAO.save(new TeamEntity(teamDTO, captain, status));
-    }
-
-    @Transactional(readOnly = true)
-    public TeamDTO getTeamByIDForAuthUser(int teamID) {
-        UserDTO user = authService.getAuthUser();
-        TeamDTO team = new TeamDTO(teamDAO.findByID(teamID));
-
-        if (user.equals(team.getCaptain())) return team;
-        else return null;
     }
 }

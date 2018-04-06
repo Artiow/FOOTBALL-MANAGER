@@ -54,35 +54,20 @@
 <nav class="nav-ppage">
     <div class="container">
         <ul class="list-inline">
-            <li><a th:href="@{/pp/admin}"><i class="fa fa-reply" aria-hidden="true"></i> Назад</a></li>
+            <li><a th:href="@{/personalpage}"><i class="fa fa-reply" aria-hidden="true"></i> Назад</a></li>
         </ul>
     </div>
 </nav>
 
-<main style="min-height: 600px">
+<main style="min-height: 600px" class="main-adminpage">
     <div class="container">
-        <div class="row" th:if="${teams != null}">
-            <div class="col-md-6 col-md-offset-3">
-                <h2 style="width: 100%; text-align: justify">Заявки на создание команды:</h2>
-                <table style="margin-top: 30px" class="table">
-                    <tr th:each="team: ${teams}" th:object="${team}">
-                        <td style="width: 121px">
-                            <!--TODO: pic here!-->
-                            <div style="width: 105px; height: 105px; margin-top: 5px; background: grey"></div>
-                        </td>
-                        <td>
-                            <h3 style="margin-top: 10px; margin-bottom: 5px" th:text="*{name}">TEAM NAME</h3>
-                            <p th:text="*{captain.name + ' ' + captain.surname + ' ' + captain.patronymic}">CAPTAIN NAME</p>
-                            <a style="margin-right: 10px" class="btn btn-default" th:href="${'/pp/admin/unconfirmed-teams/team' + team.id + '/confirm'}">Подтвердить</a>
-                            <a style="margin-left: 10px" class="btn btn-danger" th:href="${'/pp/admin/unconfirmed-teams/team' + team.id + '/reject'}">Отклонить</a>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-        <div class="row" th:unless="${teams != null}">
-            <div class="col-md-6 col-md-offset-3">
-                <h2>Заявок нет</h2>
+        <div class="row">
+            <div style="padding: 10px 0 10px 0" class="col-md-6 col-md-offset-3">
+                <a th:href="@{/pp/admin/check-user}" th:text="'Заявки на регистрацию (' + ${numOfUnconfirmedUsers} + ')'">Заявки на регистрацию (NULL)</a>
+                <br/>
+                <a th:href="@{/pp/admin/check-team}" th:text="'Заявки на создание команды (' + ${numOfUnconfirmedTeams} + ')'">Заявки на создание команды (NULL)</a>
+                <br/>
+                <a th:href="@{/pp/admin/tourney}" th:text="'Турниры (' + ${numOfTourneys} + ')'">Турниры (NULL)</a>
             </div>
         </div>
     </div>

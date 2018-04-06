@@ -60,26 +60,27 @@ public class UserController {
     public String toAdminPage(ModelMap map) {
         map
                 .addAttribute("numOfUnconfirmedUsers", adminService.getUnconfirmedUsersNum())
-                .addAttribute("numOfUnconfirmedTeams", adminService.getUnconfirmedTeamsNum());
+                .addAttribute("numOfUnconfirmedTeams", adminService.getUnconfirmedTeamsNum())
+                .addAttribute("numOfTourneys", adminService.getTourneysNum());
 
-        return "user/admin/adminpage";
+        return "user/admin/page-admin";
     }
 
 //    ----------------------------------------------------------------------------------
 //    --- USER
 
-    @GetMapping(value = {"/pp/admin/unconfirmed-user"})
-    public String toConfirmUserPage() {
+    @GetMapping(value = {"/pp/admin/check-user"})
+    public String toCheckUserPage() {
         int num = adminService.getUnconfirmedUsersNum();
         if (num == 0) return "redirect:/pp/admin";
 
         UserDTO user = adminService.getFirstUnconfirmedUser();
         String id = user.getId().toString();
-        return "redirect:/pp/admin/unconfirmed-user/user" + id;
+        return "redirect:/pp/admin/check-user/user" + id;
     }
 
-    @GetMapping(value = {"/pp/admin/unconfirmed-user/user{id}"})
-    public String toConfirmUserPageByUser(@PathVariable("id") int id, ModelMap map) {
+    @GetMapping(value = {"/pp/admin/check-user/user{id}"})
+    public String toCheckUserPage(@PathVariable("id") int id, ModelMap map) {
         UserDTO user = adminService.getUser(id);
         List<TeamPlayerDTO> duplicates = adminService.getDuplicate(user);
 
@@ -87,49 +88,54 @@ public class UserController {
                 .addAttribute("duplicates", duplicates)
                 .addAttribute("unconfirmedUser", user);
 
-        return "user/admin/unconfirmed-user";
+        return "user/admin/page-check-user";
     }
 
-    @GetMapping(value = {"/pp/admin/unconfirmed-user/user{id}/confirm"})
+    @GetMapping(value = {"/pp/admin/check-user/user{id}/confirm"})
     public String confirmUser(@PathVariable("id") int id) {
         adminService.confirmUser(id);
-        return "redirect:/pp/admin/unconfirmed-user";
+        return "redirect:/pp/admin/check-user";
     }
 
-    @GetMapping(value = {"/pp/admin/unconfirmed-user/user{id}/reject"})
+    @GetMapping(value = {"/pp/admin/check-user/user{id}/reject"})
     public String rejectUser(@PathVariable("id") int id) {
         adminService.rejectUser(id);
-        return "redirect:/pp/admin/unconfirmed-user";
+        return "redirect:/pp/admin/check-user";
     }
 
-    @GetMapping(value = {"/pp/admin/unconfirmed-user/duplicate{id}/delete"})
-    public String deleteTeamPlayer(@PathVariable("id") int id) {
+    @GetMapping(value = {"/pp/admin/check-user/duplicate{id}/delete"})
+    public String deleteDuplicate(@PathVariable("id") int id) {
         adminService.deleteDuplicate(id);
-        return "redirect:/pp/admin/unconfirmed-user";
+        return "redirect:/pp/admin/check-user";
     }
 
 //    ----------------------------------------------------------------------------------
 //    --- TOURNEY
 
-    @GetMapping(value = {"/pp/admin/unconfirmed-teams"})
+    @GetMapping(value = {"/pp/admin/check-team"})
     public String toConfirmTeamPage(ModelMap map) {
         int num = adminService.getUnconfirmedTeamsNum();
         if (num == 0) return "redirect:/pp/admin";
 
         map.addAttribute("teams", adminService.getUnconfirmedTeams());
-        return "user/admin/unconfirmed-teams";
+        return "user/admin/page-check-team";
     }
 
-    @GetMapping(value = {"/pp/admin/unconfirmed-teams/team{id}/confirm"})
+    @GetMapping(value = {"/pp/admin/check-team/team{id}/confirm"})
     public String confirmTeam(@PathVariable("id") int id) {
         adminService.confirmTeam(id);
-        return "redirect:/pp/admin/unconfirmed-teams";
+        return "redirect:/pp/admin/check-team";
     }
 
-    @GetMapping(value = {"/pp/admin/unconfirmed-teams/team{id}/reject"})
+    @GetMapping(value = {"/pp/admin/check-team/team{id}/reject"})
     public String rejectTeam(@PathVariable("id") int id) {
         adminService.rejectTeam(id);
-        return "redirect:/pp/admin/unconfirmed-teams";
+        return "redirect:/pp/admin/check-team";
+    }
+
+    @GetMapping(value = {"/pp/admin/tourney"})
+    public String toTourneyCatalogPage() {
+        return "user/admin/page-tourney";
     }
 
 //    ==================================================================================
@@ -138,13 +144,13 @@ public class UserController {
     @GetMapping(value = {"/pp/tourney"})
     public String toTourneyPage(ModelMap map) {
         map.addAttribute("teamList", userService.getTeamList());
-        return "user/tourney/tourneypage";
+        return "user/tourney/page-tourney";
     }
 
     @GetMapping(value = {"/pp/tourney/create-team"})
     public String toCreateTeamPage(ModelMap map) {
-        map.addAttribute("team", new TeamDTO());
-        return "user/tourney/create-team";
+        map.addAttribute("team", new TeamDTO()); //TODO: delete this line?
+        return "user/tourney/form-create-team";
     }
 
     @PostMapping(value = {"/pp/tourney/create-team"})
@@ -155,7 +161,7 @@ public class UserController {
 
     @GetMapping(value = {"/pp/tourney/team{id}"})
     public String toTeamPage(@PathVariable("id") int id, ModelMap map) {
-        map.addAttribute("team", userService.getTeamByIDForAuthUser(id));
-        return "user/tourney/teampage";
+        map.addAttribute("team", userService.getTeam(id));
+        return "user/tourney/page-team";
     }
 }

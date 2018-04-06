@@ -26,6 +26,7 @@ public class AdminService {
 
     private UserDAO userDAO;
     private UserRoleDAO userRoleDAO;
+    private TeamPlayerDAO teamPlayerDAO;
 
     @Autowired
     public void setUserDAO(UserDAO userDAO) {
@@ -35,6 +36,11 @@ public class AdminService {
     @Autowired
     public void setUserRoleDAO(UserRoleDAO userRoleDAO) {
         this.userRoleDAO = userRoleDAO;
+    }
+
+    @Autowired
+    public void setTeamPlayerDAO(TeamPlayerDAO teamPlayerDAO) {
+        this.teamPlayerDAO = teamPlayerDAO;
     }
 
     private String ROLE_UNCONFIRMED_CODE = "ROLE_UNCONFIRMED";
@@ -65,6 +71,16 @@ public class AdminService {
         return new UserDTO(userDAO.findByID(id));
     }
 
+    @Transactional(readOnly = true)
+    public List<TeamPlayerDTO> getDuplicate(UserDTO user) {
+        List<TeamPlayerEntity> entityList = teamPlayerDAO.findByFullName(user.getName(), user.getSurname(), user.getPatronymic());
+        if (entityList == null) return null;
+
+        List<TeamPlayerDTO> dtoList = new ArrayList<TeamPlayerDTO>();
+        for (TeamPlayerEntity entity: entityList) dtoList.add(new TeamPlayerDTO(entity));
+        return dtoList;
+    }
+
     @Transactional
     public void confirmUser(Integer id) {
         String ROLE_CONFIRMED_CODE = "ROLE_USER";
@@ -81,23 +97,6 @@ public class AdminService {
                 id,
                 userRoleDAO.findByCode(ROLE_REJECTED_CODE)
         );
-    }
-
-    private TeamPlayerDAO teamPlayerDAO;
-
-    @Autowired
-    public void setTeamPlayerDAO(TeamPlayerDAO teamPlayerDAO) {
-        this.teamPlayerDAO = teamPlayerDAO;
-    }
-
-    @Transactional(readOnly = true)
-    public List<TeamPlayerDTO> getDuplicate(UserDTO user) {
-        List<TeamPlayerEntity> entityList = teamPlayerDAO.findByFullName(user.getName(), user.getSurname(), user.getPatronymic());
-        if (entityList == null) return null;
-
-        List<TeamPlayerDTO> dtoList = new ArrayList<TeamPlayerDTO>();
-        for (TeamPlayerEntity entity: entityList) dtoList.add(new TeamPlayerDTO(entity));
-        return dtoList;
     }
 
     @Transactional
@@ -154,5 +153,10 @@ public class AdminService {
                 id,
                 teamStatusDAO.findByCode(TEAM_REJECTED_CODE)
         );
+    }
+
+    @Transactional(readOnly = true)
+    public int getTourneysNum() {
+        return 0;
     }
 }

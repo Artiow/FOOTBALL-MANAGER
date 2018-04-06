@@ -54,18 +54,43 @@
 <nav class="nav-ppage">
     <div class="container">
         <ul class="list-inline">
-            <li><a th:href="@{/personalpage}"><i class="fa fa-reply" aria-hidden="true"></i> Назад</a></li>
+            <li><a th:href="@{/pp/admin}"><i class="fa fa-reply" aria-hidden="true"></i> Назад</a></li>
         </ul>
     </div>
 </nav>
 
-<main style="min-height: 600px" class="main-adminpage">
+<main style="min-height: 600px">
     <div class="container">
         <div class="row">
-            <div style="padding: 10px 0 10px 0" class="col-md-6 col-md-offset-3">
-                <a th:href="@{/pp/admin/unconfirmed-user}" th:text="'Заявки на регистрацию (' + ${numOfUnconfirmedUsers} + ')'">Заявки на регистрацию (NULL)</a>
-                <br/>
-                <a th:href="@{/pp/admin/unconfirmed-teams}" th:text="'Заявки на создание команды (' + ${numOfUnconfirmedTeams} + ')'">Заявки на создание команды (NULL)</a>
+            <div class="col-md-6 col-md-offset-1" th:object="${unconfirmedUser}">
+                <h2>Заявка:</h2>
+                <h3 style="margin-bottom: 5px" th:text="*{surname + ' ' + name + ' ' + patronymic}">SURNAME NAME PATRONYMIC</h3>
+                <div style="padding: 10px 0 20px 0" class="row">
+                    <div class="col-md-3">
+                        <!--TODO: pic here!-->
+                        <div style="width: 125px; height: 125px; background: grey"></div>
+                    </div>
+                    <div style="padding-top: 5px" class="col-md-9">
+                        <p th:text="*{login}">LOGIN</p>
+                        <p th:text="*{email}">EMAIL</p>
+                        <p th:text="*{phone}">PHONE</p>
+                    </div>
+                </div>
+                <a style="margin-right: 10px" class="btn btn-default" th:href="*{'/pp/admin/check-user/user' + id + '/confirm'}">Подтвердить</a>
+                <a style="margin-left: 10px" class="btn btn-danger" th:href="*{'/pp/admin/check-user/user' + id + '/reject'}">Отклонить</a>
+            </div>
+            <div class="col-md-4" th:if="${duplicates != null}">
+                <h2>Найденные дубликаты:</h2>
+                <ul style="margin: 0; padding: 10px 0 10px 0" th:each="duplicate: ${duplicates}">
+                    <li style="display: inline-block" th:object="${duplicate}">
+                        <h3 style="margin-bottom: 5px" th:text="*{surname + ' ' + name + ' ' + patronymic}">SURNAME NAME PATRONYMIC</h3>
+                        <p th:text="*{phone}">PHONE</p>
+                        <a class="btn btn-danger" th:href="${'/pp/admin/check-user/duplicate' + duplicate.getId() + '/delete'}">Удалить</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-4" th:unless="${duplicates != null}">
+                <h2>Дубликатов не найдено</h2>
             </div>
         </div>
     </div>
