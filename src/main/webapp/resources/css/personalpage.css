@@ -8,9 +8,9 @@ nav.nav-ppage ul {
     padding: 0;
 }
 nav.nav-ppage ul li {
+    display: inline-block;
     margin: 0 6px 0 6px;
     padding: 0;
-    display: inline-block;
 
     text-align: center;
 }
