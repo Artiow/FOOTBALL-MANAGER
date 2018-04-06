@@ -1,5 +1,7 @@
 package ru.vldf.sportsportal.model.tourney;
 
+import ru.vldf.sportsportal.dto.tourney.TourneyDTO;
+
 import javax.persistence.*;
 import java.util.Collection;
 
@@ -10,6 +12,15 @@ public class TourneyEntity {
     private String name;
 
     private Collection<TeamCompositionEntity> teamCompositionsById;
+
+    public TourneyEntity() {
+
+    }
+
+    public TourneyEntity(TourneyDTO tourneyDTO) {
+        id = tourneyDTO.getId();
+        name= tourneyDTO.getName();
+    }
 
     @Id
     @Column(name = "ID", nullable = false)

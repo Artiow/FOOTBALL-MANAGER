@@ -6,13 +6,16 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.vldf.sportsportal.dao.generic.definite.tourney.TeamDAO;
 import ru.vldf.sportsportal.dao.generic.definite.tourney.TeamPlayerDAO;
 import ru.vldf.sportsportal.dao.generic.definite.tourney.TeamStatusDAO;
+import ru.vldf.sportsportal.dao.generic.definite.tourney.TourneyDAO;
 import ru.vldf.sportsportal.dao.generic.definite.user.UserRoleDAO;
 import ru.vldf.sportsportal.dao.generic.definite.user.UserDAO;
 import ru.vldf.sportsportal.dto.tourney.TeamDTO;
 import ru.vldf.sportsportal.dto.tourney.TeamPlayerDTO;
+import ru.vldf.sportsportal.dto.tourney.TourneyDTO;
 import ru.vldf.sportsportal.dto.user.UserDTO;
 import ru.vldf.sportsportal.model.tourney.TeamEntity;
 import ru.vldf.sportsportal.model.tourney.TeamPlayerEntity;
+import ru.vldf.sportsportal.model.tourney.TourneyEntity;
 import ru.vldf.sportsportal.model.user.UserEntity;
 
 import java.util.ArrayList;
@@ -51,12 +54,6 @@ public class AdminService {
     }
 
     @Transactional(readOnly = true)
-    public UserDTO getFirstUnconfirmedUser() {
-        List<UserEntity> entityList = userDAO.findByRole(ROLE_UNCONFIRMED_CODE);
-        return new UserDTO(entityList.get(0));
-    }
-
-    @Transactional(readOnly = true)
     public List<UserDTO> getUnconfirmedUsers() {
         List<UserEntity> entityList = userDAO.findByRole(ROLE_UNCONFIRMED_CODE);
         if (entityList == null) return null;
@@ -69,6 +66,12 @@ public class AdminService {
     @Transactional(readOnly = true)
     public UserDTO getUser(Integer id) {
         return new UserDTO(userDAO.findByID(id));
+    }
+
+    @Transactional(readOnly = true)
+    public UserDTO getFirstUnconfirmedUser() {
+        List<UserEntity> entityList = userDAO.findByRole(ROLE_UNCONFIRMED_CODE);
+        return new UserDTO(entityList.get(0));
     }
 
     @Transactional(readOnly = true)
@@ -109,6 +112,7 @@ public class AdminService {
 
     private TeamDAO teamDAO;
     private TeamStatusDAO teamStatusDAO;
+    private TourneyDAO tourneyDAO;
 
     @Autowired
     public void setTeamDAO(TeamDAO teamDAO) {
@@ -118,6 +122,11 @@ public class AdminService {
     @Autowired
     public void setTeamStatusDAO(TeamStatusDAO teamStatusDAO) {
         this.teamStatusDAO = teamStatusDAO;
+    }
+
+    @Autowired
+    public void setTourneyDAO(TourneyDAO tourneyDAO) {
+        this.tourneyDAO = tourneyDAO;
     }
 
     private String TEAM_AWAITING_CODE = "TEAM_AWAITING";
@@ -157,6 +166,26 @@ public class AdminService {
 
     @Transactional(readOnly = true)
     public int getTourneysNum() {
-        return 0;
+        return tourneyDAO.numAll().intValue();
+    }
+
+    @Transactional(readOnly = true)
+    public List<TourneyDTO> getTourneysList() {
+        List<TourneyEntity> entityList = tourneyDAO.findAll();
+        if (entityList == null) return null;
+
+        List<TourneyDTO> dtoList = new ArrayList<TourneyDTO>();
+        for (TourneyEntity entity: entityList) dtoList.add(new TourneyDTO(entity));
+        return dtoList;
+    }
+
+    @Transactional(readOnly = true)
+    public TourneyDTO getTourney(Integer id) {
+        return new TourneyDTO(tourneyDAO.findByID(id));
+    }
+
+    @Transactional
+    public void createTourney(TourneyDTO tourneyDTO) {
+        tourneyDAO.save(new TourneyEntity(tourneyDTO));
     }
 }

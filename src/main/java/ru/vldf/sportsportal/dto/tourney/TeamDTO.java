@@ -14,12 +14,12 @@ public class TeamDTO {
 
     }
 
-    public TeamDTO(TeamEntity teamTourney) {
-        id = teamTourney.getId();
-        name = teamTourney.getName();
+    public TeamDTO(TeamEntity team) {
+        id = team.getId();
+        name = team.getName();
 
-        captain = new UserDTO(teamTourney.getCaptain());
-        status = new TeamStatusDTO(teamTourney.getStatus());
+        captain = new UserDTO(team.getCaptain());
+        status = new TeamStatusDTO(team.getStatus());
     }
 
     public void setId(Integer id) {

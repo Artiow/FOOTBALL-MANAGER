@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import ru.vldf.sportsportal.dto.tourney.TeamDTO;
 import ru.vldf.sportsportal.dto.tourney.TeamPlayerDTO;
+import ru.vldf.sportsportal.dto.tourney.TourneyDTO;
 import ru.vldf.sportsportal.dto.user.UserDTO;
 import ru.vldf.sportsportal.service.AdminService;
 import ru.vldf.sportsportal.service.AuthService;
@@ -57,13 +58,13 @@ public class UserController {
 //    === ADMIN
 
     @GetMapping(value = {"/pp/admin"})
-    public String toAdminPage(ModelMap map) {
+    public String toAdminMenu(ModelMap map) {
         map
                 .addAttribute("numOfUnconfirmedUsers", adminService.getUnconfirmedUsersNum())
                 .addAttribute("numOfUnconfirmedTeams", adminService.getUnconfirmedTeamsNum())
                 .addAttribute("numOfTourneys", adminService.getTourneysNum());
 
-        return "user/admin/page-admin";
+        return "user/admin/menu-admin";
     }
 
 //    ----------------------------------------------------------------------------------
@@ -134,34 +135,53 @@ public class UserController {
     }
 
     @GetMapping(value = {"/pp/admin/tourney"})
-    public String toTourneyCatalogPage() {
+    public String toTourneyCatalogPage(ModelMap map) {
+        map.addAttribute("tourneysList", adminService.getTourneysList());
+        return "user/admin/page-tourney-catalog";
+    }
+
+    @GetMapping(value = {"/pp/admin/tourney/tourney{id}"})
+    public String toTourneyPage(@PathVariable("id") int id, ModelMap map) {
+        map.addAttribute("tourneyDTO", adminService.getTourney(id));
         return "user/admin/page-tourney";
+    }
+
+    @GetMapping(value = {"/pp/admin/tourney/create-tourney"})
+    public String toCreateTourneyForm(ModelMap map) {
+        map.addAttribute("tourneyDTO", new TourneyDTO()); //TODO: delete this line?
+        return "user/admin/form-create-tourney";
+    }
+
+    @PostMapping(value = {"/pp/admin/tourney/create-tourney"})
+    public String createTourney(@ModelAttribute(value="tourneyDTO") TourneyDTO tourneyDTO) {
+        adminService.createTourney(tourneyDTO);
+        return "redirect:/pp/admin/tourney";
     }
 
 //    ==================================================================================
 //    === TOURNEY
 
     @GetMapping(value = {"/pp/tourney"})
-    public String toTourneyPage(ModelMap map) {
+    public String toTourneyMenu(ModelMap map) {
         map.addAttribute("teamList", userService.getTeamList());
-        return "user/tourney/page-tourney";
-    }
-
-    @GetMapping(value = {"/pp/tourney/create-team"})
-    public String toCreateTeamForm(ModelMap map) {
-        map.addAttribute("team", new TeamDTO()); //TODO: delete this line?
-        return "user/tourney/form-create-team";
-    }
-
-    @PostMapping(value = {"/pp/tourney/create-team"})
-    public String createTeam(@ModelAttribute(value="team") TeamDTO teamDTO) {
-        userService.createTeam(teamDTO);
-        return "redirect:/pp/tourney";
+        return "user/tourney/menu-tourney";
     }
 
     @GetMapping(value = {"/pp/tourney/team{id}"})
     public String toTeamPage(@PathVariable("id") int id, ModelMap map) {
-        map.addAttribute("team", userService.getTeam(id));
+        map.addAttribute("teamDTO", userService.getTeam(id));
         return "user/tourney/page-team";
+    }
+
+    @GetMapping(value = {"/pp/tourney/create-team"})
+    public String toCreateTeamForm(ModelMap map) {
+        map.addAttribute("teamDTO", new TeamDTO()); //TODO: delete this line?
+        return "user/tourney/form-create-team";
+    }
+
+    @PostMapping(value = {"/pp/tourney/create-team"})
+    public String createTeam(@ModelAttribute(value="teamDTO") TeamDTO teamDTO) {
+        userService.createTeam(teamDTO);
+        return "redirect:/pp/tourney";
     }
 }
