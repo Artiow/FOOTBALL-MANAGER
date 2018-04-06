@@ -148,7 +148,7 @@ public class UserController {
     }
 
     @GetMapping(value = {"/pp/tourney/create-team"})
-    public String toCreateTeamPage(ModelMap map) {
+    public String toCreateTeamForm(ModelMap map) {
         map.addAttribute("team", new TeamDTO()); //TODO: delete this line?
         return "user/tourney/form-create-team";
     }
