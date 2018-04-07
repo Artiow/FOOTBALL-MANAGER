@@ -143,7 +143,9 @@ public class UserController {
     @GetMapping(value = {"/pp/admin/tourney/tourney{id}"})
     public String toTourneyPage(@PathVariable("id") int id, ModelMap map) {
         TourneyDTO tourneyDTO = adminService.getTourney(id);
-        map.addAttribute("tourneyDTO", tourneyDTO);
+        map
+                .addAttribute("tourneyDTO", tourneyDTO)
+                .addAttribute("teamList", adminService.getTeams(tourneyDTO));
 
         int status = tourneyDTO.getStatus().getId();
         switch (status) {

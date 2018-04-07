@@ -49,14 +49,15 @@ main.main-tourneypage table td {
     padding: 0;
 }
 main.main-tourneypage table a {
-    height: 105px;
-
     display: block;
     padding: 10px;
 
     color: inherit;
     text-decoration: inherit;
     text-align: center;
+}
+main.main-tourneypage.pic-href table a {
+    height: 105px;
 }
 main.main-tourneypage table a.pic-href {
     padding-right: 0;

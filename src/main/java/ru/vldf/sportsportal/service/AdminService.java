@@ -193,4 +193,14 @@ public class AdminService {
         TourneyStatusEntity status = tourneyStatusDAO.findByCode("TOURNEY_FORMED");
         tourneyDAO.save(new TourneyEntity(tourneyDTO, status));
     }
+
+    @Transactional(readOnly = true)
+    public List<TeamDTO> getTeams(TourneyDTO tourney) {
+        List<TeamEntity> entityList = teamDAO.findByTourney(tourney.getId());
+        if (entityList == null) return null;
+
+        List<TeamDTO> dtoList = new ArrayList<TeamDTO>();
+        for (TeamEntity entity: entityList) dtoList.add(new TeamDTO(entity));
+        return dtoList;
+    }
 }

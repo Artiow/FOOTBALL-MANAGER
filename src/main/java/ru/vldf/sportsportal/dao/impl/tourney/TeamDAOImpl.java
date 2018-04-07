@@ -5,6 +5,7 @@ import ru.vldf.sportsportal.dao.generic.abstrct.AbstractDAOImpl;
 import ru.vldf.sportsportal.dao.generic.definite.tourney.TeamDAO;
 import ru.vldf.sportsportal.model.tourney.TeamEntity;
 import ru.vldf.sportsportal.model.tourney.TeamStatusEntity;
+import ru.vldf.sportsportal.model.tourney.TourneyEntity;
 import ru.vldf.sportsportal.model.user.UserEntity;
 
 import java.util.List;
@@ -37,20 +38,30 @@ public class TeamDAOImpl extends AbstractDAOImpl<TeamEntity, Integer> implements
         else return null;
     }
 
-    public List<TeamEntity> findByUser(String userLogin) {
+    public List<TeamEntity> findByUser(UserEntity user) {
         List teams = getSession()
-                .createQuery("from TeamEntity where captain.login=?")
-                .setParameter(0, userLogin)
+                .createQuery("from TeamEntity where captain=?")
+                .setParameter(0, user)
                 .list();
 
         if ((teams != null) && (teams.size() > 0)) return (List<TeamEntity>) teams;
         else return null;
     }
 
-    public List<TeamEntity> findByUser(UserEntity user) {
-        List teams = getSession()
-                .createQuery("from TeamEntity where captain=?")
-                .setParameter(0, user)
+    public List<TeamEntity> findByTourney(Integer tourneyID) {
+        List teams = getSession() //TODO: fix!!!
+                .createQuery("from TeamEntity ")
+//                .setParameter(0, tourneyID)
+                .list();
+
+        if ((teams != null) && (teams.size() > 0)) return (List<TeamEntity>) teams;
+        else return null;
+    }
+
+    public List<TeamEntity> findByTourney(TourneyEntity tourney) {
+        List teams = getSession() //TODO: fix!!!
+                .createQuery("from TeamEntity")
+//                .setParameter(0, tourneyID)
                 .list();
 
         if ((teams != null) && (teams.size() > 0)) return (List<TeamEntity>) teams;

@@ -59,7 +59,7 @@
     </div>
 </nav>
 
-<main style="min-height: 600px">
+<main style="min-height: 600px" class="main-tourneypage">
     <div class="alert-danger" th:unless="${tourneyDTO != null}">
         <div class="container">
             <div class="row">
@@ -76,14 +76,35 @@
                 <h4 style="padding: 5px" class="alert-warning">ИДЕТ НАБОР</h4>
             </div>
         </div>
-        <div class="row" th:if="${true}">
+        <div class="row" th:if="${teamList != null}">
             <div style="padding: 10px 0 10px 0" class="col-md-6 col-md-offset-3">
-                <!--TODO: tourney teams table-->
+                <h4>Участвующие команды:</h4>
+                <table class="table table-hover">
+                    <tr th:each="teamItem: ${teamList}" th:object="${teamItem}">
+                        <td>
+                            <a th:href="*{'/xxx' + id}">
+                                <p th:text="*{name}">NAME</p>
+                            </a>
+                        </td>
+                        <td th:if="*{status.code == 'TEAM_INVITED'}" class="warning">
+                            <a th:href="*{'/xxx' + id}">
+                                <p>ПРИГЛАШЕНА</p>
+                            </a>
+                        </td>
+                        <td th:if="*{status.code == 'TEAM_INVOLVED'}" class="info">
+                            <a th:href="*{'/xxx' + id}">
+                                <p>УЧАСТВУЕТ</p>
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+                <a th:href="@{/xxx}" type="button" class="btn btn-default">Пригласить команду в турнир</a>
             </div>
         </div>
-        <div class="row" th:unless="${true}">
+        <div class="row" th:unless="${teamList != null}">
             <div style="padding: 10px 0 10px 0" class="col-md-6 col-md-offset-3">
-                <!--TODO: else-->
+                <h4>Нет участвующих команд</h4>
+                <a th:href="@{/xxx}" type="button" class="btn btn-default">Пригласить команду в турнир</a>
             </div>
         </div>
     </div>
