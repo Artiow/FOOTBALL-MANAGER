@@ -142,8 +142,15 @@ public class UserController {
 
     @GetMapping(value = {"/pp/admin/tourney/tourney{id}"})
     public String toTourneyPage(@PathVariable("id") int id, ModelMap map) {
-        map.addAttribute("tourneyDTO", adminService.getTourney(id));
-        return "user/admin/page-tourney";
+        TourneyDTO tourneyDTO = adminService.getTourney(id);
+        map.addAttribute("tourneyDTO", tourneyDTO);
+
+        int status = tourneyDTO.getStatus().getId();
+        switch (status) {
+            case 1: return "user/admin/page-tourney-status-formed"; //TOURNEY_FORMED
+            case 2: return "user/admin/page-tourney-status-ready"; //TOURNEY_READY
+            default: return "redirect:/pp/admin/tourney";
+        }
     }
 
     @GetMapping(value = {"/pp/admin/tourney/create-tourney"})
