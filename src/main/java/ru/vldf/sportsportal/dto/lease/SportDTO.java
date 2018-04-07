@@ -6,6 +6,10 @@ public class SportDTO {
     private Integer id;
     private String name;
 
+    public SportDTO() {
+
+    }
+
     public SportDTO(SportEntity sport) {
         id = sport.getId();
         name = sport.getName();

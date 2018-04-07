@@ -1,27 +1,27 @@
-package ru.vldf.sportsportal.model.user;
+package ru.vldf.sportsportal.model.tourney;
 
-import ru.vldf.sportsportal.dto.user.UserRoleDTO;
+import ru.vldf.sportsportal.dto.tourney.TourneyStatusDTO;
 
 import javax.persistence.*;
 import java.util.Collection;
 
 @Entity
-@Table(name = "UserRole", schema = "sportsportal")
-public class UserRoleEntity {
+@Table(name = "TourneyStatus", schema = "sportsportal")
+public class TourneyStatusEntity {
     private Integer id;
     private String code;
     private String description;
 
-    private Collection<UserEntity> users;
+    private Collection<TourneyEntity> tourneys;
 
-    public UserRoleEntity() {
+    public TourneyStatusEntity() {
 
     }
 
-    public UserRoleEntity(UserRoleDTO role) {
-        id = role.getId();
-        code = role.getCode();
-        description = role.getDescription();
+    public TourneyStatusEntity(TourneyStatusDTO status) {
+        id = status.getId();
+        code = status.getCode();
+        description = status.getDescription();
     }
 
     @Id
@@ -46,7 +46,7 @@ public class UserRoleEntity {
     }
 
     @Basic
-    @Column(name = "Description", nullable = false, length = 90)
+    @Column(name = "Description", nullable = true, length = 90)
     public String getDescription() {
         return description;
     }
@@ -58,25 +58,24 @@ public class UserRoleEntity {
 //    ==================================================================================
 //    === ONE-TO-MANY REFERENCES
 
-    @OneToMany(mappedBy = "role")
-    public Collection<UserEntity> getUsers() {
-        return users;
+    @OneToMany(mappedBy = "tourneyStatus")
+    public Collection<TourneyEntity> getTourneys() {
+        return tourneys;
     }
 
-    public void setUsers(Collection<UserEntity> users) {
-        this.users = users;
+    public void setTourneys(Collection<TourneyEntity> tourneys) {
+        this.tourneys = tourneys;
     }
 
 //    ==================================================================================
 //    === OBJECTS METHODS
-
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        UserRoleEntity that = (UserRoleEntity) o;
+        TourneyStatusEntity that = (TourneyStatusEntity) o;
 
         return id.equals(that.id);
     }
@@ -84,10 +83,5 @@ public class UserRoleEntity {
     @Override
     public int hashCode() {
         return id.hashCode();
-    }
-
-    @Override
-    public String toString() {
-        return code;
     }
 }

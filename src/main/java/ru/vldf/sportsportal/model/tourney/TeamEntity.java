@@ -15,7 +15,7 @@ public class TeamEntity {
     private UserEntity captain;
     private TeamStatusEntity status;
 
-    private Collection<TeamCompositionEntity> teamCompositionsById;
+    private Collection<TeamCompositionEntity> teamCompositions;
 
     public TeamEntity() {
 
@@ -53,13 +53,13 @@ public class TeamEntity {
 //    ==================================================================================
 //    === ONE-TO-MANY REFERENCES
 
-    @OneToMany(mappedBy = "teamByTourneyId")
-    public Collection<TeamCompositionEntity> getTeamCompositionsById() {
-        return teamCompositionsById;
+    @OneToMany(mappedBy = "team")
+    public Collection<TeamCompositionEntity> getTeamCompositions() {
+        return teamCompositions;
     }
 
-    public void setTeamCompositionsById(Collection<TeamCompositionEntity> teamCompositionsById) {
-        this.teamCompositionsById = teamCompositionsById;
+    public void setTeamCompositions(Collection<TeamCompositionEntity> teamCompositionsById) {
+        this.teamCompositions = teamCompositionsById;
     }
 
 //    ==================================================================================

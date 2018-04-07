@@ -28,15 +28,15 @@ public class UserEntity {
 
     }
 
-    public UserEntity(UserDTO userDTO, UserRoleEntity role) {
-        id = userDTO.getId();
-        login = userDTO.getLogin();
-        email = userDTO.getEmail();
-        password = userDTO.getPassword();
-        name = userDTO.getName();
-        surname = userDTO.getSurname();
-        patronymic = userDTO.getPatronymic();
-        phone = userDTO.getPhone();
+    public UserEntity(UserDTO user, UserRoleEntity role) {
+        id = user.getId();
+        login = user.getLogin();
+        email = user.getEmail();
+        password = user.getPassword();
+        name = user.getName();
+        surname = user.getSurname();
+        patronymic = user.getPatronymic();
+        phone = user.getPhone();
 
         this.role = role;
     }

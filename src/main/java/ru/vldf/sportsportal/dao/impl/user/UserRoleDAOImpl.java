@@ -22,13 +22,7 @@ public class UserRoleDAOImpl extends AbstractDAOImpl<UserRoleEntity, Integer> im
 //    === FIND
 
     public UserRoleEntity findByID(Integer id) {
-        List roles = getSession()
-                .createQuery("from UserRoleEntity where id=?")
-                .setParameter(0, id)
-                .list();
-
-        if ((roles != null) && (roles.size() == 1)) return (UserRoleEntity) roles.get(0);
-        else return null;
+        return super.get(id);
     }
 
     public UserRoleEntity findByCode(String code) {

@@ -6,6 +6,8 @@ public class TourneyDTO {
     private Integer id;
     private String name;
 
+    private TourneyStatusDTO status;
+
     public TourneyDTO() {
 
     }
@@ -13,6 +15,8 @@ public class TourneyDTO {
     public TourneyDTO(TourneyEntity tourney) {
         id = tourney.getId();
         name = tourney.getName();
+
+        status = new TourneyStatusDTO(tourney.getTourneyStatus());
     }
 
     public Integer getId() {
@@ -29,5 +33,13 @@ public class TourneyDTO {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public TourneyStatusDTO getStatus() {
+        return status;
+    }
+
+    public void setStatus(TourneyStatusDTO status) {
+        this.status = status;
     }
 }

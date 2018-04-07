@@ -3,10 +3,7 @@ package ru.vldf.sportsportal.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.vldf.sportsportal.dao.generic.definite.tourney.TeamDAO;
-import ru.vldf.sportsportal.dao.generic.definite.tourney.TeamPlayerDAO;
-import ru.vldf.sportsportal.dao.generic.definite.tourney.TeamStatusDAO;
-import ru.vldf.sportsportal.dao.generic.definite.tourney.TourneyDAO;
+import ru.vldf.sportsportal.dao.generic.definite.tourney.*;
 import ru.vldf.sportsportal.dao.generic.definite.user.UserRoleDAO;
 import ru.vldf.sportsportal.dao.generic.definite.user.UserDAO;
 import ru.vldf.sportsportal.dto.tourney.TeamDTO;
@@ -16,6 +13,7 @@ import ru.vldf.sportsportal.dto.user.UserDTO;
 import ru.vldf.sportsportal.model.tourney.TeamEntity;
 import ru.vldf.sportsportal.model.tourney.TeamPlayerEntity;
 import ru.vldf.sportsportal.model.tourney.TourneyEntity;
+import ru.vldf.sportsportal.model.tourney.TourneyStatusEntity;
 import ru.vldf.sportsportal.model.user.UserEntity;
 
 import java.util.ArrayList;
@@ -46,7 +44,7 @@ public class AdminService {
         this.teamPlayerDAO = teamPlayerDAO;
     }
 
-    private String ROLE_UNCONFIRMED_CODE = "ROLE_UNCONFIRMED";
+    private final String ROLE_UNCONFIRMED_CODE = "ROLE_UNCONFIRMED";
 
     @Transactional(readOnly = true)
     public int getUnconfirmedUsersNum() {
@@ -113,6 +111,7 @@ public class AdminService {
     private TeamDAO teamDAO;
     private TeamStatusDAO teamStatusDAO;
     private TourneyDAO tourneyDAO;
+    private TourneyStatusDAO tourneyStatusDAO;
 
     @Autowired
     public void setTeamDAO(TeamDAO teamDAO) {
@@ -129,16 +128,21 @@ public class AdminService {
         this.tourneyDAO = tourneyDAO;
     }
 
-    private String TEAM_AWAITING_CODE = "TEAM_AWAITING";
+    @Autowired
+    public void setTourneyStatusDAO(TourneyStatusDAO tourneyStatusDAO) {
+        this.tourneyStatusDAO = tourneyStatusDAO;
+    }
+
+    private final String TEAM_UNCONFIRMED_CODE = "TEAM_UNCONFIRMED";
 
     @Transactional(readOnly = true)
     public int getUnconfirmedTeamsNum() {
-        return teamDAO.numByStatus(TEAM_AWAITING_CODE).intValue();
+        return teamDAO.numByStatus(TEAM_UNCONFIRMED_CODE).intValue();
     }
 
     @Transactional(readOnly = true)
     public List<TeamDTO> getUnconfirmedTeams() {
-        List<TeamEntity> entityList = teamDAO.findByStatus(TEAM_AWAITING_CODE);
+        List<TeamEntity> entityList = teamDAO.findByStatus(TEAM_UNCONFIRMED_CODE);
         if (entityList == null) return null;
 
         List<TeamDTO> dtoList = new ArrayList<TeamDTO>();
@@ -186,6 +190,7 @@ public class AdminService {
 
     @Transactional
     public void createTourney(TourneyDTO tourneyDTO) {
-        tourneyDAO.save(new TourneyEntity(tourneyDTO));
+        TourneyStatusEntity status = tourneyStatusDAO.findByCode("TOURNEY_FORMED");
+        tourneyDAO.save(new TourneyEntity(tourneyDTO, status));
     }
 }

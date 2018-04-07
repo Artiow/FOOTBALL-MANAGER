@@ -77,6 +77,21 @@
                                 <p th:text="*{name}">NAME</p>
                             </a>
                         </td>
+                        <td th:if="*{status.code == 'TOURNEY_FORMED'}" class="warning">
+                            <a th:href="*{'/pp/admin/tourney/tourney' + id}">
+                                <p>ИДЕТ НАБОР</p>
+                            </a>
+                        </td>
+                        <td th:if="*{status.code == 'TOURNEY_READY'}" class="info">
+                            <a th:href="*{'/pp/admin/tourney/tourney' + id}">
+                                <p>НАБОР ЗАВЕРШЕН</p>
+                            </a>
+                        </td>
+                        <td th:if="*{status.code == 'TOURNEY_???'}" class="info">
+                            <a th:href="*{'/pp/admin/tourney/tourney' + id}">
+                                <p></p>
+                            </a>
+                        </td>
                     </tr>
                 </table>
                 <a th:href="@{/pp/admin/tourney/create-tourney}" type="button" class="btn btn-default">Создать турнир</a>

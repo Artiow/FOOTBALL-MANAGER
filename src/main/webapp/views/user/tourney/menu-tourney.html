@@ -77,19 +77,19 @@
                                 <p th:text="*{name}">NAME</p>
                             </a>
                         </td>
-                        <td th:if="*{status.code == 'TEAM_AWAITING'}" class="warning">
+                        <td th:if="*{status.code == 'TEAM_UNCONFIRMED'}" class="warning">
                             <a th:href="*{'/pp/tourney/team' + id}">
                                 <p>ОЖИДАЕТ ПОДТВЕРЖДЕНИЯ</p>
                             </a>
                         </td>
-                        <td th:if="*{status.code == 'TEAM_REJECTED'}" class="danger">
-                            <a class="cell" th:href="*{'/pp/tourney/team' + id}">
-                                <p>ЗАЯВКА ОТКЛОНЕНА</p>
+                        <td th:if="*{status.code == 'TEAM_CONFIRMED'}">
+                            <a th:href="*{'/pp/tourney/team' + id}">
+                                <p></p>
                             </a>
                         </td>
-                        <td th:unless="*{(status.code == 'TEAM_AWAITING') || (status.code == 'TEAM_REJECTED')}">
-                            <a class="cell" th:href="*{'/pp/tourney/team' + id}">
-                                <p></p>
+                        <td th:if="*{status.code == 'TEAM_REJECTED'}" class="danger">
+                            <a th:href="*{'/pp/tourney/team' + id}">
+                                <p>ЗАЯВКА ОТКЛОНЕНА</p>
                             </a>
                         </td>
                     </tr>

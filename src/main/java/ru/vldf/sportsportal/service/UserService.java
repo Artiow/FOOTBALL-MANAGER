@@ -67,10 +67,7 @@ public class UserService {
 
     @Transactional
     public void createTeam(TeamDTO teamDTO) {
-        UserEntity captain = userDAO.findByID(
-                authService.getAuthUser().getId()
-        );
-
+        UserEntity captain = userDAO.findByID(authService.getAuthUser().getId());
         TeamStatusEntity status = teamStatusDAO.findByCode("TEAM_AWAITING");
         teamDAO.save(new TeamEntity(teamDTO, captain, status));
     }

@@ -2,6 +2,8 @@ package ru.vldf.sportsportal.dao.generic.definite.tourney;
 
 import ru.vldf.sportsportal.model.tourney.TeamStatusEntity;
 
+import java.util.List;
+
 public interface TeamStatusDAO {
 
     Integer save(TeamStatusEntity status);
@@ -12,4 +14,6 @@ public interface TeamStatusDAO {
     TeamStatusEntity findByID(Integer id);
 
     TeamStatusEntity findByCode(String code);
+
+    List<TeamStatusEntity> findAll();
 }

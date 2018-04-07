@@ -1,5 +1,6 @@
 package ru.vldf.sportsportal.model.tourney;
 
+import ru.vldf.sportsportal.dto.tourney.TeamCompositionDTO;
 import ru.vldf.sportsportal.model.user.UserEntity;
 
 import javax.persistence.*;
@@ -12,11 +13,24 @@ public class TeamCompositionEntity {
     private String teamName;
     private Integer shiftBalance;
 
-    private TeamEntity teamByTourneyId;
-    private TourneyEntity tourneyByTourneyId;
+    private TeamEntity team;
+    private TourneyEntity tourney;
 
     private Collection<UserEntity> users;
     private Collection<TeamPlayerEntity> players;
+
+    public TeamCompositionEntity() {
+
+    }
+
+    public TeamCompositionEntity(TeamCompositionDTO teamComposition, TeamEntity team, TourneyEntity tourney) {
+        id = teamComposition.getId();
+        teamName = teamComposition.getTeamName();
+        shiftBalance = teamComposition.getShiftBalance();
+
+        this.team = team;
+        this.tourney = tourney;
+    }
 
     @Id
     @Column(name = "ID", nullable = false)
@@ -54,22 +68,22 @@ public class TeamCompositionEntity {
 
     @ManyToOne
     @JoinColumn(name = "Team_ID", referencedColumnName = "ID", nullable = false)
-    public TeamEntity getTeamByTourneyId() {
-        return teamByTourneyId;
+    public TeamEntity getTeam() {
+        return team;
     }
 
-    public void setTeamByTourneyId(TeamEntity teamByTourneyId) {
-        this.teamByTourneyId = teamByTourneyId;
+    public void setTeam(TeamEntity team) {
+        this.team = team;
     }
 
     @ManyToOne
     @JoinColumn(name = "Tourney_ID", referencedColumnName = "ID", nullable = false)
-    public TourneyEntity getTourneyByTourneyId() {
-        return tourneyByTourneyId;
+    public TourneyEntity getTourney() {
+        return tourney;
     }
 
-    public void setTourneyByTourneyId(TourneyEntity tourneyByTourneyId) {
-        this.tourneyByTourneyId = tourneyByTourneyId;
+    public void setTourney(TourneyEntity tourney) {
+        this.tourney = tourney;
     }
 
 //    ==================================================================================

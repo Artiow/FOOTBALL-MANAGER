@@ -11,15 +11,19 @@ public class TourneyEntity {
     private Integer id;
     private String name;
 
-    private Collection<TeamCompositionEntity> teamCompositionsById;
+    private TourneyStatusEntity status;
+
+    private Collection<TeamCompositionEntity> compositions;
 
     public TourneyEntity() {
 
     }
 
-    public TourneyEntity(TourneyDTO tourneyDTO) {
-        id = tourneyDTO.getId();
-        name= tourneyDTO.getName();
+    public TourneyEntity(TourneyDTO tourney, TourneyStatusEntity status) {
+        id = tourney.getId();
+        name= tourney.getName();
+
+        this.status = status;
     }
 
     @Id
@@ -39,20 +43,33 @@ public class TourneyEntity {
         return name;
     }
 
+//    ==================================================================================
+//    === ONE-TO-MANY REFERENCES
+
     public void setName(String name) {
         this.name = name;
     }
 
-//    ==================================================================================
-//    === ONE-TO-MANY REFERENCES
-
-    @OneToMany(mappedBy = "tourneyByTourneyId")
-    public Collection<TeamCompositionEntity> getTeamCompositionsById() {
-        return teamCompositionsById;
+    @OneToMany(mappedBy = "tourney")
+    public Collection<TeamCompositionEntity> getTeamCompositions() {
+        return compositions;
     }
 
-    public void setTeamCompositionsById(Collection<TeamCompositionEntity> teamCompositionsById) {
-        this.teamCompositionsById = teamCompositionsById;
+    public void setTeamCompositions(Collection<TeamCompositionEntity> compositions) {
+        this.compositions = compositions;
+    }
+
+//    ==================================================================================
+//    === MANY-TO-ONE REFERENCES
+
+    @ManyToOne
+    @JoinColumn(name = "Status_ID", referencedColumnName = "ID", nullable = false)
+    public TourneyStatusEntity getTourneyStatus() {
+        return status;
+    }
+
+    public void setTourneyStatus(TourneyStatusEntity status) {
+        this.status = status;
     }
 
 //    ==================================================================================
