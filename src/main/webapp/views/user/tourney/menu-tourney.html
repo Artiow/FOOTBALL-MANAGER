@@ -92,6 +92,16 @@
                                 <p>ЗАЯВКА ОТКЛОНЕНА</p>
                             </a>
                         </td>
+                        <td th:if="*{status.code == 'TEAM_INVITED'}" class="success">
+                            <a th:href="*{'/pp/tourney/team' + id}">
+                                <p>ПРИГЛАШЕНИЕ</p>
+                            </a>
+                        </td>
+                        <td th:if="*{status.code == 'TEAM_INVOLVED'}" class="info">
+                            <a th:href="*{'/pp/tourney/team' + id}">
+                                <p>В ТУРНИРЕ</p>
+                            </a>
+                        </td>
                     </tr>
                 </table>
                 <a th:href="@{/pp/tourney/create-team}" type="button" class="btn btn-default">Создать турнирную команду</a>

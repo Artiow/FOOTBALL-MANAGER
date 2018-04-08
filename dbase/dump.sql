@@ -34,6 +34,15 @@ CREATE TABLE `Playground` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `Playground`
+--
+
+LOCK TABLES `Playground` WRITE;
+/*!40000 ALTER TABLE `Playground` DISABLE KEYS */;
+/*!40000 ALTER TABLE `Playground` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `PlaygroundSpec`
 --
 
@@ -52,6 +61,15 @@ CREATE TABLE `PlaygroundSpec` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `PlaygroundSpec`
+--
+
+LOCK TABLES `PlaygroundSpec` WRITE;
+/*!40000 ALTER TABLE `PlaygroundSpec` DISABLE KEYS */;
+/*!40000 ALTER TABLE `PlaygroundSpec` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `Sport`
 --
 
@@ -66,6 +84,15 @@ CREATE TABLE `Sport` (
   UNIQUE KEY `Sport_Name_uindex` (`Name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Sport`
+--
+
+LOCK TABLES `Sport` WRITE;
+/*!40000 ALTER TABLE `Sport` DISABLE KEYS */;
+/*!40000 ALTER TABLE `Sport` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `Team`
@@ -90,6 +117,16 @@ CREATE TABLE `Team` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `Team`
+--
+
+LOCK TABLES `Team` WRITE;
+/*!40000 ALTER TABLE `Team` DISABLE KEYS */;
+INSERT INTO `Team` VALUES (1,'Good Team',1,2),(2,'Better Team',1,2),(3,'The Best Team',1,1),(4,'Fuck This Shit',1,1),(5,'Охуительная Команда Блядь',5,2),(9,'Нижние Подзалупки',5,1);
+/*!40000 ALTER TABLE `Team` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `TeamComposition`
 --
 
@@ -104,12 +141,22 @@ CREATE TABLE `TeamComposition` (
   `ShiftBalance` int(11) NOT NULL DEFAULT '3',
   PRIMARY KEY (`ID`),
   UNIQUE KEY `TeamComposition_ID_uindex` (`ID`),
+  UNIQUE KEY `TeamComposition_Team_ID_Tourney_ID_uindex` (`Team_ID`,`Tourney_ID`),
   KEY `TeamComposition_Tourney_ID_fk` (`Tourney_ID`),
   KEY `TeamComposition_Team_ID_fk` (`Team_ID`),
   CONSTRAINT `TeamComposition_Team_ID_fk` FOREIGN KEY (`Team_ID`) REFERENCES `Team` (`ID`),
   CONSTRAINT `TeamComposition_Tourney_ID_fk` FOREIGN KEY (`Tourney_ID`) REFERENCES `Tourney` (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `TeamComposition`
+--
+
+LOCK TABLES `TeamComposition` WRITE;
+/*!40000 ALTER TABLE `TeamComposition` DISABLE KEYS */;
+/*!40000 ALTER TABLE `TeamComposition` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `TeamMembershipForPlayer`
@@ -130,6 +177,15 @@ CREATE TABLE `TeamMembershipForPlayer` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `TeamMembershipForPlayer`
+--
+
+LOCK TABLES `TeamMembershipForPlayer` WRITE;
+/*!40000 ALTER TABLE `TeamMembershipForPlayer` DISABLE KEYS */;
+/*!40000 ALTER TABLE `TeamMembershipForPlayer` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `TeamMembershipForUser`
 --
 
@@ -148,6 +204,15 @@ CREATE TABLE `TeamMembershipForUser` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `TeamMembershipForUser`
+--
+
+LOCK TABLES `TeamMembershipForUser` WRITE;
+/*!40000 ALTER TABLE `TeamMembershipForUser` DISABLE KEYS */;
+/*!40000 ALTER TABLE `TeamMembershipForUser` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `TeamPic`
 --
 
@@ -163,6 +228,15 @@ CREATE TABLE `TeamPic` (
   CONSTRAINT `TeamPic_Team_ID_fk` FOREIGN KEY (`Team_ID`) REFERENCES `Team` (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `TeamPic`
+--
+
+LOCK TABLES `TeamPic` WRITE;
+/*!40000 ALTER TABLE `TeamPic` DISABLE KEYS */;
+/*!40000 ALTER TABLE `TeamPic` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `TeamPlayer`
@@ -183,6 +257,16 @@ CREATE TABLE `TeamPlayer` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `TeamPlayer`
+--
+
+LOCK TABLES `TeamPlayer` WRITE;
+/*!40000 ALTER TABLE `TeamPlayer` DISABLE KEYS */;
+INSERT INTO `TeamPlayer` VALUES (3,'test2','test2','test2',NULL),(4,'test2','test2','test2',NULL);
+/*!40000 ALTER TABLE `TeamPlayer` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `TeamStatus`
 --
 
@@ -196,8 +280,18 @@ CREATE TABLE `TeamStatus` (
   PRIMARY KEY (`ID`),
   UNIQUE KEY `TeamStatus_Code_uindex` (`Code`),
   UNIQUE KEY `TeamStatus_ID_uindex` (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `TeamStatus`
+--
+
+LOCK TABLES `TeamStatus` WRITE;
+/*!40000 ALTER TABLE `TeamStatus` DISABLE KEYS */;
+INSERT INTO `TeamStatus` VALUES (1,'TEAM_UNCONFIRMED','Команда ожидает подтверждения'),(2,'TEAM_CONFIRMED','Команда подтверждена'),(3,'TEAM_REJECTED','Команда отклонена'),(4,'TEAM_INVITED','Команда приглашена в турнир'),(5,'TEAM_INVOLVED','Команда участвует в турнире');
+/*!40000 ALTER TABLE `TeamStatus` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `Tourney`
@@ -209,11 +303,51 @@ DROP TABLE IF EXISTS `Tourney`;
 CREATE TABLE `Tourney` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `Name` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
+  `Status_ID` int(11) NOT NULL,
   PRIMARY KEY (`ID`),
   UNIQUE KEY `Tourney_ID_uindex` (`ID`),
-  UNIQUE KEY `Tourney_Name_uindex` (`Name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  UNIQUE KEY `Tourney_Name_uindex` (`Name`),
+  KEY `Tourney_TourneyStatus_ID_fk` (`Status_ID`),
+  CONSTRAINT `Tourney_TourneyStatus_ID_fk` FOREIGN KEY (`Status_ID`) REFERENCES `TourneyStatus` (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Tourney`
+--
+
+LOCK TABLES `Tourney` WRITE;
+/*!40000 ALTER TABLE `Tourney` DISABLE KEYS */;
+INSERT INTO `Tourney` VALUES (1,'Охуительно Важный Турнир',1),(2,'Турнир Чуть Поважнее',1);
+/*!40000 ALTER TABLE `Tourney` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `TourneyStatus`
+--
+
+DROP TABLE IF EXISTS `TourneyStatus`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `TourneyStatus` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `Code` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
+  `Description` varchar(90) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  UNIQUE KEY `TourneyStatus_ID_uindex` (`ID`),
+  UNIQUE KEY `TourneyStatus_Code_uindex` (`Code`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `TourneyStatus`
+--
+
+LOCK TABLES `TourneyStatus` WRITE;
+/*!40000 ALTER TABLE `TourneyStatus` DISABLE KEYS */;
+INSERT INTO `TourneyStatus` VALUES (1,'TOURNEY_FORMED','Турнир набирает команды'),(2,'TOURNEY_READY','Команды набраны');
+/*!40000 ALTER TABLE `TourneyStatus` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `User`
@@ -242,6 +376,16 @@ CREATE TABLE `User` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `User`
+--
+
+LOCK TABLES `User` WRITE;
+/*!40000 ALTER TABLE `User` DISABLE KEYS */;
+INSERT INTO `User` VALUES (1,1,'artiow','$2a$10$X0QUCiRADuOthPN9MWwU3udzOBq21vCUt8QTOP8jXXAd.RTLJbUJO','Артем','Намеднев','Александрович','namednev_a@mail.ru','9204251258'),(5,2,'login','$2a$10$hiCEvfA8G/kfKG7qJLpTD.8/A7GUxCtfLlDdNaiQOHaEo2QsVz4a.','Name','Surname','Patronymic','email',NULL),(10,4,'test1','$2a$10$n.Lx3IBkcniRkMM4dwk1Fe4OZb53HMtNTsC5KDFt4o32xa.3p7OCq','test1','test1','test1','test1','test1'),(11,4,'test2','$2a$10$n.Lx3IBkcniRkMM4dwk1Fe4OZb53HMtNTsC5KDFt4o32xa.3p7OCq','test2','test2','test2','test2','test2'),(12,4,'test3','$2a$10$n.Lx3IBkcniRkMM4dwk1Fe4OZb53HMtNTsC5KDFt4o32xa.3p7OCq','test3','test3','test3','test3','test3');
+/*!40000 ALTER TABLE `User` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `UserPic`
 --
 
@@ -259,6 +403,15 @@ CREATE TABLE `UserPic` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `UserPic`
+--
+
+LOCK TABLES `UserPic` WRITE;
+/*!40000 ALTER TABLE `UserPic` DISABLE KEYS */;
+/*!40000 ALTER TABLE `UserPic` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `UserRole`
 --
 
@@ -268,12 +421,21 @@ DROP TABLE IF EXISTS `UserRole`;
 CREATE TABLE `UserRole` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `Code` varchar(45) NOT NULL,
-  `Name` varchar(45) NOT NULL,
+  `Description` varchar(90) DEFAULT NULL,
   PRIMARY KEY (`ID`),
-  UNIQUE KEY `UserRole_Code_uindex` (`Code`),
-  UNIQUE KEY `UserRole_Name_uindex` (`Name`)
+  UNIQUE KEY `UserRole_Code_uindex` (`Code`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `UserRole`
+--
+
+LOCK TABLES `UserRole` WRITE;
+/*!40000 ALTER TABLE `UserRole` DISABLE KEYS */;
+INSERT INTO `UserRole` VALUES (1,'ROLE_ADMIN','Администратор'),(2,'ROLE_USER','Пользователь'),(3,'ROLE_TEAMLEAD','Лидер команды (нужна ли?)'),(4,'ROLE_UNCONFIRMED','Неподтвержденный пользователь'),(5,'ROLE_REJECTED','Недостоверный пользоваетель');
+/*!40000 ALTER TABLE `UserRole` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -284,4 +446,4 @@ CREATE TABLE `UserRole` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-04-06 22:45:31
+-- Dump completed on 2018-04-08  3:01:39
