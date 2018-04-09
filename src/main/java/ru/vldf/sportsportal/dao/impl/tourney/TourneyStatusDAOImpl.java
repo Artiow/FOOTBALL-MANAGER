@@ -27,7 +27,7 @@ public class TourneyStatusDAOImpl extends AbstractDAOImpl<TourneyStatusEntity, I
 
     public TourneyStatusEntity findByCode(String code) {
         List statuses = getSession()
-                .createQuery("from TeamStatusEntity where code=?")
+                .createQuery("from TourneyStatusEntity where code=?")
                 .setParameter(0, code)
                 .list();
 
