@@ -37,9 +37,9 @@
 
 <header id="header-regular">
     <header-regular id="header-auth"
-                    caption="АДМИНИСТРИРОВАНИЕ">
+                    caption="ТУРНИР">
         <auth-failed sec:authorize="!isAuthenticated()"></auth-failed>
-        <auth-completed sec:authorize="isAuthenticated()"><p th:text="${username}">USERNAME</p></auth-completed>
+        <auth-completed sec:authorize="isAuthenticated()"><p th:text="${authUser.name + ' ' + authUser.surname}">USERNAME</p></auth-completed>
     </header-regular>
 </header>
 <script
@@ -54,33 +54,26 @@
 <nav class="nav-ppage">
     <div class="container">
         <ul class="list-inline">
-            <li><a th:href="@{/pp/admin}"><i class="fa fa-reply" aria-hidden="true"></i> Назад</a></li>
+            <li><a th:href="@{/pp/tourney}"><i class="fa fa-reply" aria-hidden="true"></i> Назад</a></li>
         </ul>
     </div>
 </nav>
 
 <main style="min-height: 600px">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-5 col-md-offset-1" th:if="${teams != null}">
-                <h2>Заявки на создание команды:</h2>
-                <table style="margin-top: 30px" class="table">
-                    <tr th:each="team: ${teams}" th:object="${team}">
-                        <td>
-                            <!--TODO: pic here!-->
-                            <div style="width: 100px; height: 100px"></div>
-                        </td>
-                        <td>
-                            <h3 style="margin-top: 10px; margin-bottom: 5px" th:text="*{name}">TEAM NAME</h3>
-                            <p th:text="*{captain.name + ' ' + captain.surname + ' ' + captain.patronymic}">CAPTAIN NAME</p>
-                            <a style="margin-right: 10px" class="btn btn-default" th:href="${'/pp/admin/unconfirmed-teams/team' + team.id + '/confirm'}">Подтвердить</a>
-                            <a style="margin-left: 10px" class="btn btn-danger" th:href="${'/pp/admin/unconfirmed-teams/team' + team.id + '/reject'}">Отклонить</a>
-                        </td>
-                    </tr>
-                </table>
+    <div class="alert-danger" th:unless="${teamDTO != null}">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3">
+                    <h3 style="margin: 20px 0 20px 0">НЕТ ДОСТУПА</h3>
+                </div>
             </div>
-            <div class="col-md-5" th:unless="${teams != null}">
-                <h2>Заявок нет</h2>
+        </div>
+    </div>
+    <div class="container" th:if="${teamDTO != null}">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <h3 th:text="${teamDTO.name}">TEAM NAME</h3>
+                <h4 style="padding: 5px" class="alert-warning">ОЖИДАЕТ ПОДТВЕРЖДЕНИЯ</h4>
             </div>
         </div>
     </div>

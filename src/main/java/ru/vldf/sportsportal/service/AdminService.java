@@ -3,16 +3,15 @@ package ru.vldf.sportsportal.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.vldf.sportsportal.dao.generic.definite.tourney.TeamDAO;
-import ru.vldf.sportsportal.dao.generic.definite.tourney.TeamPlayerDAO;
-import ru.vldf.sportsportal.dao.generic.definite.tourney.TeamStatusDAO;
+import ru.vldf.sportsportal.dao.generic.definite.tourney.*;
 import ru.vldf.sportsportal.dao.generic.definite.user.UserRoleDAO;
 import ru.vldf.sportsportal.dao.generic.definite.user.UserDAO;
+import ru.vldf.sportsportal.dto.tourney.TeamCompositionDTO;
 import ru.vldf.sportsportal.dto.tourney.TeamDTO;
 import ru.vldf.sportsportal.dto.tourney.TeamPlayerDTO;
+import ru.vldf.sportsportal.dto.tourney.TourneyDTO;
 import ru.vldf.sportsportal.dto.user.UserDTO;
-import ru.vldf.sportsportal.model.tourney.TeamEntity;
-import ru.vldf.sportsportal.model.tourney.TeamPlayerEntity;
+import ru.vldf.sportsportal.model.tourney.*;
 import ru.vldf.sportsportal.model.user.UserEntity;
 
 import java.util.ArrayList;
@@ -26,6 +25,7 @@ public class AdminService {
 
     private UserDAO userDAO;
     private UserRoleDAO userRoleDAO;
+    private TeamPlayerDAO teamPlayerDAO;
 
     @Autowired
     public void setUserDAO(UserDAO userDAO) {
@@ -37,17 +37,16 @@ public class AdminService {
         this.userRoleDAO = userRoleDAO;
     }
 
-    private String ROLE_UNCONFIRMED_CODE = "ROLE_UNCONFIRMED";
+    @Autowired
+    public void setTeamPlayerDAO(TeamPlayerDAO teamPlayerDAO) {
+        this.teamPlayerDAO = teamPlayerDAO;
+    }
+
+    private final String ROLE_UNCONFIRMED_CODE = "ROLE_UNCONFIRMED";
 
     @Transactional(readOnly = true)
     public int getUnconfirmedUsersNum() {
         return userDAO.numByRole(ROLE_UNCONFIRMED_CODE).intValue();
-    }
-
-    @Transactional(readOnly = true)
-    public UserDTO getFirstUnconfirmedUser() {
-        List<UserEntity> entityList = userDAO.findByRole(ROLE_UNCONFIRMED_CODE);
-        return new UserDTO(entityList.get(0));
     }
 
     @Transactional(readOnly = true)
@@ -63,6 +62,22 @@ public class AdminService {
     @Transactional(readOnly = true)
     public UserDTO getUser(Integer id) {
         return new UserDTO(userDAO.findByID(id));
+    }
+
+    @Transactional(readOnly = true)
+    public UserDTO getFirstUnconfirmedUser() {
+        List<UserEntity> entityList = userDAO.findByRole(ROLE_UNCONFIRMED_CODE);
+        return new UserDTO(entityList.get(0));
+    }
+
+    @Transactional(readOnly = true)
+    public List<TeamPlayerDTO> getDuplicate(UserDTO user) {
+        List<TeamPlayerEntity> entityList = teamPlayerDAO.findByFullName(user.getName(), user.getSurname(), user.getPatronymic());
+        if (entityList == null) return null;
+
+        List<TeamPlayerDTO> dtoList = new ArrayList<TeamPlayerDTO>();
+        for (TeamPlayerEntity entity: entityList) dtoList.add(new TeamPlayerDTO(entity));
+        return dtoList;
     }
 
     @Transactional
@@ -83,23 +98,6 @@ public class AdminService {
         );
     }
 
-    private TeamPlayerDAO teamPlayerDAO;
-
-    @Autowired
-    public void setTeamPlayerDAO(TeamPlayerDAO teamPlayerDAO) {
-        this.teamPlayerDAO = teamPlayerDAO;
-    }
-
-    @Transactional(readOnly = true)
-    public List<TeamPlayerDTO> getDuplicate(UserDTO user) {
-        List<TeamPlayerEntity> entityList = teamPlayerDAO.findByFullName(user.getName(), user.getSurname(), user.getPatronymic());
-        if (entityList == null) return null;
-
-        List<TeamPlayerDTO> dtoList = new ArrayList<TeamPlayerDTO>();
-        for (TeamPlayerEntity entity: entityList) dtoList.add(new TeamPlayerDTO(entity));
-        return dtoList;
-    }
-
     @Transactional
     public void deleteDuplicate(Integer id) {
         teamPlayerDAO.deleteByID(id);
@@ -110,6 +108,10 @@ public class AdminService {
 
     private TeamDAO teamDAO;
     private TeamStatusDAO teamStatusDAO;
+    private TeamCompositionDAO teamCompositionDAO;
+
+    private TourneyDAO tourneyDAO;
+    private TourneyStatusDAO tourneyStatusDAO;
 
     @Autowired
     public void setTeamDAO(TeamDAO teamDAO) {
@@ -121,16 +123,31 @@ public class AdminService {
         this.teamStatusDAO = teamStatusDAO;
     }
 
-    private String TEAM_AWAITING_CODE = "TEAM_AWAITING";
+    @Autowired
+    public void setTeamCompositionDAO(TeamCompositionDAO teamCompositionDAO) {
+        this.teamCompositionDAO = teamCompositionDAO;
+    }
+
+    @Autowired
+    public void setTourneyDAO(TourneyDAO tourneyDAO) {
+        this.tourneyDAO = tourneyDAO;
+    }
+
+    @Autowired
+    public void setTourneyStatusDAO(TourneyStatusDAO tourneyStatusDAO) {
+        this.tourneyStatusDAO = tourneyStatusDAO;
+    }
+
+    private final String TEAM_UNCONFIRMED_CODE = "TEAM_UNCONFIRMED";
 
     @Transactional(readOnly = true)
     public int getUnconfirmedTeamsNum() {
-        return teamDAO.numByStatus(TEAM_AWAITING_CODE).intValue();
+        return teamDAO.numByStatus(TEAM_UNCONFIRMED_CODE).intValue();
     }
 
     @Transactional(readOnly = true)
     public List<TeamDTO> getUnconfirmedTeams() {
-        List<TeamEntity> entityList = teamDAO.findByStatus(TEAM_AWAITING_CODE);
+        List<TeamEntity> entityList = teamDAO.findByStatus(TEAM_UNCONFIRMED_CODE);
         if (entityList == null) return null;
 
         List<TeamDTO> dtoList = new ArrayList<TeamDTO>();
@@ -141,18 +158,88 @@ public class AdminService {
     @Transactional
     public void confirmTeam(Integer id) {
         String TEAM_CONFIRMED_CODE = "TEAM_CONFIRMED";
-        teamDAO.updateStatusByID(
-                id,
-                teamStatusDAO.findByCode(TEAM_CONFIRMED_CODE)
-        );
+        teamDAO.updateStatusByID(id, teamStatusDAO.findByCode(TEAM_CONFIRMED_CODE));
     }
 
     @Transactional
     public void rejectTeam(Integer id) {
         String TEAM_REJECTED_CODE = "TEAM_REJECTED";
-        teamDAO.updateStatusByID(
-                id,
-                teamStatusDAO.findByCode(TEAM_REJECTED_CODE)
-        );
+        teamDAO.updateStatusByID(id, teamStatusDAO.findByCode(TEAM_REJECTED_CODE));
+    }
+
+    @Transactional(readOnly = true)
+    public int getTourneysNum() {
+        return tourneyDAO.numAll().intValue();
+    }
+
+    @Transactional(readOnly = true)
+    public List<TourneyDTO> getTourneysList() {
+        List<TourneyEntity> entityList = tourneyDAO.findAll();
+        if (entityList == null) return null;
+
+        List<TourneyDTO> dtoList = new ArrayList<TourneyDTO>();
+        for (TourneyEntity entity: entityList) dtoList.add(new TourneyDTO(entity));
+        return dtoList;
+    }
+
+    @Transactional(readOnly = true)
+    public TourneyDTO getTourney(Integer id) {
+        return new TourneyDTO(tourneyDAO.findByID(id));
+    }
+
+    @Transactional
+    public void createTourney(TourneyDTO tourneyDTO) {
+        TourneyStatusEntity status = tourneyStatusDAO.findByCode("TOURNEY_FORMED");
+        tourneyDAO.save(new TourneyEntity(tourneyDTO, status));
+    }
+
+    @Transactional(readOnly = true)
+    public List<TeamDTO> getTeams(TourneyDTO tourney) {
+        List<TeamEntity> entityList = teamDAO.findByTourney(tourney.getId());
+        if (entityList == null) return null;
+
+        List<TeamDTO> dtoList = new ArrayList<TeamDTO>();
+        for (TeamEntity entity: entityList) dtoList.add(new TeamDTO(entity));
+        return dtoList;
+    }
+
+    @Transactional(readOnly = true)
+    public List<TeamDTO> getTeamsLike(String name) {
+        List<TeamEntity> entityList = teamDAO.findByNameLike(name);
+        if (entityList == null) return null;
+
+        List<TeamDTO> dtoList = new ArrayList<TeamDTO>();
+        for (TeamEntity entity: entityList)
+            if (entity.getStatus().getCode().equals("TEAM_CONFIRMED")) //TODO: that's right, huh?
+                dtoList.add(new TeamDTO(entity));
+
+        return dtoList;
+    }
+
+    @Transactional(readOnly = true)
+    public List<TeamCompositionDTO> getTeamCompositions(TourneyDTO tourney) {
+        List<TeamCompositionEntity> entityList = teamCompositionDAO.findByTourney(tourney.getId());
+        if (entityList == null) return null;
+
+        List<TeamCompositionDTO> dtoList = new ArrayList<TeamCompositionDTO>();
+        for (TeamCompositionEntity entity: entityList) dtoList.add(new TeamCompositionDTO(entity));
+        return dtoList;
+    }
+
+    @Transactional
+    public void inviteTeams(Integer tourneyID, List<Integer> teamsID) {
+        //TODO: upgrade and optimize this!
+
+        String TEAM_INVITE_CODE = "TEAM_INVITED";
+        TourneyEntity tourney = tourneyDAO.findByID(tourneyID);
+        for (Integer teamID: teamsID) {
+            TeamEntity team = teamDAO.findByID(teamID);
+
+            TeamCompositionDTO compositionDTO = new TeamCompositionDTO();
+            compositionDTO.setTeamName(team.getName());
+
+            teamCompositionDAO.save(new TeamCompositionEntity(compositionDTO, team, tourney));
+            teamDAO.updateStatusByID(teamID, teamStatusDAO.findByCode(TEAM_INVITE_CODE));
+        }
     }
 }

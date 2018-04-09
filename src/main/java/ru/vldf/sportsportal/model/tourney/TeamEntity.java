@@ -4,6 +4,7 @@ import ru.vldf.sportsportal.dto.tourney.TeamDTO;
 import ru.vldf.sportsportal.model.user.UserEntity;
 
 import javax.persistence.*;
+import java.util.Collection;
 
 @Entity
 @Table(name = "Team", schema = "sportsportal")
@@ -13,6 +14,8 @@ public class TeamEntity {
 
     private UserEntity captain;
     private TeamStatusEntity status;
+
+    private Collection<TeamCompositionEntity> teamCompositions;
 
     public TeamEntity() {
 
@@ -45,6 +48,18 @@ public class TeamEntity {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+//    ==================================================================================
+//    === ONE-TO-MANY REFERENCES
+
+    @OneToMany(mappedBy = "team")
+    public Collection<TeamCompositionEntity> getTeamCompositions() {
+        return teamCompositions;
+    }
+
+    public void setTeamCompositions(Collection<TeamCompositionEntity> teamCompositionsById) {
+        this.teamCompositions = teamCompositionsById;
     }
 
 //    ==================================================================================

@@ -5,12 +5,16 @@ import ru.vldf.sportsportal.model.user.UserRoleEntity;
 public class UserRoleDTO {
     private Integer id;
     private String code;
-    private String name;
+    private String description;
+
+    public UserRoleDTO() {
+
+    }
 
     public UserRoleDTO(UserRoleEntity role) {
         id = role.getId();
         code = role.getCode();
-        name = role.getName();
+        description = role.getDescription();
     }
 
     public void setId(Integer id) {
@@ -29,11 +33,11 @@ public class UserRoleDTO {
         return code;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getDescription() {
+        return description;
     }
 
-    public String getName() {
-        return name;
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

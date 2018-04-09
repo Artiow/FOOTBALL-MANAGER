@@ -23,13 +23,7 @@ public class UserDAOImpl extends AbstractDAOImpl<UserEntity, Integer> implements
 //    === FIND
 
     public UserEntity findByID(Integer id) {
-        List users = getSession()
-                .createQuery("from UserEntity where id=?")
-                .setParameter(0, id)
-                .list();
-
-        if ((users != null) && (users.size() == 1)) return (UserEntity) users.get(0);
-        else return null;
+        return super.get(id);
     }
 
     public UserEntity findByLogin(String login) {

@@ -1,6 +1,7 @@
 package ru.vldf.sportsportal.model.user;
 
 import ru.vldf.sportsportal.dto.user.UserDTO;
+import ru.vldf.sportsportal.model.tourney.TeamCompositionEntity;
 import ru.vldf.sportsportal.model.tourney.TeamEntity;
 
 import javax.persistence.*;
@@ -20,21 +21,22 @@ public class UserEntity {
 
     private UserRoleEntity role;
 
-    private Collection<TeamEntity> teamsTourney;
+    private Collection<TeamEntity> teams;
+    private Collection<TeamCompositionEntity> compositions;
 
     public UserEntity() {
 
     }
 
-    public UserEntity(UserDTO userDTO, UserRoleEntity role) {
-        id = userDTO.getId();
-        login = userDTO.getLogin();
-        email = userDTO.getEmail();
-        password = userDTO.getPassword();
-        name = userDTO.getName();
-        surname = userDTO.getSurname();
-        patronymic = userDTO.getPatronymic();
-        phone = userDTO.getPhone();
+    public UserEntity(UserDTO user, UserRoleEntity role) {
+        id = user.getId();
+        login = user.getLogin();
+        email = user.getEmail();
+        password = user.getPassword();
+        name = user.getName();
+        surname = user.getSurname();
+        patronymic = user.getPatronymic();
+        phone = user.getPhone();
 
         this.role = role;
     }
@@ -124,12 +126,12 @@ public class UserEntity {
 //    === ONE-TO-MANY REFERENCES
 
     @OneToMany(mappedBy = "captain")
-    public Collection<TeamEntity> getTeamsTourney() {
-        return teamsTourney;
+    public Collection<TeamEntity> getTeams() {
+        return teams;
     }
 
-    public void setTeamsTourney(Collection<TeamEntity> teamsTourney) {
-        this.teamsTourney = teamsTourney;
+    public void setTeams(Collection<TeamEntity> teams) {
+        this.teams = teams;
     }
 
 
@@ -151,8 +153,24 @@ public class UserEntity {
     }
 
 //    ==================================================================================
-//    === OBJECTS METHODS
+//    === MANY-TO-MANY REFERENCES
 
+    @ManyToMany
+    @JoinTable(
+            name = "TeamMembershipForUser",
+            joinColumns = @JoinColumn(name = "TeamUser_ID"),
+            inverseJoinColumns = @JoinColumn(name = "TeamComposition_ID")
+    )
+    public Collection<TeamCompositionEntity> getCompositions() {
+        return compositions;
+    }
+
+    public void setCompositions(Collection<TeamCompositionEntity> compositions) {
+        this.compositions = compositions;
+    }
+
+//    ==================================================================================
+//    === OBJECTS METHODS
 
     @Override
     public boolean equals(Object o) {

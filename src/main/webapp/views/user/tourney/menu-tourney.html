@@ -39,7 +39,7 @@
     <header-regular id="header-auth"
                     caption="ТУРНИР">
         <auth-failed sec:authorize="!isAuthenticated()"></auth-failed>
-        <auth-completed sec:authorize="isAuthenticated()"><p th:text="${username}">USERNAME</p></auth-completed>
+        <auth-completed sec:authorize="isAuthenticated()"><p th:text="${authUser.name + ' ' + authUser.surname}">USERNAME</p></auth-completed>
     </header-regular>
 </header>
 <script
@@ -59,38 +59,56 @@
     </div>
 </nav>
 
-<main style="min-height: 600px" class="main-tourneypage">
+<main style="min-height: 600px" class="main-tourneypage pic-href">
     <div class="container">
-        <div class="row">
-            <div style="padding: 10px 0 10px 0" class="col-md-5 col-md-offset-1" th:if="${teamList != null}">
+        <div class="row" th:if="${teamList != null}">
+            <div style="padding: 10px 0 10px 0" class="col-md-6 col-md-offset-3">
                 <h3>Мои турнирные команды:</h3>
                 <table class="table table-hover">
-                    <tr th:each="team: ${teamList}" th:object="${team}">
-                        <td>
-                            <a th:href="${'/pp/tourney/team' + team.id}">
-                                <p style="margin: 5px" th:text="*{name}">NAME</p>
+                    <tr th:each="teamItem: ${teamList}" th:object="${teamItem}">
+                        <td style="width: 95px">
+                            <a class="pic-href" th:href="*{'/pp/tourney/team' + id}">
+                                <!--TODO: pic here!-->
+                                <div style="width: 85px; height: 85px; background: grey"></div>
                             </a>
                         </td>
-                        <td th:if="*{status.code == 'TEAM_AWAITING'}" class="warning">
-                            <a th:href="${'/pp/tourney/team' + team.id}">
-                                <p style="margin: 5px">ОЖИДАЕТ ПОДТВЕРЖДЕНИЯ</p>
+                        <td>
+                            <a th:href="*{'/pp/tourney/team' + id}">
+                                <p th:text="*{name}">NAME</p>
+                            </a>
+                        </td>
+                        <td th:if="*{status.code == 'TEAM_UNCONFIRMED'}" class="warning">
+                            <a th:href="*{'/pp/tourney/team' + id}">
+                                <p>ОЖИДАЕТ ПОДТВЕРЖДЕНИЯ</p>
+                            </a>
+                        </td>
+                        <td th:if="*{status.code == 'TEAM_CONFIRMED'}">
+                            <a th:href="*{'/pp/tourney/team' + id}">
+                                <p></p>
                             </a>
                         </td>
                         <td th:if="*{status.code == 'TEAM_REJECTED'}" class="danger">
-                            <a th:href="${'/pp/tourney/team' + team.id}">
-                                <p style="margin: 5px">ЗАЯВКА ОТКЛОНЕНА</p>
+                            <a th:href="*{'/pp/tourney/team' + id}">
+                                <p>ЗАЯВКА ОТКЛОНЕНА</p>
                             </a>
                         </td>
-                        <td th:unless="*{(status.code == 'TEAM_AWAITING') || (status.code == 'TEAM_REJECTED')}">
-                            <a th:href="${'/pp/tourney/team' + team.id}">
-
+                        <td th:if="*{status.code == 'TEAM_INVITED'}" class="success">
+                            <a th:href="*{'/pp/tourney/team' + id}">
+                                <p>ПРИГЛАШЕНИЕ</p>
+                            </a>
+                        </td>
+                        <td th:if="*{status.code == 'TEAM_INVOLVED'}" class="info">
+                            <a th:href="*{'/pp/tourney/team' + id}">
+                                <p>В ТУРНИРЕ</p>
                             </a>
                         </td>
                     </tr>
                 </table>
                 <a th:href="@{/pp/tourney/create-team}" type="button" class="btn btn-default">Создать турнирную команду</a>
             </div>
-            <div style="padding: 10px 0 10px 0" class="col-md-5 col-md-offset-1" th:unless="${teamList != null}">
+        </div>
+        <div class="row" th:unless="${teamList != null}">
+            <div style="padding: 10px 0 10px 0" class="col-md-6 col-md-offset-3" th:unless="${teamList != null}">
                 <h3>Нет турнирных команд!</h3>
                 <a th:href="@{/pp/tourney/create-team}" type="button" class="btn btn-default">Создать турнирную команду</a>
             </div>

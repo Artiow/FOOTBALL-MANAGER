@@ -1,2 +1,0 @@
-INSERT INTO sportsportal.TeamPlayer (Name, Surname, Patronymic, Phone) VALUES ('test2', 'test2', 'test2', null);
-INSERT INTO sportsportal.TeamPlayer (Name, Surname, Patronymic, Phone) VALUES ('test2', 'test2', 'test2', null);

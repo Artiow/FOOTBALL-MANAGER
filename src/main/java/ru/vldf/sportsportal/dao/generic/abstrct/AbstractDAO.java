@@ -3,14 +3,14 @@ package ru.vldf.sportsportal.dao.generic.abstrct;
 import java.io.Serializable;
 import java.util.List;
 
-public interface AbstractDAO<T, PK extends Serializable> {
-    T get(PK id);
+public interface AbstractDAO<E, PK extends Serializable> {
+    E get(PK id);
 
-    PK save(T entity);
+    PK save(E entity);
 
-    void update(T entity);
+    void update(E entity);
 
-    void delete(T entity);
+    void delete(E entity);
 
-    List<T> list();
+    List<E> list();
 }

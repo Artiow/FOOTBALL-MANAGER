@@ -5,6 +5,7 @@ import ru.vldf.sportsportal.dao.generic.abstrct.AbstractDAOImpl;
 import ru.vldf.sportsportal.dao.generic.definite.tourney.TeamDAO;
 import ru.vldf.sportsportal.model.tourney.TeamEntity;
 import ru.vldf.sportsportal.model.tourney.TeamStatusEntity;
+import ru.vldf.sportsportal.model.tourney.TourneyEntity;
 import ru.vldf.sportsportal.model.user.UserEntity;
 
 import java.util.List;
@@ -37,20 +38,30 @@ public class TeamDAOImpl extends AbstractDAOImpl<TeamEntity, Integer> implements
         else return null;
     }
 
-    public List<TeamEntity> findByUser(String userLogin) {
+    public List<TeamEntity> findByUser(UserEntity user) {
         List teams = getSession()
-                .createQuery("from TeamEntity where captain.login=?")
-                .setParameter(0, userLogin)
+                .createQuery("from TeamEntity where captain=?")
+                .setParameter(0, user)
                 .list();
 
         if ((teams != null) && (teams.size() > 0)) return (List<TeamEntity>) teams;
         else return null;
     }
 
-    public List<TeamEntity> findByUser(UserEntity user) {
+    public List<TeamEntity> findByTourney(Integer tourneyID) {
         List teams = getSession()
-                .createQuery("from TeamEntity where captain=?")
-                .setParameter(0, user)
+                .createQuery("select eTeam from TeamEntity as eTeam, TeamCompositionEntity as eComposition where eComposition.team = eTeam and eComposition.tourney.id=?")
+                .setParameter(0, tourneyID)
+                .list();
+
+        if ((teams != null) && (teams.size() > 0)) return (List<TeamEntity>) teams;
+        else return null;
+    }
+
+    public List<TeamEntity> findByTourney(TourneyEntity tourney) {
+        List teams = getSession()
+                .createQuery("select eTeam from TeamEntity as eTeam, TeamCompositionEntity as eComposition where eComposition.team = eTeam and eComposition.tourney=?")
+                .setParameter(0, tourney)
                 .list();
 
         if ((teams != null) && (teams.size() > 0)) return (List<TeamEntity>) teams;
@@ -111,6 +122,16 @@ public class TeamDAOImpl extends AbstractDAOImpl<TeamEntity, Integer> implements
         List teams = getSession()
                 .createQuery("from TeamEntity where status=?")
                 .setParameter(0, status)
+                .list();
+
+        if ((teams != null) && (teams.size() > 0)) return (List<TeamEntity>) teams;
+        else return null;
+    }
+
+    public List<TeamEntity> findByNameLike(String name) {
+        List teams = getSession()
+                .createQuery("from TeamEntity where name like ?")
+                .setParameter(0, "%" + name + "%")
                 .list();
 
         if ((teams != null) && (teams.size() > 0)) return (List<TeamEntity>) teams;

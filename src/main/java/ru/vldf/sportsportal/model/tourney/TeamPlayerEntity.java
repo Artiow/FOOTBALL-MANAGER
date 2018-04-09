@@ -1,6 +1,7 @@
 package ru.vldf.sportsportal.model.tourney;
 
 import javax.persistence.*;
+import java.util.Collection;
 
 @Entity
 @Table(name = "TeamPlayer", schema = "sportsportal")
@@ -10,6 +11,8 @@ public class TeamPlayerEntity {
     private String surname;
     private String patronymic;
     private String phone;
+
+    private Collection<TeamCompositionEntity> compositions;
 
     @Id
     @Column(name = "ID", nullable = false)
@@ -60,6 +63,23 @@ public class TeamPlayerEntity {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+//    ==================================================================================
+//    === MANY-TO-MANY REFERENCES
+
+    @ManyToMany
+    @JoinTable(
+            name = "TeamMembershipForPlayer",
+            joinColumns = @JoinColumn(name = "TeamPlayer_ID"),
+            inverseJoinColumns = @JoinColumn(name = "TeamComposition_ID")
+    )
+    public Collection<TeamCompositionEntity> getCompositions() {
+        return compositions;
+    }
+
+    public void setCompositions(Collection<TeamCompositionEntity> compositions) {
+        this.compositions = compositions;
     }
 
 //    ==================================================================================

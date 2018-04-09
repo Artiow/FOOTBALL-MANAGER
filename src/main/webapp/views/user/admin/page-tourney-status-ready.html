@@ -39,7 +39,7 @@
     <header-regular id="header-auth"
                     caption="ТУРНИР">
         <auth-failed sec:authorize="!isAuthenticated()"></auth-failed>
-        <auth-completed sec:authorize="isAuthenticated()"><p th:text="${username}">USERNAME</p></auth-completed>
+        <auth-completed sec:authorize="isAuthenticated()"><p th:text="${authUser.name + ' ' + authUser.surname}">USERNAME</p></auth-completed>
     </header-regular>
 </header>
 <script
@@ -54,18 +54,37 @@
 <nav class="nav-ppage">
     <div class="container">
         <ul class="list-inline">
-            <li><a th:href="@{/pp/tourney}"><i class="fa fa-reply" aria-hidden="true"></i> Назад</a></li>
+            <li><a th:href="@{/pp/admin/tourney}"><i class="fa fa-reply" aria-hidden="true"></i> Назад</a></li>
         </ul>
     </div>
 </nav>
 
 <main style="min-height: 600px">
-    <div class="container">
-        <div class="row" th:if="${team != null}">
-            <h3 th:text="${team.name}">TEAM NAME</h3>
+    <div class="alert-danger" th:unless="${tourneyDTO != null}">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3">
+                    <h3 style="margin: 20px 0 20px 0">НЕТ ДОСТУПА</h3>
+                </div>
+            </div>
         </div>
-        <div class="row alert-danger" th:unless="${team != null}">
-            <h3>НЕТ ДОСТУПА</h3>
+    </div>
+    <div class="container" th:if="${tourneyDTO != null}">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <h3 th:text="${tourneyDTO.name}">TOURNEY NAME</h3>
+                <h4 style="padding: 5px" class="alert-info">НАБОР ЗАВЕРШЕН</h4>
+            </div>
+        </div>
+        <div class="row" th:if="${true}">
+            <div style="padding: 10px 0 10px 0" class="col-md-6 col-md-offset-3">
+                <!--TODO: tourney teams table-->
+            </div>
+        </div>
+        <div class="row" th:unless="${true}">
+            <div style="padding: 10px 0 10px 0" class="col-md-6 col-md-offset-3">
+                <!--TODO: else-->
+            </div>
         </div>
     </div>
 </main>

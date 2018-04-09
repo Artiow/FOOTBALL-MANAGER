@@ -9,11 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.io.Serializable;
 import java.util.List;
 
-public class AbstractDAOImpl<T, PK extends Serializable> implements AbstractDAO<T, PK> {
-    private Class<T> aClass;
+public class AbstractDAOImpl<E, PK extends Serializable> implements AbstractDAO<E, PK> {
+    private Class<E> aClass;
     private SessionFactory sessionFactory;
 
-    public AbstractDAOImpl(Class<T> aClass) {
+    public AbstractDAOImpl(Class<E> aClass) {
         this.aClass = aClass;
     }
 
@@ -34,23 +34,23 @@ public class AbstractDAOImpl<T, PK extends Serializable> implements AbstractDAO<
 //    ==================================================================================
 //    === BASIC REQUESTS
 
-    public T get(PK id) {
+    public E get(PK id) {
         return getSession().get(aClass, id);
     }
 
-    public PK save(T entity) {
+    public PK save(E entity) {
         return (PK) getSession().save(entity);
     }
 
-    public void update(T entity) {
+    public void update(E entity) {
         getSession().update(entity);
     }
 
-    public void delete(T entity) {
+    public void delete(E entity) {
         getSession().delete(entity);
     }
 
-    public List<T> list() {
-        return (List<T>) createCriteria().list();
+    public List<E> list() {
+        return (List<E>) createCriteria().list();
     }
 }

@@ -2,6 +2,7 @@ package ru.vldf.sportsportal.dao.generic.definite.tourney;
 
 import ru.vldf.sportsportal.model.tourney.TeamEntity;
 import ru.vldf.sportsportal.model.tourney.TeamStatusEntity;
+import ru.vldf.sportsportal.model.tourney.TourneyEntity;
 import ru.vldf.sportsportal.model.user.UserEntity;
 
 import java.util.List;
@@ -17,9 +18,11 @@ public interface TeamDAO {
 
     List<TeamEntity> findByUser(Integer userID);
 
-    List<TeamEntity> findByUser(String userLogin);
-
     List<TeamEntity> findByUser(UserEntity user);
+
+    List<TeamEntity> findByTourney(Integer tourneyID);
+
+    List<TeamEntity> findByTourney(TourneyEntity tourney);
 
     Long numByStatus(Integer statusID);
 
@@ -32,6 +35,8 @@ public interface TeamDAO {
     List<TeamEntity> findByStatus(String statusCode);
 
     List<TeamEntity> findByStatus(TeamStatusEntity status);
+
+    List<TeamEntity> findByNameLike(String name);
 
 //    ==================================================================================
 //    === UPDATE

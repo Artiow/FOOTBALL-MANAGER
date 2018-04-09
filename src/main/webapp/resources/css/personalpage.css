@@ -8,9 +8,9 @@ nav.nav-ppage ul {
     padding: 0;
 }
 nav.nav-ppage ul li {
-    margin: 0 6px 0 6px;
-    padding: 10px;
     display: inline-block;
+    margin: 0 6px 0 6px;
+    padding: 0;
 
     text-align: center;
 }
@@ -19,6 +19,9 @@ nav.nav-ppage ul li:hover {
     cursor: pointer;
 }
 nav.nav-ppage ul li a {
+    display: inline-block;
+    padding: 10px;
+
     color: #0f0f0f;
     font-size: 18px;
     vertical-align: middle;
@@ -29,6 +32,16 @@ main.main-ppage .alert-danger h3, main.main-ppage .alert-warning h3 {
     margin: 10px;
 }
 
+main.main-adminpage a {
+    display: inline-block;
+    margin-top: 10px;
+
+    font-size: 20px;
+
+    text-decoration: none;
+    cursor: pointer
+}
+
 main.main-tourneypage table tr {
     cursor: pointer
 }
@@ -37,8 +50,19 @@ main.main-tourneypage table td {
 }
 main.main-tourneypage table a {
     display: block;
-    padding: 8px;
+    padding: 10px;
 
     color: inherit;
     text-decoration: inherit;
+    text-align: center;
+}
+main.main-tourneypage.pic-href table a {
+    height: 105px;
+}
+main.main-tourneypage table a.pic-href {
+    padding-right: 0;
+}
+main.main-tourneypage table a p {
+    margin: 0;
+    font-size: 18px;
 }

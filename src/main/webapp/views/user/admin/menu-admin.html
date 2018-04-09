@@ -3,29 +3,33 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>404</title>
+    <title>Личный кабинет</title>
     <script
-            src="../libs/vue.js"
+            src="../../../libs/vue.js"
             th:src="@{/libs/vue.js}"
     ></script>
     <script
-            src="../libs/jquery-3.2.1.js"
+            src="../../../libs/jquery-3.2.1.js"
             th:src="@{/libs/jquery-3.2.1.js}"
     ></script>
     <link rel="stylesheet"
-          href="../libs/bootstrap/css/bootstrap.css"
+          href="../../../libs/bootstrap/css/bootstrap.css"
           th:href="@{/libs/bootstrap/css/bootstrap.css}"
     />
     <link rel="stylesheet"
-          href="../libs/font-awesome/css/font-awesome.css"
+          href="../../../libs/font-awesome/css/font-awesome.css"
           th:href="@{/libs/font-awesome/css/font-awesome.css}"
     />
     <link rel="stylesheet"
-          href="../resources/css/header.css"
+          href="../../../resources/css/personalpage.css"
+          th:href="@{/css/personalpage.css}"
+    />
+    <link rel="stylesheet"
+          href="../../../resources/css/header.css"
           th:href="@{/css/header.css}"
     />
     <link rel="stylesheet"
-          href="../resources/css/footer.css"
+          href="../../../resources/css/footer.css"
           th:href="@{/css/footer.css}"
     />
 </head>
@@ -33,25 +37,37 @@
 
 <header id="header-regular">
     <header-regular id="header-auth"
-                    caption="404">
+                    caption="АДМИНИСТРИРОВАНИЕ">
         <auth-failed sec:authorize="!isAuthenticated()"></auth-failed>
         <auth-completed sec:authorize="isAuthenticated()"><p th:text="${authUser.name + ' ' + authUser.surname}">USERNAME</p></auth-completed>
     </header-regular>
 </header>
 <script
-        src="../resources/js/components/HeaderRegular.js"
+        src="../../../resources/js/components/HeaderRegular.js"
         th:src="@{/components/HeaderRegular.js}"
 ></script>
 <script
-        src="../resources/js/components/HeaderAuth.js"
+        src="../../../resources/js/components/HeaderAuth.js"
         th:src="@{/components/HeaderAuth.js}"
 ></script>
 
-<main style="min-height: 600px">
+<nav class="nav-ppage">
+    <div class="container">
+        <ul class="list-inline">
+            <li><a th:href="@{/personalpage}"><i class="fa fa-reply" aria-hidden="true"></i> Назад</a></li>
+        </ul>
+    </div>
+</nav>
+
+<main style="min-height: 600px" class="main-adminpage">
     <div class="container">
         <div class="row">
-            <div class="col-md-6 col-md-offset-3">
-                <p style="display: block; margin-top: 100px; font-size: 35px; text-align: center">Упс! Страница не найдена!</p>
+            <div style="padding: 10px 0 10px 0" class="col-md-6 col-md-offset-3">
+                <a th:href="@{/pp/admin/check-user}" th:text="'Заявки на регистрацию (' + ${numOfUnconfirmedUsers} + ')'">Заявки на регистрацию (NULL)</a>
+                <br/>
+                <a th:href="@{/pp/admin/check-team}" th:text="'Заявки на создание команды (' + ${numOfUnconfirmedTeams} + ')'">Заявки на создание команды (NULL)</a>
+                <br/>
+                <a th:href="@{/pp/admin/tourney}" th:text="'Турниры (' + ${numOfTourneys} + ')'">Турниры (NULL)</a>
             </div>
         </div>
     </div>
@@ -69,13 +85,13 @@
     </footer-regular>
 </footer>
 <script
-        src="../resources/js/components/FooterRegular.js"
+        src="../../../resources/js/components/FooterRegular.js"
         th:src="@{/components/FooterRegular.js}"
 ></script>
 
 </body>
 <script
-        src="../resources/js/padding.js"
+        src="../../../resources/js/padding.js"
         th:src="@{/js/padding.js}"
 ></script>
 </html>

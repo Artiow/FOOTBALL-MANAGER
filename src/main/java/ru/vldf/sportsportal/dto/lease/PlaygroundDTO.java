@@ -7,6 +7,10 @@ public class PlaygroundDTO {
     private String name;
     private String address;
 
+    public PlaygroundDTO() {
+
+    }
+
     public PlaygroundDTO(PlaygroundEntity playground) {
         id = playground.getId();
         name = playground.getName();

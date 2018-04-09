@@ -1,5 +1,7 @@
 package ru.vldf.sportsportal.model.lease;
 
+import ru.vldf.sportsportal.dto.lease.PlaygroundDTO;
+
 import javax.persistence.*;
 import java.util.Collection;
 
@@ -11,6 +13,16 @@ public class PlaygroundEntity {
     private String address;
 
     private Collection<SportEntity> sports;
+
+    public PlaygroundEntity() {
+
+    }
+
+    public PlaygroundEntity(PlaygroundDTO playground) {
+        id = playground.getId();
+        name = playground.getName();
+        address = playground.getAddress();
+    }
 
     @Id
     @Column(name = "ID", nullable = false)
