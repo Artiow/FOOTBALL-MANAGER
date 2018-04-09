@@ -5,7 +5,7 @@ import ru.vldf.sportsportal.model.tourney.TeamCompositionEntity;
 public class TeamCompositionDTO {
     private Integer id;
     private String teamName;
-    private Integer shiftBalance;
+    private Integer shiftBalance = 3; //default
 
     private TeamDTO team;
     private TourneyDTO tourney;

@@ -21,7 +21,7 @@ public class TourneyEntity {
 
     public TourneyEntity(TourneyDTO tourney, TourneyStatusEntity status) {
         id = tourney.getId();
-        name= tourney.getName();
+        name = tourney.getName();
 
         this.status = status;
     }

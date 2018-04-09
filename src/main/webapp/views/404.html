@@ -1,13 +1,81 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>Большой Воронежский Спортивный Портал - Ошибка</title>
+    <title>404</title>
+    <script
+            src="../libs/vue.js"
+            th:src="@{/libs/vue.js}"
+    ></script>
+    <script
+            src="../libs/jquery-3.2.1.js"
+            th:src="@{/libs/jquery-3.2.1.js}"
+    ></script>
+    <link rel="stylesheet"
+          href="../libs/bootstrap/css/bootstrap.css"
+          th:href="@{/libs/bootstrap/css/bootstrap.css}"
+    />
+    <link rel="stylesheet"
+          href="../libs/font-awesome/css/font-awesome.css"
+          th:href="@{/libs/font-awesome/css/font-awesome.css}"
+    />
+    <link rel="stylesheet"
+          href="../resources/css/header.css"
+          th:href="@{/css/header.css}"
+    />
+    <link rel="stylesheet"
+          href="../resources/css/footer.css"
+          th:href="@{/css/footer.css}"
+    />
 </head>
 <body>
-    <div>
-        <h1>404</h1>
-        <h2>Страница не найдена</h2>
+
+<header id="header-regular">
+    <header-regular id="header-auth"
+                    caption="404">
+        <auth-failed sec:authorize="!isAuthenticated()"></auth-failed>
+        <auth-completed sec:authorize="isAuthenticated()"><p th:text="${authUser.name + ' ' + authUser.surname}">USERNAME</p></auth-completed>
+    </header-regular>
+</header>
+<script
+        src="../resources/js/components/HeaderRegular.js"
+        th:src="@{/components/HeaderRegular.js}"
+></script>
+<script
+        src="../resources/js/components/HeaderAuth.js"
+        th:src="@{/components/HeaderAuth.js}"
+></script>
+
+<main style="min-height: 600px">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <p style="display: block; margin-top: 100px; font-size: 35px; text-align: center">Упс! Страница не найдена!</p>
+            </div>
+        </div>
     </div>
+</main>
+
+<footer id="footer-regular">
+    <footer-regular link-service="#"
+                    link-contacts="#"
+                    link-feedback="#"
+                    src-vldf-logo="/img/logo-vldf-sm.png"
+                    link-vldf="http://www.vldf.ru/"
+                    link-vldf-vk="https://vk.com/vldfru"
+                    link-vldf-instagram="https://www.instagram.com/vldf2009/"
+                    link-vldf-youtube="https://www.youtube.com/channel/UCgWjF5d6O3ORXolcr1HO-cQ">
+    </footer-regular>
+</footer>
+<script
+        src="../resources/js/components/FooterRegular.js"
+        th:src="@{/components/FooterRegular.js}"
+></script>
+
 </body>
+<script
+        src="../resources/js/padding.js"
+        th:src="@{/js/padding.js}"
+></script>
 </html>

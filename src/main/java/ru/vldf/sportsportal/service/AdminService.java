@@ -158,19 +158,13 @@ public class AdminService {
     @Transactional
     public void confirmTeam(Integer id) {
         String TEAM_CONFIRMED_CODE = "TEAM_CONFIRMED";
-        teamDAO.updateStatusByID(
-                id,
-                teamStatusDAO.findByCode(TEAM_CONFIRMED_CODE)
-        );
+        teamDAO.updateStatusByID(id, teamStatusDAO.findByCode(TEAM_CONFIRMED_CODE));
     }
 
     @Transactional
     public void rejectTeam(Integer id) {
         String TEAM_REJECTED_CODE = "TEAM_REJECTED";
-        teamDAO.updateStatusByID(
-                id,
-                teamStatusDAO.findByCode(TEAM_REJECTED_CODE)
-        );
+        teamDAO.updateStatusByID(id, teamStatusDAO.findByCode(TEAM_REJECTED_CODE));
     }
 
     @Transactional(readOnly = true)
@@ -230,5 +224,22 @@ public class AdminService {
         List<TeamCompositionDTO> dtoList = new ArrayList<TeamCompositionDTO>();
         for (TeamCompositionEntity entity: entityList) dtoList.add(new TeamCompositionDTO(entity));
         return dtoList;
+    }
+
+    @Transactional
+    public void inviteTeams(Integer tourneyID, List<Integer> teamsID) {
+        //TODO: upgrade and optimize this!
+
+        String TEAM_INVITE_CODE = "TEAM_INVITED";
+        TourneyEntity tourney = tourneyDAO.findByID(tourneyID);
+        for (Integer teamID: teamsID) {
+            TeamEntity team = teamDAO.findByID(teamID);
+
+            TeamCompositionDTO compositionDTO = new TeamCompositionDTO();
+            compositionDTO.setTeamName(team.getName());
+
+            teamCompositionDAO.save(new TeamCompositionEntity(compositionDTO, team, tourney));
+            teamDAO.updateStatusByID(teamID, teamStatusDAO.findByCode(TEAM_INVITE_CODE));
+        }
     }
 }

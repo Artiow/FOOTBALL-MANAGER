@@ -10,25 +10,55 @@
             background-size: cover;
         }
     </style>
-    <script src="/libs/vue.js"></script>
-    <script src="/libs/jquery-3.2.1.js"></script>
-    <link rel="stylesheet" href="/libs/bootstrap/css/bootstrap.css"/>
-    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.css"/>
-    <link rel="stylesheet" href="/css/header.css"/>
-    <link rel="stylesheet" href="/css/nav.css"/>
-    <link rel="stylesheet" href="/css/footer.css"/>
+    <script
+            src="../libs/vue.js"
+            th:src="@{/libs/vue.js}"
+    ></script>
+    <script
+            src="../libs/jquery-3.2.1.js"
+            th:src="@{/libs/jquery-3.2.1.js}"
+    ></script>
+    <link rel="stylesheet"
+          href="../libs/bootstrap/css/bootstrap.css"
+          th:href="@{/libs/bootstrap/css/bootstrap.css}"
+    />
+    <link rel="stylesheet"
+          href="../libs/font-awesome/css/font-awesome.css"
+          th:href="@{/libs/font-awesome/css/font-awesome.css}"
+    />
+    <link rel="stylesheet"
+          href="../resources/css/header.css"
+          th:href="@{/css/header.css}"
+    />
+    <link rel="stylesheet"
+          href="../resources/css/nav.css"
+          th:href="@{/css/nav.css}"
+    />
+    <link rel="stylesheet"
+          href="../resources/css/footer.css"
+          th:href="@{/css/footer.css}"
+    />
 </head>
 <body>
 
 <header><header-main>
     <auth-failed sec:authorize="!isAuthenticated()"></auth-failed>
-    <auth-completed sec:authorize="isAuthenticated()"><p th:text="${username}">USERNAME</p></auth-completed>
+    <auth-completed sec:authorize="isAuthenticated()"><p th:text="${authUser.name + ' ' + authUser.surname}">USERNAME</p></auth-completed>
 </header-main></header>
-<script src="/components/HeaderMain.js"></script>
-<script src="/components/HeaderAuth.js"></script>
+<script
+        src="../resources/js/components/HeaderMain.js"
+        th:src="@{/components/HeaderMain.js}"
+></script>
+<script
+        src="../resources/js/components/HeaderAuth.js"
+        th:src="@{/components/HeaderAuth.js}"
+></script>
 
 <nav class="nav-main"><nav-main></nav-main></nav>
-<script src="/components/NavMain.js"></script>
+<script
+        src="../resources/js/components/NavMain.js"
+        th:src="@{/components/NavMain.js}"
+></script>
 
 <footer><footer-regular link-service="#"
                         link-contacts="#"
@@ -39,8 +69,14 @@
                         link-vldf-instagram="https://www.instagram.com/vldf2009/"
                         link-vldf-youtube="https://www.youtube.com/channel/UCgWjF5d6O3ORXolcr1HO-cQ">
 </footer-regular></footer>
-<script src="/components/FooterRegular.js"></script>
+<script
+        src="../resources/js/components/FooterRegular.js"
+        th:src="@{/components/FooterRegular.js}"
+></script>
 
 </body>
-<script src="/js/padding.js"></script>
+<script
+        src="../resources/js/padding.js"
+        th:src="@{/js/padding.js}"
+></script>
 </html>

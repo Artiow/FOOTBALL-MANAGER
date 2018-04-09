@@ -11,7 +11,7 @@ import java.util.Collection;
 public class TeamCompositionEntity {
     private Integer id;
     private String teamName;
-    private Integer shiftBalance;
+    private Integer shiftBalance = 3; //default
 
     private TeamEntity team;
     private TourneyEntity tourney;

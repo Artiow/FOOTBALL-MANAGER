@@ -3,10 +3,7 @@ package ru.vldf.sportsportal.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import ru.vldf.sportsportal.dto.tourney.TeamDTO;
 import ru.vldf.sportsportal.dto.tourney.TeamPlayerDTO;
 import ru.vldf.sportsportal.dto.tourney.TourneyDTO;
@@ -42,11 +39,6 @@ public class UserController {
     @ModelAttribute("authUser")
     public UserDTO getAuthUser() {
         return authService.getAuthUser();
-    }
-
-    @ModelAttribute("authUserShortName")
-    public String getAuthUserShortName() {
-        return authService.getAuthUserShortName();
     }
 
     @GetMapping(value = {"/personalpage"})
@@ -178,10 +170,10 @@ public class UserController {
         return "user/admin/form-invite-team";
     }
 
-    @PostMapping(value = {"/pp/admin/tourney/tourney{id}/invite"})
-    public String inviteTeam(@PathVariable("id") int id, ModelMap map) {
-//        TODO: invite
-        return "redirect:/pp/admin/tourney/tourney" + id;
+    @PostMapping(value = {"/pp/admin/tourney/tourney{tourneyID}/invite"})
+    public String inviteTeam(@PathVariable("tourneyID") int tourneyID, @RequestParam("teamsID") List<Integer> teamsID) {
+        adminService.inviteTeams(tourneyID, teamsID);
+        return "redirect:/pp/admin/tourney/tourney" + tourneyID;
     }
 
 //    ==================================================================================
@@ -195,8 +187,14 @@ public class UserController {
 
     @GetMapping(value = {"/pp/tourney/team{id}"})
     public String toTeamPage(@PathVariable("id") int id, ModelMap map) {
-        map.addAttribute("teamDTO", userService.getTeam(id));
-        return "user/tourney/page-team";
+        TeamDTO teamDTO = userService.getTeam(id);
+        map.addAttribute("teamDTO", teamDTO);
+
+        int status = teamDTO.getStatus().getId();
+        switch (status) {
+            case 4: return "user/tourney/page-team-status-invite"; //TEAM_INVITE
+            default: return "redirect:/xxx" + id;
+        }
     }
 
     @GetMapping(value = {"/pp/tourney/create-team"})
