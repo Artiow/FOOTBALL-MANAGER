@@ -1,7 +1,6 @@
 package ru.vldf.sportsportal.model.tourney;
 
 import ru.vldf.sportsportal.dto.tourney.TeamCompositionDTO;
-import ru.vldf.sportsportal.model.user.UserEntity;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -16,7 +15,6 @@ public class TeamCompositionEntity {
     private TeamEntity team;
     private TourneyEntity tourney;
 
-    private Collection<UserEntity> users;
     private Collection<TeamPlayerEntity> players;
 
     public TeamCompositionEntity() {
@@ -91,21 +89,7 @@ public class TeamCompositionEntity {
 
     @ManyToMany
     @JoinTable(
-            name = "TeamMembershipForUser",
-            joinColumns = @JoinColumn(name = "TeamComposition_ID"),
-            inverseJoinColumns = @JoinColumn(name = "TeamUser_ID")
-    )
-    public Collection<UserEntity> getUsers() {
-        return users;
-    }
-
-    public void setUsers(Collection<UserEntity> users) {
-        this.users = users;
-    }
-
-    @ManyToMany
-    @JoinTable(
-            name = "TeamMembershipForPlayer",
+            name = "TeamMembership",
             joinColumns = @JoinColumn(name = "TeamComposition_ID"),
             inverseJoinColumns = @JoinColumn(name = "TeamPlayer_ID")
     )

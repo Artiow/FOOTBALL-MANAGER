@@ -16,7 +16,7 @@ public class TourneyDTO {
         id = tourney.getId();
         name = tourney.getName();
 
-        status = new TourneyStatusDTO(tourney.getTourneyStatus());
+        if (tourney.getTourneyStatus() != null) status = new TourneyStatusDTO(tourney.getTourneyStatus());
     }
 
     public Integer getId() {

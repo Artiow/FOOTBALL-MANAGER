@@ -7,7 +7,6 @@ public class TeamPlayerDTO {
     private String name;
     private String surname;
     private String patronymic;
-    private String phone;
 
     public TeamPlayerDTO() {
 
@@ -18,7 +17,6 @@ public class TeamPlayerDTO {
         name = player.getName();
         surname = player.getSurname();
         patronymic = player.getPatronymic();
-        phone = player.getPhone();
     }
 
     public Integer getId() {
@@ -51,13 +49,5 @@ public class TeamPlayerDTO {
 
     public void setPatronymic(String patronymic) {
         this.patronymic = patronymic;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
     }
 }

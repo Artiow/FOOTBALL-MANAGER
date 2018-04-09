@@ -82,20 +82,21 @@ public class AdminService {
 
     @Transactional
     public void confirmUser(Integer id) {
-        String ROLE_CONFIRMED_CODE = "ROLE_USER";
-        userDAO.updateRoleByID(
-                id,
-                userRoleDAO.findByCode(ROLE_CONFIRMED_CODE)
-        );
+        Integer playerID = teamPlayerDAO.save(new TeamPlayerEntity(userDAO.findByID(id)));
+        bindUser(id, playerID); //TODO: optimize this?
     }
 
     @Transactional
     public void rejectUser(Integer id) {
         String ROLE_REJECTED_CODE = "ROLE_REJECTED";
-        userDAO.updateRoleByID(
-                id,
-                userRoleDAO.findByCode(ROLE_REJECTED_CODE)
-        );
+        userDAO.updateRoleByID(id, userRoleDAO.findByCode(ROLE_REJECTED_CODE));
+    }
+
+    @Transactional
+    public void bindUser(Integer userID, Integer playerID) {
+        String ROLE_CONFIRMED_CODE = "ROLE_USER";
+        userDAO.updateRoleByID(userID, userRoleDAO.findByCode(ROLE_CONFIRMED_CODE));
+        userDAO.updateTeamPlayerByID(userID, teamPlayerDAO.findByID(playerID));
     }
 
     @Transactional
@@ -213,6 +214,7 @@ public class AdminService {
             if (entity.getStatus().getCode().equals("TEAM_CONFIRMED")) //TODO: that's right, huh?
                 dtoList.add(new TeamDTO(entity));
 
+        if (dtoList.isEmpty()) return null;
         return dtoList;
     }
 

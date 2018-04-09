@@ -19,8 +19,8 @@ public class TeamCompositionDTO {
         teamName = teamComposition.getTeamName();
         shiftBalance = teamComposition.getShiftBalance();
 
-        team = new TeamDTO(teamComposition.getTeam());
-        tourney = new TourneyDTO(teamComposition.getTourney());
+        if (teamComposition.getTeam() != null) team = new TeamDTO(teamComposition.getTeam());
+        if (teamComposition.getTourney() != null) tourney = new TourneyDTO(teamComposition.getTourney());
     }
 
     public Integer getId() {

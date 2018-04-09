@@ -18,8 +18,8 @@ public class TeamDTO {
         id = team.getId();
         name = team.getName();
 
-        captain = new UserDTO(team.getCaptain());
-        status = new TeamStatusDTO(team.getStatus());
+        if (team.getCaptain() != null) captain = new UserDTO(team.getCaptain());
+        if (team.getCaptain() != null) status = new TeamStatusDTO(team.getStatus());
     }
 
     public void setId(Integer id) {

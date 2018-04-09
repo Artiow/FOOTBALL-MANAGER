@@ -1,8 +1,8 @@
 package ru.vldf.sportsportal.model.user;
 
 import ru.vldf.sportsportal.dto.user.UserDTO;
-import ru.vldf.sportsportal.model.tourney.TeamCompositionEntity;
 import ru.vldf.sportsportal.model.tourney.TeamEntity;
+import ru.vldf.sportsportal.model.tourney.TeamPlayerEntity;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -20,9 +20,9 @@ public class UserEntity {
     private String phone;
 
     private UserRoleEntity role;
+    private TeamPlayerEntity player;
 
     private Collection<TeamEntity> teams;
-    private Collection<TeamCompositionEntity> compositions;
 
     public UserEntity() {
 
@@ -39,6 +39,12 @@ public class UserEntity {
         phone = user.getPhone();
 
         this.role = role;
+    }
+
+    public UserEntity(UserDTO user, UserRoleEntity role, TeamPlayerEntity player) {
+        this(user, role);
+
+        this.player = player;
     }
 
     @Id
@@ -123,6 +129,22 @@ public class UserEntity {
     }
 
 //    ==================================================================================
+//    === ONE-TO-ONE REFERENCES
+
+    @OneToOne
+    @JoinColumn(
+            name = "TeamPlayer_ID",
+            referencedColumnName = "ID"
+    )
+    public TeamPlayerEntity getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(TeamPlayerEntity player) {
+        this.player = player;
+    }
+
+//    ==================================================================================
 //    === ONE-TO-MANY REFERENCES
 
     @OneToMany(mappedBy = "captain")
@@ -150,23 +172,6 @@ public class UserEntity {
 
     public void setRole(UserRoleEntity role) {
         this.role = role;
-    }
-
-//    ==================================================================================
-//    === MANY-TO-MANY REFERENCES
-
-    @ManyToMany
-    @JoinTable(
-            name = "TeamMembershipForUser",
-            joinColumns = @JoinColumn(name = "TeamUser_ID"),
-            inverseJoinColumns = @JoinColumn(name = "TeamComposition_ID")
-    )
-    public Collection<TeamCompositionEntity> getCompositions() {
-        return compositions;
-    }
-
-    public void setCompositions(Collection<TeamCompositionEntity> compositions) {
-        this.compositions = compositions;
     }
 
 //    ==================================================================================

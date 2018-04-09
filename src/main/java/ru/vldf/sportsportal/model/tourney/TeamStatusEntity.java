@@ -1,5 +1,7 @@
 package ru.vldf.sportsportal.model.tourney;
 
+import ru.vldf.sportsportal.dto.tourney.TeamStatusDTO;
+
 import javax.persistence.*;
 import java.util.Collection;
 
@@ -11,6 +13,16 @@ public class TeamStatusEntity {
     private String description;
 
     private Collection<TeamEntity> teams;
+
+    public TeamStatusEntity() {
+
+    }
+
+    public TeamStatusEntity(TeamStatusDTO status) {
+        id = status.getId();
+        code = status.getCode();
+        description = status.getDescription();
+    }
 
     @Id
     @Column(name = "ID", nullable = false)

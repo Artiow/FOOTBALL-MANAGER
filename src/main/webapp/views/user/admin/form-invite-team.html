@@ -59,6 +59,7 @@
     </div>
 </nav>
 
+<!--TODO: style clear!-->
 <main style="min-height: 600px" class="main-tourneypage">
     <div class="alert-danger" th:unless="${tourneyDTO != null}">
         <div class="container">
@@ -100,7 +101,7 @@
         </div>
         <div class="row" th:unless="${teamList != null}">
             <div style="padding: 10px 0 10px 0" class="col-md-6 col-md-offset-3">
-                <h4>Список команд пуст!</h4>
+                <h4>Доступные команды отсутствуют!</h4>
             </div>
         </div>
     </div>

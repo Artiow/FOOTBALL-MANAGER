@@ -3,6 +3,7 @@ package ru.vldf.sportsportal.dao.impl.user;
 import org.springframework.stereotype.Repository;
 import ru.vldf.sportsportal.dao.generic.definite.user.UserDAO;
 import ru.vldf.sportsportal.dao.generic.abstrct.AbstractDAOImpl;
+import ru.vldf.sportsportal.model.tourney.TeamPlayerEntity;
 import ru.vldf.sportsportal.model.user.UserRoleEntity;
 import ru.vldf.sportsportal.model.user.UserEntity;
 
@@ -113,6 +114,14 @@ public class UserDAOImpl extends AbstractDAOImpl<UserEntity, Integer> implements
         return getSession()
                 .createQuery("update UserEntity set role=? where id=?")
                 .setParameter(0, role)
+                .setParameter(1, id)
+                .executeUpdate();
+    }
+
+    public Integer updateTeamPlayerByID(Integer id, TeamPlayerEntity player) {
+        return getSession()
+                .createQuery("update UserEntity set player=? where id=?")
+                .setParameter(0, player)
                 .setParameter(1, id)
                 .executeUpdate();
     }

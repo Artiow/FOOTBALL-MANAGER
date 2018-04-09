@@ -37,7 +37,7 @@
 
 <header id="header-regular">
     <header-regular id="header-auth"
-                    caption="АДМИНИСТРИРОВАНИЕ">
+                    caption="ТУРНИР">
         <auth-failed sec:authorize="!isAuthenticated()"></auth-failed>
         <auth-completed sec:authorize="isAuthenticated()"><p th:text="${authUser.name + ' ' + authUser.surname}">USERNAME</p></auth-completed>
     </header-regular>
@@ -54,48 +54,26 @@
 <nav class="nav-ppage">
     <div class="container">
         <ul class="list-inline">
-            <li><a th:href="@{/pp/admin}"><i class="fa fa-reply" aria-hidden="true"></i> Назад</a></li>
+            <li><a th:href="@{/pp/tourney}"><i class="fa fa-reply" aria-hidden="true"></i> Назад</a></li>
         </ul>
     </div>
 </nav>
 
-<!--TODO: style clear!-->
-<main style="min-height: 600px" class="main-tourneypage pic-href">
-    <div class="container">
+<main style="min-height: 600px">
+    <div class="alert-danger" th:unless="${teamDTO != null}">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3">
+                    <h3 style="margin: 20px 0 20px 0">НЕТ ДОСТУПА</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container" th:if="${teamDTO != null}">
         <div class="row">
-            <div style="padding: 10px 0 10px 0" class="col-md-6 col-md-offset-3">
-                <h3>Турниры</h3>
-                <table class="table table-hover">
-                    <tr th:each="tourneyItem: ${tourneysList}" th:object="${tourneyItem}">
-                        <td>
-                            <a class="pic-href" th:href="*{'/pp/admin/tourney/tourney' + id}">
-                                <!--TODO: pic here!-->
-                                <div style="width: 40px; height: 40px; background: grey"></div>
-                            </a>
-                        </td>
-                        <td>
-                            <a th:href="*{'/pp/admin/tourney/tourney' + id}">
-                                <p th:text="*{name}">NAME</p>
-                            </a>
-                        </td>
-                        <td th:if="*{status.code == 'TOURNEY_FORMED'}" class="warning">
-                            <a th:href="*{'/pp/admin/tourney/tourney' + id}">
-                                <p>ИДЕТ НАБОР</p>
-                            </a>
-                        </td>
-                        <td th:if="*{status.code == 'TOURNEY_READY'}" class="info">
-                            <a th:href="*{'/pp/admin/tourney/tourney' + id}">
-                                <p>НАБОР ЗАВЕРШЕН</p>
-                            </a>
-                        </td>
-                        <td th:if="*{status.code == 'TOURNEY_???'}" class="info">
-                            <a th:href="*{'/pp/admin/tourney/tourney' + id}">
-                                <p></p>
-                            </a>
-                        </td>
-                    </tr>
-                </table>
-                <a th:href="@{/pp/admin/tourney/create-tourney}" type="button" class="btn btn-default">Создать турнир</a>
+            <div class="col-md-6 col-md-offset-3">
+                <h3 th:text="${teamDTO.name}">TEAM NAME</h3>
+                <h4 style="padding: 5px" class="alert-danger">ЗАЯВКА ОТКЛОНЕНА</h4>
             </div>
         </div>
     </div>

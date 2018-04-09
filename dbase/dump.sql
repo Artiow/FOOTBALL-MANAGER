@@ -113,7 +113,7 @@ CREATE TABLE `Team` (
   KEY `Team_TeamStatus_ID_fk` (`Status_ID`),
   CONSTRAINT `Team_TeamStatus_ID_fk` FOREIGN KEY (`Status_ID`) REFERENCES `TeamStatus` (`ID`),
   CONSTRAINT `Team_User_ID_fk` FOREIGN KEY (`Captain_ID`) REFERENCES `User` (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -146,7 +146,7 @@ CREATE TABLE `TeamComposition` (
   KEY `TeamComposition_Team_ID_fk` (`Team_ID`),
   CONSTRAINT `TeamComposition_Team_ID_fk` FOREIGN KEY (`Team_ID`) REFERENCES `Team` (`ID`),
   CONSTRAINT `TeamComposition_Tourney_ID_fk` FOREIGN KEY (`Tourney_ID`) REFERENCES `Tourney` (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -160,13 +160,13 @@ INSERT INTO `TeamComposition` VALUES (2,1,1,'Good Team',3),(3,5,1,'Охуите�
 UNLOCK TABLES;
 
 --
--- Table structure for table `TeamMembershipForPlayer`
+-- Table structure for table `TeamMembership`
 --
 
-DROP TABLE IF EXISTS `TeamMembershipForPlayer`;
+DROP TABLE IF EXISTS `TeamMembership`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `TeamMembershipForPlayer` (
+CREATE TABLE `TeamMembership` (
   `TeamPlayer_ID` int(11) NOT NULL,
   `TeamComposition_ID` int(11) NOT NULL,
   PRIMARY KEY (`TeamPlayer_ID`,`TeamComposition_ID`),
@@ -178,39 +178,12 @@ CREATE TABLE `TeamMembershipForPlayer` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `TeamMembershipForPlayer`
+-- Dumping data for table `TeamMembership`
 --
 
-LOCK TABLES `TeamMembershipForPlayer` WRITE;
-/*!40000 ALTER TABLE `TeamMembershipForPlayer` DISABLE KEYS */;
-/*!40000 ALTER TABLE `TeamMembershipForPlayer` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `TeamMembershipForUser`
---
-
-DROP TABLE IF EXISTS `TeamMembershipForUser`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `TeamMembershipForUser` (
-  `TeamUser_ID` int(11) NOT NULL,
-  `TeamComposition_ID` int(11) NOT NULL,
-  PRIMARY KEY (`TeamUser_ID`,`TeamComposition_ID`),
-  KEY `TeamMembershipForUser_TeamComposition_ID_fk` (`TeamComposition_ID`),
-  KEY `TeamMembershipForUser_TeamUser_ID_index` (`TeamUser_ID`),
-  CONSTRAINT `TeamMembershipForUser_TeamComposition_ID_fk` FOREIGN KEY (`TeamComposition_ID`) REFERENCES `TeamComposition` (`ID`),
-  CONSTRAINT `TeamMembershipForUser_User_ID_fk` FOREIGN KEY (`TeamUser_ID`) REFERENCES `User` (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `TeamMembershipForUser`
---
-
-LOCK TABLES `TeamMembershipForUser` WRITE;
-/*!40000 ALTER TABLE `TeamMembershipForUser` DISABLE KEYS */;
-/*!40000 ALTER TABLE `TeamMembershipForUser` ENABLE KEYS */;
+LOCK TABLES `TeamMembership` WRITE;
+/*!40000 ALTER TABLE `TeamMembership` DISABLE KEYS */;
+/*!40000 ALTER TABLE `TeamMembership` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -251,10 +224,9 @@ CREATE TABLE `TeamPlayer` (
   `Name` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
   `Surname` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
   `Patronymic` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `Phone` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`ID`),
   UNIQUE KEY `Player_ID_uindex` (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -263,7 +235,7 @@ CREATE TABLE `TeamPlayer` (
 
 LOCK TABLES `TeamPlayer` WRITE;
 /*!40000 ALTER TABLE `TeamPlayer` DISABLE KEYS */;
-INSERT INTO `TeamPlayer` VALUES (3,'test2','test2','test2',NULL),(4,'test2','test2','test2',NULL);
+INSERT INTO `TeamPlayer` VALUES (3,'test2','test2','test2'),(4,'test2','test2','test2'),(5,'test1','test1','test1');
 /*!40000 ALTER TABLE `TeamPlayer` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -310,7 +282,7 @@ CREATE TABLE `Tourney` (
   UNIQUE KEY `Tourney_Name_uindex` (`Name`),
   KEY `Tourney_TourneyStatus_ID_fk` (`Status_ID`),
   CONSTRAINT `Tourney_TourneyStatus_ID_fk` FOREIGN KEY (`Status_ID`) REFERENCES `TourneyStatus` (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -360,6 +332,7 @@ DROP TABLE IF EXISTS `User`;
 CREATE TABLE `User` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `UserRole_ID` int(11) NOT NULL,
+  `TeamPlayer_ID` int(11) DEFAULT NULL,
   `Login` varchar(45) NOT NULL,
   `Password` varchar(125) NOT NULL,
   `Name` varchar(45) NOT NULL,
@@ -371,9 +344,11 @@ CREATE TABLE `User` (
   UNIQUE KEY `User_ID_uindex` (`ID`),
   UNIQUE KEY `User_Email_uindex` (`EMail`),
   UNIQUE KEY `User_Login_uindex` (`Login`),
+  UNIQUE KEY `User_Player_ID_uindex` (`TeamPlayer_ID`),
   KEY `User_UserRole_ID_fk` (`UserRole_ID`),
+  CONSTRAINT `User_TeamPlayer_ID_fk` FOREIGN KEY (`TeamPlayer_ID`) REFERENCES `TeamPlayer` (`ID`),
   CONSTRAINT `User_UserRole_ID_fk` FOREIGN KEY (`UserRole_ID`) REFERENCES `UserRole` (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -382,7 +357,7 @@ CREATE TABLE `User` (
 
 LOCK TABLES `User` WRITE;
 /*!40000 ALTER TABLE `User` DISABLE KEYS */;
-INSERT INTO `User` VALUES (1,1,'artiow','$2a$10$X0QUCiRADuOthPN9MWwU3udzOBq21vCUt8QTOP8jXXAd.RTLJbUJO','Артем','Намеднев','Александрович','namednev_a@mail.ru','9204251258'),(5,2,'login','$2a$10$hiCEvfA8G/kfKG7qJLpTD.8/A7GUxCtfLlDdNaiQOHaEo2QsVz4a.','Name','Surname','Patronymic','email',NULL),(10,4,'test1','$2a$10$n.Lx3IBkcniRkMM4dwk1Fe4OZb53HMtNTsC5KDFt4o32xa.3p7OCq','test1','test1','test1','test1','test1'),(11,4,'test2','$2a$10$n.Lx3IBkcniRkMM4dwk1Fe4OZb53HMtNTsC5KDFt4o32xa.3p7OCq','test2','test2','test2','test2','test2'),(12,4,'test3','$2a$10$n.Lx3IBkcniRkMM4dwk1Fe4OZb53HMtNTsC5KDFt4o32xa.3p7OCq','test3','test3','test3','test3','test3');
+INSERT INTO `User` VALUES (1,1,NULL,'artiow','$2a$10$X0QUCiRADuOthPN9MWwU3udzOBq21vCUt8QTOP8jXXAd.RTLJbUJO','Артем','Намеднев','Александрович','namednev_a@mail.ru','9204251258'),(5,2,NULL,'login','$2a$10$hiCEvfA8G/kfKG7qJLpTD.8/A7GUxCtfLlDdNaiQOHaEo2QsVz4a.','Name','Surname','Patronymic','email',NULL),(10,4,NULL,'test1','$2a$10$n.Lx3IBkcniRkMM4dwk1Fe4OZb53HMtNTsC5KDFt4o32xa.3p7OCq','test1','test1','test1','test1','test1'),(11,4,NULL,'test2','$2a$10$n.Lx3IBkcniRkMM4dwk1Fe4OZb53HMtNTsC5KDFt4o32xa.3p7OCq','test2','test2','test2','test2','test2'),(12,4,NULL,'test3','$2a$10$n.Lx3IBkcniRkMM4dwk1Fe4OZb53HMtNTsC5KDFt4o32xa.3p7OCq','test3','test3','test3','test3','test3');
 /*!40000 ALTER TABLE `User` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -447,4 +422,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-04-09 15:53:57
+-- Dump completed on 2018-04-09 22:27:16

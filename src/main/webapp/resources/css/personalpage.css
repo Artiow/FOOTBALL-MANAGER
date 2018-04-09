@@ -57,12 +57,16 @@ main.main-tourneypage table a {
     text-align: center;
 }
 main.main-tourneypage.pic-href table a {
-    height: 105px;
-}
-main.main-tourneypage table a.pic-href {
-    padding-right: 0;
+    height: 60px;
 }
 main.main-tourneypage table a p {
     margin: 0;
     font-size: 18px;
+}
+
+main.main-tourneypage.pic-href table tr td:first-child {
+    width: 55px;
+}
+main.main-tourneypage table a.pic-href {
+    padding-right: 0;
 }

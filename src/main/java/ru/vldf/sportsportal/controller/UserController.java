@@ -96,6 +96,12 @@ public class UserController {
         return "redirect:/pp/admin/check-user";
     }
 
+    @GetMapping(value = "/pp/admin/check-user/user{userID}/bind/duplicate{duplicateID}")
+    public String bindDuplicate(@PathVariable("userID") int userID, @PathVariable("duplicateID") int duplicateID) {
+        adminService.bindUser(userID, duplicateID);
+        return "redirect:/pp/admin/check-user";
+    }
+
     @GetMapping(value = {"/pp/admin/check-user/duplicate{id}/delete"})
     public String deleteDuplicate(@PathVariable("id") int id) {
         adminService.deleteDuplicate(id);
@@ -193,7 +199,8 @@ public class UserController {
         int status = teamDTO.getStatus().getId();
         switch (status) {
             case 1: return "user/tourney/page-team-status-unconfirmed"; //TEAM_UNCONFIRMED
-            case 4: return "user/tourney/page-team-status-invite"; //TEAM_INVITE
+            case 3: return "user/tourney/page-team-status-rejected"; //TEAM_REJECTED
+            case 4: return "user/tourney/page-team-status-invited"; //TEAM_INVITE
             default: return "redirect:/xxx" + id;
         }
     }

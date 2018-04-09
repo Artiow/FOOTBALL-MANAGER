@@ -1,5 +1,8 @@
 package ru.vldf.sportsportal.model.tourney;
 
+import ru.vldf.sportsportal.dto.tourney.TeamPlayerDTO;
+import ru.vldf.sportsportal.model.user.UserEntity;
+
 import javax.persistence.*;
 import java.util.Collection;
 
@@ -10,9 +13,29 @@ public class TeamPlayerEntity {
     private String name;
     private String surname;
     private String patronymic;
-    private String phone;
+
+    private UserEntity user;
 
     private Collection<TeamCompositionEntity> compositions;
+
+    public TeamPlayerEntity() {
+
+    }
+
+    public TeamPlayerEntity(UserEntity user) {
+        name = user.getName();
+        surname = user.getSurname();
+        patronymic = user.getPatronymic();
+    }
+
+    public TeamPlayerEntity(TeamPlayerDTO playerDTO, UserEntity user) {
+        id = playerDTO.getId();
+        name = playerDTO.getName();
+        surname = playerDTO.getSurname();
+        patronymic = playerDTO.getPatronymic();
+
+        this.user = user;
+    }
 
     @Id
     @Column(name = "ID", nullable = false)
@@ -46,7 +69,7 @@ public class TeamPlayerEntity {
     }
 
     @Basic
-    @Column(name = "Patronymic", nullable = true, length = 45)
+    @Column(name = "Patronymic", length = 45)
     public String getPatronymic() {
         return patronymic;
     }
@@ -55,14 +78,16 @@ public class TeamPlayerEntity {
         this.patronymic = patronymic;
     }
 
-    @Basic
-    @Column(name = "Phone", nullable = true, length = 10)
-    public String getPhone() {
-        return phone;
+//    ==================================================================================
+//    === ONE-TO-ONE REFERENCES
+
+    @OneToOne(mappedBy = "player")
+    public UserEntity getUser() {
+        return user;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setUser(UserEntity user) {
+        this.user = user;
     }
 
 //    ==================================================================================
@@ -70,7 +95,7 @@ public class TeamPlayerEntity {
 
     @ManyToMany
     @JoinTable(
-            name = "TeamMembershipForPlayer",
+            name = "TeamMembership",
             joinColumns = @JoinColumn(name = "TeamPlayer_ID"),
             inverseJoinColumns = @JoinColumn(name = "TeamComposition_ID")
     )
