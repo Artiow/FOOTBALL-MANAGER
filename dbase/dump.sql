@@ -113,7 +113,7 @@ CREATE TABLE `Team` (
   KEY `Team_TeamStatus_ID_fk` (`Status_ID`),
   CONSTRAINT `Team_TeamStatus_ID_fk` FOREIGN KEY (`Status_ID`) REFERENCES `TeamStatus` (`ID`),
   CONSTRAINT `Team_User_ID_fk` FOREIGN KEY (`Captain_ID`) REFERENCES `User` (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -122,7 +122,7 @@ CREATE TABLE `Team` (
 
 LOCK TABLES `Team` WRITE;
 /*!40000 ALTER TABLE `Team` DISABLE KEYS */;
-INSERT INTO `Team` VALUES (1,'Good Team',1,2),(2,'Better Team',1,2),(3,'The Best Team',1,1),(4,'Fuck This Shit',1,1),(5,'Охуительная Команда Блядь',5,2),(9,'Нижние Подзалупки',5,1);
+INSERT INTO `Team` VALUES (1,'Good Team',1,4),(2,'Better Team',1,2),(3,'The Best Team',1,1),(5,'Охуительная Команда Блядь',5,4),(9,'Нижние Подзалупки',5,1);
 /*!40000 ALTER TABLE `Team` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -146,7 +146,7 @@ CREATE TABLE `TeamComposition` (
   KEY `TeamComposition_Team_ID_fk` (`Team_ID`),
   CONSTRAINT `TeamComposition_Team_ID_fk` FOREIGN KEY (`Team_ID`) REFERENCES `Team` (`ID`),
   CONSTRAINT `TeamComposition_Tourney_ID_fk` FOREIGN KEY (`Tourney_ID`) REFERENCES `Tourney` (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -155,6 +155,7 @@ CREATE TABLE `TeamComposition` (
 
 LOCK TABLES `TeamComposition` WRITE;
 /*!40000 ALTER TABLE `TeamComposition` DISABLE KEYS */;
+INSERT INTO `TeamComposition` VALUES (2,1,1,'Good Team',3),(3,5,1,'Охуительная Команда Блядь',3);
 /*!40000 ALTER TABLE `TeamComposition` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -446,4 +447,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-04-08  3:01:39
+-- Dump completed on 2018-04-09 15:53:57
