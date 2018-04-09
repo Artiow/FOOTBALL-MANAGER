@@ -192,6 +192,7 @@ public class UserController {
 
         int status = teamDTO.getStatus().getId();
         switch (status) {
+            case 1: return "user/tourney/page-team-status-unconfirmed"; //TEAM_UNCONFIRMED
             case 4: return "user/tourney/page-team-status-invite"; //TEAM_INVITE
             default: return "redirect:/xxx" + id;
         }
