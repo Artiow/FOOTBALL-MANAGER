@@ -128,6 +128,16 @@ public class TeamDAOImpl extends AbstractDAOImpl<TeamEntity, Integer> implements
         else return null;
     }
 
+    public List<TeamEntity> findByNameLike(String name) {
+        List teams = getSession()
+                .createQuery("from TeamEntity where name like ?")
+                .setParameter(0, "%" + name + "%")
+                .list();
+
+        if ((teams != null) && (teams.size() > 0)) return (List<TeamEntity>) teams;
+        else return null;
+    }
+
 //    ==================================================================================
 //    === UPDATE
 

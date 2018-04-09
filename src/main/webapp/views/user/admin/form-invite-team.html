@@ -76,35 +76,23 @@
                 <h4 style="padding: 5px" class="alert-warning">ИДЕТ НАБОР</h4>
             </div>
         </div>
-        <div class="row" th:if="${teamCompositionList != null}">
+        <div class="row" th:if="${teamList != null}">
             <div style="padding: 10px 0 10px 0" class="col-md-6 col-md-offset-3">
-                <h4>Участвующие команды:</h4>
+                <h4>Доступные команды:</h4>
                 <table class="table table-hover">
-                    <tr th:each="teamCompositionItem: ${teamCompositionList}" th:object="${teamCompositionItem}">
+                    <tr th:each="teamItem: ${teamList}" th:object="${teamItem}">
                         <td>
-                            <a th:href="*{'/xxx' + team.id}">
-                                <p th:text="*{teamName}">NAME</p>
-                            </a>
-                        </td>
-                        <td th:if="*{team.status.code == 'TEAM_INVITED'}" class="warning">
-                            <a th:href="*{'/xxx' + team.id}">
-                                <p>ПРИГЛАШЕНА</p>
-                            </a>
-                        </td>
-                        <td th:if="*{team.status.code == 'TEAM_INVOLVED'}" class="info">
-                            <a th:href="*{'/xxx' + team.id}">
-                                <p>УЧАСТВУЕТ</p>
+                            <a th:href="*{'/xxx' + id}">
+                                <p th:text="*{name}">NAME</p>
                             </a>
                         </td>
                     </tr>
                 </table>
-                <a th:href="${'/pp/admin/tourney/tourney' + tourneyDTO.id + '/invite'}" type="button" class="btn btn-default">Пригласить команды в турнир</a>
             </div>
         </div>
-        <div class="row" th:unless="${teamCompositionList != null}">
+        <div class="row" th:unless="${teamList != null}">
             <div style="padding: 10px 0 10px 0" class="col-md-6 col-md-offset-3">
-                <h4>Нет участвующих команд</h4>
-                <a th:href="${'/pp/admin/tourney/tourney' + tourneyDTO.id + '/invite'}" type="button" class="btn btn-default">Пригласить команды в турнир</a>
+                <h4>Список команд пуст!</h4>
             </div>
         </div>
     </div>

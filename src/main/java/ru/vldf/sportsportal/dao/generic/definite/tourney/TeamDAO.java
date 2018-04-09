@@ -36,6 +36,8 @@ public interface TeamDAO {
 
     List<TeamEntity> findByStatus(TeamStatusEntity status);
 
+    List<TeamEntity> findByNameLike(String name);
+
 //    ==================================================================================
 //    === UPDATE
 

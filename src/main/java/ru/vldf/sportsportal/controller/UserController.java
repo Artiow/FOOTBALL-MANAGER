@@ -145,7 +145,7 @@ public class UserController {
         TourneyDTO tourneyDTO = adminService.getTourney(id);
         map
                 .addAttribute("tourneyDTO", tourneyDTO)
-                .addAttribute("teamList", adminService.getTeams(tourneyDTO));
+                .addAttribute("teamCompositionList", adminService.getTeamCompositions(tourneyDTO));
 
         int status = tourneyDTO.getStatus().getId();
         switch (status) {
@@ -165,6 +165,23 @@ public class UserController {
     public String createTourney(@ModelAttribute(value="tourneyDTO") TourneyDTO tourneyDTO) {
         adminService.createTourney(tourneyDTO);
         return "redirect:/pp/admin/tourney";
+    }
+
+    @GetMapping(value = {"/pp/admin/tourney/tourney{id}/invite"})
+    public String toTeamInviteForm(@PathVariable("id") int id, ModelMap map) {
+//        TODO: add search by name
+
+        map
+                .addAttribute("tourneyDTO", adminService.getTourney(id))
+                .addAttribute("teamList", adminService.getTeamsLike(""));
+
+        return "user/admin/form-invite-team";
+    }
+
+    @PostMapping(value = {"/pp/admin/tourney/tourney{id}/invite"})
+    public String inviteTeam(@PathVariable("id") int id, ModelMap map) {
+//        TODO: invite
+        return "redirect:/pp/admin/tourney/tourney" + id;
     }
 
 //    ==================================================================================

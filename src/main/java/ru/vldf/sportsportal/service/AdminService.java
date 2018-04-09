@@ -6,14 +6,12 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.vldf.sportsportal.dao.generic.definite.tourney.*;
 import ru.vldf.sportsportal.dao.generic.definite.user.UserRoleDAO;
 import ru.vldf.sportsportal.dao.generic.definite.user.UserDAO;
+import ru.vldf.sportsportal.dto.tourney.TeamCompositionDTO;
 import ru.vldf.sportsportal.dto.tourney.TeamDTO;
 import ru.vldf.sportsportal.dto.tourney.TeamPlayerDTO;
 import ru.vldf.sportsportal.dto.tourney.TourneyDTO;
 import ru.vldf.sportsportal.dto.user.UserDTO;
-import ru.vldf.sportsportal.model.tourney.TeamEntity;
-import ru.vldf.sportsportal.model.tourney.TeamPlayerEntity;
-import ru.vldf.sportsportal.model.tourney.TourneyEntity;
-import ru.vldf.sportsportal.model.tourney.TourneyStatusEntity;
+import ru.vldf.sportsportal.model.tourney.*;
 import ru.vldf.sportsportal.model.user.UserEntity;
 
 import java.util.ArrayList;
@@ -110,6 +108,8 @@ public class AdminService {
 
     private TeamDAO teamDAO;
     private TeamStatusDAO teamStatusDAO;
+    private TeamCompositionDAO teamCompositionDAO;
+
     private TourneyDAO tourneyDAO;
     private TourneyStatusDAO tourneyStatusDAO;
 
@@ -121,6 +121,11 @@ public class AdminService {
     @Autowired
     public void setTeamStatusDAO(TeamStatusDAO teamStatusDAO) {
         this.teamStatusDAO = teamStatusDAO;
+    }
+
+    @Autowired
+    public void setTeamCompositionDAO(TeamCompositionDAO teamCompositionDAO) {
+        this.teamCompositionDAO = teamCompositionDAO;
     }
 
     @Autowired
@@ -201,6 +206,29 @@ public class AdminService {
 
         List<TeamDTO> dtoList = new ArrayList<TeamDTO>();
         for (TeamEntity entity: entityList) dtoList.add(new TeamDTO(entity));
+        return dtoList;
+    }
+
+    @Transactional(readOnly = true)
+    public List<TeamDTO> getTeamsLike(String name) {
+        List<TeamEntity> entityList = teamDAO.findByNameLike(name);
+        if (entityList == null) return null;
+
+        List<TeamDTO> dtoList = new ArrayList<TeamDTO>();
+        for (TeamEntity entity: entityList)
+            if (entity.getStatus().getCode().equals("TEAM_CONFIRMED")) //TODO: that's right, huh?
+                dtoList.add(new TeamDTO(entity));
+
+        return dtoList;
+    }
+
+    @Transactional(readOnly = true)
+    public List<TeamCompositionDTO> getTeamCompositions(TourneyDTO tourney) {
+        List<TeamCompositionEntity> entityList = teamCompositionDAO.findByTourney(tourney.getId());
+        if (entityList == null) return null;
+
+        List<TeamCompositionDTO> dtoList = new ArrayList<TeamCompositionDTO>();
+        for (TeamCompositionEntity entity: entityList) dtoList.add(new TeamCompositionDTO(entity));
         return dtoList;
     }
 }
