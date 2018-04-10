@@ -53,7 +53,7 @@ public class HibernateConfig {
 
         dataSource.setUrl(URL);
         dataSource.setUsername("root");
-        dataSource.setPassword("");
+        dataSource.setPassword("root");
         return dataSource;
     }
 
