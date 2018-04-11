@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import ru.vldf.sportsportal.dto.tourney.TeamCompositionDTO;
 import ru.vldf.sportsportal.dto.tourney.TeamDTO;
 import ru.vldf.sportsportal.dto.tourney.TeamPlayerDTO;
 import ru.vldf.sportsportal.dto.tourney.TourneyDTO;
@@ -185,30 +186,48 @@ public class UserController {
 //    ==================================================================================
 //    === TOURNEY
 
+    private UserService.UserTourneyService userTourneyService;
+
+    @Autowired
+    public void setUserTourneyService(UserService.UserTourneyService userTourneyService) {
+        this.userTourneyService = userTourneyService;
+    }
+
     @GetMapping(value = {"/pp/tourney"})
     public String toTourneyMenu(ModelMap map) {
-        map.addAttribute("teamList", userService.getTeamList());
+        map.addAttribute("teamList", userTourneyService.getTeamList());
         return "user/tourney/menu-tourney";
     }
 
     @GetMapping(value = {"/pp/tourney/team{id}"})
     public String toTeamPage(@PathVariable("id") int id, ModelMap map) {
-        TeamDTO teamDTO = userService.getTeam(id);
+        TeamDTO teamDTO = userTourneyService.getTeam(id);
+        if (teamDTO == null) return "redirect:/xxx" + id; //not user's team
+
         map.addAttribute("teamDTO", teamDTO);
 
         int status = teamDTO.getStatus().getId();
         switch (status) {
             case 1: return "user/tourney/page-team-status-unconfirmed"; //TEAM_UNCONFIRMED
-            case 3: return "user/tourney/page-team-status-rejected"; //TEAM_REJECTED
+            case 3: return "user/tourney/page-team-status-rejected";    //TEAM_REJECTED
+
             case 4: return "redirect:/pp/tourney/team{id}/composition"; //TEAM_INVITE
+
             default: return "redirect:/xxx" + id;
         }
     }
 
     @GetMapping(value = {"/pp/tourney/team{id}/composition"})
     public String toInvitedTeamPage(@PathVariable("id") int id, ModelMap map) {
-        TeamDTO teamDTO = userService.getTeam(id);
-        map.addAttribute("teamDTO", teamDTO);
+        TeamDTO teamDTO = userTourneyService.getTeam(id);
+        if (teamDTO == null) return "redirect:/xxx" + id; //not user's team
+
+        TeamCompositionDTO compositionDTO = userTourneyService
+                .getRecruitingCompositions(id).get(0); //TODO: remove .get(0)
+
+        map
+                .addAttribute("teamDTO", teamDTO)
+                .addAttribute("compositionDTO", compositionDTO);
 
         return "user/tourney/page-team-status-invited";
     }
@@ -221,7 +240,7 @@ public class UserController {
 
     @PostMapping(value = {"/pp/tourney/create-team"})
     public String createTeam(@ModelAttribute(value="teamDTO") TeamDTO teamDTO) {
-        userService.createTeam(teamDTO);
+        userTourneyService.createTeam(teamDTO);
         return "redirect:/pp/tourney";
     }
 }

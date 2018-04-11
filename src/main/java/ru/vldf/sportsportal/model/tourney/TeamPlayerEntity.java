@@ -4,6 +4,7 @@ import ru.vldf.sportsportal.dto.tourney.TeamPlayerDTO;
 import ru.vldf.sportsportal.model.user.UserEntity;
 
 import javax.persistence.*;
+import java.sql.Date;
 import java.util.Collection;
 
 @Entity
@@ -13,6 +14,7 @@ public class TeamPlayerEntity {
     private String name;
     private String surname;
     private String patronymic;
+    private Date birthday;
 
     private UserEntity user;
 
@@ -26,6 +28,9 @@ public class TeamPlayerEntity {
         name = user.getName();
         surname = user.getSurname();
         patronymic = user.getPatronymic();
+        birthday = (Date) user.getBirthday().clone();
+
+        this.user = user;
     }
 
     public TeamPlayerEntity(TeamPlayerDTO playerDTO, UserEntity user) {
@@ -33,6 +38,7 @@ public class TeamPlayerEntity {
         name = playerDTO.getName();
         surname = playerDTO.getSurname();
         patronymic = playerDTO.getPatronymic();
+        birthday = (Date) playerDTO.getBirthday().clone();
 
         this.user = user;
     }
@@ -76,6 +82,16 @@ public class TeamPlayerEntity {
 
     public void setPatronymic(String patronymic) {
         this.patronymic = patronymic;
+    }
+
+    @Basic
+    @Column(name = "Birthday", nullable = false)
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
     }
 
 //    ==================================================================================

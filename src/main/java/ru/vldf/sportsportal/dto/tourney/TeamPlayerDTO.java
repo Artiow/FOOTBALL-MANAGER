@@ -2,11 +2,14 @@ package ru.vldf.sportsportal.dto.tourney;
 
 import ru.vldf.sportsportal.model.tourney.TeamPlayerEntity;
 
+import java.sql.Date;
+
 public class TeamPlayerDTO {
     private Integer id;
     private String name;
     private String surname;
     private String patronymic;
+    private Date birthday;
 
     public TeamPlayerDTO() {
 
@@ -17,6 +20,7 @@ public class TeamPlayerDTO {
         name = player.getName();
         surname = player.getSurname();
         patronymic = player.getPatronymic();
+        birthday = (Date) player.getBirthday().clone();
     }
 
     public Integer getId() {
@@ -49,5 +53,13 @@ public class TeamPlayerDTO {
 
     public void setPatronymic(String patronymic) {
         this.patronymic = patronymic;
+    }
+
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
     }
 }

@@ -1,6 +1,7 @@
 package ru.vldf.sportsportal.dao.generic.definite.tourney;
 
 import ru.vldf.sportsportal.model.tourney.TeamCompositionEntity;
+import ru.vldf.sportsportal.model.tourney.TeamCompositionStatusEntity;
 import ru.vldf.sportsportal.model.tourney.TeamEntity;
 import ru.vldf.sportsportal.model.tourney.TourneyEntity;
 
@@ -20,4 +21,13 @@ public interface TeamCompositionDAO {
     List<TeamCompositionEntity> findByTourney(TourneyEntity tourney);
 
     List<TeamCompositionEntity> findAll();
+
+//    ==================================================================================
+//    === SPECIAL
+
+    List<TeamCompositionEntity> findByTeamAndStatus(Integer teamID, Integer statusID);
+
+    List<TeamCompositionEntity> findByTeamAndStatus(Integer teamID, String statusCode);
+
+    List<TeamCompositionEntity> findByTeamAndStatus(TeamEntity team, TeamCompositionStatusEntity status);
 }

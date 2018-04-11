@@ -4,6 +4,7 @@ import org.springframework.stereotype.Repository;
 import ru.vldf.sportsportal.dao.generic.abstrct.AbstractDAOImpl;
 import ru.vldf.sportsportal.dao.generic.definite.tourney.TeamCompositionDAO;
 import ru.vldf.sportsportal.model.tourney.TeamCompositionEntity;
+import ru.vldf.sportsportal.model.tourney.TeamCompositionStatusEntity;
 import ru.vldf.sportsportal.model.tourney.TeamEntity;
 import ru.vldf.sportsportal.model.tourney.TourneyEntity;
 
@@ -49,5 +50,44 @@ public class TeamCompositionDAOImpl extends AbstractDAOImpl<TeamCompositionEntit
 
     public List<TeamCompositionEntity> findAll() {
         return super.list();
+    }
+
+//    ==================================================================================
+//    === SPECIAL
+
+    public List<TeamCompositionEntity> findByTeamAndStatus(Integer teamID, Integer statusID) {
+        List compositions = getSession()
+                .createQuery("from TeamCompositionEntity as eTeamComposition"
+                        + " where eTeamComposition.team.id=? and eTeamComposition.status.id=?"
+                ).setParameter(0, teamID)
+                .setParameter(1, statusID)
+                .list();
+
+        if ((compositions != null) && (compositions.size() > 0)) return (List<TeamCompositionEntity>) compositions;
+        else return null;
+    }
+
+    public List<TeamCompositionEntity> findByTeamAndStatus(Integer teamID, String statusCode) {
+        List compositions = getSession()
+                .createQuery("from TeamCompositionEntity as eTeamComposition"
+                        + " where eTeamComposition.team.id=? and eTeamComposition.status.code=?"
+                ).setParameter(0, teamID)
+                .setParameter(1, statusCode)
+                .list();
+
+        if ((compositions != null) && (compositions.size() > 0)) return (List<TeamCompositionEntity>) compositions;
+        else return null;
+    }
+
+    public List<TeamCompositionEntity> findByTeamAndStatus(TeamEntity team, TeamCompositionStatusEntity status) {
+        List compositions = getSession()
+                .createQuery("from TeamCompositionEntity as eTeamComposition"
+                                + " where eTeamComposition.team=? and eTeamComposition.status=?"
+                ).setParameter(0, team)
+                .setParameter(1, status)
+                .list();
+
+        if ((compositions != null) && (compositions.size() > 0)) return (List<TeamCompositionEntity>) compositions;
+        else return null;
     }
 }

@@ -3,6 +3,8 @@ package ru.vldf.sportsportal.dto.user;
 import ru.vldf.sportsportal.dto.tourney.TeamPlayerDTO;
 import ru.vldf.sportsportal.model.user.UserEntity;
 
+import java.sql.Date;
+
 public class UserDTO {
     private Integer id;
     private String login;
@@ -11,6 +13,7 @@ public class UserDTO {
     private String name;
     private String surname;
     private String patronymic;
+    private Date birthday;
     private String phone;
 
     private UserRoleDTO role;
@@ -104,6 +107,14 @@ public class UserDTO {
 
     public void setRole(UserRoleDTO role) {
         this.role = role;
+    }
+
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
     }
 
     public TeamPlayerDTO getPlayer() {

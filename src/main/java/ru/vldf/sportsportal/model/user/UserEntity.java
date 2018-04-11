@@ -5,6 +5,7 @@ import ru.vldf.sportsportal.model.tourney.TeamEntity;
 import ru.vldf.sportsportal.model.tourney.TeamPlayerEntity;
 
 import javax.persistence.*;
+import java.sql.Date;
 import java.util.Collection;
 
 @Entity
@@ -17,6 +18,7 @@ public class UserEntity {
     private String name;
     private String surname;
     private String patronymic;
+    private Date birthday;
     private String phone;
 
     private UserRoleEntity role;
@@ -116,6 +118,16 @@ public class UserEntity {
 
     public void setPatronymic(String patronomic) {
         this.patronymic = patronomic;
+    }
+
+    @Basic
+    @Column(name = "Birthday", nullable = false)
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
     }
 
     @Basic
