@@ -91,9 +91,14 @@
                                 <p>ПРИГЛАШЕНА</p>
                             </a>
                         </td>
+                        <td th:if="*{team.status.code == 'TEAM_AWAITING'}" class="info">
+                            <a th:href="*{'/xxx' + team.id}">
+                                <p>ОЖИДАЕТ ПОДТВЕРЖДЕНИЯ</p>
+                            </a>
+                        </td>
                         <td th:if="*{team.status.code == 'TEAM_INVOLVED'}" class="info">
                             <a th:href="*{'/xxx' + team.id}">
-                                <p>УЧАСТВУЕТ</p>
+                                <p>ГОТОВА</p>
                             </a>
                         </td>
                     </tr>

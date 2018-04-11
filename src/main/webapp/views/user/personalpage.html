@@ -55,7 +55,7 @@
     <div class="container">
         <ul class="list-inline">
             <li th:if="${(authUser.role.code == 'ROLE_ADMIN')}"><a th:href="@{/pp/admin}">Администрирование</a></li>
-            <li th:if="${(authUser.role.code == 'ROLE_ADMIN') || (authUser.role.code == 'ROLE_USER')}"><a th:href="@{/pp/tourney}">Турниры</a></li>
+            <li th:if="${(authUser.role.code == 'ROLE_ADMIN') || (authUser.role.code == 'ROLE_USER')}"><a th:href="@{/pp/tourney}">Мои турниры</a></li>
         </ul>
     </div>
 </nav>

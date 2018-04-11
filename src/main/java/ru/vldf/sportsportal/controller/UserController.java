@@ -200,9 +200,17 @@ public class UserController {
         switch (status) {
             case 1: return "user/tourney/page-team-status-unconfirmed"; //TEAM_UNCONFIRMED
             case 3: return "user/tourney/page-team-status-rejected"; //TEAM_REJECTED
-            case 4: return "user/tourney/page-team-status-invited"; //TEAM_INVITE
+            case 4: return "redirect:/pp/tourney/team{id}/composition"; //TEAM_INVITE
             default: return "redirect:/xxx" + id;
         }
+    }
+
+    @GetMapping(value = {"/pp/tourney/team{id}/composition"})
+    public String toInvitedTeamPage(@PathVariable("id") int id, ModelMap map) {
+        TeamDTO teamDTO = userService.getTeam(id);
+        map.addAttribute("teamDTO", teamDTO);
+
+        return "user/tourney/page-team-status-invited";
     }
 
     @GetMapping(value = {"/pp/tourney/create-team"})

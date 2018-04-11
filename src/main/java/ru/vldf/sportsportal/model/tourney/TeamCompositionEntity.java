@@ -14,6 +14,7 @@ public class TeamCompositionEntity {
 
     private TeamEntity team;
     private TourneyEntity tourney;
+    private TeamCompositionStatusEntity status;
 
     private Collection<TeamPlayerEntity> players;
 
@@ -21,13 +22,14 @@ public class TeamCompositionEntity {
 
     }
 
-    public TeamCompositionEntity(TeamCompositionDTO teamComposition, TeamEntity team, TourneyEntity tourney) {
+    public TeamCompositionEntity(TeamCompositionDTO teamComposition, TeamEntity team, TourneyEntity tourney, TeamCompositionStatusEntity status) {
         id = teamComposition.getId();
         teamName = teamComposition.getTeamName();
         shiftBalance = teamComposition.getShiftBalance();
 
         this.team = team;
         this.tourney = tourney;
+        this.status = status;
     }
 
     @Id
@@ -82,6 +84,16 @@ public class TeamCompositionEntity {
 
     public void setTourney(TourneyEntity tourney) {
         this.tourney = tourney;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "Status_ID", referencedColumnName = "ID", nullable = false)
+    public TeamCompositionStatusEntity getStatus() {
+        return status;
+    }
+
+    public void setStatus(TeamCompositionStatusEntity status) {
+        this.status = status;
     }
 
 //    ==================================================================================

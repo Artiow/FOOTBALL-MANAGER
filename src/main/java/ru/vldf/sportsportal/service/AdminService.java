@@ -6,10 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.vldf.sportsportal.dao.generic.definite.tourney.*;
 import ru.vldf.sportsportal.dao.generic.definite.user.UserRoleDAO;
 import ru.vldf.sportsportal.dao.generic.definite.user.UserDAO;
-import ru.vldf.sportsportal.dto.tourney.TeamCompositionDTO;
-import ru.vldf.sportsportal.dto.tourney.TeamDTO;
-import ru.vldf.sportsportal.dto.tourney.TeamPlayerDTO;
-import ru.vldf.sportsportal.dto.tourney.TourneyDTO;
+import ru.vldf.sportsportal.dto.tourney.*;
 import ru.vldf.sportsportal.dto.user.UserDTO;
 import ru.vldf.sportsportal.model.tourney.*;
 import ru.vldf.sportsportal.model.user.UserEntity;
@@ -110,6 +107,7 @@ public class AdminService {
     private TeamDAO teamDAO;
     private TeamStatusDAO teamStatusDAO;
     private TeamCompositionDAO teamCompositionDAO;
+    private TeamCompositionStatusDAO teamCompositionStatusDAO;
 
     private TourneyDAO tourneyDAO;
     private TourneyStatusDAO tourneyStatusDAO;
@@ -127,6 +125,11 @@ public class AdminService {
     @Autowired
     public void setTeamCompositionDAO(TeamCompositionDAO teamCompositionDAO) {
         this.teamCompositionDAO = teamCompositionDAO;
+    }
+
+    @Autowired
+    public void setTeamCompositionStatusDAO(TeamCompositionStatusDAO teamCompositionStatusDAO) {
+        this.teamCompositionStatusDAO = teamCompositionStatusDAO;
     }
 
     @Autowired
@@ -231,17 +234,22 @@ public class AdminService {
     @Transactional
     public void inviteTeams(Integer tourneyID, List<Integer> teamsID) {
         //TODO: upgrade and optimize this!
+        TourneyEntity tourney = tourneyDAO.findByID(tourneyID);
 
         String TEAM_INVITE_CODE = "TEAM_INVITED";
-        TourneyEntity tourney = tourneyDAO.findByID(tourneyID);
+        String COMPOSITION_RECRUITING_CODE = "COMPOSITION_RECRUITING";
+
+        TeamStatusEntity teamStatus = teamStatusDAO.findByCode(TEAM_INVITE_CODE);
+        TeamCompositionStatusEntity compositionStatus = teamCompositionStatusDAO.findByCode(COMPOSITION_RECRUITING_CODE);
+
         for (Integer teamID: teamsID) {
             TeamEntity team = teamDAO.findByID(teamID);
 
             TeamCompositionDTO compositionDTO = new TeamCompositionDTO();
             compositionDTO.setTeamName(team.getName());
 
-            teamCompositionDAO.save(new TeamCompositionEntity(compositionDTO, team, tourney));
-            teamDAO.updateStatusByID(teamID, teamStatusDAO.findByCode(TEAM_INVITE_CODE));
+            teamCompositionDAO.save(new TeamCompositionEntity(compositionDTO, team, tourney, compositionStatus));
+            teamDAO.updateStatusByID(teamID, teamStatus);
         }
     }
 }

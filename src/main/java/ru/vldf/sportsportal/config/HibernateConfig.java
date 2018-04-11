@@ -47,6 +47,8 @@ public class HibernateConfig {
         String URL = "jdbc:mysql://localhost:3306/sportsportal?"
                 + "autoReconnect=true&"
                 + "autoReconnectForPools=true&"
+                + "useUnicode=true&"
+                + "characterEncoding=utf8&"
                 + "useJDBCCompliantTimezoneShift=true&"
                 + "useLegacyDatetimeCode=false&"
                 + "serverTimezone=Europe/Moscow";
