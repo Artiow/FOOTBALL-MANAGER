@@ -16,7 +16,7 @@ public class TeamCompositionEntity {
     private TourneyEntity tourney;
     private TeamCompositionStatusEntity status;
 
-    private Collection<TeamPlayerEntity> players;
+    private Collection<TeamCompositionMembershipEntity> memberships;
 
     public TeamCompositionEntity() {
 
@@ -64,6 +64,18 @@ public class TeamCompositionEntity {
     }
 
 //    ==================================================================================
+//    === ONE-TO-MANY REFERENCES
+
+    @OneToMany(mappedBy = "composition")
+    public Collection<TeamCompositionMembershipEntity> getMemberships() {
+        return memberships;
+    }
+
+    public void setMemberships(Collection<TeamCompositionMembershipEntity> memberships) {
+        this.memberships = memberships;
+    }
+
+//    ==================================================================================
 //    === MANY-TO-ONE REFERENCES
 
     @ManyToOne
@@ -94,23 +106,6 @@ public class TeamCompositionEntity {
 
     public void setStatus(TeamCompositionStatusEntity status) {
         this.status = status;
-    }
-
-//    ==================================================================================
-//    === MANY-TO-MANY REFERENCES
-
-    @ManyToMany
-    @JoinTable(
-            name = "TeamMembership",
-            joinColumns = @JoinColumn(name = "TeamComposition_ID"),
-            inverseJoinColumns = @JoinColumn(name = "TeamPlayer_ID")
-    )
-    public Collection<TeamPlayerEntity> getPlayers() {
-        return players;
-    }
-
-    public void setPlayers(Collection<TeamPlayerEntity> players) {
-        this.players = players;
     }
 
 //    ==================================================================================

@@ -16,6 +16,10 @@ public interface TeamCompositionDAO {
 
     TeamCompositionEntity findByID(Integer id);
 
+    List<TeamCompositionEntity> findByTeam(Integer teamID);
+
+    List<TeamCompositionEntity> findByTeam(TeamEntity team);
+
     List<TeamCompositionEntity> findByTourney(Integer tourneyID);
 
     List<TeamCompositionEntity> findByTourney(TourneyEntity tourney);

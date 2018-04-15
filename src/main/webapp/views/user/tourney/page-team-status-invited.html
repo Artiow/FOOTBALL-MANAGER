@@ -71,18 +71,63 @@
     </div>
     <div class="container" th:if="${teamDTO != null}">
         <div class="row">
-            <div class="col-md-6 col-md-offset-3">
+            <div class="col-md-10 col-md-offset-1">
                 <h3 th:text="${teamDTO.name}">TEAM NAME</h3>
                 <h4 style="padding: 5px" class="alert-success">ПРИГЛАШЕНИЕ В ТУРНИР</h4>
                 <h4 style="padding: 5px" class="alert-warning">СОБЕРИТЕ СОСТАВ</h4>
+                <!--<a class="btn btn-success" th:if="${currentSize != 0}">Подтвердить</a>-->
             </div>
         </div>
         <div style="margin-top: 10px" class="row">
-            <div class="col-md-4 col-md-offset-2">
-                <h4>Текущий состав:</h4>
+            <div class="col-md-4 col-md-offset-1">
+                <h4 th:text="${'Текущий состав (' + currentSize + '/' + maxSize + '):'}">Текущий состав: NULL</h4>
+                <p th:if="${currentPlayerDTOList == null}">Пусто</p>
+                <table class="table table-hover" th:unless="${currentPlayerDTOList == null}">
+                    <tr th:each="playerDTO: ${currentPlayerDTOList}" th:object="${playerDTO}">
+                        <td>
+                            <p style="margin: 0; font-weight: bold" th:text="*{surname + ' ' + name}">SURNAME NAME</p>
+                            <p style="margin: 0; font-weight: bold" th:text="*{patronymic}">PATRONYMIC</p>
+                            <p style="margin: 0" th:text="*{birthday}">BIRTHDAY</p>
+                        </td>
+                        <td>
+                            <a th:href="${'/pp/tourney/team' + teamDTO.id + '/composition/player' + playerDTO.id + '/delete'}" style="margin-top: 12px" class="btn btn-danger">Удалить</a>
+                        </td>
+                    </tr>
+                </table>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-2" th:if="${!full}">
                 <h4>Поиск:</h4>
+                <form role="form" th:action="${'/pp/tourney/team' + teamDTO.id + '/composition/player/found'}" th:object="${playerDTO}" method="post">
+                    <div style="margin-bottom: 8px">
+                        <label class="login-label" for="input-name"><i class="fa fa-user" aria-hidden="true"></i> Имя</label>
+                        <input class="form-control" id="input-name" type="text" th:field="*{name}" placeholder="name" required="required" autofocus="autofocus"/>
+                    </div>
+                    <div style="margin-bottom: 8px">
+                        <label class="login-label" for="input-surname"><i class="fa fa-user" aria-hidden="true"></i> Фамилия</label>
+                        <input class="form-control" id="input-surname" type="text" th:field="*{surname}" placeholder="surname" required="required"/>
+                    </div>
+                    <div style="margin-bottom: 18px">
+                        <label class="login-label" for="input-patronymic"><i class="fa fa-user" aria-hidden="true"></i> Отчество</label>
+                        <input class="form-control" id="input-patronymic" type="text" th:field="*{patronymic}" placeholder="patronymic"/>
+                    </div>
+                    <button type="submit" class="btn btn-default">Найти</button>
+                </form>
+            </div>
+            <div class="col-md-4"  th:if="${!full}">
+                <h4>Найдено:</h4>
+                <p th:if="${foundedPlayerDTOList == null}">Пусто</p>
+                <table class="table table-hover" th:unless="${foundedPlayerDTOList == null}">
+                    <tr th:each="playerDTO: ${foundedPlayerDTOList}" th:object="${playerDTO}">
+                        <td>
+                            <p style="margin: 0; font-weight: bold" th:text="*{surname + ' ' + name}">SURNAME NAME</p>
+                            <p style="margin: 0; font-weight: bold" th:text="*{patronymic}">PATRONYMIC</p>
+                            <p style="margin: 0" th:text="*{birthday}">BIRTHDAY</p>
+                        </td>
+                        <td>
+                            <a th:href="${'/pp/tourney/team' + teamDTO.id + '/composition/player' + playerDTO.id + '/add'}" style="margin-top: 12px" class="btn btn-success">Добавить</a>
+                        </td>
+                    </tr>
+                </table>
             </div>
         </div>
     </div>

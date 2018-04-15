@@ -28,6 +28,26 @@ public class TeamCompositionDAOImpl extends AbstractDAOImpl<TeamCompositionEntit
         return super.get(id);
     }
 
+    public List<TeamCompositionEntity> findByTeam(Integer teamID) {
+        List compositions = getSession()
+                .createQuery("from TeamCompositionEntity as eTeamComposition where eTeamComposition.team.id=?")
+                .setParameter(0, teamID)
+                .list();
+
+        if ((compositions != null) && (compositions.size() > 0)) return (List<TeamCompositionEntity>) compositions;
+        else return null;
+    }
+
+    public List<TeamCompositionEntity> findByTeam(TeamEntity team) {
+        List compositions = getSession()
+                .createQuery("from TeamCompositionEntity as eTeamComposition where eTeamComposition.team=?")
+                .setParameter(0, team)
+                .list();
+
+        if ((compositions != null) && (compositions.size() > 0)) return (List<TeamCompositionEntity>) compositions;
+        else return null;
+    }
+
     public List<TeamCompositionEntity> findByTourney(Integer tourneyID) {
         List compositions = getSession()
                 .createQuery("from TeamCompositionEntity as eTeamComposition where eTeamComposition.tourney.id=?")

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import ru.vldf.sportsportal.dao.generic.definite.tourney.TeamPlayerDAO;
 import ru.vldf.sportsportal.dto.tourney.TeamCompositionDTO;
 import ru.vldf.sportsportal.dto.tourney.TeamDTO;
 import ru.vldf.sportsportal.dto.tourney.TeamPlayerDTO;
@@ -206,7 +207,7 @@ public class UserController {
 
         map.addAttribute("teamDTO", teamDTO);
 
-        int status = teamDTO.getStatus().getId();
+        int status = teamDTO.getStatus().getId(); //TODO: ???
         switch (status) {
             case 1: return "user/tourney/page-team-status-unconfirmed"; //TEAM_UNCONFIRMED
             case 3: return "user/tourney/page-team-status-rejected";    //TEAM_REJECTED
@@ -222,15 +223,65 @@ public class UserController {
         TeamDTO teamDTO = userTourneyService.getTeam(id);
         if (teamDTO == null) return "redirect:/xxx" + id; //not user's team
 
-        TeamCompositionDTO compositionDTO = userTourneyService
-                .getRecruitingCompositions(id).get(0); //TODO: remove .get(0)
+        Integer compositionID = userTourneyService
+                .getRecruitingCompositions(id).get(0).getId(); //TODO: remove .get(0)
+
+        List<TeamPlayerDTO> playerDTOList = userTourneyService
+                .getPlayers(compositionID);
+
+        Integer maxSize = 18;
+        Integer currentSize;
+        if (playerDTOList != null) currentSize = playerDTOList.size();
+        else currentSize = 0;
 
         map
                 .addAttribute("teamDTO", teamDTO)
-                .addAttribute("compositionDTO", compositionDTO);
+                .addAttribute("playerDTO", new TeamPlayerDTO())
+                .addAttribute("currentPlayerDTOList", playerDTOList)
+                .addAttribute("maxSize", maxSize)
+                .addAttribute("currentSize", currentSize)
+                .addAttribute("full", !(currentSize < maxSize));
 
         return "user/tourney/page-team-status-invited";
     }
+
+    @PostMapping(value = {"/pp/tourney/team{id}/composition/player/found"})
+    public String foundTeamPlayer(
+            @PathVariable("id") int teamID, ModelMap map,
+            @ModelAttribute(value = "playerDTO") TeamPlayerDTO playerDTO
+    ) {
+
+        map.addAttribute("foundedPlayerDTOList", userTourneyService.getPlayers(
+                playerDTO.getName(),
+                playerDTO.getSurname(),
+                playerDTO.getPatronymic()
+        ));
+
+        return toInvitedTeamPage(teamID, map); //redirect:/pp/tourney/team{id}/composition
+    }
+
+    @GetMapping(value = {"/pp/tourney/team{teamID}/composition/player{playerID}/add"})
+    public String addTeamPlayer(@PathVariable("teamID") int teamID, @PathVariable("playerID") int playerID) {
+        Integer compositionID = userTourneyService
+                .getRecruitingCompositions(teamID).get(0).getId(); //TODO: remove .get(0)
+
+        userTourneyService.addPlayerToComposition(compositionID, playerID);
+        return "redirect:/pp/tourney/team" + teamID + "/composition";
+    }
+
+    @GetMapping(value = {"/pp/tourney/team{teamID}/composition/player{playerID}/delete"})
+    public String deleteTeamPlayer(@PathVariable("teamID") int teamID, @PathVariable("playerID") int playerID) {
+        Integer compositionID = userTourneyService
+                .getRecruitingCompositions(teamID).get(0).getId(); //TODO: remove .get(0)
+
+        userTourneyService.deletePlayerFromComposition(compositionID, playerID);
+        return "redirect:/pp/tourney/team" + teamID + "/composition";
+    }
+
+//    @GetMapping(value = {"/pp/tourney/team{id}/composition/confirm"})
+//    public String confirmComposition() {
+//        return null;
+//    }
 
     @GetMapping(value = {"/pp/tourney/create-team"})
     public String toCreateTeamForm(ModelMap map) {

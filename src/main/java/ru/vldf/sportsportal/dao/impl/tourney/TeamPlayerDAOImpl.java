@@ -3,6 +3,7 @@ package ru.vldf.sportsportal.dao.impl.tourney;
 import org.springframework.stereotype.Repository;
 import ru.vldf.sportsportal.dao.generic.abstrct.AbstractDAOImpl;
 import ru.vldf.sportsportal.dao.generic.definite.tourney.TeamPlayerDAO;
+import ru.vldf.sportsportal.model.tourney.TeamCompositionEntity;
 import ru.vldf.sportsportal.model.tourney.TeamPlayerEntity;
 
 import java.util.List;
@@ -37,13 +38,26 @@ public class TeamPlayerDAOImpl extends AbstractDAOImpl<TeamPlayerEntity, Integer
         else return null;
     }
 
+    public List<TeamPlayerEntity> findByTeamComposition(Integer compositionID) {
+        List players = getSession()
+                .createQuery("select ePlayer from TeamPlayerEntity as ePlayer"
+                        + " join ePlayer.memberships as eMembership"
+                        + " join eMembership.composition as eComposition"
+                        + " with eComposition.id=?")
+                .setParameter(0, compositionID)
+                .list();
+
+        if ((players != null) && (players.size() > 0)) return (List<TeamPlayerEntity>) players;
+        else return null;
+    }
+
 //    ==================================================================================
 //    === DELETE
 
     public void deleteByID(Integer id) {
         getSession()
                 .createQuery("delete TeamPlayerEntity where id=?")
-                .setParameter(0,id)
+                .setParameter(0, id)
                 .executeUpdate();
     }
 }

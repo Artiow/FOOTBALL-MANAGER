@@ -9,6 +9,7 @@ public class TeamCompositionDTO {
 
     private TeamDTO team;
     private TourneyDTO tourney;
+    private TeamCompositionStatusDTO status;
 
     public TeamCompositionDTO() {
 
@@ -21,6 +22,7 @@ public class TeamCompositionDTO {
 
         if (teamComposition.getTeam() != null) team = new TeamDTO(teamComposition.getTeam());
         if (teamComposition.getTourney() != null) tourney = new TourneyDTO(teamComposition.getTourney());
+        if (teamComposition.getStatus() != null) status = new TeamCompositionStatusDTO(teamComposition.getStatus());
     }
 
     public Integer getId() {
@@ -61,5 +63,13 @@ public class TeamCompositionDTO {
 
     public void setTourney(TourneyDTO tourney) {
         this.tourney = tourney;
+    }
+
+    public TeamCompositionStatusDTO getStatus() {
+        return status;
+    }
+
+    public void setStatus(TeamCompositionStatusDTO status) {
+        this.status = status;
     }
 }

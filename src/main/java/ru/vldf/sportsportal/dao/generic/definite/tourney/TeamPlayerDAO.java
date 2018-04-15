@@ -14,6 +14,8 @@ public interface TeamPlayerDAO {
 
     List<TeamPlayerEntity> findByFullName(String name, String surname, String patronymic);
 
+    List<TeamPlayerEntity> findByTeamComposition(Integer compositionID);
+
 //    ==================================================================================
 //    === DELETE
 
