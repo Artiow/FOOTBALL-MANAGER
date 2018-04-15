@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.util.Collection;
 
 @Entity
-@Table(name = "UserRole", schema = "sportsportal")
+@Table(name = "UserRole", schema = "public", catalog = "sportsportal")
 public class UserRoleEntity {
     private Integer id;
     private String code;

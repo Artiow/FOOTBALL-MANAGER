@@ -9,7 +9,7 @@ import java.sql.Date;
 import java.util.Collection;
 
 @Entity
-@Table(name = "User", schema = "sportsportal")
+@Table(name = "User", schema = "public", catalog = "sportsportal")
 public class UserEntity {
     private Integer id;
     private String login;

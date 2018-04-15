@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.util.Collection;
 
 @Entity
-@Table(name = "TourneyStatus", schema = "sportsportal")
+@Table(name = "TourneyStatus", schema = "public", catalog = "sportsportal")
 public class TourneyStatusEntity {
     private Integer id;
     private String code;

@@ -3,7 +3,7 @@ package ru.vldf.sportsportal.model.tourney;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "teamcompositionmembership", schema = "sportsportal")
+@Table(name = "teamcompositionmembership", schema = "public", catalog = "sportsportal")
 public class TeamCompositionMembershipEntity {
     private Integer id;
 

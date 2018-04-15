@@ -8,7 +8,7 @@ import java.sql.Date;
 import java.util.Collection;
 
 @Entity
-@Table(name = "TeamPlayer", schema = "sportsportal")
+@Table(name = "TeamPlayer", schema = "public", catalog = "sportsportal")
 public class TeamPlayerEntity {
     private Integer id;
     private String name;

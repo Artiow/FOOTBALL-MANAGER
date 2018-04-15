@@ -3,9 +3,10 @@ package ru.vldf.sportsportal.config;
 import org.hibernate.SessionFactory;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.orm.hibernate5.HibernateExceptionTranslator;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
@@ -15,26 +16,24 @@ import java.util.Properties;
 
 @Configuration
 @EnableTransactionManagement
+@PropertySource("classpath:hibernate.properties")
 public class HibernateConfig {
 
-    @Value("${hibernate-property.show_sql}")
-    private String SHOW_SQL;
-    @Value("${hibernate-property.hibernate.dialect}")
-    private String HIBERNATE_DIALECT;
+    private Environment env;
 
-    @Value("${hibernate-property.hibernate.connection.useUnicode}")
-    private String HIBERNATE_USE_UNICODE;
-    @Value("${hibernate-property.hibernate.connection.characterEncoding}")
-    private String HIBERNATE_CHARACTER_ENCODING;
+    @Autowired
+    public void setEnvironment(Environment env) {
+        this.env = env;
+    }
 
     private Properties getHibernateProperties() {
         return new Properties() {
             {
-                setProperty("show_sql", SHOW_SQL);
-                setProperty("hibernate.dialect", HIBERNATE_DIALECT);
+                setProperty("show_sql", "false");
 
-                setProperty("hibernate.connection.useUnicode", HIBERNATE_USE_UNICODE);
-                setProperty("hibernate.connection.characterEncoding", HIBERNATE_CHARACTER_ENCODING);
+                setProperty("hibernate.dialect", env.getProperty("hibernate.dialect"));
+                setProperty("hibernate.connection.useUnicode", env.getProperty("hibernate.connection.useUnicode"));
+                setProperty("hibernate.connection.characterEncoding", env.getProperty("hibernate.connection.characterEncoding"));
             }
         };
     }
@@ -42,20 +41,11 @@ public class HibernateConfig {
     @Bean(name = "dataSource")
     public BasicDataSource getDataSource() {
         BasicDataSource dataSource = new BasicDataSource();
-        dataSource.setDriverClassName("com.mysql.jdbc.Driver");
+        dataSource.setDriverClassName(env.getProperty("db.driver"));
 
-        String URL = "jdbc:mysql://localhost:3306/sportsportal?"
-                + "autoReconnect=true&"
-                + "autoReconnectForPools=true&"
-                + "useUnicode=true&"
-                + "characterEncoding=utf8&"
-                + "useJDBCCompliantTimezoneShift=true&"
-                + "useLegacyDatetimeCode=false&"
-                + "serverTimezone=Europe/Moscow";
-
-        dataSource.setUrl(URL);
-        dataSource.setUsername("root");
-        dataSource.setPassword("root");
+        dataSource.setUrl(env.getProperty("db.url"));
+        dataSource.setUsername(env.getProperty("db.username"));
+        dataSource.setPassword(env.getProperty("db.password"));
         return dataSource;
     }
 
@@ -63,9 +53,9 @@ public class HibernateConfig {
     public LocalSessionFactoryBean getSessionFactory() {
         LocalSessionFactoryBean sessionFactoryBean = new LocalSessionFactoryBean();
         sessionFactoryBean.setPackagesToScan("ru.vldf.sportsportal.model");
-        sessionFactoryBean.setHibernateProperties(getHibernateProperties());
-        sessionFactoryBean.setDataSource(getDataSource());
 
+        sessionFactoryBean.setDataSource(getDataSource());
+        sessionFactoryBean.setHibernateProperties(getHibernateProperties());
         return sessionFactoryBean;
     }
 
