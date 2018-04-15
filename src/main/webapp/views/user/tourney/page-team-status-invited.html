@@ -75,7 +75,7 @@
                 <h3 th:text="${teamDTO.name}">TEAM NAME</h3>
                 <h4 style="padding: 5px" class="alert-success">ПРИГЛАШЕНИЕ В ТУРНИР</h4>
                 <h4 style="padding: 5px" class="alert-warning">СОБЕРИТЕ СОСТАВ</h4>
-                <!--<a class="btn btn-success" th:if="${currentSize != 0}">Подтвердить</a>-->
+                <a th:href="${'/pp/tourney/team' + teamDTO.id + '/composition/confirm'}" class="btn btn-success" th:if="${currentSize != 0}">Подтвердить</a>
             </div>
         </div>
         <div style="margin-top: 10px" class="row">

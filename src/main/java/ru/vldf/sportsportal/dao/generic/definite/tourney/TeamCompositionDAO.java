@@ -27,6 +27,11 @@ public interface TeamCompositionDAO {
     List<TeamCompositionEntity> findAll();
 
 //    ==================================================================================
+//    === UPDATE
+
+    Integer updateStatusByID(Integer id, TeamCompositionStatusEntity status);
+
+//    ==================================================================================
 //    === SPECIAL
 
     List<TeamCompositionEntity> findByTeamAndStatus(Integer teamID, Integer statusID);

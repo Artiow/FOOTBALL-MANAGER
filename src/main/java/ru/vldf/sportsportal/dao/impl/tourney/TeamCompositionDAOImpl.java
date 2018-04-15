@@ -73,6 +73,17 @@ public class TeamCompositionDAOImpl extends AbstractDAOImpl<TeamCompositionEntit
     }
 
 //    ==================================================================================
+//    === UPDATE
+
+    public Integer updateStatusByID(Integer id, TeamCompositionStatusEntity status) {
+        return getSession()
+                .createQuery("update TeamCompositionEntity set status=? where id=?")
+                .setParameter(0, status)
+                .setParameter(1, id)
+                .executeUpdate();
+    }
+
+//    ==================================================================================
 //    === SPECIAL
 
     public List<TeamCompositionEntity> findByTeamAndStatus(Integer teamID, Integer statusID) {

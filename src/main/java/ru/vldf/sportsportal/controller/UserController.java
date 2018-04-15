@@ -223,8 +223,10 @@ public class UserController {
         TeamDTO teamDTO = userTourneyService.getTeam(id);
         if (teamDTO == null) return "redirect:/xxx" + id; //not user's team
 
-        Integer compositionID = userTourneyService
-                .getRecruitingCompositions(id).get(0).getId(); //TODO: remove .get(0)
+        List<TeamCompositionDTO> list = userTourneyService.getRecruitingCompositions(id);
+        if (list == null) return "redirect:/xxx" + id; //TODO: WORKAROUND!!!
+
+        Integer compositionID = list.get(0).getId(); //TODO: remove .get(0)
 
         List<TeamPlayerDTO> playerDTOList = userTourneyService
                 .getPlayers(compositionID);
@@ -278,10 +280,14 @@ public class UserController {
         return "redirect:/pp/tourney/team" + teamID + "/composition";
     }
 
-//    @GetMapping(value = {"/pp/tourney/team{id}/composition/confirm"})
-//    public String confirmComposition() {
-//        return null;
-//    }
+    @GetMapping(value = {"/pp/tourney/team{teamID}/composition/confirm"})
+    public String confirmComposition(@PathVariable("teamID") int teamID) {
+        Integer compositionID = userTourneyService
+                .getRecruitingCompositions(teamID).get(0).getId(); //TODO: remove .get(0)
+
+        userTourneyService.confirmComposition(compositionID);
+        return "redirect:/pp/tourney";
+    }
 
     @GetMapping(value = {"/pp/tourney/create-team"})
     public String toCreateTeamForm(ModelMap map) {

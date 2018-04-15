@@ -163,5 +163,14 @@ public class UserService {
         public void deletePlayerFromComposition(Integer compositionID, Integer playerID) {
             teamCompositionMembershipDAO.deleteByMembership(playerID, compositionID);
         }
+
+        @Transactional
+        public void confirmComposition(Integer compositionID) {
+            String COMPOSITION_UNCONFIRMED_CODE = "COMPOSITION_UNCONFIRMED";
+            teamCompositionDAO.updateStatusByID(
+                    compositionID,
+                    teamCompositionStatusDAO.findByCode(COMPOSITION_UNCONFIRMED_CODE)
+            );
+        }
     }
 }
