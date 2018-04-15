@@ -2,6 +2,6 @@ $ cat .gitignore
 
 SPORTSPORTAL.iml
 /src/main/webapp/libs
-/src/main/resources/hibernate.properties
+/src/main/resources
 /target
 /.idea
