@@ -44,7 +44,11 @@ public class UserController {
     }
 
     @GetMapping(value = {"/personalpage"})
-    public String toPersonalPage() {
+    public String toPersonalPage(ModelMap map) {
+
+//        TODO: tmp solution!
+        map.addAttribute("teamList", userTourneyService.getTeamList());
+
         return "user/personalpage";
     }
 

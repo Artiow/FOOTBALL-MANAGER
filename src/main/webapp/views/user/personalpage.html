@@ -60,7 +60,7 @@
     </div>
 </nav>
 
-<main class="main-ppage" style="min-height: 600px">
+<main class="main-ppage">
     <div class="alert-danger" th:if="${(authUser.role.code == 'ROLE_REJECTED')}">
         <div class="container">
             <div class="row">
@@ -91,6 +91,65 @@
                 <h3 th:text="*{patronymic}">PATRONYMIC</h3>
                 <p th:text="*{email}">email@mail.com</p>
                 <p th:text="*{login}">login</p>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!--TODO: tmp solution!-->
+<main style="min-height: 400px" class="main-tourneypage pic-href" th:if="${(authUser.role.code == 'ROLE_REJECTED') || (authUser.role.code == 'ROLE_UNCONFIRMED')}"></main>
+<main style="min-height: 400px" class="main-tourneypage pic-href" th:unless="${(authUser.role.code == 'ROLE_REJECTED') || (authUser.role.code == 'ROLE_UNCONFIRMED')}">
+    <div class="container">
+        <div class="row" th:if="${teamList != null}">
+            <div style="padding: 10px 0 10px 0" class="col-md-6 col-md-offset-3">
+                <h3>Мои турнирные команды:</h3>
+                <table class="table table-hover">
+                    <tr th:each="teamItem: ${teamList}" th:object="${teamItem}">
+                        <td>
+                            <a class="pic-href" th:href="*{'/pp/tourney/team' + id}">
+                                <!--TODO: pic here!-->
+                                <div style="width: 40px; height: 40px; background: grey"></div>
+                            </a>
+                        </td>
+                        <td>
+                            <a th:href="*{'/pp/tourney/team' + id}">
+                                <p th:text="*{name}">NAME</p>
+                            </a>
+                        </td>
+                        <td th:if="*{status.code == 'TEAM_UNCONFIRMED'}" class="warning">
+                            <a th:href="*{'/pp/tourney/team' + id}">
+                                <p>ОЖИДАЕТ ПОДТВЕРЖДЕНИЯ</p>
+                            </a>
+                        </td>
+                        <td th:if="*{status.code == 'TEAM_CONFIRMED'}">
+                            <a th:href="*{'/pp/tourney/team' + id}">
+                                <p></p>
+                            </a>
+                        </td>
+                        <td th:if="*{status.code == 'TEAM_REJECTED'}" class="danger">
+                            <a th:href="*{'/pp/tourney/team' + id}">
+                                <p>ЗАЯВКА ОТКЛОНЕНА</p>
+                            </a>
+                        </td>
+                        <td th:if="*{status.code == 'TEAM_INVITED'}" class="success">
+                            <a th:href="*{'/pp/tourney/team' + id}">
+                                <p>ПРИГЛАШЕНИЕ</p>
+                            </a>
+                        </td>
+                        <td th:if="*{status.code == 'TEAM_INVOLVED'}" class="info">
+                            <a th:href="*{'/pp/tourney/team' + id}">
+                                <p>В ТУРНИРЕ</p>
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+                <a th:href="@{/pp/tourney/create-team}" type="button" class="btn btn-default">Создать турнирную команду</a>
+            </div>
+        </div>
+        <div class="row" th:unless="${teamList != null}">
+            <div style="padding: 10px 0 10px 0" class="col-md-6 col-md-offset-3" th:unless="${teamList != null}">
+                <h3>Нет турнирных команд!</h3>
+                <a th:href="@{/pp/tourney/create-team}" type="button" class="btn btn-default">Создать турнирную команду</a>
             </div>
         </div>
     </div>
