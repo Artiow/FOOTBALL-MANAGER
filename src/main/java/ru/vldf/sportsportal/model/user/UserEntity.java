@@ -112,7 +112,7 @@ public class UserEntity {
     }
 
     @Basic
-    @Column(name = "Patronymic", length = 45)
+    @Column(name = "Patronymic", nullable = true, length = 45)
     public String getPatronymic() {
         return patronymic;
     }
@@ -132,7 +132,7 @@ public class UserEntity {
     }
 
     @Basic
-    @Column(name = "Phone", length = 10)
+    @Column(name = "Phone", nullable = false, length = 16)
     public String getPhone() {
         return phone;
     }
