@@ -35,8 +35,18 @@ public class AdviseController {
         return "404";
     }
 
+    @GetMapping(value = "/500")
+    public String to500() {
+        return "500";
+    }
+
     @ExceptionHandler(NoHandlerFoundException.class)
-    public String handle(NoHandlerFoundException ex) {
+    public String handle404(NoHandlerFoundException ex) {
         return "redirect:/404";
+    }
+
+    @ExceptionHandler(Exception.class)
+    public String handle500(Exception ex) {
+        return "redirect:/500";
     }
 }

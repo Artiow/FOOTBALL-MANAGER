@@ -44,7 +44,7 @@ header .logo h1 {
 }
 
 .login-form .login-button {
-    margin-top: 25px;
+    margin-top: 30px;
     margin-right: 5px;
 }
 .login-form .login-button:last-child {
@@ -58,6 +58,12 @@ header .logo h1 {
 }
 .login-form .login-link:hover {
     color: #f2f2f2;
+}
+
+.login-form h3 {
+    color: #fcfcfc;
+    font-weight: bold;
+    font-size: 24px;
 }
 
 .login-error {
