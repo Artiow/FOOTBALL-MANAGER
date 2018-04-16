@@ -38,6 +38,7 @@ public class UserEntity {
         name = user.getName();
         surname = user.getSurname();
         patronymic = user.getPatronymic();
+        if (user.getBirthday() != null) birthday = ((Date) user.getBirthday().clone()); else birthday = null;
         phone = user.getPhone();
 
         this.role = role;
