@@ -75,6 +75,7 @@
                         <p th:text="*{login}">LOGIN</p>
                         <p th:text="*{email}">EMAIL</p>
                         <p th:text="*{phone}">PHONE</p>
+                        <p th:text="*{birthday.toString()}">BIRTHDAY</p>
                     </div>
                 </div>
                 <a style="margin-right: 10px" class="btn btn-default" th:href="*{'/pp/admin/check-user/user' + id + '/confirm'}">Подтвердить</a>
