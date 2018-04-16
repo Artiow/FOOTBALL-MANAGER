@@ -15,7 +15,7 @@ public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServlet
     }
 
     protected Class<?>[] getServletConfigClasses() {
-        return null;
+        return new Class[] {WebAppConfig.class};
     }
 
     protected String[] getServletMappings() {
