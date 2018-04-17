@@ -1,7 +1,7 @@
-package ru.vldf.sportsportal.dto.user;
+package ru.vldf.sportsportal.dto.common;
 
 import ru.vldf.sportsportal.dto.tourney.TeamPlayerDTO;
-import ru.vldf.sportsportal.domain.user.UserEntity;
+import ru.vldf.sportsportal.domain.common.UserEntity;
 
 import java.sql.Date;
 

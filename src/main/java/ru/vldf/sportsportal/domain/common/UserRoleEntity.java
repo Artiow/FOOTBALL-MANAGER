@@ -1,12 +1,12 @@
-package ru.vldf.sportsportal.domain.user;
+package ru.vldf.sportsportal.domain.common;
 
-import ru.vldf.sportsportal.dto.user.UserRoleDTO;
+import ru.vldf.sportsportal.dto.common.UserRoleDTO;
 
 import javax.persistence.*;
 import java.util.Collection;
 
 @Entity
-@Table(name = "UserRole", schema = "public", catalog = "sportsportal")
+@Table(name = "user_role", schema = "common", catalog = "sportsportal")
 public class UserRoleEntity {
     private Integer id;
     private String code;
@@ -25,7 +25,7 @@ public class UserRoleEntity {
     }
 
     @Id
-    @Column(name = "ID", nullable = false)
+    @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer getId() {
         return id;
@@ -36,7 +36,7 @@ public class UserRoleEntity {
     }
 
     @Basic
-    @Column(name = "Code", nullable = false, length = 45)
+    @Column(name = "code", nullable = false, length = 45)
     public String getCode() {
         return code;
     }
@@ -46,7 +46,7 @@ public class UserRoleEntity {
     }
 
     @Basic
-    @Column(name = "Description", nullable = false, length = 90)
+    @Column(name = "description", nullable = true, length = 90)
     public String getDescription() {
         return description;
     }
@@ -70,7 +70,6 @@ public class UserRoleEntity {
 //    ==================================================================================
 //    === OBJECTS METHODS
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -78,16 +77,19 @@ public class UserRoleEntity {
 
         UserRoleEntity that = (UserRoleEntity) o;
 
-        return id.equals(that.id);
+        return id != null ? id.equals(that.id) : that.id == null;
     }
 
     @Override
     public int hashCode() {
-        return id.hashCode();
+        return id != null ? id.hashCode() : 0;
     }
 
     @Override
     public String toString() {
-        return code;
+        return "UserRoleEntity{" +
+                "id=" + id +
+                ", code='" + code + '\'' +
+                '}';
     }
 }

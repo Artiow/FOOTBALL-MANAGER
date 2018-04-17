@@ -1,6 +1,6 @@
 package ru.vldf.sportsportal.dto.tourney;
 
-import ru.vldf.sportsportal.dto.user.UserDTO;
+import ru.vldf.sportsportal.dto.common.UserDTO;
 import ru.vldf.sportsportal.domain.tourney.TeamEntity;
 
 public class TeamDTO {

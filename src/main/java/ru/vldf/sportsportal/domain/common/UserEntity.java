@@ -1,6 +1,6 @@
-package ru.vldf.sportsportal.domain.user;
+package ru.vldf.sportsportal.domain.common;
 
-import ru.vldf.sportsportal.dto.user.UserDTO;
+import ru.vldf.sportsportal.dto.common.UserDTO;
 import ru.vldf.sportsportal.domain.tourney.TeamEntity;
 import ru.vldf.sportsportal.domain.tourney.TeamPlayerEntity;
 

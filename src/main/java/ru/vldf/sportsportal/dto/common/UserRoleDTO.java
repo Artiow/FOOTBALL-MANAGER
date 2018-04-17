@@ -1,6 +1,6 @@
-package ru.vldf.sportsportal.dto.user;
+package ru.vldf.sportsportal.dto.common;
 
-import ru.vldf.sportsportal.domain.user.UserRoleEntity;
+import ru.vldf.sportsportal.domain.common.UserRoleEntity;
 
 public class UserRoleDTO {
     private Integer id;
@@ -39,5 +39,28 @@ public class UserRoleDTO {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        UserRoleDTO that = (UserRoleDTO) o;
+
+        return id != null ? id.equals(that.id) : that.id == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
+    }
+
+    @Override
+    public String toString() {
+        return "UserRoleDTO{" +
+                "id=" + id +
+                ", code='" + code + '\'' +
+                '}';
     }
 }

@@ -1,6 +1,6 @@
 package ru.vldf.sportsportal.dao.generic.definite.user;
 
-import ru.vldf.sportsportal.domain.user.UserRoleEntity;
+import ru.vldf.sportsportal.domain.common.UserRoleEntity;
 
 public interface UserRoleDAO {
 

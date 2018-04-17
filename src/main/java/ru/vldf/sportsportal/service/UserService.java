@@ -8,9 +8,9 @@ import ru.vldf.sportsportal.dao.generic.definite.user.UserDAO;
 import ru.vldf.sportsportal.dto.tourney.TeamCompositionDTO;
 import ru.vldf.sportsportal.dto.tourney.TeamDTO;
 import ru.vldf.sportsportal.dto.tourney.TeamPlayerDTO;
-import ru.vldf.sportsportal.dto.user.UserDTO;
+import ru.vldf.sportsportal.dto.common.UserDTO;
 import ru.vldf.sportsportal.domain.tourney.*;
-import ru.vldf.sportsportal.domain.user.UserEntity;
+import ru.vldf.sportsportal.domain.common.UserEntity;
 
 import java.util.ArrayList;
 import java.util.List;

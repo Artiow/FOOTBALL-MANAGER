@@ -1,8 +1,8 @@
 package ru.vldf.sportsportal.dao.generic.definite.user;
 
 import ru.vldf.sportsportal.domain.tourney.TeamPlayerEntity;
-import ru.vldf.sportsportal.domain.user.UserRoleEntity;
-import ru.vldf.sportsportal.domain.user.UserEntity;
+import ru.vldf.sportsportal.domain.common.UserRoleEntity;
+import ru.vldf.sportsportal.domain.common.UserEntity;
 
 import java.util.List;
 

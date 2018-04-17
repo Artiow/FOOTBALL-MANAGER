@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.servlet.NoHandlerFoundException;
-import ru.vldf.sportsportal.dto.user.UserDTO;
+import ru.vldf.sportsportal.dto.common.UserDTO;
 import ru.vldf.sportsportal.service.AuthService;
 
 @Controller

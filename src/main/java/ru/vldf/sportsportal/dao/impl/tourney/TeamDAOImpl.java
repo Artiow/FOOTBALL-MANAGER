@@ -6,7 +6,7 @@ import ru.vldf.sportsportal.dao.generic.definite.tourney.TeamDAO;
 import ru.vldf.sportsportal.domain.tourney.TeamEntity;
 import ru.vldf.sportsportal.domain.tourney.TeamStatusEntity;
 import ru.vldf.sportsportal.domain.tourney.TourneyEntity;
-import ru.vldf.sportsportal.domain.user.UserEntity;
+import ru.vldf.sportsportal.domain.common.UserEntity;
 
 import java.util.List;
 
