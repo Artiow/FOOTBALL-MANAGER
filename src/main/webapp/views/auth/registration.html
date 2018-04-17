@@ -65,22 +65,22 @@
                         </div>
                         <div class="form-group">
                             <label class="login-label" for="input-email"><i class="fa fa-envelope-o" aria-hidden="true"></i> Электронная почта</label>
-                            <input class="form-control" id="input-email" type="text" th:field="*{email}" placeholder="email" required="required"/>
+                            <input class="form-control" id="input-email" type="email" th:field="*{email}" placeholder="email" pattern="^[-\w.]+@([A-z0-9][-A-z0-9]+\.)+[A-z]{2,4}$" required="required"/>
                         </div>
                     </div>
                     <div class="col-xs-6">
                         <h3>Данные авторизации:</h3>
                         <div class="form-group">
-                            <label class="login-label" for="input-login"><i class="fa fa-key" aria-hidden="true"></i> Логин</label>
-                            <input class="form-control" id="input-login" type="text" th:field="*{login}" placeholder="login" required="required"/>
+                            <label class="login-label" for="input-login"><i class="fa fa-key" aria-hidden="true"></i> Логин<br/>(5-20 лат. символов, первая буква)</label>
+                            <input class="form-control" id="input-login" type="text" th:field="*{login}" placeholder="login" pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{4,20}$" required="required"/>
                         </div>
                         <div class="form-group">
-                            <label class="login-label" for="input-password"><i class="fa fa-lock" aria-hidden="true"></i> Пароль</label>
-                            <input class="form-control" id="input-password" type="password" th:field="*{password}" placeholder="password" required="required"/>
+                            <label class="login-label" for="input-password"><i class="fa fa-lock" aria-hidden="true"></i> Пароль<br/>(5-20 символов)</label>
+                            <input class="form-control" id="input-password" type="password" th:field="*{password}" placeholder="password" pattern=".{5,20}" required="required"/>
                         </div>
                         <div class="form-group">
                             <label class="login-label" for="input-password-confirm"><i class="fa fa-lock" aria-hidden="true"></i> Повторите пароль</label>
-                            <input class="form-control" id="input-password-confirm" type="password" placeholder="password" required="required"/>
+                            <input class="form-control" id="input-password-confirm" type="password" placeholder="password" pattern=".{5,20}" required="required"/>
                         </div>
                         <button type="submit" class="btn btn-default login-button">Зарегистрироваться</button>
                     </div>
