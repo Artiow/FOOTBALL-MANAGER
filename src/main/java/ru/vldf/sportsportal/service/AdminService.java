@@ -63,6 +63,7 @@ public class AdminService {
             return dtoList;
         }
 
+
         @Transactional(readOnly = true)
         public UserDTO getUser(Integer id) {
             return new UserDTO(userDAO.findByID(id));
@@ -71,12 +72,17 @@ public class AdminService {
         @Transactional(readOnly = true)
         public UserDTO getFirstUnconfirmedUser() {
             List<UserEntity> entityList = userDAO.findByRole(ROLE_UNCONFIRMED_CODE);
-            return new UserDTO(entityList.get(0));
+            return new UserDTO(entityList.get(0)); //TODO: lol wtf dude? add pagination!
         }
 
         @Transactional(readOnly = true)
-        public List<PlayerDTO> getDuplicate(UserDTO user) {
-            List<PlayerEntity> entityList = playerDAO.findByFullName(user.getName(), user.getSurname(), user.getPatronymic());
+        public List<PlayerDTO> getDuplicates(UserDTO user) {
+            List<PlayerEntity> entityList = playerDAO.findByFullName(
+                    user.getName(),
+                    user.getSurname(),
+                    user.getPatronymic()
+            );
+
             if (entityList == null) return null;
 
             List<PlayerDTO> dtoList = new ArrayList<PlayerDTO>();
@@ -84,16 +90,23 @@ public class AdminService {
             return dtoList;
         }
 
+
         @Transactional
         public void confirmUser(Integer id) {
+//            TODO: optimize this?
             Integer playerID = playerDAO.save(new PlayerEntity(userDAO.findByID(id)));
-            bindUser(id, playerID); //TODO: optimize this?
+            bindUser(id, playerID);
         }
 
         @Transactional
         public void rejectUser(Integer id) {
             String ROLE_REJECTED_CODE = "ROLE_REJECTED";
             userDAO.updateRoleByID(id, userRoleDAO.findByCode(ROLE_REJECTED_CODE));
+        }
+
+        @Transactional
+        public void deleteDuplicate(Integer id) {
+            playerDAO.deleteByID(id);
         }
 
         @Transactional
@@ -107,10 +120,6 @@ public class AdminService {
             )); //TODO: wut? fix it u bastard!
         }
 
-        @Transactional
-        public void deleteDuplicate(Integer id) {
-            playerDAO.deleteByID(id);
-        }
     }
 
 
@@ -120,7 +129,6 @@ public class AdminService {
         private TeamStatusDAO teamStatusDAO;
         private CompositionDAO compositionDAO;
         private CompositionStatusDAO compositionStatusDAO;
-
         private TourneyDAO tourneyDAO;
         private TourneyStatusDAO tourneyStatusDAO;
 
@@ -154,6 +162,7 @@ public class AdminService {
             this.tourneyStatusDAO = tourneyStatusDAO;
         }
 
+
         private final String TEAM_UNCONFIRMED_CODE = "TEAM_UNCONFIRMED";
 
         @Transactional(readOnly = true)
@@ -171,22 +180,6 @@ public class AdminService {
             return dtoList;
         }
 
-        @Transactional
-        public void confirmTeam(Integer id) {
-            String TEAM_CONFIRMED_CODE = "TEAM_CONFIRMED";
-            teamDAO.updateStatusByID(id, teamStatusDAO.findByCode(TEAM_CONFIRMED_CODE));
-        }
-
-        @Transactional
-        public void rejectTeam(Integer id) {
-            String TEAM_REJECTED_CODE = "TEAM_REJECTED";
-            teamDAO.updateStatusByID(id, teamStatusDAO.findByCode(TEAM_REJECTED_CODE));
-        }
-
-        @Transactional(readOnly = true)
-        public int getTourneysNum() {
-            return tourneyDAO.numAll().intValue();
-        }
 
         @Transactional(readOnly = true)
         public List<TourneyDTO> getTourneysList() {
@@ -208,6 +201,21 @@ public class AdminService {
             TourneyStatusEntity status = tourneyStatusDAO.findByCode("TOURNEY_FORMED");
             tourneyDAO.save(new TourneyEntity(tourneyDTO, status));
         }
+
+
+        @Transactional
+        public void confirmTeam(Integer id) {
+            String TEAM_CONFIRMED_CODE = "TEAM_CONFIRMED";
+            teamDAO.updateStatusByID(id, teamStatusDAO.findByCode(TEAM_CONFIRMED_CODE));
+        }
+
+        @Transactional
+        public void rejectTeam(Integer id) {
+            String TEAM_REJECTED_CODE = "TEAM_REJECTED";
+            teamDAO.updateStatusByID(id, teamStatusDAO.findByCode(TEAM_REJECTED_CODE));
+        }
+
+
 
         @Transactional(readOnly = true)
         public List<TeamDTO> getTeams(TourneyDTO tourney) {
@@ -233,6 +241,7 @@ public class AdminService {
             return dtoList;
         }
 
+
         @Transactional(readOnly = true)
         public List<CompositionDTO> getTeamCompositions(TourneyDTO tourney) {
             List<CompositionEntity> entityList = compositionDAO.findByTourney(tourney.getId());
@@ -245,7 +254,7 @@ public class AdminService {
 
         @Transactional
         public void inviteTeams(Integer tourneyID, List<Integer> teamsID) {
-            //TODO: upgrade and optimize this!
+//            TODO: upgrade and optimize this!
             TourneyEntity tourney = tourneyDAO.findByID(tourneyID);
 
             String TEAM_INVITE_CODE = "TEAM_INVITED";
@@ -264,5 +273,7 @@ public class AdminService {
                 teamDAO.updateStatusByID(teamID, teamStatus);
             }
         }
+
     }
+
 }

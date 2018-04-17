@@ -83,11 +83,11 @@ public class UserController {
 
         @GetMapping(value = {"/pp/admin/check-user"})
         public String toCheckUserPage(ModelMap map) {
-            UserDTO user = userService.getFirstUnconfirmedUser(); //TODO: lol wtf?
+            UserDTO user = userService.getFirstUnconfirmedUser(); //TODO: lol wtf dude? add pagination!
             if (user == null) return "redirect:/404";
 
             List<PlayerDTO> duplicates
-                    = userService.getDuplicate(user);
+                    = userService.getDuplicates(user);
             map
                     .addAttribute("uUser", user)
                     .addAttribute("duplicates", duplicates);
@@ -101,7 +101,7 @@ public class UserController {
             if (user == null) return "redirect:/404";
 
             List<PlayerDTO> duplicates
-                    = userService.getDuplicate(user);
+                    = userService.getDuplicates(user);
             map
                     .addAttribute("uUser", user)
                     .addAttribute("duplicates", duplicates);
