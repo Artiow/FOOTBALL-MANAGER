@@ -107,7 +107,7 @@ public class UserEntity {
     }
 
     @Basic
-    @Column(name = "patronymic", nullable = true, length = 45)
+    @Column(name = "patronymic", nullable = false, length = 45)
     public String getPatronymic() {
         return patronymic;
     }
