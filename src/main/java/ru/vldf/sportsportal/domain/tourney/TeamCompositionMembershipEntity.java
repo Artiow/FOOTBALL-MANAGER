@@ -1,4 +1,4 @@
-package ru.vldf.sportsportal.model.tourney;
+package ru.vldf.sportsportal.domain.tourney;
 
 import javax.persistence.*;
 

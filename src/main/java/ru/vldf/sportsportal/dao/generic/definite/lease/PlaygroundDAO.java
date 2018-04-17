@@ -1,6 +1,6 @@
 package ru.vldf.sportsportal.dao.generic.definite.lease;
 
-import ru.vldf.sportsportal.model.lease.PlaygroundEntity;
+import ru.vldf.sportsportal.domain.lease.PlaygroundEntity;
 
 import java.util.List;
 

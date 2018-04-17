@@ -52,7 +52,7 @@ public class HibernateConfig {
     @Bean(name = "sessionFactory")
     public LocalSessionFactoryBean getSessionFactory() {
         LocalSessionFactoryBean sessionFactoryBean = new LocalSessionFactoryBean();
-        sessionFactoryBean.setPackagesToScan("ru.vldf.sportsportal.model");
+        sessionFactoryBean.setPackagesToScan("ru.vldf.sportsportal.domain");
 
         sessionFactoryBean.setDataSource(getDataSource());
         sessionFactoryBean.setHibernateProperties(getHibernateProperties());

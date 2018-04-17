@@ -3,7 +3,7 @@ package ru.vldf.sportsportal.dao.impl.tourney;
 import org.springframework.stereotype.Repository;
 import ru.vldf.sportsportal.dao.generic.abstrct.AbstractDAOImpl;
 import ru.vldf.sportsportal.dao.generic.definite.tourney.TourneyStatusDAO;
-import ru.vldf.sportsportal.model.tourney.TourneyStatusEntity;
+import ru.vldf.sportsportal.domain.tourney.TourneyStatusEntity;
 
 import java.util.List;
 

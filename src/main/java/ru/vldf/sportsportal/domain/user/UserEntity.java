@@ -1,8 +1,8 @@
-package ru.vldf.sportsportal.model.user;
+package ru.vldf.sportsportal.domain.user;
 
 import ru.vldf.sportsportal.dto.user.UserDTO;
-import ru.vldf.sportsportal.model.tourney.TeamEntity;
-import ru.vldf.sportsportal.model.tourney.TeamPlayerEntity;
+import ru.vldf.sportsportal.domain.tourney.TeamEntity;
+import ru.vldf.sportsportal.domain.tourney.TeamPlayerEntity;
 
 import javax.persistence.*;
 import java.sql.Date;

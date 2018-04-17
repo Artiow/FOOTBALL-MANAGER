@@ -1,6 +1,6 @@
 package ru.vldf.sportsportal.dto.tourney;
 
-import ru.vldf.sportsportal.model.tourney.TeamCompositionEntity;
+import ru.vldf.sportsportal.domain.tourney.TeamCompositionEntity;
 
 public class TeamCompositionDTO {
     private Integer id;

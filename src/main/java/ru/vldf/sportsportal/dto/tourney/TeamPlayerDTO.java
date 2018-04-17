@@ -1,6 +1,6 @@
 package ru.vldf.sportsportal.dto.tourney;
 
-import ru.vldf.sportsportal.model.tourney.TeamPlayerEntity;
+import ru.vldf.sportsportal.domain.tourney.TeamPlayerEntity;
 
 import java.sql.Date;
 

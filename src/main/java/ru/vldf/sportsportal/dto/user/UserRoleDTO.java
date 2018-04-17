@@ -1,6 +1,6 @@
 package ru.vldf.sportsportal.dto.user;
 
-import ru.vldf.sportsportal.model.user.UserRoleEntity;
+import ru.vldf.sportsportal.domain.user.UserRoleEntity;
 
 public class UserRoleDTO {
     private Integer id;

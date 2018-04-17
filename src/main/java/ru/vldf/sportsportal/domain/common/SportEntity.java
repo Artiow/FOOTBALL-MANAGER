@@ -1,15 +1,17 @@
-package ru.vldf.sportsportal.model.lease;
+package ru.vldf.sportsportal.domain.common;
 
-import ru.vldf.sportsportal.dto.lease.SportDTO;
+import ru.vldf.sportsportal.domain.lease.PlaygroundEntity;
+import ru.vldf.sportsportal.dto.common.SportDTO;
 
 import javax.persistence.*;
 import java.util.Collection;
 
 @Entity
-@Table(name = "Sport", schema = "public", catalog = "sportsportal")
+@Table(name = "sport", schema = "common", catalog = "sportsportal")
 public class SportEntity {
     private Integer id;
-    private String name;
+    private String code;
+    private String description;
 
     private Collection<PlaygroundEntity> playgrounds;
 
@@ -19,11 +21,12 @@ public class SportEntity {
 
     public SportEntity(SportDTO sport) {
         id = sport.getId();
-        name = sport.getName();
+        code = sport.getCode();
+        description = sport.getDescription();
     }
 
     @Id
-    @Column(name = "ID", nullable = false)
+    @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer getId() {
         return id;
@@ -34,13 +37,23 @@ public class SportEntity {
     }
 
     @Basic
-    @Column(name = "Name", nullable = false, length = 45)
-    public String getName() {
-        return name;
+    @Column(name = "code", nullable = false, length = 45)
+    public String getCode() {
+        return code;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCode(String name) {
+        this.code = name;
+    }
+
+    @Basic
+    @Column(name = "description", nullable = true, length = 90)
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
 //    ==================================================================================
@@ -48,9 +61,9 @@ public class SportEntity {
 
     @ManyToMany
     @JoinTable(
-            name = "PlaygroundSpec",
-            joinColumns = @JoinColumn(name = "Sport_ID"),
-            inverseJoinColumns = @JoinColumn(name = "Playground_ID")
+            name = "playground_sport",
+            joinColumns = @JoinColumn(name = "sport_id"),
+            inverseJoinColumns = @JoinColumn(name = "playground_id")
     )
     public Collection<PlaygroundEntity> getPlaygrounds() {
         return playgrounds;
@@ -63,7 +76,6 @@ public class SportEntity {
 //    ==================================================================================
 //    === OBJECTS METHODS
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -71,16 +83,19 @@ public class SportEntity {
 
         SportEntity that = (SportEntity) o;
 
-        return id.equals(that.id);
+        return id != null ? id.equals(that.id) : that.id == null;
     }
 
     @Override
     public int hashCode() {
-        return id.hashCode();
+        return id != null ? id.hashCode() : 0;
     }
 
     @Override
     public String toString() {
-        return name;
+        return "SportEntity{" +
+                "id=" + id +
+                ", code='" + code + '\'' +
+                '}';
     }
 }

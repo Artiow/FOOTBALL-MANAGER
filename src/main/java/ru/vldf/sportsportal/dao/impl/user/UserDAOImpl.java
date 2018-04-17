@@ -3,9 +3,9 @@ package ru.vldf.sportsportal.dao.impl.user;
 import org.springframework.stereotype.Repository;
 import ru.vldf.sportsportal.dao.generic.definite.user.UserDAO;
 import ru.vldf.sportsportal.dao.generic.abstrct.AbstractDAOImpl;
-import ru.vldf.sportsportal.model.tourney.TeamPlayerEntity;
-import ru.vldf.sportsportal.model.user.UserRoleEntity;
-import ru.vldf.sportsportal.model.user.UserEntity;
+import ru.vldf.sportsportal.domain.tourney.TeamPlayerEntity;
+import ru.vldf.sportsportal.domain.user.UserRoleEntity;
+import ru.vldf.sportsportal.domain.user.UserEntity;
 
 import java.util.List;
 

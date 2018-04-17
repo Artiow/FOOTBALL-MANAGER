@@ -1,24 +1,24 @@
-package ru.vldf.sportsportal.model.tourney;
+package ru.vldf.sportsportal.domain.tourney;
 
-import ru.vldf.sportsportal.dto.tourney.TeamStatusDTO;
+import ru.vldf.sportsportal.dto.tourney.TourneyStatusDTO;
 
 import javax.persistence.*;
 import java.util.Collection;
 
 @Entity
-@Table(name = "TeamStatus", schema = "public", catalog = "sportsportal")
-public class TeamStatusEntity {
+@Table(name = "TourneyStatus", schema = "public", catalog = "sportsportal")
+public class TourneyStatusEntity {
     private Integer id;
     private String code;
     private String description;
 
-    private Collection<TeamEntity> teams;
+    private Collection<TourneyEntity> tourneys;
 
-    public TeamStatusEntity() {
+    public TourneyStatusEntity() {
 
     }
 
-    public TeamStatusEntity(TeamStatusDTO status) {
+    public TourneyStatusEntity(TourneyStatusDTO status) {
         id = status.getId();
         code = status.getCode();
         description = status.getDescription();
@@ -46,7 +46,7 @@ public class TeamStatusEntity {
     }
 
     @Basic
-    @Column(name = "Description", length = 90)
+    @Column(name = "Description", nullable = true, length = 90)
     public String getDescription() {
         return description;
     }
@@ -58,13 +58,13 @@ public class TeamStatusEntity {
 //    ==================================================================================
 //    === ONE-TO-MANY REFERENCES
 
-    @OneToMany(mappedBy = "status")
-    public Collection<TeamEntity> getTeams() {
-        return teams;
+    @OneToMany(mappedBy = "tourneyStatus")
+    public Collection<TourneyEntity> getTourneys() {
+        return tourneys;
     }
 
-    public void setTeams(Collection<TeamEntity> teams) {
-        this.teams = teams;
+    public void setTourneys(Collection<TourneyEntity> tourneys) {
+        this.tourneys = tourneys;
     }
 
 //    ==================================================================================
@@ -75,7 +75,7 @@ public class TeamStatusEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        TeamStatusEntity that = (TeamStatusEntity) o;
+        TourneyStatusEntity that = (TourneyStatusEntity) o;
 
         return id.equals(that.id);
     }
@@ -83,10 +83,5 @@ public class TeamStatusEntity {
     @Override
     public int hashCode() {
         return id.hashCode();
-    }
-
-    @Override
-    public String toString() {
-        return code;
     }
 }

@@ -1,27 +1,27 @@
-package ru.vldf.sportsportal.model.tourney;
+package ru.vldf.sportsportal.domain.tourney;
 
-import ru.vldf.sportsportal.dto.tourney.TourneyStatusDTO;
+import ru.vldf.sportsportal.dto.tourney.TeamCompositionStatusDTO;
 
 import javax.persistence.*;
 import java.util.Collection;
 
 @Entity
-@Table(name = "TourneyStatus", schema = "public", catalog = "sportsportal")
-public class TourneyStatusEntity {
+@Table(name = "teamcompositionstatus", schema = "public", catalog = "sportsportal")
+public class TeamCompositionStatusEntity {
     private Integer id;
     private String code;
     private String description;
 
-    private Collection<TourneyEntity> tourneys;
+    private Collection<TeamCompositionEntity> compositions;
 
-    public TourneyStatusEntity() {
+    public TeamCompositionStatusEntity() {
 
     }
 
-    public TourneyStatusEntity(TourneyStatusDTO status) {
-        id = status.getId();
-        code = status.getCode();
-        description = status.getDescription();
+    public TeamCompositionStatusEntity(TeamCompositionStatusDTO statusDTO) {
+        id = statusDTO.getId();
+        code = statusDTO.getCode();
+        description = statusDTO.getDescription();
     }
 
     @Id
@@ -58,13 +58,13 @@ public class TourneyStatusEntity {
 //    ==================================================================================
 //    === ONE-TO-MANY REFERENCES
 
-    @OneToMany(mappedBy = "tourneyStatus")
-    public Collection<TourneyEntity> getTourneys() {
-        return tourneys;
+    @OneToMany(mappedBy = "status")
+    public Collection<TeamCompositionEntity> getCompositions() {
+        return compositions;
     }
 
-    public void setTourneys(Collection<TourneyEntity> tourneys) {
-        this.tourneys = tourneys;
+    public void setCompositions(Collection<TeamCompositionEntity> compositions) {
+        this.compositions = compositions;
     }
 
 //    ==================================================================================
@@ -75,7 +75,7 @@ public class TourneyStatusEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        TourneyStatusEntity that = (TourneyStatusEntity) o;
+        TeamCompositionStatusEntity that = (TeamCompositionStatusEntity) o;
 
         return id.equals(that.id);
     }

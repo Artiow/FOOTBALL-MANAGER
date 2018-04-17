@@ -3,10 +3,10 @@ package ru.vldf.sportsportal.dao.impl.tourney;
 import org.springframework.stereotype.Repository;
 import ru.vldf.sportsportal.dao.generic.abstrct.AbstractDAOImpl;
 import ru.vldf.sportsportal.dao.generic.definite.tourney.TeamCompositionDAO;
-import ru.vldf.sportsportal.model.tourney.TeamCompositionEntity;
-import ru.vldf.sportsportal.model.tourney.TeamCompositionStatusEntity;
-import ru.vldf.sportsportal.model.tourney.TeamEntity;
-import ru.vldf.sportsportal.model.tourney.TourneyEntity;
+import ru.vldf.sportsportal.domain.tourney.TeamCompositionEntity;
+import ru.vldf.sportsportal.domain.tourney.TeamCompositionStatusEntity;
+import ru.vldf.sportsportal.domain.tourney.TeamEntity;
+import ru.vldf.sportsportal.domain.tourney.TourneyEntity;
 
 import java.util.List;
 

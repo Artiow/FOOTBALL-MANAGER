@@ -1,12 +1,13 @@
-package ru.vldf.sportsportal.model.lease;
+package ru.vldf.sportsportal.domain.lease;
 
+import ru.vldf.sportsportal.domain.common.SportEntity;
 import ru.vldf.sportsportal.dto.lease.PlaygroundDTO;
 
 import javax.persistence.*;
 import java.util.Collection;
 
 @Entity
-@Table(name = "Playground", schema = "public", catalog = "sportsportal")
+@Table(name = "playground", schema = "lease", catalog = "sportsportal")
 public class PlaygroundEntity {
     private Integer id;
     private String name;
@@ -25,7 +26,7 @@ public class PlaygroundEntity {
     }
 
     @Id
-    @Column(name = "ID", nullable = false)
+    @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer getId() {
         return id;
@@ -36,7 +37,7 @@ public class PlaygroundEntity {
     }
 
     @Basic
-    @Column(name = "Name", nullable = false, length = 45)
+    @Column(name = "name", nullable = false, length = 45)
     public String getName() {
         return name;
     }
@@ -46,7 +47,7 @@ public class PlaygroundEntity {
     }
 
     @Basic
-    @Column(name = "Address", nullable = false, length = 45)
+    @Column(name = "address", nullable = false, length = 45)
     public String getAddress() {
         return address;
     }
@@ -60,9 +61,9 @@ public class PlaygroundEntity {
 
     @ManyToMany
     @JoinTable(
-            name = "PlaygroundSpec",
-            joinColumns = @JoinColumn(name = "Playground_ID"),
-            inverseJoinColumns = @JoinColumn(name = "Sport_ID")
+            name = "playground_sport",
+            joinColumns = @JoinColumn(name = "playground_id"),
+            inverseJoinColumns = @JoinColumn(name = "sport_id")
     )
     public Collection<SportEntity> getSports() {
         return sports;
@@ -75,7 +76,6 @@ public class PlaygroundEntity {
 //    ==================================================================================
 //    === OBJECTS METHODS
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -83,16 +83,19 @@ public class PlaygroundEntity {
 
         PlaygroundEntity that = (PlaygroundEntity) o;
 
-        return id.equals(that.id);
+        return id != null ? id.equals(that.id) : that.id == null;
     }
 
     @Override
     public int hashCode() {
-        return id.hashCode();
+        return id != null ? id.hashCode() : 0;
     }
 
     @Override
     public String toString() {
-        return name;
+        return "PlaygroundEntity{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

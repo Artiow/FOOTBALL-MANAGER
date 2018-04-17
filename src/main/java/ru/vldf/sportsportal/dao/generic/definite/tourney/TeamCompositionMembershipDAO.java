@@ -1,6 +1,6 @@
 package ru.vldf.sportsportal.dao.generic.definite.tourney;
 
-import ru.vldf.sportsportal.model.tourney.TeamCompositionMembershipEntity;
+import ru.vldf.sportsportal.domain.tourney.TeamCompositionMembershipEntity;
 
 import java.util.List;
 

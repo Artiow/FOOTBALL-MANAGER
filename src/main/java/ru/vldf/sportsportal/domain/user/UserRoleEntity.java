@@ -1,4 +1,4 @@
-package ru.vldf.sportsportal.model.user;
+package ru.vldf.sportsportal.domain.user;
 
 import ru.vldf.sportsportal.dto.user.UserRoleDTO;
 

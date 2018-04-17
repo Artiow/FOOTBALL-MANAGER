@@ -1,27 +1,27 @@
-package ru.vldf.sportsportal.model.tourney;
+package ru.vldf.sportsportal.domain.tourney;
 
-import ru.vldf.sportsportal.dto.tourney.TeamCompositionStatusDTO;
+import ru.vldf.sportsportal.dto.tourney.TeamStatusDTO;
 
 import javax.persistence.*;
 import java.util.Collection;
 
 @Entity
-@Table(name = "teamcompositionstatus", schema = "public", catalog = "sportsportal")
-public class TeamCompositionStatusEntity {
+@Table(name = "TeamStatus", schema = "public", catalog = "sportsportal")
+public class TeamStatusEntity {
     private Integer id;
     private String code;
     private String description;
 
-    private Collection<TeamCompositionEntity> compositions;
+    private Collection<TeamEntity> teams;
 
-    public TeamCompositionStatusEntity() {
+    public TeamStatusEntity() {
 
     }
 
-    public TeamCompositionStatusEntity(TeamCompositionStatusDTO statusDTO) {
-        id = statusDTO.getId();
-        code = statusDTO.getCode();
-        description = statusDTO.getDescription();
+    public TeamStatusEntity(TeamStatusDTO status) {
+        id = status.getId();
+        code = status.getCode();
+        description = status.getDescription();
     }
 
     @Id
@@ -46,7 +46,7 @@ public class TeamCompositionStatusEntity {
     }
 
     @Basic
-    @Column(name = "Description", nullable = true, length = 90)
+    @Column(name = "Description", length = 90)
     public String getDescription() {
         return description;
     }
@@ -59,12 +59,12 @@ public class TeamCompositionStatusEntity {
 //    === ONE-TO-MANY REFERENCES
 
     @OneToMany(mappedBy = "status")
-    public Collection<TeamCompositionEntity> getCompositions() {
-        return compositions;
+    public Collection<TeamEntity> getTeams() {
+        return teams;
     }
 
-    public void setCompositions(Collection<TeamCompositionEntity> compositions) {
-        this.compositions = compositions;
+    public void setTeams(Collection<TeamEntity> teams) {
+        this.teams = teams;
     }
 
 //    ==================================================================================
@@ -75,7 +75,7 @@ public class TeamCompositionStatusEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        TeamCompositionStatusEntity that = (TeamCompositionStatusEntity) o;
+        TeamStatusEntity that = (TeamStatusEntity) o;
 
         return id.equals(that.id);
     }
@@ -83,5 +83,10 @@ public class TeamCompositionStatusEntity {
     @Override
     public int hashCode() {
         return id.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return code;
     }
 }
