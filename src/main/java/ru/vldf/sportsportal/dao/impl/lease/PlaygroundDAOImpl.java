@@ -3,7 +3,7 @@ package ru.vldf.sportsportal.dao.impl.lease;
 import org.springframework.stereotype.Repository;
 import ru.vldf.sportsportal.dao.generic.definite.lease.PlaygroundDAO;
 import ru.vldf.sportsportal.dao.generic.abstrct.AbstractDAOImpl;
-import ru.vldf.sportsportal.model.lease.PlaygroundEntity;
+import ru.vldf.sportsportal.domain.lease.PlaygroundEntity;
 
 import java.util.List;
 

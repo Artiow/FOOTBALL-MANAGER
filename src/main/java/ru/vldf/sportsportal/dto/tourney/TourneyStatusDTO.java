@@ -1,6 +1,6 @@
 package ru.vldf.sportsportal.dto.tourney;
 
-import ru.vldf.sportsportal.model.tourney.TourneyStatusEntity;
+import ru.vldf.sportsportal.domain.tourney.TourneyStatusEntity;
 
 public class TourneyStatusDTO {
     private Integer id;
@@ -39,5 +39,28 @@ public class TourneyStatusDTO {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        TourneyStatusDTO that = (TourneyStatusDTO) o;
+
+        return id != null ? id.equals(that.id) : that.id == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
+    }
+
+    @Override
+    public String toString() {
+        return "TourneyStatusDTO{" +
+                "id=" + id +
+                ", code='" + code + '\'' +
+                '}';
     }
 }

@@ -62,7 +62,7 @@
 <main style="min-height: 600px">
     <div class="container">
         <div class="row">
-            <div class="col-md-6 col-md-offset-1" th:object="${unconfirmedUser}">
+            <div class="col-md-6 col-md-offset-1" th:object="${uUser}">
                 <h2>Заявка:</h2>
                 <h3 style="margin-bottom: 5px" th:text="*{surname + ' ' + name + ' ' + patronymic}">SURNAME NAME PATRONYMIC</h3>
                 <div style="padding: 10px 0 20px 0" class="row">
@@ -72,22 +72,29 @@
                     </div>
                     <div style="padding-top: 5px" class="col-md-9">
                         <p th:text="*{login}">LOGIN</p>
-                        <p th:text="*{email}">EMAIL</p>
+                        <p th:text="*{EMail}">EMAIL</p>
                         <p th:text="*{phone}">PHONE</p>
+                        <p th:text="*{birthday.toString()}">BIRTHDAY</p>
                     </div>
                 </div>
                 <a style="margin-right: 10px" class="btn btn-default" th:href="*{'/pp/admin/check-user/user' + id + '/confirm'}">Подтвердить</a>
                 <a style="margin-left: 10px" class="btn btn-danger" th:href="*{'/pp/admin/check-user/user' + id + '/reject'}">Отклонить</a>
             </div>
             <div class="col-md-4" th:if="${duplicates != null}">
-                <h2>Найденные дубликаты:</h2>
-                <ul style="margin: 0; padding: 10px 0 10px 0" th:each="duplicate: ${duplicates}">
-                    <li style="display: inline-block" th:object="${duplicate}">
-                        <h3 style="margin-bottom: 5px" th:text="*{surname + ' ' + name + ' ' + patronymic}">SURNAME NAME PATRONYMIC</h3>
-                        <p th:text="*{phone}">PHONE</p>
-                        <a class="btn btn-danger" th:href="${'/pp/admin/check-user/duplicate' + duplicate.getId() + '/delete'}">Удалить</a>
-                    </li>
-                </ul>
+                <h2>Возможные дубликаты:</h2>
+                <table class="table table-hover">
+                    <tr th:each="duplicate: ${duplicates}" th:object="${duplicate}">
+                        <td>
+                            <h3 style="margin: 0" th:text="*{surname}">SURNAME</h3>
+                            <h3 style="margin: 0" th:text="*{name}">NAME</h3>
+                            <h3 style="margin: 0" th:text="*{patronymic}">PATRONYMIC</h3>
+                            <p style="margin: 0; margin-top: 5px" th:text="*{birthday.toString()}">BIRTHDAY</p>
+                            <br/>
+                            <a class="btn btn-danger" th:href="${'/pp/admin/check-user/duplicate' + duplicate.id + '/delete'}">Удалить</a>
+                            <a class="btn btn-success" th:href="${'/pp/admin/check-user/user' + uUser.id + '/bind/duplicate' + duplicate.id}">Связать</a>
+                        </td>
+                    </tr>
+                </table>
             </div>
             <div class="col-md-4" th:unless="${duplicates != null}">
                 <h2>Дубликатов не найдено</h2>

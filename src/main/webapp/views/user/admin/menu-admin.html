@@ -63,11 +63,15 @@
     <div class="container">
         <div class="row">
             <div style="padding: 10px 0 10px 0" class="col-md-6 col-md-offset-3">
-                <a th:href="@{/pp/admin/check-user}" th:text="'Заявки на регистрацию (' + ${numOfUnconfirmedUsers} + ')'">Заявки на регистрацию (NULL)</a>
-                <br/>
-                <a th:href="@{/pp/admin/check-team}" th:text="'Заявки на создание команды (' + ${numOfUnconfirmedTeams} + ')'">Заявки на создание команды (NULL)</a>
-                <br/>
-                <a th:href="@{/pp/admin/tourney}" th:text="'Турниры (' + ${numOfTourneys} + ')'">Турниры (NULL)</a>
+                <a th:if="${uUsersNum != 0}" th:href="@{/pp/admin/check-user}" th:text="'Заявки на регистрацию (' + ${uUsersNum} + ')'">Заявки на регистрацию (NULL)</a>
+                <br th:if="${uUsersNum != 0}"/>
+                <a th:unless="${uUsersNum != 0}">Заявки на регистрацию (0)</a>
+                <br th:unless="${uUsersNum != 0}"/>
+                <a th:if="${uTeamsNum != 0}" th:href="@{/pp/admin/check-team}" th:text="'Заявки на создание команды (' + ${uTeamsNum} + ')'">Заявки на создание команды (NULL)</a>
+                <br th:if="${uTeamsNum != 0}"/>
+                <a th:unless="${uTeamsNum != 0}">Заявки на создание команды (0)</a>
+                <br th:unless="${uTeamsNum != 0}"/>
+                <a th:href="@{/pp/admin/tourney}">Турниры</a>
             </div>
         </div>
     </div>

@@ -6,11 +6,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.vldf.sportsportal.dao.generic.definite.user.UserRoleDAO;
-import ru.vldf.sportsportal.dao.generic.definite.user.UserDAO;
-import ru.vldf.sportsportal.dto.user.UserDTO;
-import ru.vldf.sportsportal.model.user.UserRoleEntity;
-import ru.vldf.sportsportal.model.user.UserEntity;
+import ru.vldf.sportsportal.dao.generic.definite.common.UserRoleDAO;
+import ru.vldf.sportsportal.dao.generic.definite.common.UserDAO;
+import ru.vldf.sportsportal.dto.common.UserDTO;
+import ru.vldf.sportsportal.domain.common.UserEntity;
 import ru.vldf.sportsportal.service.security.SecurityPrincipal;
 
 @Service
@@ -39,6 +38,11 @@ public class AuthService {
         return SecurityContextHolder.getContext().getAuthentication();
     }
 
+    @Transactional(readOnly = true)
+    public Boolean check(UserDTO userDTO) {
+        return ((userDAO.findByLogin(userDTO.getLogin()) == null) && (userDAO.findByEMail(userDTO.getEMail()) == null));
+    }
+
     @Transactional
     public void register(UserDTO userDTO) {
         String ROLE_UNCONFIRMED_CODE = "ROLE_UNCONFIRMED";
@@ -52,7 +56,7 @@ public class AuthService {
         );
     }
 
-//    TODO: get by HttpServletRequest
+//    TODO: get by HttpServletRequest?
     public UserDTO getAuthUser() {
         final String ROLE_ANONYMOUS = "anonymousUser";
 
@@ -61,6 +65,7 @@ public class AuthService {
         else return ((SecurityPrincipal) principal).getUser();
     }
 
+//    TODO: cut out this method
     public String getAuthUserShortName() {
         UserDTO user = getAuthUser();
         if (user != null) return (user.getName() + ' ' + user.getSurname());

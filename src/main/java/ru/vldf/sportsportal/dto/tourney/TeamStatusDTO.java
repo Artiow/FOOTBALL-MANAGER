@@ -1,11 +1,15 @@
 package ru.vldf.sportsportal.dto.tourney;
 
-import ru.vldf.sportsportal.model.tourney.TeamStatusEntity;
+import ru.vldf.sportsportal.domain.tourney.TeamStatusEntity;
 
 public class TeamStatusDTO {
     private Integer id;
     private String code;
     private String description;
+
+    public TeamStatusDTO() {
+
+    }
 
     public TeamStatusDTO(TeamStatusEntity teamTourneyStatus) {
         id = teamTourneyStatus.getId();
@@ -35,5 +39,28 @@ public class TeamStatusDTO {
 
     public String getDescription() {
         return description;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        TeamStatusDTO that = (TeamStatusDTO) o;
+
+        return id != null ? id.equals(that.id) : that.id == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
+    }
+
+    @Override
+    public String toString() {
+        return "TeamStatusDTO{" +
+                "id=" + id +
+                ", code='" + code + '\'' +
+                '}';
     }
 }
