@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.util.Collection;
 
 @Entity
-@Table(name = "TourneyStatus", schema = "public", catalog = "sportsportal")
+@Table(name = "tourney_status", schema = "tourney", catalog = "sportsportal")
 public class TourneyStatusEntity {
     private Integer id;
     private String code;
@@ -25,7 +25,7 @@ public class TourneyStatusEntity {
     }
 
     @Id
-    @Column(name = "ID", nullable = false)
+    @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer getId() {
         return id;
@@ -36,7 +36,7 @@ public class TourneyStatusEntity {
     }
 
     @Basic
-    @Column(name = "Code", nullable = false, length = 45)
+    @Column(name = "code", nullable = false, length = 45)
     public String getCode() {
         return code;
     }
@@ -46,7 +46,7 @@ public class TourneyStatusEntity {
     }
 
     @Basic
-    @Column(name = "Description", nullable = true, length = 90)
+    @Column(name = "description", nullable = true, length = 90)
     public String getDescription() {
         return description;
     }
@@ -58,7 +58,7 @@ public class TourneyStatusEntity {
 //    ==================================================================================
 //    === ONE-TO-MANY REFERENCES
 
-    @OneToMany(mappedBy = "tourneyStatus")
+    @OneToMany(mappedBy = "status")
     public Collection<TourneyEntity> getTourneys() {
         return tourneys;
     }
@@ -77,11 +77,19 @@ public class TourneyStatusEntity {
 
         TourneyStatusEntity that = (TourneyStatusEntity) o;
 
-        return id.equals(that.id);
+        return id != null ? id.equals(that.id) : that.id == null;
     }
 
     @Override
     public int hashCode() {
-        return id.hashCode();
+        return id != null ? id.hashCode() : 0;
+    }
+
+    @Override
+    public String toString() {
+        return "TourneyStatusEntity{" +
+                "id=" + id +
+                ", code='" + code + '\'' +
+                '}';
     }
 }
