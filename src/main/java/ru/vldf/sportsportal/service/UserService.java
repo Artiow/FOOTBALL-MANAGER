@@ -35,9 +35,9 @@ public class UserService {
         private TeamDAO teamDAO;
         private TeamStatusDAO teamStatusDAO;
         private PlayerDAO playerDAO;
-        private TeamCompositionDAO teamCompositionDAO;
-        private TeamCompositionStatusDAO teamCompositionStatusDAO;
-        private TeamCompositionMembershipDAO teamCompositionMembershipDAO;
+        private CompositionDAO compositionDAO;
+        private CompositionStatusDAO compositionStatusDAO;
+        private CompositionMembershipDAO compositionMembershipDAO;
 
         @Autowired
         public void setTeamDAO(TeamDAO teamDAO) {
@@ -55,18 +55,18 @@ public class UserService {
         }
 
         @Autowired
-        public void setTeamCompositionDAO(TeamCompositionDAO teamCompositionDAO) {
-            this.teamCompositionDAO = teamCompositionDAO;
+        public void setCompositionDAO(CompositionDAO compositionDAO) {
+            this.compositionDAO = compositionDAO;
         }
 
         @Autowired
-        public void setTeamCompositionStatusDAO(TeamCompositionStatusDAO teamCompositionStatusDAO) {
-            this.teamCompositionStatusDAO = teamCompositionStatusDAO;
+        public void setCompositionStatusDAO(CompositionStatusDAO compositionStatusDAO) {
+            this.compositionStatusDAO = compositionStatusDAO;
         }
 
         @Autowired
-        public void setTeamCompositionMembershipDAO(TeamCompositionMembershipDAO teamCompositionMembershipDAO) {
-            this.teamCompositionMembershipDAO = teamCompositionMembershipDAO;
+        public void setCompositionMembershipDAO(CompositionMembershipDAO compositionMembershipDAO) {
+            this.compositionMembershipDAO = compositionMembershipDAO;
         }
 
 
@@ -96,7 +96,7 @@ public class UserService {
             TeamDTO team = getTeam(teamID);
             if (team == null) return null; //not user's team
 
-            List<CompositionEntity> entityList = teamCompositionDAO.findByTeam(teamID);
+            List<CompositionEntity> entityList = compositionDAO.findByTeam(teamID);
 
             if (entityList == null) return null;
             List<CompositionDTO> dtoList = new ArrayList<CompositionDTO>();
@@ -111,7 +111,7 @@ public class UserService {
 
             String COMPOSITION_RECRUITING_CODE = "COMPOSITION_RECRUITING";
 
-            List<CompositionEntity> entityList = teamCompositionDAO
+            List<CompositionEntity> entityList = compositionDAO
                     .findByTeamAndStatus(teamID, COMPOSITION_RECRUITING_CODE);
 
             if (entityList == null) return null;
@@ -153,23 +153,23 @@ public class UserService {
         @Transactional
         public void addPlayerToComposition(Integer compositionID, Integer playerID) {
             CompositionMembershipEntity membership = new CompositionMembershipEntity();
-            membership.setComposition(teamCompositionDAO.findByID(compositionID));
+            membership.setComposition(compositionDAO.findByID(compositionID));
             membership.setPlayer(playerDAO.findByID(playerID));
 
-            teamCompositionMembershipDAO.save(membership);
+            compositionMembershipDAO.save(membership);
         }
 
         @Transactional
         public void deletePlayerFromComposition(Integer compositionID, Integer playerID) {
-            teamCompositionMembershipDAO.deleteByMembership(playerID, compositionID);
+            compositionMembershipDAO.deleteByMembership(playerID, compositionID);
         }
 
         @Transactional
         public void confirmComposition(Integer compositionID) {
             String COMPOSITION_UNCONFIRMED_CODE = "COMPOSITION_UNCONFIRMED";
-            teamCompositionDAO.updateStatusByID(
+            compositionDAO.updateStatusByID(
                     compositionID,
-                    teamCompositionStatusDAO.findByCode(COMPOSITION_UNCONFIRMED_CODE)
+                    compositionStatusDAO.findByCode(COMPOSITION_UNCONFIRMED_CODE)
             );
         }
     }

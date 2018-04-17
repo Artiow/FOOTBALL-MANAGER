@@ -4,7 +4,7 @@ import ru.vldf.sportsportal.domain.tourney.CompositionStatusEntity;
 
 import java.util.List;
 
-public interface TeamCompositionStatusDAO {
+public interface CompositionStatusDAO {
 
     Integer save(CompositionStatusEntity status);
 

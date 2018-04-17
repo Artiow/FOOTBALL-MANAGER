@@ -118,8 +118,8 @@ public class AdminService {
 
     private TeamDAO teamDAO;
     private TeamStatusDAO teamStatusDAO;
-    private TeamCompositionDAO teamCompositionDAO;
-    private TeamCompositionStatusDAO teamCompositionStatusDAO;
+    private CompositionDAO compositionDAO;
+    private CompositionStatusDAO compositionStatusDAO;
 
     private TourneyDAO tourneyDAO;
     private TourneyStatusDAO tourneyStatusDAO;
@@ -135,13 +135,13 @@ public class AdminService {
     }
 
     @Autowired
-    public void setTeamCompositionDAO(TeamCompositionDAO teamCompositionDAO) {
-        this.teamCompositionDAO = teamCompositionDAO;
+    public void setCompositionDAO(CompositionDAO compositionDAO) {
+        this.compositionDAO = compositionDAO;
     }
 
     @Autowired
-    public void setTeamCompositionStatusDAO(TeamCompositionStatusDAO teamCompositionStatusDAO) {
-        this.teamCompositionStatusDAO = teamCompositionStatusDAO;
+    public void setCompositionStatusDAO(CompositionStatusDAO compositionStatusDAO) {
+        this.compositionStatusDAO = compositionStatusDAO;
     }
 
     @Autowired
@@ -235,7 +235,7 @@ public class AdminService {
 
     @Transactional(readOnly = true)
     public List<CompositionDTO> getTeamCompositions(TourneyDTO tourney) {
-        List<CompositionEntity> entityList = teamCompositionDAO.findByTourney(tourney.getId());
+        List<CompositionEntity> entityList = compositionDAO.findByTourney(tourney.getId());
         if (entityList == null) return null;
 
         List<CompositionDTO> dtoList = new ArrayList<CompositionDTO>();
@@ -252,7 +252,7 @@ public class AdminService {
         String COMPOSITION_RECRUITING_CODE = "COMPOSITION_RECRUITING";
 
         TeamStatusEntity teamStatus = teamStatusDAO.findByCode(TEAM_INVITE_CODE);
-        CompositionStatusEntity compositionStatus = teamCompositionStatusDAO.findByCode(COMPOSITION_RECRUITING_CODE);
+        CompositionStatusEntity compositionStatus = compositionStatusDAO.findByCode(COMPOSITION_RECRUITING_CODE);
 
         for (Integer teamID: teamsID) {
             TeamEntity team = teamDAO.findByID(teamID);
@@ -260,7 +260,7 @@ public class AdminService {
             CompositionDTO compositionDTO = new CompositionDTO();
             compositionDTO.setName(team.getName());
 
-            teamCompositionDAO.save(new CompositionEntity(compositionDTO, team, tourney, compositionStatus));
+            compositionDAO.save(new CompositionEntity(compositionDTO, team, tourney, compositionStatus));
             teamDAO.updateStatusByID(teamID, teamStatus);
         }
     }

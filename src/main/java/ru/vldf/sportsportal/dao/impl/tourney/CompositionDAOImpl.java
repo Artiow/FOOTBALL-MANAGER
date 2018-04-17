@@ -2,7 +2,7 @@ package ru.vldf.sportsportal.dao.impl.tourney;
 
 import org.springframework.stereotype.Repository;
 import ru.vldf.sportsportal.dao.generic.abstrct.AbstractDAOImpl;
-import ru.vldf.sportsportal.dao.generic.definite.tourney.TeamCompositionDAO;
+import ru.vldf.sportsportal.dao.generic.definite.tourney.CompositionDAO;
 import ru.vldf.sportsportal.domain.tourney.CompositionEntity;
 import ru.vldf.sportsportal.domain.tourney.CompositionStatusEntity;
 import ru.vldf.sportsportal.domain.tourney.TeamEntity;
@@ -11,8 +11,8 @@ import ru.vldf.sportsportal.domain.tourney.TourneyEntity;
 import java.util.List;
 
 @Repository
-public class TeamCompositionDAOImpl extends AbstractDAOImpl<CompositionEntity, Integer> implements TeamCompositionDAO {
-    public TeamCompositionDAOImpl() {
+public class CompositionDAOImpl extends AbstractDAOImpl<CompositionEntity, Integer> implements CompositionDAO {
+    public CompositionDAOImpl() {
         super(CompositionEntity.class);
     }
 

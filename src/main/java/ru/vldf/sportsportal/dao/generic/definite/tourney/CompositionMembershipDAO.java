@@ -4,7 +4,7 @@ import ru.vldf.sportsportal.domain.tourney.CompositionMembershipEntity;
 
 import java.util.List;
 
-public interface TeamCompositionMembershipDAO {
+public interface CompositionMembershipDAO {
     Integer save(CompositionMembershipEntity composition);
 
 //    ==================================================================================

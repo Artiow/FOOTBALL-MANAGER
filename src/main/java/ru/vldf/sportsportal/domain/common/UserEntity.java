@@ -34,7 +34,7 @@ public class UserEntity {
     public UserEntity(UserDTO user, UserRoleEntity role) {
         id = user.getId();
         login = user.getLogin();
-        email = user.getEmail();
+        email = user.getEMail();
         password = user.getPassword();
         name = user.getName();
         surname = user.getSurname();
@@ -68,11 +68,11 @@ public class UserEntity {
 
     @Basic
     @Column(name = "email", nullable = false, length = 45)
-    public String getEmail() {
+    public String getEMail() {
         return email;
     }
 
-    public void setEmail(String email) {
+    public void setEMail(String email) {
         this.email = email;
     }
 

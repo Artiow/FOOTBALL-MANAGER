@@ -38,6 +38,11 @@ public class AuthService {
         return SecurityContextHolder.getContext().getAuthentication();
     }
 
+    @Transactional(readOnly = true)
+    public Boolean check(UserDTO userDTO) {
+        return ((userDAO.findByLogin(userDTO.getLogin()) == null) && (userDAO.findByEMail(userDTO.getEMail()) == null));
+    }
+
     @Transactional
     public void register(UserDTO userDTO) {
         String ROLE_UNCONFIRMED_CODE = "ROLE_UNCONFIRMED";
@@ -51,7 +56,7 @@ public class AuthService {
         );
     }
 
-//    TODO: get by HttpServletRequest
+//    TODO: get by HttpServletRequest?
     public UserDTO getAuthUser() {
         final String ROLE_ANONYMOUS = "anonymousUser";
 
@@ -60,6 +65,7 @@ public class AuthService {
         else return ((SecurityPrincipal) principal).getUser();
     }
 
+//    TODO: cut out this method
     public String getAuthUserShortName() {
         UserDTO user = getAuthUser();
         if (user != null) return (user.getName() + ' ' + user.getSurname());
