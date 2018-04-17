@@ -1,18 +1,18 @@
 package ru.vldf.sportsportal.dao.generic.definite.tourney;
 
-import ru.vldf.sportsportal.domain.tourney.TeamCompositionMembershipEntity;
+import ru.vldf.sportsportal.domain.tourney.CompositionMembershipEntity;
 
 import java.util.List;
 
 public interface TeamCompositionMembershipDAO {
-    Integer save(TeamCompositionMembershipEntity composition);
+    Integer save(CompositionMembershipEntity composition);
 
 //    ==================================================================================
 //    === FIND
 
-    TeamCompositionMembershipEntity findByID(Integer id);
+    CompositionMembershipEntity findByID(Integer id);
 
-    List<TeamCompositionMembershipEntity> findAll();
+    List<CompositionMembershipEntity> findAll();
 
 //    ==================================================================================
 //    === DELETE

@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.util.Collection;
 
 @Entity
-@Table(name = "TeamStatus", schema = "public", catalog = "sportsportal")
+@Table(name = "team_status", schema = "tourney", catalog = "sportsportal")
 public class TeamStatusEntity {
     private Integer id;
     private String code;
@@ -25,7 +25,7 @@ public class TeamStatusEntity {
     }
 
     @Id
-    @Column(name = "ID", nullable = false)
+    @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer getId() {
         return id;
@@ -36,7 +36,7 @@ public class TeamStatusEntity {
     }
 
     @Basic
-    @Column(name = "Code", nullable = false, length = 45)
+    @Column(name = "code", nullable = false, length = 45)
     public String getCode() {
         return code;
     }
@@ -46,7 +46,7 @@ public class TeamStatusEntity {
     }
 
     @Basic
-    @Column(name = "Description", length = 90)
+    @Column(name = "description", nullable = true, length = 90)
     public String getDescription() {
         return description;
     }
@@ -77,16 +77,19 @@ public class TeamStatusEntity {
 
         TeamStatusEntity that = (TeamStatusEntity) o;
 
-        return id.equals(that.id);
+        return id != null ? id.equals(that.id) : that.id == null;
     }
 
     @Override
     public int hashCode() {
-        return id.hashCode();
+        return id != null ? id.hashCode() : 0;
     }
 
     @Override
     public String toString() {
-        return code;
+        return "TeamStatusEntity{" +
+                "id=" + id +
+                ", code='" + code + '\'' +
+                '}';
     }
 }

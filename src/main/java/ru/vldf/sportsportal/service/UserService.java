@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.vldf.sportsportal.dao.generic.definite.tourney.*;
 import ru.vldf.sportsportal.dao.generic.definite.common.UserDAO;
-import ru.vldf.sportsportal.dto.tourney.TeamCompositionDTO;
+import ru.vldf.sportsportal.dto.tourney.CompositionDTO;
 import ru.vldf.sportsportal.dto.tourney.TeamDTO;
 import ru.vldf.sportsportal.dto.tourney.PlayerDTO;
 import ru.vldf.sportsportal.dto.common.UserDTO;
@@ -92,31 +92,31 @@ public class UserService {
         }
 
         @Transactional(readOnly = true)
-        public List<TeamCompositionDTO> getCompositions(int teamID) {
+        public List<CompositionDTO> getCompositions(int teamID) {
             TeamDTO team = getTeam(teamID);
             if (team == null) return null; //not user's team
 
-            List<TeamCompositionEntity> entityList = teamCompositionDAO.findByTeam(teamID);
+            List<CompositionEntity> entityList = teamCompositionDAO.findByTeam(teamID);
 
             if (entityList == null) return null;
-            List<TeamCompositionDTO> dtoList = new ArrayList<TeamCompositionDTO>();
-            for (TeamCompositionEntity entity: entityList) dtoList.add(new TeamCompositionDTO(entity));
+            List<CompositionDTO> dtoList = new ArrayList<CompositionDTO>();
+            for (CompositionEntity entity: entityList) dtoList.add(new CompositionDTO(entity));
             return dtoList;
         }
 
         @Transactional(readOnly = true)
-        public List<TeamCompositionDTO> getRecruitingCompositions(int teamID) {
+        public List<CompositionDTO> getRecruitingCompositions(int teamID) {
             TeamDTO team = getTeam(teamID);
             if (team == null) return null; //not user's team
 
             String COMPOSITION_RECRUITING_CODE = "COMPOSITION_RECRUITING";
 
-            List<TeamCompositionEntity> entityList = teamCompositionDAO
+            List<CompositionEntity> entityList = teamCompositionDAO
                     .findByTeamAndStatus(teamID, COMPOSITION_RECRUITING_CODE);
 
             if (entityList == null) return null;
-            List<TeamCompositionDTO> dtoList = new ArrayList<TeamCompositionDTO>();
-            for (TeamCompositionEntity entity: entityList) dtoList.add(new TeamCompositionDTO(entity));
+            List<CompositionDTO> dtoList = new ArrayList<CompositionDTO>();
+            for (CompositionEntity entity: entityList) dtoList.add(new CompositionDTO(entity));
             return dtoList;
         }
 
@@ -152,7 +152,7 @@ public class UserService {
 
         @Transactional
         public void addPlayerToComposition(Integer compositionID, Integer playerID) {
-            TeamCompositionMembershipEntity membership = new TeamCompositionMembershipEntity();
+            CompositionMembershipEntity membership = new CompositionMembershipEntity();
             membership.setComposition(teamCompositionDAO.findByID(compositionID));
             membership.setPlayer(playerDAO.findByID(playerID));
 

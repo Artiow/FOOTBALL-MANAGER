@@ -1,19 +1,19 @@
 package ru.vldf.sportsportal.dao.generic.definite.tourney;
 
-import ru.vldf.sportsportal.domain.tourney.TeamCompositionStatusEntity;
+import ru.vldf.sportsportal.domain.tourney.CompositionStatusEntity;
 
 import java.util.List;
 
 public interface TeamCompositionStatusDAO {
 
-    Integer save(TeamCompositionStatusEntity status);
+    Integer save(CompositionStatusEntity status);
 
 //    ==================================================================================
 //    === FIND
 
-    TeamCompositionStatusEntity findByID(Integer id);
+    CompositionStatusEntity findByID(Integer id);
 
-    TeamCompositionStatusEntity findByCode(String code);
+    CompositionStatusEntity findByCode(String code);
 
-    List<TeamCompositionStatusEntity> findAll();
+    List<CompositionStatusEntity> findAll();
 }

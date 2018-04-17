@@ -13,7 +13,7 @@ public class TourneyEntity {
 
     private TourneyStatusEntity status;
 
-    private Collection<TeamCompositionEntity> compositions;
+    private Collection<CompositionEntity> compositions;
 
     public TourneyEntity() {
 
@@ -51,11 +51,11 @@ public class TourneyEntity {
     }
 
     @OneToMany(mappedBy = "tourney")
-    public Collection<TeamCompositionEntity> getTeamCompositions() {
+    public Collection<CompositionEntity> getTeamCompositions() {
         return compositions;
     }
 
-    public void setTeamCompositions(Collection<TeamCompositionEntity> compositions) {
+    public void setTeamCompositions(Collection<CompositionEntity> compositions) {
         this.compositions = compositions;
     }
 

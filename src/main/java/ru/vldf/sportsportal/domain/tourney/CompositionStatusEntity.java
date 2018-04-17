@@ -1,31 +1,31 @@
 package ru.vldf.sportsportal.domain.tourney;
 
-import ru.vldf.sportsportal.dto.tourney.TeamCompositionStatusDTO;
+import ru.vldf.sportsportal.dto.tourney.CompositionStatusDTO;
 
 import javax.persistence.*;
 import java.util.Collection;
 
 @Entity
-@Table(name = "teamcompositionstatus", schema = "public", catalog = "sportsportal")
-public class TeamCompositionStatusEntity {
+@Table(name = "composition_status", schema = "tourney", catalog = "sportsportal")
+public class CompositionStatusEntity {
     private Integer id;
     private String code;
     private String description;
 
-    private Collection<TeamCompositionEntity> compositions;
+    private Collection<CompositionEntity> compositions;
 
-    public TeamCompositionStatusEntity() {
+    public CompositionStatusEntity() {
 
     }
 
-    public TeamCompositionStatusEntity(TeamCompositionStatusDTO statusDTO) {
+    public CompositionStatusEntity(CompositionStatusDTO statusDTO) {
         id = statusDTO.getId();
         code = statusDTO.getCode();
         description = statusDTO.getDescription();
     }
 
     @Id
-    @Column(name = "ID", nullable = false)
+    @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer getId() {
         return id;
@@ -36,7 +36,7 @@ public class TeamCompositionStatusEntity {
     }
 
     @Basic
-    @Column(name = "Code", nullable = false, length = 45)
+    @Column(name = "code", nullable = false, length = 45)
     public String getCode() {
         return code;
     }
@@ -46,7 +46,7 @@ public class TeamCompositionStatusEntity {
     }
 
     @Basic
-    @Column(name = "Description", nullable = true, length = 90)
+    @Column(name = "description", nullable = true, length = 90)
     public String getDescription() {
         return description;
     }
@@ -59,11 +59,11 @@ public class TeamCompositionStatusEntity {
 //    === ONE-TO-MANY REFERENCES
 
     @OneToMany(mappedBy = "status")
-    public Collection<TeamCompositionEntity> getCompositions() {
+    public Collection<CompositionEntity> getCompositions() {
         return compositions;
     }
 
-    public void setCompositions(Collection<TeamCompositionEntity> compositions) {
+    public void setCompositions(Collection<CompositionEntity> compositions) {
         this.compositions = compositions;
     }
 
@@ -75,13 +75,21 @@ public class TeamCompositionStatusEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        TeamCompositionStatusEntity that = (TeamCompositionStatusEntity) o;
+        CompositionStatusEntity that = (CompositionStatusEntity) o;
 
-        return id.equals(that.id);
+        return id != null ? id.equals(that.id) : that.id == null;
     }
 
     @Override
     public int hashCode() {
-        return id.hashCode();
+        return id != null ? id.hashCode() : 0;
+    }
+
+    @Override
+    public String toString() {
+        return "CompositionStatusEntity{" +
+                "id=" + id +
+                ", code='" + code + '\'' +
+                '}';
     }
 }

@@ -7,15 +7,15 @@ import javax.persistence.*;
 import java.util.Collection;
 
 @Entity
-@Table(name = "Team", schema = "public", catalog = "sportsportal")
+@Table(name = "team", schema = "tourney", catalog = "sportsportal")
 public class TeamEntity {
     private Integer id;
     private String name;
 
-    private UserEntity captain;
     private TeamStatusEntity status;
+    private UserEntity captain;
 
-    private Collection<TeamCompositionEntity> teamCompositions;
+    private Collection<CompositionEntity> compositions;
 
     public TeamEntity() {
 
@@ -30,7 +30,7 @@ public class TeamEntity {
     }
 
     @Id
-    @Column(name = "ID", nullable = false)
+    @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer getId() {
         return id;
@@ -41,7 +41,7 @@ public class TeamEntity {
     }
 
     @Basic
-    @Column(name = "Name", nullable = false, length = 45)
+    @Column(name = "name", nullable = false, length = 45)
     public String getName() {
         return name;
     }
@@ -54,12 +54,12 @@ public class TeamEntity {
 //    === ONE-TO-MANY REFERENCES
 
     @OneToMany(mappedBy = "team")
-    public Collection<TeamCompositionEntity> getTeamCompositions() {
-        return teamCompositions;
+    public Collection<CompositionEntity> getCompositions() {
+        return compositions;
     }
 
-    public void setTeamCompositions(Collection<TeamCompositionEntity> teamCompositionsById) {
-        this.teamCompositions = teamCompositionsById;
+    public void setCompositions(Collection<CompositionEntity> teamCompositionsById) {
+        this.compositions = teamCompositionsById;
     }
 
 //    ==================================================================================
@@ -67,8 +67,8 @@ public class TeamEntity {
 
     @ManyToOne
     @JoinColumn(
-            name = "Captain_ID",
-            referencedColumnName = "ID",
+            name = "captain_id",
+            referencedColumnName = "id",
             nullable = false
     )
     public UserEntity getCaptain() {
@@ -81,8 +81,8 @@ public class TeamEntity {
 
     @ManyToOne
     @JoinColumn(
-            name = "Status_ID",
-            referencedColumnName = "ID",
+            name = "status_id",
+            referencedColumnName = "id",
             nullable = false
     )
     public TeamStatusEntity getStatus() {
@@ -103,16 +103,19 @@ public class TeamEntity {
 
         TeamEntity that = (TeamEntity) o;
 
-        return id.equals(that.id);
+        return id != null ? id.equals(that.id) : that.id == null;
     }
 
     @Override
     public int hashCode() {
-        return id.hashCode();
+        return id != null ? id.hashCode() : 0;
     }
 
     @Override
     public String toString() {
-        return name;
+        return "TeamEntity{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

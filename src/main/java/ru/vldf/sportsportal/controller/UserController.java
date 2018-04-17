@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-import ru.vldf.sportsportal.dto.tourney.TeamCompositionDTO;
+import ru.vldf.sportsportal.dto.tourney.CompositionDTO;
 import ru.vldf.sportsportal.dto.tourney.TeamDTO;
 import ru.vldf.sportsportal.dto.tourney.PlayerDTO;
 import ru.vldf.sportsportal.dto.tourney.TourneyDTO;
@@ -226,7 +226,7 @@ public class UserController {
         TeamDTO teamDTO = userTourneyService.getTeam(id);
         if (teamDTO == null) return "redirect:/xxx" + id; //not user's team
 
-        List<TeamCompositionDTO> list = userTourneyService.getRecruitingCompositions(id);
+        List<CompositionDTO> list = userTourneyService.getRecruitingCompositions(id);
         if (list == null) return "redirect:/xxx" + id; //TODO: WORKAROUND!!!
 
         Integer compositionID = list.get(0).getId(); //TODO: remove .get(0)

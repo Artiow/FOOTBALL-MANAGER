@@ -234,12 +234,12 @@ public class AdminService {
     }
 
     @Transactional(readOnly = true)
-    public List<TeamCompositionDTO> getTeamCompositions(TourneyDTO tourney) {
-        List<TeamCompositionEntity> entityList = teamCompositionDAO.findByTourney(tourney.getId());
+    public List<CompositionDTO> getTeamCompositions(TourneyDTO tourney) {
+        List<CompositionEntity> entityList = teamCompositionDAO.findByTourney(tourney.getId());
         if (entityList == null) return null;
 
-        List<TeamCompositionDTO> dtoList = new ArrayList<TeamCompositionDTO>();
-        for (TeamCompositionEntity entity: entityList) dtoList.add(new TeamCompositionDTO(entity));
+        List<CompositionDTO> dtoList = new ArrayList<CompositionDTO>();
+        for (CompositionEntity entity: entityList) dtoList.add(new CompositionDTO(entity));
         return dtoList;
     }
 
@@ -252,15 +252,15 @@ public class AdminService {
         String COMPOSITION_RECRUITING_CODE = "COMPOSITION_RECRUITING";
 
         TeamStatusEntity teamStatus = teamStatusDAO.findByCode(TEAM_INVITE_CODE);
-        TeamCompositionStatusEntity compositionStatus = teamCompositionStatusDAO.findByCode(COMPOSITION_RECRUITING_CODE);
+        CompositionStatusEntity compositionStatus = teamCompositionStatusDAO.findByCode(COMPOSITION_RECRUITING_CODE);
 
         for (Integer teamID: teamsID) {
             TeamEntity team = teamDAO.findByID(teamID);
 
-            TeamCompositionDTO compositionDTO = new TeamCompositionDTO();
-            compositionDTO.setTeamName(team.getName());
+            CompositionDTO compositionDTO = new CompositionDTO();
+            compositionDTO.setName(team.getName());
 
-            teamCompositionDAO.save(new TeamCompositionEntity(compositionDTO, team, tourney, compositionStatus));
+            teamCompositionDAO.save(new CompositionEntity(compositionDTO, team, tourney, compositionStatus));
             teamDAO.updateStatusByID(teamID, teamStatus);
         }
     }

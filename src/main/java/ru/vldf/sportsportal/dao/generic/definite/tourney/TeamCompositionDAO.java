@@ -1,7 +1,7 @@
 package ru.vldf.sportsportal.dao.generic.definite.tourney;
 
-import ru.vldf.sportsportal.domain.tourney.TeamCompositionEntity;
-import ru.vldf.sportsportal.domain.tourney.TeamCompositionStatusEntity;
+import ru.vldf.sportsportal.domain.tourney.CompositionEntity;
+import ru.vldf.sportsportal.domain.tourney.CompositionStatusEntity;
 import ru.vldf.sportsportal.domain.tourney.TeamEntity;
 import ru.vldf.sportsportal.domain.tourney.TourneyEntity;
 
@@ -9,34 +9,34 @@ import java.util.List;
 
 public interface TeamCompositionDAO {
 
-    Integer save(TeamCompositionEntity composition);
+    Integer save(CompositionEntity composition);
 
 //    ==================================================================================
 //    === FIND
 
-    TeamCompositionEntity findByID(Integer id);
+    CompositionEntity findByID(Integer id);
 
-    List<TeamCompositionEntity> findByTeam(Integer teamID);
+    List<CompositionEntity> findByTeam(Integer teamID);
 
-    List<TeamCompositionEntity> findByTeam(TeamEntity team);
+    List<CompositionEntity> findByTeam(TeamEntity team);
 
-    List<TeamCompositionEntity> findByTourney(Integer tourneyID);
+    List<CompositionEntity> findByTourney(Integer tourneyID);
 
-    List<TeamCompositionEntity> findByTourney(TourneyEntity tourney);
+    List<CompositionEntity> findByTourney(TourneyEntity tourney);
 
-    List<TeamCompositionEntity> findAll();
+    List<CompositionEntity> findAll();
 
 //    ==================================================================================
 //    === UPDATE
 
-    Integer updateStatusByID(Integer id, TeamCompositionStatusEntity status);
+    Integer updateStatusByID(Integer id, CompositionStatusEntity status);
 
 //    ==================================================================================
 //    === SPECIAL
 
-    List<TeamCompositionEntity> findByTeamAndStatus(Integer teamID, Integer statusID);
+    List<CompositionEntity> findByTeamAndStatus(Integer teamID, Integer statusID);
 
-    List<TeamCompositionEntity> findByTeamAndStatus(Integer teamID, String statusCode);
+    List<CompositionEntity> findByTeamAndStatus(Integer teamID, String statusCode);
 
-    List<TeamCompositionEntity> findByTeamAndStatus(TeamEntity team, TeamCompositionStatusEntity status);
+    List<CompositionEntity> findByTeamAndStatus(TeamEntity team, CompositionStatusEntity status);
 }

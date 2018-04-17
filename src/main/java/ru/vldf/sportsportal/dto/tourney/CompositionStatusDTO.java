@@ -1,44 +1,44 @@
 package ru.vldf.sportsportal.dto.tourney;
 
-import ru.vldf.sportsportal.domain.tourney.TeamStatusEntity;
+import ru.vldf.sportsportal.domain.tourney.CompositionStatusEntity;
 
-public class TeamStatusDTO {
+public class CompositionStatusDTO {
     private Integer id;
     private String code;
     private String description;
 
-    public TeamStatusDTO() {
+    public CompositionStatusDTO() {
 
     }
 
-    public TeamStatusDTO(TeamStatusEntity teamTourneyStatus) {
-        id = teamTourneyStatus.getId();
-        code = teamTourneyStatus.getCode();
-        description = teamTourneyStatus.getDescription();
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
+    public CompositionStatusDTO(CompositionStatusEntity status) {
+        id = status.getId();
+        code = status.getCode();
+        description = status.getDescription();
     }
 
     public Integer getId() {
         return id;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getCode() {
         return code;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getDescription() {
         return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @Override
@@ -46,7 +46,7 @@ public class TeamStatusDTO {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        TeamStatusDTO that = (TeamStatusDTO) o;
+        CompositionStatusDTO that = (CompositionStatusDTO) o;
 
         return id != null ? id.equals(that.id) : that.id == null;
     }
@@ -58,7 +58,7 @@ public class TeamStatusDTO {
 
     @Override
     public String toString() {
-        return "TeamStatusDTO{" +
+        return "CompositionStatusDTO{" +
                 "id=" + id +
                 ", code='" + code + '\'' +
                 '}';

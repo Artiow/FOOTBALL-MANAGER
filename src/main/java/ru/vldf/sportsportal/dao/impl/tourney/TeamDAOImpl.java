@@ -50,7 +50,7 @@ public class TeamDAOImpl extends AbstractDAOImpl<TeamEntity, Integer> implements
 
     public List<TeamEntity> findByTourney(Integer tourneyID) {
         List teams = getSession()
-                .createQuery("select eTeam from TeamEntity as eTeam, TeamCompositionEntity as eComposition where eComposition.team = eTeam and eComposition.tourney.id=?")
+                .createQuery("select eTeam from TeamEntity as eTeam, CompositionEntity as eComposition where eComposition.team = eTeam and eComposition.tourney.id=?")
                 .setParameter(0, tourneyID)
                 .list();
 
@@ -60,7 +60,7 @@ public class TeamDAOImpl extends AbstractDAOImpl<TeamEntity, Integer> implements
 
     public List<TeamEntity> findByTourney(TourneyEntity tourney) {
         List teams = getSession()
-                .createQuery("select eTeam from TeamEntity as eTeam, TeamCompositionEntity as eComposition where eComposition.team = eTeam and eComposition.tourney=?")
+                .createQuery("select eTeam from TeamEntity as eTeam, CompositionEntity as eComposition where eComposition.team = eTeam and eComposition.tourney=?")
                 .setParameter(0, tourney)
                 .list();
 

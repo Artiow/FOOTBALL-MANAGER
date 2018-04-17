@@ -7,8 +7,8 @@ public class TeamDTO {
     private Integer id;
     private String name;
 
-    private UserDTO captain;
     private TeamStatusDTO status;
+    private UserDTO captain;
 
     public TeamDTO() {
 
@@ -18,8 +18,8 @@ public class TeamDTO {
         id = team.getId();
         name = team.getName();
 
-        if (team.getCaptain() != null) captain = new UserDTO(team.getCaptain());
         if (team.getCaptain() != null) status = new TeamStatusDTO(team.getStatus());
+        if (team.getCaptain() != null) captain = new UserDTO(team.getCaptain());
     }
 
     public void setId(Integer id) {
@@ -71,6 +71,9 @@ public class TeamDTO {
 
     @Override
     public String toString() {
-        return name;
+        return "TeamDTO{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

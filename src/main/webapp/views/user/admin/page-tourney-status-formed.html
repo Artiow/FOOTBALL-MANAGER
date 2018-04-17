@@ -83,7 +83,7 @@
                     <tr th:each="teamCompositionItem: ${teamCompositionList}" th:object="${teamCompositionItem}">
                         <td>
                             <a th:href="*{'/xxx' + team.id}">
-                                <p th:text="*{teamName}">NAME</p>
+                                <p th:text="*{name}">NAME</p>
                             </a>
                         </td>
                         <td th:if="*{team.status.code == 'TEAM_INVITED'}" class="warning">

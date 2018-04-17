@@ -89,6 +89,7 @@
                             <h3 style="margin: 0" th:text="*{surname}">SURNAME</h3>
                             <h3 style="margin: 0" th:text="*{name}">NAME</h3>
                             <h3 style="margin: 0" th:text="*{patronymic}">PATRONYMIC</h3>
+                            <p style="margin: 0; margin-top: 5px" th:text="*{birthday.toString()}">BIRTHDAY</p>
                             <br/>
                             <a class="btn btn-danger" th:href="${'/pp/admin/check-user/duplicate' + duplicate.id + '/delete'}">Удалить</a>
                             <a class="btn btn-success" th:href="${'/pp/admin/check-user/user' + unconfirmedUser.id + '/bind/duplicate' + duplicate.id}">Связать</a>

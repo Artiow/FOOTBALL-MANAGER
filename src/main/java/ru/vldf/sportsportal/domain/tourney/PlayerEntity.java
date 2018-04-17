@@ -17,7 +17,7 @@ public class PlayerEntity {
 
     private PlayerOwnershipEntity playerOwnership;
 
-    private Collection<TeamCompositionMembershipEntity> memberships;
+    private Collection<CompositionMembershipEntity> memberships;
 
     public PlayerEntity() {
 
@@ -97,11 +97,11 @@ public class PlayerEntity {
 //    === ONE-TO-MANY REFERENCES
 
     @OneToMany(mappedBy = "player")
-    public Collection<TeamCompositionMembershipEntity> getMemberships() {
+    public Collection<CompositionMembershipEntity> getMemberships() {
         return memberships;
     }
 
-    public void setMemberships(Collection<TeamCompositionMembershipEntity> memberships) {
+    public void setMemberships(Collection<CompositionMembershipEntity> memberships) {
         this.memberships = memberships;
     }
 

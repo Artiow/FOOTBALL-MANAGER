@@ -3,29 +3,29 @@ package ru.vldf.sportsportal.dao.impl.tourney;
 import org.springframework.stereotype.Repository;
 import ru.vldf.sportsportal.dao.generic.abstrct.AbstractDAOImpl;
 import ru.vldf.sportsportal.dao.generic.definite.tourney.TeamCompositionMembershipDAO;
-import ru.vldf.sportsportal.domain.tourney.TeamCompositionMembershipEntity;
+import ru.vldf.sportsportal.domain.tourney.CompositionMembershipEntity;
 
 import java.util.List;
 
 @Repository
-public class TeamCompositionMembershipDAOImpl extends AbstractDAOImpl<TeamCompositionMembershipEntity, Integer> implements TeamCompositionMembershipDAO {
+public class TeamCompositionMembershipDAOImpl extends AbstractDAOImpl<CompositionMembershipEntity, Integer> implements TeamCompositionMembershipDAO {
     public TeamCompositionMembershipDAOImpl() {
-        super(TeamCompositionMembershipEntity.class);
+        super(CompositionMembershipEntity.class);
     }
 
     @Override
-    public Integer save(TeamCompositionMembershipEntity entity) {
+    public Integer save(CompositionMembershipEntity entity) {
         return super.save(entity);
     }
 
 //    ==================================================================================
 //    === FIND
 
-    public TeamCompositionMembershipEntity findByID(Integer id) {
+    public CompositionMembershipEntity findByID(Integer id) {
         return super.get(id);
     }
 
-    public List<TeamCompositionMembershipEntity> findAll() {
+    public List<CompositionMembershipEntity> findAll() {
         return super.list();
     }
 
@@ -34,14 +34,14 @@ public class TeamCompositionMembershipDAOImpl extends AbstractDAOImpl<TeamCompos
 
     public void deleteByID(Integer id) {
         getSession()
-                .createQuery("delete TeamCompositionMembershipEntity where id=?")
+                .createQuery("delete CompositionMembershipEntity where id=?")
                 .setParameter(0, id)
                 .executeUpdate();
     }
 
     public void deleteByMembership(Integer playerID, Integer compositionID) {
         getSession()
-                .createQuery("delete TeamCompositionMembershipEntity where player.id=? and composition.id=?")
+                .createQuery("delete CompositionMembershipEntity where player.id=? and composition.id=?")
                 .setParameter(0, playerID)
                 .setParameter(1, compositionID)
                 .executeUpdate();
