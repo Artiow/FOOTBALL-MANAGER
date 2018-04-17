@@ -59,11 +59,10 @@
     </div>
 </nav>
 
-<!--TODO: style clear!-->
 <main style="min-height: 600px">
     <div class="container">
         <div class="row">
-            <div class="col-md-6 col-md-offset-1" th:object="${unconfirmedUser}">
+            <div class="col-md-6 col-md-offset-1" th:object="${uUser}">
                 <h2>Заявка:</h2>
                 <h3 style="margin-bottom: 5px" th:text="*{surname + ' ' + name + ' ' + patronymic}">SURNAME NAME PATRONYMIC</h3>
                 <div style="padding: 10px 0 20px 0" class="row">
@@ -92,7 +91,7 @@
                             <p style="margin: 0; margin-top: 5px" th:text="*{birthday.toString()}">BIRTHDAY</p>
                             <br/>
                             <a class="btn btn-danger" th:href="${'/pp/admin/check-user/duplicate' + duplicate.id + '/delete'}">Удалить</a>
-                            <a class="btn btn-success" th:href="${'/pp/admin/check-user/user' + unconfirmedUser.id + '/bind/duplicate' + duplicate.id}">Связать</a>
+                            <a class="btn btn-success" th:href="${'/pp/admin/check-user/user' + uUser.id + '/bind/duplicate' + duplicate.id}">Связать</a>
                         </td>
                     </tr>
                 </table>

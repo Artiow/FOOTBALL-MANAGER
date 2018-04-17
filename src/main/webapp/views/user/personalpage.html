@@ -96,7 +96,7 @@
     </div>
 </main>
 
-<!--TODO: tmp solution!-->
+<!--TODO: tmp solution! remove this!-->
 <main style="min-height: 400px" class="main-tourneypage pic-href" th:if="${(authUser.role.code == 'ROLE_REJECTED') || (authUser.role.code == 'ROLE_UNCONFIRMED')}"></main>
 <main style="min-height: 400px" class="main-tourneypage pic-href" th:unless="${(authUser.role.code == 'ROLE_REJECTED') || (authUser.role.code == 'ROLE_UNCONFIRMED')}">
     <div class="container">

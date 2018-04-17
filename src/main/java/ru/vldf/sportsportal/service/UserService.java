@@ -121,9 +121,9 @@ public class UserService {
         }
 
         @Transactional(readOnly = true)
-        public List<PlayerDTO> getPlayers(Integer compositionID) {
+        public List<PlayerDTO> getPlayers(CompositionDTO composition) {
 //            TODO: optimize this
-            List<PlayerEntity> entityList = playerDAO.findByTeamComposition(compositionID);
+            List<PlayerEntity> entityList = playerDAO.findByTeamComposition(composition.getId());
 
             if (entityList == null) return null;
             List<PlayerDTO> dtoList = new ArrayList<PlayerDTO>();
