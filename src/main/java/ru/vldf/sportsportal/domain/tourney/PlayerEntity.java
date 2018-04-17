@@ -1,6 +1,5 @@
 package ru.vldf.sportsportal.domain.tourney;
 
-import ru.vldf.sportsportal.dto.tourney.TeamPlayerDTO;
 import ru.vldf.sportsportal.domain.common.UserEntity;
 
 import javax.persistence.*;
@@ -8,43 +7,31 @@ import java.sql.Date;
 import java.util.Collection;
 
 @Entity
-@Table(name = "TeamPlayer", schema = "public", catalog = "sportsportal")
-public class TeamPlayerEntity {
+@Table(name = "player", schema = "tourney", catalog = "sportsportal")
+public class PlayerEntity {
     private Integer id;
     private String name;
     private String surname;
     private String patronymic;
     private Date birthday;
 
-    private UserEntity user;
+    private PlayerOwnershipEntity playerOwnership;
 
     private Collection<TeamCompositionMembershipEntity> memberships;
 
-    public TeamPlayerEntity() {
+    public PlayerEntity() {
 
     }
 
-    public TeamPlayerEntity(UserEntity user) {
+    public PlayerEntity(UserEntity user) {
         name = user.getName();
         surname = user.getSurname();
         patronymic = user.getPatronymic();
         birthday = (Date) user.getBirthday().clone();
-
-        this.user = user;
-    }
-
-    public TeamPlayerEntity(TeamPlayerDTO playerDTO, UserEntity user) {
-        id = playerDTO.getId();
-        name = playerDTO.getName();
-        surname = playerDTO.getSurname();
-        patronymic = playerDTO.getPatronymic();
-        birthday = (Date) playerDTO.getBirthday().clone();
-
-        this.user = user;
     }
 
     @Id
-    @Column(name = "ID", nullable = false)
+    @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer getId() {
         return id;
@@ -55,7 +42,7 @@ public class TeamPlayerEntity {
     }
 
     @Basic
-    @Column(name = "Name", nullable = false, length = 45)
+    @Column(name = "name", nullable = false, length = 45)
     public String getName() {
         return name;
     }
@@ -65,7 +52,7 @@ public class TeamPlayerEntity {
     }
 
     @Basic
-    @Column(name = "Surname", nullable = false, length = 45)
+    @Column(name = "surname", nullable = false, length = 45)
     public String getSurname() {
         return surname;
     }
@@ -75,7 +62,7 @@ public class TeamPlayerEntity {
     }
 
     @Basic
-    @Column(name = "Patronymic", length = 45)
+    @Column(name = "patronymic", nullable = true, length = 45)
     public String getPatronymic() {
         return patronymic;
     }
@@ -85,7 +72,7 @@ public class TeamPlayerEntity {
     }
 
     @Basic
-    @Column(name = "Birthday", nullable = false)
+    @Column(name = "birthday", nullable = false)
     public Date getBirthday() {
         return birthday;
     }
@@ -95,15 +82,15 @@ public class TeamPlayerEntity {
     }
 
 //    ==================================================================================
-//    === ONE-TO-MANY REFERENCES
+//    === ONE-TO-ONE REFERENCES
 
     @OneToOne(mappedBy = "player")
-    public UserEntity getUser() {
-        return user;
+    public PlayerOwnershipEntity getPlayerOwnership() {
+        return playerOwnership;
     }
 
-    public void setUser(UserEntity user) {
-        this.user = user;
+    public void setPlayerOwnership(PlayerOwnershipEntity playerOwnership) {
+        this.playerOwnership = playerOwnership;
     }
 
 //    ==================================================================================
@@ -126,18 +113,23 @@ public class TeamPlayerEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        TeamPlayerEntity that = (TeamPlayerEntity) o;
+        PlayerEntity that = (PlayerEntity) o;
 
-        return id.equals(that.id);
+        return id != null ? id.equals(that.id) : that.id == null;
     }
 
     @Override
     public int hashCode() {
-        return id.hashCode();
+        return id != null ? id.hashCode() : 0;
     }
 
     @Override
     public String toString() {
-        return name + ' ' + surname + ' ' + patronymic;
+        return "PlayerEntity{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", patronymic='" + patronymic + '\'' +
+                '}';
     }
 }

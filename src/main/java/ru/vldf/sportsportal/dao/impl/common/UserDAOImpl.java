@@ -1,9 +1,9 @@
-package ru.vldf.sportsportal.dao.impl.user;
+package ru.vldf.sportsportal.dao.impl.common;
 
 import org.springframework.stereotype.Repository;
-import ru.vldf.sportsportal.dao.generic.definite.user.UserDAO;
+import ru.vldf.sportsportal.dao.generic.definite.common.UserDAO;
 import ru.vldf.sportsportal.dao.generic.abstrct.AbstractDAOImpl;
-import ru.vldf.sportsportal.domain.tourney.TeamPlayerEntity;
+import ru.vldf.sportsportal.domain.tourney.PlayerEntity;
 import ru.vldf.sportsportal.domain.common.UserRoleEntity;
 import ru.vldf.sportsportal.domain.common.UserEntity;
 
@@ -114,14 +114,6 @@ public class UserDAOImpl extends AbstractDAOImpl<UserEntity, Integer> implements
         return getSession()
                 .createQuery("update UserEntity set role=? where id=?")
                 .setParameter(0, role)
-                .setParameter(1, id)
-                .executeUpdate();
-    }
-
-    public Integer updateTeamPlayerByID(Integer id, TeamPlayerEntity player) {
-        return getSession()
-                .createQuery("update UserEntity set player=? where id=?")
-                .setParameter(0, player)
                 .setParameter(1, id)
                 .executeUpdate();
     }

@@ -4,10 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.vldf.sportsportal.dao.generic.definite.tourney.*;
-import ru.vldf.sportsportal.dao.generic.definite.user.UserDAO;
+import ru.vldf.sportsportal.dao.generic.definite.common.UserDAO;
 import ru.vldf.sportsportal.dto.tourney.TeamCompositionDTO;
 import ru.vldf.sportsportal.dto.tourney.TeamDTO;
-import ru.vldf.sportsportal.dto.tourney.TeamPlayerDTO;
+import ru.vldf.sportsportal.dto.tourney.PlayerDTO;
 import ru.vldf.sportsportal.dto.common.UserDTO;
 import ru.vldf.sportsportal.domain.tourney.*;
 import ru.vldf.sportsportal.domain.common.UserEntity;
@@ -34,7 +34,7 @@ public class UserService {
     public class UserTourneyService {
         private TeamDAO teamDAO;
         private TeamStatusDAO teamStatusDAO;
-        private TeamPlayerDAO teamPlayerDAO;
+        private PlayerDAO playerDAO;
         private TeamCompositionDAO teamCompositionDAO;
         private TeamCompositionStatusDAO teamCompositionStatusDAO;
         private TeamCompositionMembershipDAO teamCompositionMembershipDAO;
@@ -50,8 +50,8 @@ public class UserService {
         }
 
         @Autowired
-        public void setTeamPlayerDAO(TeamPlayerDAO teamPlayerDAO) {
-            this.teamPlayerDAO = teamPlayerDAO;
+        public void setTeamPlayerDAO(PlayerDAO playerDAO) {
+            this.playerDAO = playerDAO;
         }
 
         @Autowired
@@ -121,24 +121,24 @@ public class UserService {
         }
 
         @Transactional(readOnly = true)
-        public List<TeamPlayerDTO> getPlayers(Integer compositionID) {
+        public List<PlayerDTO> getPlayers(Integer compositionID) {
 //            TODO: optimize this
-            List<TeamPlayerEntity> entityList = teamPlayerDAO.findByTeamComposition(compositionID);
+            List<PlayerEntity> entityList = playerDAO.findByTeamComposition(compositionID);
 
             if (entityList == null) return null;
-            List<TeamPlayerDTO> dtoList = new ArrayList<TeamPlayerDTO>();
-            for (TeamPlayerEntity entity : entityList) dtoList.add(new TeamPlayerDTO(entity));
+            List<PlayerDTO> dtoList = new ArrayList<PlayerDTO>();
+            for (PlayerEntity entity : entityList) dtoList.add(new PlayerDTO(entity));
             return dtoList;
         }
 
         @Transactional(readOnly = true)
-        public List<TeamPlayerDTO> getPlayers(String name, String surname, String patronymic) {
+        public List<PlayerDTO> getPlayers(String name, String surname, String patronymic) {
 //            TODO: optimize this
-            List<TeamPlayerEntity> entityList = teamPlayerDAO.findByFullName(name, surname, patronymic);
+            List<PlayerEntity> entityList = playerDAO.findByFullName(name, surname, patronymic);
 
             if (entityList == null) return null;
-            List<TeamPlayerDTO> dtoList = new ArrayList<TeamPlayerDTO>();
-            for (TeamPlayerEntity entity: entityList) dtoList.add(new TeamPlayerDTO(entity));
+            List<PlayerDTO> dtoList = new ArrayList<PlayerDTO>();
+            for (PlayerEntity entity: entityList) dtoList.add(new PlayerDTO(entity));
             return dtoList;
         }
 
@@ -154,7 +154,7 @@ public class UserService {
         public void addPlayerToComposition(Integer compositionID, Integer playerID) {
             TeamCompositionMembershipEntity membership = new TeamCompositionMembershipEntity();
             membership.setComposition(teamCompositionDAO.findByID(compositionID));
-            membership.setPlayer(teamPlayerDAO.findByID(playerID));
+            membership.setPlayer(playerDAO.findByID(playerID));
 
             teamCompositionMembershipDAO.save(membership);
         }

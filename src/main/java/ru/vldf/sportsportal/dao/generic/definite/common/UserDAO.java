@@ -1,6 +1,5 @@
-package ru.vldf.sportsportal.dao.generic.definite.user;
+package ru.vldf.sportsportal.dao.generic.definite.common;
 
-import ru.vldf.sportsportal.domain.tourney.TeamPlayerEntity;
 import ru.vldf.sportsportal.domain.common.UserRoleEntity;
 import ru.vldf.sportsportal.domain.common.UserEntity;
 
@@ -35,6 +34,4 @@ public interface UserDAO {
 //    === UPDATE
 
     Integer updateRoleByID(Integer id, UserRoleEntity role);
-
-    Integer updateTeamPlayerByID(Integer id, TeamPlayerEntity player);
 }

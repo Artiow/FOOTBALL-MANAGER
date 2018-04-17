@@ -5,7 +5,7 @@ import ru.vldf.sportsportal.domain.tourney.TeamCompositionMembershipEntity;
 public class TeamCompositionMembershipDTO {
     private Integer id;
 
-    private TeamPlayerDTO player;
+    private PlayerDTO player;
     private TeamCompositionDTO composition;
 
     public TeamCompositionMembershipDTO() {
@@ -15,7 +15,7 @@ public class TeamCompositionMembershipDTO {
     public TeamCompositionMembershipDTO(TeamCompositionMembershipEntity membership) {
         id = membership.getId();
 
-        if (membership.getPlayer() != null) player = new TeamPlayerDTO(membership.getPlayer());
+        if (membership.getPlayer() != null) player = new PlayerDTO(membership.getPlayer());
         if (membership.getComposition() != null) composition = new TeamCompositionDTO(membership.getComposition());
     }
 
@@ -27,11 +27,11 @@ public class TeamCompositionMembershipDTO {
         this.id = id;
     }
 
-    public TeamPlayerDTO getPlayer() {
+    public PlayerDTO getPlayer() {
         return player;
     }
 
-    public void setPlayer(TeamPlayerDTO player) {
+    public void setPlayer(PlayerDTO player) {
         this.player = player;
     }
 

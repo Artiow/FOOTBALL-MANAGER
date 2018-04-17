@@ -1,8 +1,8 @@
-package ru.vldf.sportsportal.dao.impl.lease;
+package ru.vldf.sportsportal.dao.impl.common;
 
 import org.springframework.stereotype.Repository;
 import ru.vldf.sportsportal.dao.generic.abstrct.AbstractDAOImpl;
-import ru.vldf.sportsportal.dao.generic.definite.lease.SportDAO;
+import ru.vldf.sportsportal.dao.generic.definite.common.SportDAO;
 import ru.vldf.sportsportal.domain.common.SportEntity;
 
 import java.util.List;

@@ -40,7 +40,7 @@
         <div class="col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 col-xs-12">
             <form class="login-form" role="form" th:action="@{/registration}" th:object="${userDTO}" method="post">
                 <div class="row">
-                    <div class="col-xs-6">
+                    <div class="col-xs-5">
                         <h3>Персональные данные:</h3>
                         <div class="form-group">
                             <label class="login-label" for="input-name"><i class="fa fa-user" aria-hidden="true"></i> Имя</label>
@@ -68,7 +68,7 @@
                             <input class="form-control" id="input-email" type="email" th:field="*{email}" placeholder="email" pattern="^[-\w.]+@([A-z0-9][-A-z0-9]+\.)+[A-z]{2,4}$" required="required"/>
                         </div>
                     </div>
-                    <div class="col-xs-6">
+                    <div class="col-xs-5 col-xs-offset-1">
                         <h3>Данные авторизации:</h3>
                         <div class="form-group">
                             <label class="login-label" for="input-login"><i class="fa fa-key" aria-hidden="true"></i> Логин<br/>(5-20 лат. символов, первая буква)</label>
@@ -82,7 +82,14 @@
                             <label class="login-label" for="input-password-confirm"><i class="fa fa-lock" aria-hidden="true"></i> Повторите пароль</label>
                             <input class="form-control" id="input-password-confirm" type="password" placeholder="password" pattern=".{5,20}" required="required"/>
                         </div>
-                        <button type="submit" class="btn btn-default login-button">Зарегистрироваться</button>
+                        <div class="form-group">
+                            <!--TODO: lol-->
+                            <label class="login-label" for="check">
+                                <input id="check" type="checkbox" required="required"/> Я согласен на обработку персональных данных
+                            </label>
+                        </div>
+                        <!--TODO: fix it-->
+                        <button style="margin-top: 0" type="submit" class="btn btn-default login-button">Зарегистрироваться</button>
                     </div>
                 </div>
             </form>

@@ -1,7 +1,7 @@
-package ru.vldf.sportsportal.dao.impl.user;
+package ru.vldf.sportsportal.dao.impl.common;
 
 import org.springframework.stereotype.Repository;
-import ru.vldf.sportsportal.dao.generic.definite.user.UserRoleDAO;
+import ru.vldf.sportsportal.dao.generic.definite.common.UserRoleDAO;
 import ru.vldf.sportsportal.dao.generic.abstrct.AbstractDAOImpl;
 import ru.vldf.sportsportal.domain.common.UserRoleEntity;
 

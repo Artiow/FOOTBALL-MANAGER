@@ -1,15 +1,15 @@
 package ru.vldf.sportsportal.domain.common;
 
+import ru.vldf.sportsportal.domain.tourney.PlayerOwnershipEntity;
 import ru.vldf.sportsportal.dto.common.UserDTO;
 import ru.vldf.sportsportal.domain.tourney.TeamEntity;
-import ru.vldf.sportsportal.domain.tourney.TeamPlayerEntity;
 
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.Collection;
 
 @Entity
-@Table(name = "User", schema = "public", catalog = "sportsportal")
+@Table(name = "user", schema = "common", catalog = "sportsportal")
 public class UserEntity {
     private Integer id;
     private String login;
@@ -22,7 +22,8 @@ public class UserEntity {
     private String phone;
 
     private UserRoleEntity role;
-    private TeamPlayerEntity player;
+
+    private PlayerOwnershipEntity playerOwnership;
 
     private Collection<TeamEntity> teams;
 
@@ -44,14 +45,8 @@ public class UserEntity {
         this.role = role;
     }
 
-    public UserEntity(UserDTO user, UserRoleEntity role, TeamPlayerEntity player) {
-        this(user, role);
-
-        this.player = player;
-    }
-
     @Id
-    @Column(name = "ID", nullable = false)
+    @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer getId() {
         return id;
@@ -62,7 +57,7 @@ public class UserEntity {
     }
 
     @Basic
-    @Column(name = "Login", nullable = false, length = 45)
+    @Column(name = "login", nullable = false, length = 45)
     public String getLogin() {
         return login;
     }
@@ -72,7 +67,7 @@ public class UserEntity {
     }
 
     @Basic
-    @Column(name = "Email", nullable = false, length = 45)
+    @Column(name = "email", nullable = false, length = 45)
     public String getEmail() {
         return email;
     }
@@ -82,7 +77,7 @@ public class UserEntity {
     }
 
     @Basic
-    @Column(name = "Password", nullable = false, length = 125)
+    @Column(name = "password", nullable = false, length = 125)
     public String getPassword() {
         return password;
     }
@@ -92,7 +87,7 @@ public class UserEntity {
     }
 
     @Basic
-    @Column(name = "Name", nullable = false, length = 45)
+    @Column(name = "name", nullable = false, length = 45)
     public String getName() {
         return name;
     }
@@ -102,7 +97,7 @@ public class UserEntity {
     }
 
     @Basic
-    @Column(name = "Surname", nullable = false, length = 45)
+    @Column(name = "surname", nullable = false, length = 45)
     public String getSurname() {
         return surname;
     }
@@ -112,7 +107,7 @@ public class UserEntity {
     }
 
     @Basic
-    @Column(name = "Patronymic", nullable = true, length = 45)
+    @Column(name = "patronymic", nullable = true, length = 45)
     public String getPatronymic() {
         return patronymic;
     }
@@ -122,7 +117,7 @@ public class UserEntity {
     }
 
     @Basic
-    @Column(name = "Birthday", nullable = false)
+    @Column(name = "birthday", nullable = false)
     public Date getBirthday() {
         return birthday;
     }
@@ -132,7 +127,7 @@ public class UserEntity {
     }
 
     @Basic
-    @Column(name = "Phone", nullable = false, length = 16)
+    @Column(name = "phone", nullable = false, length = 16)
     public String getPhone() {
         return phone;
     }
@@ -144,21 +139,14 @@ public class UserEntity {
 //    ==================================================================================
 //    === ONE-TO-ONE REFERENCES
 
-    @OneToOne
-    @JoinColumn(
-            name = "TeamPlayer_ID",
-            referencedColumnName = "ID"
-    )
-    public TeamPlayerEntity getPlayer() {
-        return player;
+    @OneToOne(mappedBy = "user")
+    public PlayerOwnershipEntity getPlayerOwnership() {
+        return playerOwnership;
     }
 
-    public void setPlayer(TeamPlayerEntity player) {
-        this.player = player;
+    public void setPlayerOwnership(PlayerOwnershipEntity playerOwnership) {
+        this.playerOwnership = playerOwnership;
     }
-
-//    ==================================================================================
-//    === ONE-TO-MANY REFERENCES
 
     @OneToMany(mappedBy = "captain")
     public Collection<TeamEntity> getTeams() {
@@ -175,8 +163,8 @@ public class UserEntity {
 
     @ManyToOne
     @JoinColumn(
-            name = "UserRole_ID",
-            referencedColumnName = "ID",
+            name = "role_id",
+            referencedColumnName = "id",
             nullable = false
     )
     public UserRoleEntity getRole() {
@@ -197,16 +185,19 @@ public class UserEntity {
 
         UserEntity that = (UserEntity) o;
 
-        return id.equals(that.id);
+        return id != null ? id.equals(that.id) : that.id == null;
     }
 
     @Override
     public int hashCode() {
-        return id.hashCode();
+        return id != null ? id.hashCode() : 0;
     }
 
     @Override
     public String toString() {
-        return login;
+        return "UserEntity{" +
+                "id=" + id +
+                ", login='" + login + '\'' +
+                '}';
     }
 }

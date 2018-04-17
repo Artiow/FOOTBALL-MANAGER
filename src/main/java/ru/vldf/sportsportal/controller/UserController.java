@@ -6,7 +6,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import ru.vldf.sportsportal.dto.tourney.TeamCompositionDTO;
 import ru.vldf.sportsportal.dto.tourney.TeamDTO;
-import ru.vldf.sportsportal.dto.tourney.TeamPlayerDTO;
+import ru.vldf.sportsportal.dto.tourney.PlayerDTO;
 import ru.vldf.sportsportal.dto.tourney.TourneyDTO;
 import ru.vldf.sportsportal.dto.common.UserDTO;
 import ru.vldf.sportsportal.service.AdminService;
@@ -80,7 +80,7 @@ public class UserController {
     @GetMapping(value = {"/pp/admin/check-user/user{id}"})
     public String toCheckUserPage(@PathVariable("id") int id, ModelMap map) {
         UserDTO user = adminService.getUser(id);
-        List<TeamPlayerDTO> duplicates = adminService.getDuplicate(user);
+        List<PlayerDTO> duplicates = adminService.getDuplicate(user);
 
         map
                 .addAttribute("duplicates", duplicates)
@@ -231,7 +231,7 @@ public class UserController {
 
         Integer compositionID = list.get(0).getId(); //TODO: remove .get(0)
 
-        List<TeamPlayerDTO> playerDTOList = userTourneyService
+        List<PlayerDTO> playerDTOList = userTourneyService
                 .getPlayers(compositionID);
 
         Integer maxSize = 18;
@@ -241,7 +241,7 @@ public class UserController {
 
         map
                 .addAttribute("teamDTO", teamDTO)
-                .addAttribute("playerDTO", new TeamPlayerDTO())
+                .addAttribute("playerDTO", new PlayerDTO())
                 .addAttribute("currentPlayerDTOList", playerDTOList)
                 .addAttribute("maxSize", maxSize)
                 .addAttribute("currentSize", currentSize)
@@ -253,7 +253,7 @@ public class UserController {
     @PostMapping(value = {"/pp/tourney/team{id}/composition/player/found"})
     public String foundTeamPlayer(
             @PathVariable("id") int teamID, ModelMap map,
-            @ModelAttribute(value = "playerDTO") TeamPlayerDTO playerDTO
+            @ModelAttribute(value = "playerDTO") PlayerDTO playerDTO
     ) {
 
         map.addAttribute("foundedPlayerDTOList", userTourneyService.getPlayers(

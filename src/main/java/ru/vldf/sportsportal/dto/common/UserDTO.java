@@ -1,6 +1,5 @@
 package ru.vldf.sportsportal.dto.common;
 
-import ru.vldf.sportsportal.dto.tourney.TeamPlayerDTO;
 import ru.vldf.sportsportal.domain.common.UserEntity;
 
 import java.sql.Date;
@@ -17,7 +16,6 @@ public class UserDTO {
     private String phone;
 
     private UserRoleDTO role;
-    private TeamPlayerDTO player;
 
     public UserDTO() {
 
@@ -35,7 +33,6 @@ public class UserDTO {
         phone = user.getPhone();
 
         if (user.getRole() != null) role = new UserRoleDTO(user.getRole());
-        if (user.getPlayer() != null) player = new TeamPlayerDTO(user.getPlayer());
     }
 
     public Integer getId() {
@@ -118,14 +115,6 @@ public class UserDTO {
         this.birthday = birthday;
     }
 
-    public TeamPlayerDTO getPlayer() {
-        return player;
-    }
-
-    public void setPlayer(TeamPlayerDTO player) {
-        this.player = player;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -143,6 +132,9 @@ public class UserDTO {
 
     @Override
     public String toString() {
-        return login;
+        return "UserDTO{" +
+                "id=" + id +
+                ", login='" + login + '\'' +
+                '}';
     }
 }

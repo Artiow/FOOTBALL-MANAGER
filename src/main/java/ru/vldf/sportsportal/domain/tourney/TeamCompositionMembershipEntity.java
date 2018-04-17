@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class TeamCompositionMembershipEntity {
     private Integer id;
 
-    private TeamPlayerEntity player;
+    private PlayerEntity player;
     private TeamCompositionEntity composition;
 
     public TeamCompositionMembershipEntity() {
@@ -31,11 +31,11 @@ public class TeamCompositionMembershipEntity {
 
     @ManyToOne
     @JoinColumn(name = "TeamPlayer_ID", referencedColumnName = "ID", nullable = false)
-    public TeamPlayerEntity getPlayer() {
+    public PlayerEntity getPlayer() {
         return player;
     }
 
-    public void setPlayer(TeamPlayerEntity player) {
+    public void setPlayer(PlayerEntity player) {
         this.player = player;
     }
 

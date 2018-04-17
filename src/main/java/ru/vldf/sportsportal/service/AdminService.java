@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.vldf.sportsportal.dao.generic.definite.tourney.*;
-import ru.vldf.sportsportal.dao.generic.definite.user.UserRoleDAO;
-import ru.vldf.sportsportal.dao.generic.definite.user.UserDAO;
+import ru.vldf.sportsportal.dao.generic.definite.common.UserRoleDAO;
+import ru.vldf.sportsportal.dao.generic.definite.common.UserDAO;
 import ru.vldf.sportsportal.dto.tourney.*;
 import ru.vldf.sportsportal.dto.common.UserDTO;
 import ru.vldf.sportsportal.domain.tourney.*;
@@ -22,7 +22,9 @@ public class AdminService {
 
     private UserDAO userDAO;
     private UserRoleDAO userRoleDAO;
-    private TeamPlayerDAO teamPlayerDAO;
+
+    private PlayerDAO playerDAO;
+    private PlayerOwnershipDAO playerOwnershipDAO;
 
     @Autowired
     public void setUserDAO(UserDAO userDAO) {
@@ -35,9 +37,15 @@ public class AdminService {
     }
 
     @Autowired
-    public void setTeamPlayerDAO(TeamPlayerDAO teamPlayerDAO) {
-        this.teamPlayerDAO = teamPlayerDAO;
+    public void setPlayerDAO(PlayerDAO playerDAO) {
+        this.playerDAO = playerDAO;
     }
+
+    @Autowired
+    public void setPlayerOwnershipDAO(PlayerOwnershipDAO playerOwnershipDAO) {
+        this.playerOwnershipDAO = playerOwnershipDAO;
+    }
+
 
     private final String ROLE_UNCONFIRMED_CODE = "ROLE_UNCONFIRMED";
 
@@ -68,18 +76,18 @@ public class AdminService {
     }
 
     @Transactional(readOnly = true)
-    public List<TeamPlayerDTO> getDuplicate(UserDTO user) {
-        List<TeamPlayerEntity> entityList = teamPlayerDAO.findByFullName(user.getName(), user.getSurname(), user.getPatronymic());
+    public List<PlayerDTO> getDuplicate(UserDTO user) {
+        List<PlayerEntity> entityList = playerDAO.findByFullName(user.getName(), user.getSurname(), user.getPatronymic());
         if (entityList == null) return null;
 
-        List<TeamPlayerDTO> dtoList = new ArrayList<TeamPlayerDTO>();
-        for (TeamPlayerEntity entity: entityList) dtoList.add(new TeamPlayerDTO(entity));
+        List<PlayerDTO> dtoList = new ArrayList<PlayerDTO>();
+        for (PlayerEntity entity: entityList) dtoList.add(new PlayerDTO(entity));
         return dtoList;
     }
 
     @Transactional
     public void confirmUser(Integer id) {
-        Integer playerID = teamPlayerDAO.save(new TeamPlayerEntity(userDAO.findByID(id)));
+        Integer playerID = playerDAO.save(new PlayerEntity(userDAO.findByID(id)));
         bindUser(id, playerID); //TODO: optimize this?
     }
 
@@ -93,12 +101,16 @@ public class AdminService {
     public void bindUser(Integer userID, Integer playerID) {
         String ROLE_CONFIRMED_CODE = "ROLE_USER";
         userDAO.updateRoleByID(userID, userRoleDAO.findByCode(ROLE_CONFIRMED_CODE));
-        userDAO.updateTeamPlayerByID(userID, teamPlayerDAO.findByID(playerID));
+
+        playerOwnershipDAO.save(new PlayerOwnershipEntity(
+                userDAO.findByID(userID),
+                playerDAO.findByID(playerID)
+        )); //TODO: wut? fix it u bastard!
     }
 
     @Transactional
     public void deleteDuplicate(Integer id) {
-        teamPlayerDAO.deleteByID(id);
+        playerDAO.deleteByID(id);
     }
 
 //    ==================================================================================

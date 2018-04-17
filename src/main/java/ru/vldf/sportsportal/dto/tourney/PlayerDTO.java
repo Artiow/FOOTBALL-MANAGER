@@ -1,21 +1,21 @@
 package ru.vldf.sportsportal.dto.tourney;
 
-import ru.vldf.sportsportal.domain.tourney.TeamPlayerEntity;
+import ru.vldf.sportsportal.domain.tourney.PlayerEntity;
 
 import java.sql.Date;
 
-public class TeamPlayerDTO {
+public class PlayerDTO {
     private Integer id;
     private String name;
     private String surname;
     private String patronymic;
     private Date birthday;
 
-    public TeamPlayerDTO() {
+    public PlayerDTO() {
 
     }
 
-    public TeamPlayerDTO(TeamPlayerEntity player) {
+    public PlayerDTO(PlayerEntity player) {
         id = player.getId();
         name = player.getName();
         surname = player.getSurname();
@@ -61,5 +61,30 @@ public class TeamPlayerDTO {
 
     public void setBirthday(Date birthday) {
         this.birthday = birthday;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        PlayerDTO playerDTO = (PlayerDTO) o;
+
+        return id != null ? id.equals(playerDTO.id) : playerDTO.id == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
+    }
+
+    @Override
+    public String toString() {
+        return "PlayerDTO{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", patronymic='" + patronymic + '\'' +
+                '}';
     }
 }

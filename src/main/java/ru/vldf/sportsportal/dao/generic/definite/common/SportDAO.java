@@ -1,4 +1,4 @@
-package ru.vldf.sportsportal.dao.generic.definite.lease;
+package ru.vldf.sportsportal.dao.generic.definite.common;
 
 import ru.vldf.sportsportal.domain.common.SportEntity;
 
