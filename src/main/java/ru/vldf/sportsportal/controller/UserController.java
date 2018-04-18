@@ -4,10 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-import ru.vldf.sportsportal.dto.tourney.CompositionDTO;
-import ru.vldf.sportsportal.dto.tourney.TeamDTO;
-import ru.vldf.sportsportal.dto.tourney.PlayerDTO;
-import ru.vldf.sportsportal.dto.tourney.TourneyDTO;
+import ru.vldf.sportsportal.dto.tourney.*;
 import ru.vldf.sportsportal.dto.common.UserDTO;
 import ru.vldf.sportsportal.service.AdminService;
 import ru.vldf.sportsportal.service.AuthService;
@@ -156,10 +153,24 @@ public class UserController {
             return "redirect:/pp/admin/check-team";
         }
 
+        @GetMapping(value = {"/pp/admin/check-team/team{id}/rename"})
+        public String renameTeam(@PathVariable("id") int id, ModelMap map) {
+            map.addAttribute("teamDTO", tourneyService.getTeam(id));
+            return "user/admin/form-rename-team";
+        }
+
+        @PostMapping(value = {"/pp/admin/check-team/team{id}/rename"})
+        public String createTeam(@PathVariable("id") int id, @ModelAttribute(value="teamDTO") TeamDTO teamDTO) {
+            teamDTO.setId(id);
+            tourneyService.renameTeam(teamDTO);
+            tourneyService.confirmTeam(teamDTO.getId());
+            return "redirect:/pp/admin/check-team";
+        }
+
 
         @GetMapping(value = {"/pp/admin/tourney"})
         public String toTourneyCatalogPage(ModelMap map) {
-            map.addAttribute("tourneyList", tourneyService.getTourneysList());
+            map.addAttribute("tourneyList", tourneyService.getTourneyList());
             return "user/admin/page-tourney-catalog";
         }
 
@@ -227,6 +238,7 @@ public class UserController {
 
         @GetMapping(value = {"/pp/tourney"})
         public String toTourneyMenu(ModelMap map) {
+//            TODO: add current composition (participating in the tournament)!
             map.addAttribute("teamList", userTourneyService.getTeamList());
             return "user/tourney/menu-tourney";
         }
@@ -237,28 +249,25 @@ public class UserController {
             TeamDTO teamDTO = userTourneyService.getTeam(id);
             if (teamDTO == null) return "redirect:/xxx" + id; //not user's team
 
+            TeamStatusDTO status = teamDTO.getStatus();
+            String code = status.getCode();
+
             map.addAttribute("teamDTO", teamDTO);
+            if (code.equals("TEAM_UNCONFIRMED")) return "user/tourney/page-team-status-unconfirmed";
+            if (code.equals("TEAM_REJECTED")) return "user/tourney/page-team-status-rejected";
 
-            int status = teamDTO.getStatus().getId();
-            switch (status) {
-                case 1: return "user/tourney/page-team-status-unconfirmed"; //TEAM_UNCONFIRMED
-                case 3: return "user/tourney/page-team-status-rejected";    //TEAM_REJECTED
+            map.addAttribute("compositionList", userTourneyService.getCompositionList(teamDTO));
+            if (code.equals("TEAM_CONFIRMED")) return "user/tourney/page-team-status-confirmed";
 
-//                TODO: composition choice add!
-                case 4: return "redirect:/pp/tourney/team{id}/composition"; //TEAM_INVITE
-
-                default: return "redirect:/xxx{id}";
-            }
+            return "redirect:/xxx{id}";
         }
 
-        @GetMapping(value = {"/pp/tourney/team{id}/composition"})
-        public String toInvitedTeamPage(@PathVariable("id") int id, ModelMap map) {
-            TeamDTO teamDTO = userTourneyService.getTeam(id);
-            if (teamDTO == null) return "redirect:/xxx" + id; //not user's team
+        @GetMapping(value = {"/pp/tourney/composition{id}"})
+        public String toRecruitingCompositionPage(@PathVariable("id") int id, ModelMap map) {
+            CompositionDTO compositionDTO = userTourneyService.getComposition(id);
+            if (compositionDTO == null) return "redirect:/xxx" + id; //not user's composition
 
-            List<CompositionDTO> list = userTourneyService.getRecruitingCompositions(id);
-            if (list == null) return "redirect:/xxx" + id;  //TODO: workaround! composition choice add!
-            CompositionDTO compositionDTO = list.get(0);    //TODO: remove .get(0)! composition choice add!
+            if (!compositionDTO.getStatus().getCode().equals("COMPOSITION_RECRUITING")) return "redirect:/500"; //TODO: lol wut?
 
             Integer maxSize = 18;
             Integer currentSize;
@@ -270,7 +279,7 @@ public class UserController {
                     .addAttribute("maxSize", maxSize)
                     .addAttribute("currentSize", currentSize)
 
-                    .addAttribute("teamDTO", teamDTO)
+                    .addAttribute("teamDTO", compositionDTO.getTeam())
                     .addAttribute("compositionDTO", compositionDTO)
 
                     .addAttribute("playerDTO", new PlayerDTO())
@@ -278,13 +287,13 @@ public class UserController {
 
                     .addAttribute("isFull", !(currentSize < maxSize));
 
-            return "user/tourney/page-team-status-invited";
+            return "user/tourney/page-composition-status-recruiting";
         }
 
-        @PostMapping(value = {"/pp/tourney/team{teamID}/composition{compositionID}/player-search"})
+        @PostMapping(value = {"/pp/tourney/composition{id}/player-search"})
         public String searchPlayers(
-                @PathVariable("teamID") int teamID, @PathVariable("compositionID") int compositionID,
-                ModelMap map, @ModelAttribute(value = "playerDTO") PlayerDTO playerDTO
+                @PathVariable("id") int id, ModelMap map,
+                @ModelAttribute(value = "playerDTO") PlayerDTO playerDTO
         ) {
 //            TODO: add partial search!
             map.addAttribute("foundedPlayerDTOList", userTourneyService.getPlayers(
@@ -293,35 +302,46 @@ public class UserController {
                     playerDTO.getPatronymic()
             ));
 
-            return toInvitedTeamPage(teamID, map); //TODO: compositionID?
+            return toRecruitingCompositionPage(id, map);
         }
 
 
-        @GetMapping(value = {"/pp/tourney/team{teamID}/composition{compositionID}/player{playerID}/add"})
+        @GetMapping(value = {"/pp/tourney/composition{id}/confirm"})
+        public String confirmComposition(@PathVariable("id") int id) {
+//            TODO: optimize
+            CompositionDTO compositionDTO = userTourneyService.getComposition(id);
+            if (compositionDTO == null) return "redirect:/500"; //not user's composition
+
+            userTourneyService.confirmComposition(compositionDTO.getId());
+
+            Integer teamID = compositionDTO.getTeam().getId();
+            return "redirect:/pp/tourney/team" + teamID;
+        }
+
+        @GetMapping(value = {"/pp/tourney/composition{compositionID}/player{playerID}/add"})
         public String addPlayer(
-                @PathVariable("teamID") int teamID,
                 @PathVariable("compositionID") int compositionID,
                 @PathVariable("playerID") int playerID
         ) {
-            userTourneyService.addPlayerToComposition(compositionID, playerID);
-            return "redirect:/pp/tourney/team" + teamID + "/composition"; //TODO: compositionID?
+//            TODO: optimize
+            CompositionDTO compositionDTO = userTourneyService.getComposition(compositionID);
+            if (compositionDTO == null) return "redirect:/500"; //not user's composition
+
+            userTourneyService.addPlayerToComposition(compositionDTO.getId(), playerID);
+            return "redirect:/pp/tourney/composition{compositionID}";
         }
 
-        @GetMapping(value = {"/pp/tourney/team{teamID}/composition{compositionID}/player{playerID}/delete"})
+        @GetMapping(value = {"/pp/tourney/composition{compositionID}/player{playerID}/delete"})
         public String deletePlayer(
-                @PathVariable("teamID") int teamID,
                 @PathVariable("compositionID") int compositionID,
                 @PathVariable("playerID") int playerID
         ) {
-            userTourneyService.deletePlayerFromComposition(compositionID, playerID);
-            return "redirect:/pp/tourney/team" + teamID + "/composition"; //TODO: compositionID?
-        }
+//            TODO: optimize
+            CompositionDTO compositionDTO = userTourneyService.getComposition(compositionID);
+            if (compositionDTO == null) return "redirect:/500"; //not user's composition
 
-
-        @GetMapping(value = {"/pp/tourney/composition{compositionID}/confirm"})
-        public String confirmComposition(@PathVariable("compositionID") int compositionID) {
-            userTourneyService.confirmComposition(compositionID);
-            return "redirect:/pp/tourney"; //TODO: compositionID?
+            userTourneyService.deletePlayerFromComposition(compositionDTO.getId(), playerID);
+            return "redirect:/pp/tourney/composition{compositionID}";
         }
 
 

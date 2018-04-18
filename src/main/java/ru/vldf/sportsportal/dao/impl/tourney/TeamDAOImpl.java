@@ -30,8 +30,9 @@ public class TeamDAOImpl extends AbstractDAOImpl<TeamEntity, Integer> implements
 
     public List<TeamEntity> findByUser(Integer userID) {
         List teams = getSession()
-                .createQuery("from TeamEntity where captain.id=?")
-                .setParameter(0, userID)
+                .createQuery("from TeamEntity where captain.id=?"
+                        + " order by name"
+                ).setParameter(0, userID)
                 .list();
 
         if ((teams != null) && (teams.size() > 0)) return (List<TeamEntity>) teams;
@@ -40,8 +41,9 @@ public class TeamDAOImpl extends AbstractDAOImpl<TeamEntity, Integer> implements
 
     public List<TeamEntity> findByUser(UserEntity user) {
         List teams = getSession()
-                .createQuery("from TeamEntity where captain=?")
-                .setParameter(0, user)
+                .createQuery("from TeamEntity where captain=?"
+                        + " order by name"
+                ).setParameter(0, user)
                 .list();
 
         if ((teams != null) && (teams.size() > 0)) return (List<TeamEntity>) teams;
@@ -50,8 +52,10 @@ public class TeamDAOImpl extends AbstractDAOImpl<TeamEntity, Integer> implements
 
     public List<TeamEntity> findByTourney(Integer tourneyID) {
         List teams = getSession()
-                .createQuery("select eTeam from TeamEntity as eTeam, CompositionEntity as eComposition where eComposition.team = eTeam and eComposition.tourney.id=?")
-                .setParameter(0, tourneyID)
+                .createQuery("select eTeam from TeamEntity as eTeam, CompositionEntity as eComposition"
+                        + " where eComposition.team = eTeam and eComposition.tourney.id=?"
+                        + " order by eTeam.name"
+                ).setParameter(0, tourneyID)
                 .list();
 
         if ((teams != null) && (teams.size() > 0)) return (List<TeamEntity>) teams;
@@ -60,8 +64,10 @@ public class TeamDAOImpl extends AbstractDAOImpl<TeamEntity, Integer> implements
 
     public List<TeamEntity> findByTourney(TourneyEntity tourney) {
         List teams = getSession()
-                .createQuery("select eTeam from TeamEntity as eTeam, CompositionEntity as eComposition where eComposition.team = eTeam and eComposition.tourney=?")
-                .setParameter(0, tourney)
+                .createQuery("select eTeam from TeamEntity as eTeam, CompositionEntity as eComposition"
+                        + " where eComposition.team = eTeam and eComposition.tourney=?"
+                        + " order by eTeam.name"
+                ).setParameter(0, tourney)
                 .list();
 
         if ((teams != null) && (teams.size() > 0)) return (List<TeamEntity>) teams;
@@ -100,8 +106,9 @@ public class TeamDAOImpl extends AbstractDAOImpl<TeamEntity, Integer> implements
 
     public List<TeamEntity> findByStatus(Integer statusID) {
         List teams = getSession()
-                .createQuery("from TeamEntity where status.id=?")
-                .setParameter(0, statusID)
+                .createQuery("from TeamEntity where status.id=?"
+                        + " order by name"
+                ).setParameter(0, statusID)
                 .list();
 
         if ((teams != null) && (teams.size() > 0)) return (List<TeamEntity>) teams;
@@ -110,8 +117,9 @@ public class TeamDAOImpl extends AbstractDAOImpl<TeamEntity, Integer> implements
 
     public List<TeamEntity> findByStatus(String statusCode) {
         List teams = getSession()
-                .createQuery("from TeamEntity where status.code=?")
-                .setParameter(0, statusCode)
+                .createQuery("from TeamEntity where status.code=?"
+                        + " order by name"
+                ).setParameter(0, statusCode)
                 .list();
 
         if ((teams != null) && (teams.size() > 0)) return (List<TeamEntity>) teams;
@@ -120,8 +128,9 @@ public class TeamDAOImpl extends AbstractDAOImpl<TeamEntity, Integer> implements
 
     public List<TeamEntity> findByStatus(TeamStatusEntity status) {
         List teams = getSession()
-                .createQuery("from TeamEntity where status=?")
-                .setParameter(0, status)
+                .createQuery("from TeamEntity where status=?"
+                        + " order by name"
+                ).setParameter(0, status)
                 .list();
 
         if ((teams != null) && (teams.size() > 0)) return (List<TeamEntity>) teams;
@@ -130,12 +139,17 @@ public class TeamDAOImpl extends AbstractDAOImpl<TeamEntity, Integer> implements
 
     public List<TeamEntity> findByNameLike(String name) {
         List teams = getSession()
-                .createQuery("from TeamEntity where name like ?")
-                .setParameter(0, "%" + name + "%")
+                .createQuery("from TeamEntity where name like ?"
+                        + " order by name"
+                ).setParameter(0, "%" + name + "%")
                 .list();
 
         if ((teams != null) && (teams.size() > 0)) return (List<TeamEntity>) teams;
         else return null;
+    }
+
+    public List<TeamEntity> findAll() {
+        return super.list();
     }
 
 //    ==================================================================================
@@ -145,6 +159,14 @@ public class TeamDAOImpl extends AbstractDAOImpl<TeamEntity, Integer> implements
         return getSession()
                 .createQuery("update TeamEntity set status=? where id=?")
                 .setParameter(0, status)
+                .setParameter(1, id)
+                .executeUpdate();
+    }
+
+    public Integer updateNameByID(Integer id, String name) {
+        return getSession()
+                .createQuery("update TeamEntity set name=? where id=?")
+                .setParameter(0, name)
                 .setParameter(1, id)
                 .executeUpdate();
     }
