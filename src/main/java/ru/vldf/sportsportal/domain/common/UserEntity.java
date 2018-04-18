@@ -68,11 +68,11 @@ public class UserEntity {
 
     @Basic
     @Column(name = "email", nullable = false, length = 45)
-    public String getEMail() {
+    public String getEmail() {
         return email;
     }
 
-    public void setEMail(String email) {
+    public void setEmail(String email) {
         this.email = email;
     }
 

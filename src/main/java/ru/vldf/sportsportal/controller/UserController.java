@@ -84,7 +84,7 @@ public class UserController {
         @GetMapping(value = {"/pp/admin/check-user"})
         public String toCheckUserPage(ModelMap map) {
             UserDTO user = userService.getFirstUnconfirmedUser(); //TODO: lol wtf dude? add pagination!
-            if (user == null) return "redirect:/404";
+            if (user == null) return "redirect:/pp/admin";
 
             List<PlayerDTO> duplicates
                     = userService.getDuplicates(user);

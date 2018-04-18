@@ -45,6 +45,9 @@ public class AuthService {
 
     @Transactional
     public void register(UserDTO userDTO) {
+        userDTO.setLogin(userDTO.getLogin().toLowerCase());
+        userDTO.setEMail(userDTO.getEMail().toLowerCase());
+
         String ROLE_UNCONFIRMED_CODE = "ROLE_UNCONFIRMED";
         userDTO.setPassword(bCryptPasswordEncoder.encode(userDTO.getPassword()));
 

@@ -72,6 +72,8 @@ public class AdminService {
         @Transactional(readOnly = true)
         public UserDTO getFirstUnconfirmedUser() {
             List<UserEntity> entityList = userDAO.findByRole(ROLE_UNCONFIRMED_CODE);
+            if ((entityList == null) || (entityList.isEmpty())) return null;
+
             return new UserDTO(entityList.get(0)); //TODO: lol wtf dude? add pagination!
         }
 

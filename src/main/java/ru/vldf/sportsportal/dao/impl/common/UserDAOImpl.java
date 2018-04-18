@@ -29,7 +29,7 @@ public class UserDAOImpl extends AbstractDAOImpl<UserEntity, Integer> implements
 
     public UserEntity findByLogin(String login) {
         List users = getSession()
-                .createQuery("from UserEntity where login=?")
+                .createQuery("from UserEntity where login=lower(?)")
                 .setParameter(0, login)
                 .list();
 
@@ -39,7 +39,7 @@ public class UserDAOImpl extends AbstractDAOImpl<UserEntity, Integer> implements
 
     public UserEntity findByEMail(String eMail) {
         List users = getSession()
-                .createQuery("from UserEntity where email=?")
+                .createQuery("from UserEntity where email=lower(?)")
                 .setParameter(0, eMail)
                 .list();
 
