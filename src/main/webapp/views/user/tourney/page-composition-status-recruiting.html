@@ -113,14 +113,14 @@
                             <p style="margin: 0" th:text="*{birthday}">BIRTHDAY</p>
                         </td>
                         <td>
-                            <a th:href="${'/pp/tourney/team' + teamDTO.id + '/composition' + compositionDTO.id + '/player' + playerDTO.id + '/delete'}" style="margin-top: 12px" class="btn btn-danger">Удалить</a>
+                            <a th:href="${'/pp/tourney/composition' + compositionDTO.id + '/player' + playerDTO.id + '/delete'}" style="margin-top: 12px" class="btn btn-danger">Удалить</a>
                         </td>
                     </tr>
                 </table>
             </div>
             <div class="col-md-2" th:if="${!isFull}">
                 <h4>Поиск:</h4>
-                <form role="form" th:action="${'/pp/tourney/team' + teamDTO.id + '/composition' + compositionDTO.id + '/player-search'}" th:object="${playerDTO}" method="post">
+                <form role="form" th:action="${'/pp/tourney/composition' + compositionDTO.id + '/player-search'}" th:object="${playerDTO}" method="post">
                     <div style="margin-bottom: 8px">
                         <label class="login-label" for="input-name"><i class="fa fa-user" aria-hidden="true"></i> Имя</label>
                         <input class="form-control" id="input-name" type="text" th:field="*{name}" placeholder="name" required="required" autofocus="autofocus"/>
@@ -148,7 +148,7 @@
                             <p style="margin: 0" th:text="*{birthday}">BIRTHDAY</p>
                         </td>
                         <td>
-                            <a th:href="${'/pp/tourney/team' + teamDTO.id + '/composition' + compositionDTO.id + '/player' + playerDTO.id + '/add'}" style="margin-top: 12px" class="btn btn-success">Добавить</a>
+                            <a th:href="${'/pp/tourney/composition' + compositionDTO.id + '/player' + playerDTO.id + '/add'}" style="margin-top: 12px" class="btn btn-success">Добавить</a>
                         </td>
                     </tr>
                 </table>
