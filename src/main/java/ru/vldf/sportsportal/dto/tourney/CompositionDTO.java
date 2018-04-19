@@ -5,7 +5,8 @@ import ru.vldf.sportsportal.domain.tourney.CompositionEntity;
 public class CompositionDTO {
     private Integer id;
     private String name;
-    private Integer shiftbalance = 3; //default
+    private Integer shiftbalance = 3;       //default
+    private String timegrid = "CCCCCCCCCC"; //default
 
     private TeamDTO team;
     private TourneyDTO tourney;
@@ -15,14 +16,15 @@ public class CompositionDTO {
 
     }
 
-    public CompositionDTO(CompositionEntity teamComposition) {
-        id = teamComposition.getId();
-        name = teamComposition.getName();
-        shiftbalance = teamComposition.getShiftBalance();
+    public CompositionDTO(CompositionEntity composition) {
+        id = composition.getId();
+        name = composition.getName();
+        shiftbalance = composition.getShiftBalance();
+        timegrid = composition.getTimeGrid();
 
-        if (teamComposition.getTeam() != null) team = new TeamDTO(teamComposition.getTeam());
-        if (teamComposition.getTourney() != null) tourney = new TourneyDTO(teamComposition.getTourney());
-        if (teamComposition.getStatus() != null) status = new CompositionStatusDTO(teamComposition.getStatus());
+        if (composition.getTeam() != null) team = new TeamDTO(composition.getTeam());
+        if (composition.getTourney() != null) tourney = new TourneyDTO(composition.getTourney());
+        if (composition.getStatus() != null) status = new CompositionStatusDTO(composition.getStatus());
     }
 
     public Integer getId() {
@@ -47,6 +49,14 @@ public class CompositionDTO {
 
     public void setShiftBalance(Integer shiftbalance) {
         this.shiftbalance = shiftbalance;
+    }
+
+    public String getTimeGrid() {
+        return timegrid;
+    }
+
+    public void setTimeGrid(String timegrid) {
+        this.timegrid = timegrid;
     }
 
     public TeamDTO getTeam() {

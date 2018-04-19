@@ -312,6 +312,7 @@ public class UserController {
             CompositionDTO compositionDTO = userTourneyService.getComposition(id);
             if (compositionDTO == null) return "redirect:/500"; //not user's composition
 
+//            TODO: that's right, huh?
             userTourneyService.confirmComposition(compositionDTO.getId());
 
             Integer teamID = compositionDTO.getTeam().getId();

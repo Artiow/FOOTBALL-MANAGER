@@ -12,6 +12,10 @@
             src="../../../libs/jquery-3.2.1.js"
             th:src="@{/libs/jquery-3.2.1.js}"
     ></script>
+    <script
+            src="../../../libs/bootstrap/js/bootstrap.js"
+            th:src="@{/libs/bootstrap/js/bootstrap.js}"
+    ></script>
     <link rel="stylesheet"
           href="../../../libs/bootstrap/css/bootstrap.css"
           th:href="@{/libs/bootstrap/css/bootstrap.css}"
@@ -74,8 +78,27 @@
             <div class="col-md-10 col-md-offset-1">
                 <h3 th:text="${teamDTO.name}">TEAM NAME</h3>
                 <h4 style="padding: 5px" class="alert-success">ПРИГЛАШЕНИЕ В ТУРНИР</h4>
-                <h4 style="padding: 5px" class="alert-warning">СОБЕРИТЕ СОСТАВ</h4>
-                <a th:href="${'/pp/tourney/composition' + compositionDTO.id + '/confirm'}" class="btn btn-success" th:if="${currentSize != 0}">Подтвердить</a>
+                <h4 style="padding: 5px" class="alert-warning">СОБЕРИТЕ СОСТАВ И ВЫБЕРИТЕ ВРЕМЯ</h4>
+                <!--TODO: confirm?-->
+                <!--<a th:href="${'/pp/tourney/composition' + compositionDTO.id + '/confirm'}" class="btn btn-success" th:if="${currentSize != 0}">Подтвердить</a>-->
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <h4>Сетка времени:</h4>
+                <script>$('.dropdown-toggle').dropdown()</script>
+            </div>
+            <div class="col-md-10 col-md-offset-1">
+                <div class="btn-group" th:each="i: ${#numbers.sequence(9,18)}">
+                    <button class="btn btn-danger dropdown-toggle" data-toggle="dropdown" th:utext="${i + ':00 &lt;span class=&quot;caret&quot;&gt;&lt;/span&gt;'}">X:00 <span class="caret"></span></button>
+                    <!--<button class="btn btn-danger dropdown-toggle" data-toggle="dropdown" th:text="${i + ':00 &lt;span class=&quot;caret&quot;&gt;&lt;/span&gt;'}">X:00 <span class="caret"></span></button>-->
+                    <!--<button class="btn btn-danger dropdown-toggle" data-toggle="dropdown" th:text="${i + ':00 &lt;span class=&quot;caret&quot;&gt;&lt;/span&gt;'}">X:00 <span class="caret"></span></button>-->
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Не смогу</a></li>
+                        <li><a href="#">Смогу</a></li>
+                        <li><a href="#">Хочу</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
         <div style="margin-top: 10px" class="row">
