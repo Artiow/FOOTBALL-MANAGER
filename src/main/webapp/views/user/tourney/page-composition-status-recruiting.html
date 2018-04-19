@@ -104,7 +104,7 @@
         <div th:if="${rivalDTO != null}" class="row">
             <div class="col-md-10 col-md-offset-1">
                 <h4>Выбор времени соперника:</h4>
-                <p th:text="${rivalDTO.name}"></p>
+                <h4 th:text="${rivalDTO.name}"></h4>
             </div>
             <div class="col-md-10 col-md-offset-1">
                 <div class="btn-group" th:each="char2,iter2: ${rivalgrid}">
@@ -135,16 +135,16 @@
                 <h4>Поиск:</h4>
                 <form role="form" th:action="${'/pp/tourney/composition' + compositionDTO.id + '/player-search'}" th:object="${playerDTO}" method="post">
                     <div style="margin-bottom: 8px">
-                        <label class="login-label" for="input-name"><i class="fa fa-user" aria-hidden="true"></i> Имя</label>
-                        <input class="form-control" id="input-name" type="text" th:field="*{name}" placeholder="name" required="required" autofocus="autofocus"/>
+                        <label class="login-label" for="input-surname"><i class="fa fa-user" aria-hidden="true"></i> Фамилия</label>
+                        <input class="form-control" id="input-surname" type="text" th:field="*{surname}" placeholder="surname" required="required" autofocus="autofocus"/>
                     </div>
                     <div style="margin-bottom: 8px">
-                        <label class="login-label" for="input-surname"><i class="fa fa-user" aria-hidden="true"></i> Фамилия</label>
-                        <input class="form-control" id="input-surname" type="text" th:field="*{surname}" placeholder="surname" required="required"/>
+                        <label class="login-label" for="input-name"><i class="fa fa-user" aria-hidden="true"></i> Имя</label>
+                        <input class="form-control" id="input-name" type="text" th:field="*{name}" placeholder="name"/>
                     </div>
                     <div style="margin-bottom: 18px">
                         <label class="login-label" for="input-patronymic"><i class="fa fa-user" aria-hidden="true"></i> Отчество</label>
-                        <input class="form-control" id="input-patronymic" type="text" th:field="*{patronymic}" placeholder="patronymic" required="required"/>
+                        <input class="form-control" id="input-patronymic" type="text" th:field="*{patronymic}" placeholder="patronymic"/>
                     </div>
                     <button type="submit" class="btn btn-default">Найти</button>
                     <a style="float: right" class="btn btn-success" disabled="disabled">Создать</a>

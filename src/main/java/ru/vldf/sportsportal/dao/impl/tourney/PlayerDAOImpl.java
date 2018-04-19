@@ -25,6 +25,38 @@ public class PlayerDAOImpl extends AbstractDAOImpl<PlayerEntity, Integer> implem
         return super.get(id);
     }
 
+    public List<PlayerEntity> findBySurname(String surname) {
+        List players = getSession()
+                .createQuery("from PlayerEntity where surname=?")
+                .setParameter(0, surname)
+                .list();
+
+        if ((players != null) && (players.size() > 0)) return (List<PlayerEntity>) players;
+        else return null;
+    }
+
+    public List<PlayerEntity> findBySurnameAndName(String surname, String name) {
+        List players = getSession()
+                .createQuery("from PlayerEntity where surname=? and name=?")
+                .setParameter(0, surname)
+                .setParameter(1, name)
+                .list();
+
+        if ((players != null) && (players.size() > 0)) return (List<PlayerEntity>) players;
+        else return null;
+    }
+
+    public List<PlayerEntity> findBySurnameAndPatronymic(String surname, String patronymic) {
+        List players = getSession()
+                .createQuery("from PlayerEntity where surname=? and patronymic=?")
+                .setParameter(0, surname)
+                .setParameter(1, patronymic)
+                .list();
+
+        if ((players != null) && (players.size() > 0)) return (List<PlayerEntity>) players;
+        else return null;
+    }
+
     public List<PlayerEntity> findByFullName(String name, String surname, String patronymic) {
         List players = getSession()
                 .createQuery("from PlayerEntity where name=? and surname=? and  patronymic=?")

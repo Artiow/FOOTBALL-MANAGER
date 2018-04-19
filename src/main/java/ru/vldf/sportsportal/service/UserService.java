@@ -147,12 +147,20 @@ public class UserService {
         @Transactional(readOnly = true)
         public List<PlayerDTO> getPlayers(String name, String surname, String patronymic) {
 //            TODO: optimize this
-//            TODO: add partial search!
-            List<PlayerEntity> entityList = playerDAO.findByFullName(name, surname, patronymic);
+            List<PlayerEntity> entityList;
+
+            if ((name.equals("")) && (patronymic.equals("")))
+                entityList = playerDAO.findBySurname(surname);
+            else if (patronymic.equals(""))
+                entityList = playerDAO.findBySurnameAndName(surname, name);
+            else if (name.equals(""))
+                entityList = playerDAO.findBySurnameAndPatronymic(surname, patronymic);
+            else
+                entityList = playerDAO.findByFullName(name, surname, patronymic);
 
             if (entityList == null) return null;
             List<PlayerDTO> dtoList = new ArrayList<PlayerDTO>();
-            for (PlayerEntity entity: entityList) dtoList.add(new PlayerDTO(entity));
+            for (PlayerEntity entity : entityList) dtoList.add(new PlayerDTO(entity));
             return dtoList;
         }
 
