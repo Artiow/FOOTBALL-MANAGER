@@ -37,7 +37,7 @@ public class UserController {
         return authService.getAuthUser();
     }
 
-    @GetMapping(value = {"/personalpage"})
+    @GetMapping(value = {"/personalpage", "/pp"})
     public String toPersonalPage(ModelMap map) {
         map.addAttribute("teamList", userTourneyService.getTeamList()); //TODO: tmp solution! remove this!
         return "user/personalpage";
@@ -267,16 +267,28 @@ public class UserController {
             CompositionDTO compositionDTO = userTourneyService.getComposition(id);
             if (compositionDTO == null) return "redirect:/xxx" + id; //not user's composition
 
-            if (!compositionDTO.getStatus().getCode().equals("COMPOSITION_RECRUITING")) return "redirect:/500"; //TODO: lol wut?
+            if (!compositionDTO.getStatus().getCode().equals("COMPOSITION_RECRUITING"))
+                return "redirect:/500"; //TODO: lol wut?
 
             Integer maxSize = 18;
             Integer currentSize;
 
             List<PlayerDTO> playerDTOList = userTourneyService.getPlayers(compositionDTO);
-            if (playerDTOList != null) currentSize = playerDTOList.size(); else currentSize = 0;
+            if (playerDTOList != null) currentSize = playerDTOList.size();
+            else currentSize = 0;
 
+            Integer maxImp = 4;
+            Integer currentImp = 0;
             char[] chars = compositionDTO.getTimegrid().toCharArray();
-            String[] timegrid = new String[10]; for (int i = 0; i < 10; i++) timegrid[i] = ("" + chars[i]);
+            String[] timegrid = new String[10];
+
+            char tmp;
+            for (int i = 0; i < 10; i++) {
+                tmp = chars[i];
+
+                if (tmp == 'N') currentImp++;
+                timegrid[i] = ("" + chars[i]);
+            }
 
             map
                     .addAttribute("maxSize", maxSize)
@@ -285,6 +297,8 @@ public class UserController {
                     .addAttribute("teamDTO", compositionDTO.getTeam())
                     .addAttribute("compositionDTO", compositionDTO)
                     .addAttribute("timegrid", timegrid)
+
+                    .addAttribute("impLimit", !(currentImp < maxImp))
 
                     .addAttribute("playerDTO", new PlayerDTO())
                     .addAttribute("currentPlayerDTOList", playerDTOList)
