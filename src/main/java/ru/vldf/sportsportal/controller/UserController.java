@@ -275,12 +275,16 @@ public class UserController {
             List<PlayerDTO> playerDTOList = userTourneyService.getPlayers(compositionDTO);
             if (playerDTOList != null) currentSize = playerDTOList.size(); else currentSize = 0;
 
+            char[] chars = compositionDTO.getTimegrid().toCharArray();
+            String[] timegrid = new String[10]; for (int i = 0; i < 10; i++) timegrid[i] = ("" + chars[i]);
+
             map
                     .addAttribute("maxSize", maxSize)
                     .addAttribute("currentSize", currentSize)
 
                     .addAttribute("teamDTO", compositionDTO.getTeam())
                     .addAttribute("compositionDTO", compositionDTO)
+                    .addAttribute("timegrid", timegrid)
 
                     .addAttribute("playerDTO", new PlayerDTO())
                     .addAttribute("currentPlayerDTOList", playerDTOList)
@@ -289,6 +293,34 @@ public class UserController {
 
             return "user/tourney/page-composition-status-recruiting";
         }
+
+        @GetMapping(value = {"/pp/tourney/composition{id}/confirm"})
+        public String confirmComposition(@PathVariable("id") int id) {
+//            TODO: optimize
+            CompositionDTO compositionDTO = userTourneyService.getComposition(id);
+            if (compositionDTO == null) return "redirect:/500"; //not user's composition
+
+//            TODO: that's right, huh?
+            userTourneyService.confirmComposition(compositionDTO.getId());
+
+            Integer teamID = compositionDTO.getTeam().getId();
+            return "redirect:/pp/tourney/team" + teamID;
+        }
+
+
+        @GetMapping(value = {"/pp/tourney/composition{compositionID}/time{time}/{choice}"})
+        public String updateTimeGrid(
+                @PathVariable("compositionID") int compositionID,
+                @PathVariable("time") Integer time, @PathVariable("choice") Character choice
+        ) {
+//            TODO: optimize
+            CompositionDTO compositionDTO = userTourneyService.getComposition(compositionID);
+            if (compositionDTO == null) return "redirect:/500"; //not user's composition
+
+            userTourneyService.timeChoice(compositionDTO, time, choice);
+            return "redirect:/pp/tourney/composition{compositionID}";
+        }
+
 
         @PostMapping(value = {"/pp/tourney/composition{id}/player-search"})
         public String searchPlayers(
@@ -303,20 +335,6 @@ public class UserController {
             ));
 
             return toRecruitingCompositionPage(id, map);
-        }
-
-
-        @GetMapping(value = {"/pp/tourney/composition{id}/confirm"})
-        public String confirmComposition(@PathVariable("id") int id) {
-//            TODO: optimize
-            CompositionDTO compositionDTO = userTourneyService.getComposition(id);
-            if (compositionDTO == null) return "redirect:/500"; //not user's composition
-
-//            TODO: that's right, huh?
-            userTourneyService.confirmComposition(compositionDTO.getId());
-
-            Integer teamID = compositionDTO.getTeam().getId();
-            return "redirect:/pp/tourney/team" + teamID;
         }
 
         @GetMapping(value = {"/pp/tourney/composition{compositionID}/player{playerID}/add"})

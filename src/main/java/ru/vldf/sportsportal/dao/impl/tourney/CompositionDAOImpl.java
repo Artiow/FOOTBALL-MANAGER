@@ -83,6 +83,14 @@ public class CompositionDAOImpl extends AbstractDAOImpl<CompositionEntity, Integ
                 .executeUpdate();
     }
 
+    public Integer updateTimeGridByID(Integer id, String timegrid) {
+        return getSession()
+                .createQuery("update CompositionEntity set timegrid=? where id=?")
+                .setParameter(0, timegrid)
+                .setParameter(1, id)
+                .executeUpdate();
+    }
+
 //    ==================================================================================
 //    === SPECIAL
 

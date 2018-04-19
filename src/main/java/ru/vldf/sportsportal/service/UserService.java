@@ -142,6 +142,15 @@ public class UserService {
 
 
         @Transactional
+        public void timeChoice(CompositionDTO composition, Integer time, Character choice) {
+            StringBuilder timegrid = new StringBuilder(composition.getTimegrid());
+            timegrid.setCharAt(time, choice);
+
+            compositionDAO.updateTimeGridByID(composition.getId(),timegrid.toString());
+        }
+
+
+        @Transactional
         public void createTeam(TeamDTO teamDTO) {
 //            TODO: optimize this
             UserEntity captain = userDAO.findByID(authService.getAuthUser().getId());

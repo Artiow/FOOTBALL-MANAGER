@@ -31,6 +31,8 @@ public interface CompositionDAO {
 
     Integer updateStatusByID(Integer id, CompositionStatusEntity status);
 
+    Integer updateTimeGridByID(Integer id, String timegrid);
+
 //    ==================================================================================
 //    === SPECIAL
 

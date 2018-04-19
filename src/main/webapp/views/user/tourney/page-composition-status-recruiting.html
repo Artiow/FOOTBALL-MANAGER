@@ -89,14 +89,14 @@
                 <script>$('.dropdown-toggle').dropdown()</script>
             </div>
             <div class="col-md-10 col-md-offset-1">
-                <div class="btn-group" th:each="i: ${#numbers.sequence(9,18)}">
-                    <button class="btn btn-danger dropdown-toggle" data-toggle="dropdown" th:utext="${i + ':00 &lt;span class=&quot;caret&quot;&gt;&lt;/span&gt;'}">X:00 <span class="caret"></span></button>
-                    <!--<button class="btn btn-danger dropdown-toggle" data-toggle="dropdown" th:text="${i + ':00 &lt;span class=&quot;caret&quot;&gt;&lt;/span&gt;'}">X:00 <span class="caret"></span></button>-->
-                    <!--<button class="btn btn-danger dropdown-toggle" data-toggle="dropdown" th:text="${i + ':00 &lt;span class=&quot;caret&quot;&gt;&lt;/span&gt;'}">X:00 <span class="caret"></span></button>-->
+                <div class="btn-group" th:each="char,iter: ${timegrid}">
+                    <button class="btn btn-danger dropdown-toggle" data-toggle="dropdown" th:if="${char == 'N'}" th:utext="${(iter.index + 9) + ':00 ' + '&lt;span class=&quot;caret&quot;&gt;&lt;/span&gt;'}">X:00 <span class="caret"></span></button>
+                    <button class="btn btn-warning dropdown-toggle" data-toggle="dropdown" th:if="${char == 'C'}" th:utext="${(iter.index + 9) + ':00 ' + '&lt;span class=&quot;caret&quot;&gt;&lt;/span&gt;'}">X:00 <span class="caret"></span></button>
+                    <button class="btn btn-success dropdown-toggle" data-toggle="dropdown" th:if="${char == 'Y'}" th:utext="${(iter.index + 9) + ':00 ' + '&lt;span class=&quot;caret&quot;&gt;&lt;/span&gt;'}">X:00 <span class="caret"></span></button>
                     <ul class="dropdown-menu">
-                        <li><a href="#">Не смогу</a></li>
-                        <li><a href="#">Смогу</a></li>
-                        <li><a href="#">Хочу</a></li>
+                        <li><a th:href="${'/pp/tourney/composition' + compositionDTO.id + '/time' + iter.index + '/N'}">Не смогу</a></li>
+                        <li><a th:href="${'/pp/tourney/composition' + compositionDTO.id + '/time' + iter.index + '/C'}">Смогу</a></li>
+                        <li><a th:href="${'/pp/tourney/composition' + compositionDTO.id + '/time' + iter.index + '/Y'}">Хочу</a></li>
                     </ul>
                 </div>
             </div>

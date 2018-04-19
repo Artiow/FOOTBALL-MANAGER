@@ -27,7 +27,7 @@ public class CompositionEntity {
         id = composition.getId();
         name = composition.getName();
         shiftbalance = composition.getShiftBalance();
-        timegrid = composition.getTimeGrid();
+        timegrid = composition.getTimegrid();
 
         this.team = team;
         this.tourney = tourney;
@@ -67,11 +67,11 @@ public class CompositionEntity {
 
     @Basic
     @Column(name = "timegrid", nullable = false)
-    public String getTimeGrid() {
+    public String getTimegrid() {
         return timegrid;
     }
 
-    public void setTimeGrid(String timegrid) {
+    public void setTimegrid(String timegrid) {
         this.timegrid = timegrid;
     }
 

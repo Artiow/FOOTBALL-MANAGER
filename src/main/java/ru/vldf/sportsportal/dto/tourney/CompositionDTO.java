@@ -20,7 +20,7 @@ public class CompositionDTO {
         id = composition.getId();
         name = composition.getName();
         shiftbalance = composition.getShiftBalance();
-        timegrid = composition.getTimeGrid();
+        timegrid = composition.getTimegrid();
 
         if (composition.getTeam() != null) team = new TeamDTO(composition.getTeam());
         if (composition.getTourney() != null) tourney = new TourneyDTO(composition.getTourney());
@@ -51,11 +51,11 @@ public class CompositionDTO {
         this.shiftbalance = shiftbalance;
     }
 
-    public String getTimeGrid() {
+    public String getTimegrid() {
         return timegrid;
     }
 
-    public void setTimeGrid(String timegrid) {
+    public void setTimegrid(String timegrid) {
         this.timegrid = timegrid;
     }
 
