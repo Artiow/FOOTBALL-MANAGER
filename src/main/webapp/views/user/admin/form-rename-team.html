@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Заявка</title>
+    <link rel="stylesheet"
+          href="../../../libs/bootstrap/css/bootstrap.css"
+          th:href="@{/libs/bootstrap/css/bootstrap.css}"
+    />
+    <link rel="stylesheet"
+          href="../../../libs/font-awesome/css/font-awesome.css"
+          th:href="@{/libs/font-awesome/css/font-awesome.css}"
+    />
+    <link rel="stylesheet"
+          href="../../../resources/css/login.css"
+          th:href="@{/css/login.css}"
+    />
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 hidden-xs buffer"></div>
+        <div class="col-md-12 hidden-xs hidden-sm buffer"></div>
+    </div>
+    <header class="row">
+        <div class="col-md-4 col-md-offset-4 col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
+            <a class="hidden-xs logo"><h1>ПЕРЕИМЕНОВАНИЕ<br/>ТУРНИРНОЙ<br/>КОМАНДЫ</h1></a>
+            <a class="visible-xs logo"><h1>ПЕРЕИМЕНОВАНИЕ<br/>ТУРНИРНОЙ<br/>КОМАНДЫ</h1></a>
+        </div>
+    </header>
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4 col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
+            <form class="login-form" role="form" th:action="${'/pp/admin/check-team/team' + teamDTO.id + '/rename'}" th:object="${teamDTO}" method="post">
+                <div class="form-group">
+                    <label class="login-label" for="input-name"><i class="fa fa-user" aria-hidden="true"></i> Наименование команды</label>
+                    <input class="form-control" id="input-name" type="text" th:field="*{name}" placeholder="name" th:default="*{name}" required="required" autofocus="autofocus"/>
+                </div>
+                <button type="submit" class="btn btn-success login-button">Переименовать</button><a th:href="@{/pp/admin/check-team}" type="button" class="btn btn-link login-button login-link">Отмена</a>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 hidden-xs hidden-sm buffer"></div>
+        <div class="col-sm-12 hidden-xs buffer"></div>
+    </div>
+</div>
+</body>
+</html>

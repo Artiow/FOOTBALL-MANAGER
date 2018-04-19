@@ -95,13 +95,10 @@ public class UserService {
             else return null; //not user's team
         }
 
-
         @Transactional(readOnly = true)
-        public List<CompositionDTO> getCompositions(int teamID) {
-            TeamDTO team = getTeam(teamID);
-            if (team == null) return null; //not user's team
-
-            List<CompositionEntity> entityList = compositionDAO.findByTeam(teamID);
+        public List<CompositionDTO> getCompositionList(TeamDTO team) {
+//            TODO: optimize this
+            List<CompositionEntity> entityList = compositionDAO.findByTeam(team.getId());
 
             if (entityList == null) return null;
             List<CompositionDTO> dtoList = new ArrayList<CompositionDTO>();
@@ -110,17 +107,13 @@ public class UserService {
         }
 
         @Transactional(readOnly = true)
-        public List<CompositionDTO> getRecruitingCompositions(int teamID) {
-            TeamDTO team = getTeam(teamID);
-            if (team == null) return null; //not user's team
+        public CompositionDTO getComposition(int compositionID) {
+//            TODO: optimize this
+            UserDTO user = authService.getAuthUser();
+            CompositionDTO composition = new CompositionDTO(compositionDAO.findByID(compositionID));
 
-            String COMPOSITION_RECRUITING_CODE = "COMPOSITION_RECRUITING";
-            List<CompositionEntity> entityList = compositionDAO.findByTeamAndStatus(teamID, COMPOSITION_RECRUITING_CODE);
-
-            if (entityList == null) return null;
-            List<CompositionDTO> dtoList = new ArrayList<CompositionDTO>();
-            for (CompositionEntity entity: entityList) dtoList.add(new CompositionDTO(entity));
-            return dtoList;
+            if (user.equals(composition.getTeam().getCaptain())) return composition;
+            else return null; //not user's composition
         }
 
 
@@ -145,6 +138,15 @@ public class UserService {
             List<PlayerDTO> dtoList = new ArrayList<PlayerDTO>();
             for (PlayerEntity entity: entityList) dtoList.add(new PlayerDTO(entity));
             return dtoList;
+        }
+
+
+        @Transactional
+        public void timeChoice(CompositionDTO composition, Integer time, Character choice) {
+            StringBuilder timegrid = new StringBuilder(composition.getTimegrid());
+            timegrid.setCharAt(time, choice);
+
+            compositionDAO.updateTimeGridByID(composition.getId(),timegrid.toString());
         }
 
 

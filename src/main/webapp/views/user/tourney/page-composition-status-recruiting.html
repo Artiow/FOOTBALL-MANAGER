@@ -12,6 +12,10 @@
             src="../../../libs/jquery-3.2.1.js"
             th:src="@{/libs/jquery-3.2.1.js}"
     ></script>
+    <script
+            src="../../../libs/bootstrap/js/bootstrap.js"
+            th:src="@{/libs/bootstrap/js/bootstrap.js}"
+    ></script>
     <link rel="stylesheet"
           href="../../../libs/bootstrap/css/bootstrap.css"
           th:href="@{/libs/bootstrap/css/bootstrap.css}"
@@ -74,11 +78,30 @@
             <div class="col-md-10 col-md-offset-1">
                 <h3 th:text="${teamDTO.name}">TEAM NAME</h3>
                 <h4 style="padding: 5px" class="alert-success">ПРИГЛАШЕНИЕ В ТУРНИР</h4>
-                <h4 style="padding: 5px" class="alert-warning">СОБЕРИТЕ СОСТАВ</h4>
-                <a th:href="${'/pp/tourney/composition' + compositionDTO.id + '/confirm'}" class="btn btn-success" th:if="${currentSize != 0}">Подтвердить</a>
+                <h4 style="padding: 5px" class="alert-warning">СОБЕРИТЕ СОСТАВ И ВЫБЕРИТЕ ВРЕМЯ</h4>
+                <!--TODO: confirm?-->
+                <!--<a th:href="${'/pp/tourney/composition' + compositionDTO.id + '/confirm'}" class="btn btn-success" th:if="${currentSize != 0}">Подтвердить</a>-->
             </div>
         </div>
-        <div style="margin-top: 10px" class="row">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <h4>Сетка времени:</h4>
+                <script>$('.dropdown-toggle').dropdown()</script>
+            </div>
+            <div class="col-md-10 col-md-offset-1">
+                <div class="btn-group" th:each="char,iter: ${timegrid}">
+                    <button class="btn btn-danger dropdown-toggle" data-toggle="dropdown" th:if="${char == 'N'}" th:utext="${(iter.index + 9) + ':00 ' + '&lt;span class=&quot;caret&quot;&gt;&lt;/span&gt;'}">X:00 <span class="caret"></span></button>
+                    <button class="btn btn-warning dropdown-toggle" data-toggle="dropdown" th:if="${char == 'C'}" th:utext="${(iter.index + 9) + ':00 ' + '&lt;span class=&quot;caret&quot;&gt;&lt;/span&gt;'}">X:00 <span class="caret"></span></button>
+                    <button class="btn btn-success dropdown-toggle" data-toggle="dropdown" th:if="${char == 'Y'}" th:utext="${(iter.index + 9) + ':00 ' + '&lt;span class=&quot;caret&quot;&gt;&lt;/span&gt;'}">X:00 <span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                        <li><a th:href="${'/pp/tourney/composition' + compositionDTO.id + '/time' + iter.index + '/N'}">Не смогу</a></li>
+                        <li><a th:href="${'/pp/tourney/composition' + compositionDTO.id + '/time' + iter.index + '/C'}">Смогу</a></li>
+                        <li><a th:href="${'/pp/tourney/composition' + compositionDTO.id + '/time' + iter.index + '/Y'}">Хочу</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div style="margin-top: 10px; margin-bottom: 20px" class="row">
             <div class="col-md-4 col-md-offset-1">
                 <h4 th:text="${'Текущий состав (' + currentSize + '/' + maxSize + '):'}">Текущий состав: NULL</h4>
                 <p th:if="${currentPlayerDTOList == null}">Пусто</p>
@@ -90,14 +113,14 @@
                             <p style="margin: 0" th:text="*{birthday}">BIRTHDAY</p>
                         </td>
                         <td>
-                            <a th:href="${'/pp/tourney/team' + teamDTO.id + '/composition' + compositionDTO.id + '/player' + playerDTO.id + '/delete'}" style="margin-top: 12px" class="btn btn-danger">Удалить</a>
+                            <a th:href="${'/pp/tourney/composition' + compositionDTO.id + '/player' + playerDTO.id + '/delete'}" style="margin-top: 12px" class="btn btn-danger">Удалить</a>
                         </td>
                     </tr>
                 </table>
             </div>
             <div class="col-md-2" th:if="${!isFull}">
                 <h4>Поиск:</h4>
-                <form role="form" th:action="${'/pp/tourney/team' + teamDTO.id + '/composition' + compositionDTO.id + '/player-search'}" th:object="${playerDTO}" method="post">
+                <form role="form" th:action="${'/pp/tourney/composition' + compositionDTO.id + '/player-search'}" th:object="${playerDTO}" method="post">
                     <div style="margin-bottom: 8px">
                         <label class="login-label" for="input-name"><i class="fa fa-user" aria-hidden="true"></i> Имя</label>
                         <input class="form-control" id="input-name" type="text" th:field="*{name}" placeholder="name" required="required" autofocus="autofocus"/>
@@ -111,6 +134,7 @@
                         <input class="form-control" id="input-patronymic" type="text" th:field="*{patronymic}" placeholder="patronymic" required="required"/>
                     </div>
                     <button type="submit" class="btn btn-default">Найти</button>
+                    <a style="float: right" class="btn btn-success" disabled="disabled">Создать</a>
                 </form>
             </div>
             <div class="col-md-4"  th:if="${!isFull}">
@@ -124,7 +148,7 @@
                             <p style="margin: 0" th:text="*{birthday}">BIRTHDAY</p>
                         </td>
                         <td>
-                            <a th:href="${'/pp/tourney/team' + teamDTO.id + '/composition' + compositionDTO.id + '/player' + playerDTO.id + '/add'}" style="margin-top: 12px" class="btn btn-success">Добавить</a>
+                            <a th:href="${'/pp/tourney/composition' + compositionDTO.id + '/player' + playerDTO.id + '/add'}" style="margin-top: 12px" class="btn btn-success">Добавить</a>
                         </td>
                     </tr>
                 </table>

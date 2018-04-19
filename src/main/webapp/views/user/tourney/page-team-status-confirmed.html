@@ -54,53 +54,70 @@
 <nav class="nav-ppage">
     <div class="container">
         <ul class="list-inline">
-            <li><a th:href="@{/personalpage}"><i class="fa fa-reply" aria-hidden="true"></i> Назад</a></li>
+            <li><a th:href="@{/pp/tourney}"><i class="fa fa-reply" aria-hidden="true"></i> Назад</a></li>
         </ul>
     </div>
 </nav>
 
 <main style="min-height: 600px" class="main-tourneypage pic-href">
-    <div class="container">
-        <div class="row" th:if="${teamList != null}">
+    <div class="alert-danger" th:unless="${teamDTO != null}">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3">
+                    <h3 style="margin: 20px 0 20px 0">НЕТ ДОСТУПА</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container" th:if="${teamDTO != null}">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <h3 th:text="${teamDTO.name}">TEAM NAME</h3>
+            </div>
+        </div>
+        <div class="row" th:if="${compositionList != null}">
             <div style="padding: 10px 0 10px 0" class="col-md-6 col-md-offset-3">
-                <h3>Мои турнирные команды:</h3>
+                <h3>Участия в турнирах:</h3>
                 <table class="table table-hover">
-                    <tr th:each="teamItem: ${teamList}" th:object="${teamItem}">
+                    <tr th:each="compositionItem: ${compositionList}" th:object="${compositionItem}">
                         <td>
-                            <a class="pic-href" th:href="*{'/pp/tourney/team' + id}">
+                            <a class="pic-href" th:href="*{'/pp/tourney/composition' + id}">
                                 <!--TODO: pic here!-->
                                 <div style="width: 40px; height: 40px; background: grey"></div>
                             </a>
                         </td>
                         <td>
-                            <a th:href="*{'/pp/tourney/team' + id}">
-                                <p th:text="*{name}">NAME</p>
+                            <a th:href="*{'/pp/tourney/composition' + id}">
+                                <p th:text="*{tourney.name}">TOURNEY</p>
                             </a>
                         </td>
-                        <td th:if="*{status.code == 'TEAM_UNCONFIRMED'}" class="warning">
-                            <a th:href="*{'/pp/tourney/team' + id}">
+                        <td th:if="*{status.code == 'COMPOSITION_RECRUITING'}" class="info">
+                            <a th:href="*{'/pp/tourney/composition' + id}">
+                                <p>ПРИГЛАШЕНИЕ В ТУРНИР</p>
+                            </a>
+                        </td>
+                        <td th:if="*{status.code == 'COMPOSITION_UNCONFIRMED'}" class="warning">
+                            <a th:href="*{'/pp/tourney/composition' + id}">
                                 <p>ОЖИДАЕТ ПОДТВЕРЖДЕНИЯ</p>
                             </a>
                         </td>
-                        <td th:if="*{status.code == 'TEAM_REJECTED'}" class="danger">
-                            <a th:href="*{'/pp/tourney/team' + id}">
-                                <p>ЗАЯВКА ОТКЛОНЕНА</p>
+                        <td th:if="*{status.code == 'COMPOSITION_CONFIRMED'}" class="success">
+                            <a th:href="*{'/pp/tourney/composition' + id}">
+                                <p>СОСТАВ ПОДТВЕРЖДЕН</p>
                             </a>
                         </td>
-                        <td th:if="*{status.code == 'TEAM_CONFIRMED'}">
-                            <a th:href="*{'/pp/tourney/team' + id}">
-                                <p></p>
+                        <td th:if="*{status.code == 'COMPOSITION_REJECTED'}" class="danger">
+                            <a th:href="*{'/pp/tourney/composition' + id}">
+                                <p>СОСТАВ НЕ ПОДТВЕРЖДЕН</p>
                             </a>
                         </td>
                     </tr>
                 </table>
-                <a th:href="@{/pp/tourney/create-team}" type="button" class="btn btn-default">Создать турнирную команду</a>
             </div>
         </div>
-        <div class="row" th:unless="${teamList != null}">
-            <div style="padding: 10px 0 10px 0" class="col-md-6 col-md-offset-3" th:unless="${teamList != null}">
-                <h3>Нет турнирных команд!</h3>
-                <a th:href="@{/pp/tourney/create-team}" type="button" class="btn btn-default">Создать турнирную команду</a>
+        <div class="row" th:unless="${compositionList != null}">
+            <div style="padding: 10px 0 10px 0" class="col-md-6 col-md-offset-3">
+                <h3>Команда не участвовала в турнирах!</h3>
             </div>
         </div>
     </div>

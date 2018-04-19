@@ -38,8 +38,12 @@ public interface TeamDAO {
 
     List<TeamEntity> findByNameLike(String name);
 
+    List<TeamEntity> findAll();
+
 //    ==================================================================================
 //    === UPDATE
 
     Integer updateStatusByID(Integer id, TeamStatusEntity status);
+
+    Integer updateNameByID(Integer id, String name);
 }

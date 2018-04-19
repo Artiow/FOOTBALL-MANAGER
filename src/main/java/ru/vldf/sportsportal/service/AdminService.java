@@ -72,6 +72,8 @@ public class AdminService {
         @Transactional(readOnly = true)
         public UserDTO getFirstUnconfirmedUser() {
             List<UserEntity> entityList = userDAO.findByRole(ROLE_UNCONFIRMED_CODE);
+            if ((entityList == null) || (entityList.isEmpty())) return null;
+
             return new UserDTO(entityList.get(0)); //TODO: lol wtf dude? add pagination!
         }
 
@@ -180,9 +182,24 @@ public class AdminService {
             return dtoList;
         }
 
+        @Transactional(readOnly = true)
+        public List<TeamDTO> getTeamList() {
+            List<TeamEntity> entityList = teamDAO.findAll();
+            if (entityList == null) return null;
+
+            List<TeamDTO> dtoList = new ArrayList<TeamDTO>();
+            for (TeamEntity entity: entityList) dtoList.add(new TeamDTO(entity));
+            return dtoList;
+        }
 
         @Transactional(readOnly = true)
-        public List<TourneyDTO> getTourneysList() {
+        public TeamDTO getTeam(Integer id) {
+            return new TeamDTO(teamDAO.findByID(id));
+        }
+
+
+        @Transactional(readOnly = true)
+        public List<TourneyDTO> getTourneyList() {
             List<TourneyEntity> entityList = tourneyDAO.findAll();
             if (entityList == null) return null;
 
@@ -213,6 +230,11 @@ public class AdminService {
         public void rejectTeam(Integer id) {
             String TEAM_REJECTED_CODE = "TEAM_REJECTED";
             teamDAO.updateStatusByID(id, teamStatusDAO.findByCode(TEAM_REJECTED_CODE));
+        }
+
+        @Transactional
+        public void renameTeam(TeamDTO teamDTO) {
+            teamDAO.updateNameByID(teamDTO.getId(), teamDTO.getName());
         }
 
 
@@ -257,10 +279,7 @@ public class AdminService {
 //            TODO: upgrade and optimize this!
             TourneyEntity tourney = tourneyDAO.findByID(tourneyID);
 
-            String TEAM_INVITE_CODE = "TEAM_INVITED";
             String COMPOSITION_RECRUITING_CODE = "COMPOSITION_RECRUITING";
-
-            TeamStatusEntity teamStatus = teamStatusDAO.findByCode(TEAM_INVITE_CODE);
             CompositionStatusEntity compositionStatus = compositionStatusDAO.findByCode(COMPOSITION_RECRUITING_CODE);
 
             for (Integer teamID: teamsID) {
@@ -270,7 +289,6 @@ public class AdminService {
                 compositionDTO.setName(team.getName());
 
                 compositionDAO.save(new CompositionEntity(compositionDTO, team, tourney, compositionStatus));
-                teamDAO.updateStatusByID(teamID, teamStatus);
             }
         }
 

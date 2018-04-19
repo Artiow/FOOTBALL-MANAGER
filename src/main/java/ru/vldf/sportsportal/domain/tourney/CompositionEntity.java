@@ -10,7 +10,8 @@ import java.util.Collection;
 public class CompositionEntity {
     private Integer id;
     private String name;
-    private Integer shiftbalance = 3; //default
+    private Integer shiftbalance = 3;       //default
+    private String timegrid = "CCCCCCCCCC"; //default
 
     private TeamEntity team;
     private TourneyEntity tourney;
@@ -22,10 +23,11 @@ public class CompositionEntity {
 
     }
 
-    public CompositionEntity(CompositionDTO teamComposition, TeamEntity team, TourneyEntity tourney, CompositionStatusEntity status) {
-        id = teamComposition.getId();
-        name = teamComposition.getName();
-        shiftbalance = teamComposition.getShiftBalance();
+    public CompositionEntity(CompositionDTO composition, TeamEntity team, TourneyEntity tourney, CompositionStatusEntity status) {
+        id = composition.getId();
+        name = composition.getName();
+        shiftbalance = composition.getShiftBalance();
+        timegrid = composition.getTimegrid();
 
         this.team = team;
         this.tourney = tourney;
@@ -61,6 +63,16 @@ public class CompositionEntity {
 
     public void setShiftBalance(Integer shiftbalance) {
         this.shiftbalance = shiftbalance;
+    }
+
+    @Basic
+    @Column(name = "timegrid", nullable = false)
+    public String getTimegrid() {
+        return timegrid;
+    }
+
+    public void setTimegrid(String timegrid) {
+        this.timegrid = timegrid;
     }
 
 //    ==================================================================================

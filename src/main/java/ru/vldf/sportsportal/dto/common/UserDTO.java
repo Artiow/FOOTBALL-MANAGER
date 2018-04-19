@@ -2,9 +2,10 @@ package ru.vldf.sportsportal.dto.common;
 
 import ru.vldf.sportsportal.domain.common.UserEntity;
 
+import java.io.Serializable;
 import java.sql.Date;
 
-public class UserDTO {
+public class UserDTO implements Serializable {
     private Integer id;
     private String login;
     private String email;
@@ -24,7 +25,7 @@ public class UserDTO {
     public UserDTO(UserEntity user) {
         id = user.getId();
         login = user.getLogin();
-        email = user.getEMail();
+        email = user.getEmail();
         password = user.getPassword();
         name = user.getName();
         surname = user.getSurname();
