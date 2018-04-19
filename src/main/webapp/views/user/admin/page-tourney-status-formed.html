@@ -77,8 +77,10 @@
             </div>
         </div>
         <div class="row" th:if="${compositionList != null}">
-            <div style="padding: 10px 0 10px 0" class="col-md-6 col-md-offset-3">
+            <div class="col-md-6 col-md-offset-3">
                 <h4>Участвующие команды:</h4>
+            </div>
+            <div style="padding: 10px" class="col-md-3 col-md-offset-3">
                 <table class="table table-hover">
                     <tr th:each="compositionItem: ${compositionList}" th:object="${compositionItem}">
                         <td>
@@ -86,29 +88,16 @@
                                 <p th:text="*{name}">NAME</p>
                             </a>
                         </td>
-                        <td th:if="*{team.status.code == 'TEAM_INVITED'}" class="warning">
-                            <a th:href="*{'/xxx' + team.id}">
-                                <p>ПРИГЛАШЕНА</p>
-                            </a>
-                        </td>
-                        <td th:if="*{team.status.code == 'TEAM_AWAITING'}" class="info">
-                            <a th:href="*{'/xxx' + team.id}">
-                                <p>ОЖИДАЕТ ПОДТВЕРЖДЕНИЯ</p>
-                            </a>
-                        </td>
-                        <td th:if="*{team.status.code == 'TEAM_INVOLVED'}" class="info">
-                            <a th:href="*{'/xxx' + team.id}">
-                                <p>ГОТОВА</p>
-                            </a>
-                        </td>
                     </tr>
                 </table>
+            </div>
+            <div class="col-md-6 col-md-offset-3">
                 <a th:href="${'/pp/admin/tourney/tourney' + tourneyDTO.id + '/invite'}" type="button" class="btn btn-default">Пригласить команды в турнир</a>
             </div>
         </div>
         <div class="row" th:unless="${compositionList != null}">
-            <div style="padding: 10px 0 10px 0" class="col-md-6 col-md-offset-3">
-                <h4>Нет участвующих команд</h4>
+            <div style="padding: 10px" class="col-md-6 col-md-offset-3">
+                <h4 style="margin-bottom: 25px">Нет участвующих команд</h4>
                 <a th:href="${'/pp/admin/tourney/tourney' + tourneyDTO.id + '/invite'}" type="button" class="btn btn-default">Пригласить команды в турнир</a>
             </div>
         </div>

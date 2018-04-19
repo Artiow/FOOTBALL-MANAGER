@@ -290,13 +290,31 @@ public class UserController {
                 timegrid[i] = ("" + chars[i]);
             }
 
+            TmpDTO tmpDTO = userTourneyService.getRival(id);
+            CompositionDTO rivalDTO = null;
+            String[] rivalgrid = null;
+            if (tmpDTO != null) {
+                if (tmpDTO.getRed().getId() == id) rivalDTO = tmpDTO.getBlue();
+                if (tmpDTO.getBlue().getId() == id) rivalDTO = tmpDTO.getRed();
+
+                char[] chars2 = rivalDTO.getTimegrid().toCharArray(); //TODO: wtf
+                rivalgrid = new String[10];
+
+                for (int i = 0; i < 10; i++) {
+                    rivalgrid[i] = ("" + chars2[i]);
+                }
+            }
+
             map
                     .addAttribute("maxSize", maxSize)
                     .addAttribute("currentSize", currentSize)
 
                     .addAttribute("teamDTO", compositionDTO.getTeam())
                     .addAttribute("compositionDTO", compositionDTO)
+                    .addAttribute("rivalDTO", rivalDTO)
+
                     .addAttribute("timegrid", timegrid)
+                    .addAttribute("rivalgrid", rivalgrid)
 
                     .addAttribute("impLimit", !(currentImp < maxImp))
 

@@ -11,6 +11,7 @@ import ru.vldf.sportsportal.dto.tourney.PlayerDTO;
 import ru.vldf.sportsportal.dto.common.UserDTO;
 import ru.vldf.sportsportal.domain.tourney.*;
 import ru.vldf.sportsportal.domain.common.UserEntity;
+import ru.vldf.sportsportal.dto.tourney.TmpDTO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -114,6 +115,21 @@ public class UserService {
 
             if (user.equals(composition.getTeam().getCaptain())) return composition;
             else return null; //not user's composition
+        }
+
+
+        private TmpDAO tmpDAO;
+
+        @Autowired
+        public void setTmpDAO(TmpDAO tmpDAO) {
+            this.tmpDAO = tmpDAO;
+        }
+
+        @Transactional(readOnly = true)
+        public TmpDTO getRival(int compositionID) {
+            TmpEntity entity = tmpDAO.findRivalByID(compositionID);
+            if (entity != null) return new TmpDTO(entity);
+            else return null; //TODO: wtf
         }
 
 
