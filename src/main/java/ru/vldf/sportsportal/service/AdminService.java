@@ -134,6 +134,7 @@ public class AdminService {
         private TourneyDAO tourneyDAO;
         private TourneyStatusDAO tourneyStatusDAO;
         private GameDAO gameDAO;
+        private PlayerDAO playerDAO;
 
         @Autowired
         public void setTeamDAO(TeamDAO teamDAO) {
@@ -170,6 +171,11 @@ public class AdminService {
             this.gameDAO = gameDAO;
         }
 
+        @Autowired
+        public void setPlayerDAO(PlayerDAO playerDAO) {
+            this.playerDAO = playerDAO;
+        }
+
 
         private final String TEAM_UNCONFIRMED_CODE = "TEAM_UNCONFIRMED";
 
@@ -203,6 +209,16 @@ public class AdminService {
             return new TeamDTO(teamDAO.findByID(id));
         }
 
+        @Transactional(readOnly = true) //TODO: duplicate code
+        public List<PlayerDTO> getPlayerList(CompositionDTO composition) {
+            List<PlayerEntity> entityList = playerDAO.findByTeamComposition(composition.getId());
+            if (entityList == null) return null;
+
+            List<PlayerDTO> dtoList = new ArrayList<PlayerDTO>();
+            for (PlayerEntity entity: entityList) dtoList.add(new PlayerDTO(entity));
+            return dtoList;
+        }
+
 
         @Transactional(readOnly = true)
         public List<TourneyDTO> getTourneyList() {
@@ -228,6 +244,12 @@ public class AdminService {
             for (GameEntity entity: entityList) dtoList.add(new GameDTO(entity));
             return dtoList;
         }
+
+        @Transactional(readOnly = true)
+        public GameDTO getGame(Integer id) {
+            return new GameDTO(gameDAO.findByID(id));
+        }
+
 
         @Transactional(readOnly = true)
         public List<String[]> getTimegrid(List<GameDTO> games) {

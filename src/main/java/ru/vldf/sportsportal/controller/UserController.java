@@ -180,12 +180,14 @@ public class UserController {
 
             map
                     .addAttribute("tourneyDTO", tourneyDTO)
+                    .addAttribute("gameList", tourneyService.getGames(tourneyDTO))
                     .addAttribute("compositionList", tourneyService.getTeamCompositions(tourneyDTO));
+
 
             int status = tourneyDTO.getStatus().getId();
             switch (status) {
                 case 1: return "user/admin/page-tourney-status-formed"; //TOURNEY_FORMED
-                case 2: return "user/admin/page-tourney-status-formed"; //TOURNEY_TIMEUP
+                case 2: return "user/admin/page-tourney-status-timeup"; //TOURNEY_TIMEUP
 
                 default: return "redirect:/xxx{id}"; //TODO: to tourney page!
             }
@@ -204,14 +206,31 @@ public class UserController {
                     .addAttribute("timegrid", timegrid);
 
             if (tourneyDTO.getStatus().getCode().equals("TOURNEY_FORMED")) return "user/admin/page-tourney-timegrid";
-            if (tourneyDTO.getStatus().getCode().equals("TOURNEY_TIMEUP")) return "user/admin/page-tourney-timeup";
-            else return "user/admin/page-tourney-timegrid"; //TODO: remove!
+            if (tourneyDTO.getStatus().getCode().equals("TOURNEY_TIMEUP")) return "user/admin/page-tourney-timegrid-done";
+            else return "redirect:/500";
         }
 
         @GetMapping(value = {"/pp/admin/tourney/tourney{id}/timeup"})
         public String timeup(@PathVariable("id") int id) {
             tourneyService.timeupTourney(tourneyService.getTourney(id));
             return "redirect:/pp/admin/tourney/tourney{id}";
+        }
+
+        @GetMapping(value = {"/pp/admin/game{id}/protocol"})
+        public String toProtocolPage(@PathVariable("id") int id, ModelMap map) {
+            GameDTO game = tourneyService.getGame(id);
+
+            List<PlayerDTO> redPlayerList = tourneyService.getPlayerList(game.getRed());
+            List<PlayerDTO> bluePlayerList = tourneyService.getPlayerList(game.getBlue());
+
+            map
+                    .addAttribute("tourneyDTO", game.getTourney())
+                    .addAttribute("redTeamDTO", game.getRed())
+                    .addAttribute("blueTeamDTO", game.getBlue())
+                    .addAttribute("redPlayerList", redPlayerList)
+                    .addAttribute("bluePlayerList", bluePlayerList);
+
+            return "user/admin/page-tourney-protocol";
         }
 
 

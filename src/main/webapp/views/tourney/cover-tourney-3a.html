@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Турниры</title>
+    <script
+            src="../../libs/vue.js"
+            th:src="@{/libs/vue.js}"
+    ></script>
+    <script
+            src="../../libs/jquery-3.2.1.js"
+            th:src="@{/libs/jquery-3.2.1.js}"
+    ></script>
+    <link rel="stylesheet"
+          href="../../libs/bootstrap/css/bootstrap.css"
+          th:href="@{/libs/bootstrap/css/bootstrap.css}"
+    />
+    <link rel="stylesheet"
+          href="../../libs/font-awesome/css/font-awesome.css"
+          th:href="@{/libs/font-awesome/css/font-awesome.css}"
+    />
+    <link rel="stylesheet"
+          href="../../resources/css/header.css"
+          th:href="@{/css/header.css}"
+    />
+    <link rel="stylesheet"
+          href="../../resources/css/personalpage.css"
+          th:href="@{/css/personalpage.css}"
+    />
+    <link rel="stylesheet"
+          href="../../resources/css/footer.css"
+          th:href="@{/css/footer.css}"
+    />
+</head>
+<body>
+
+<header id="header-regular">
+    <header-regular id="header-auth" caption="ТУРНИРЫ">
+        <auth-failed sec:authorize="!isAuthenticated()"></auth-failed>
+        <auth-completed sec:authorize="isAuthenticated()"><p th:text="${authUser.name + ' ' + authUser.surname}">USERNAME</p></auth-completed>
+    </header-regular>
+</header>
+<script
+        src="../../resources/js/components/HeaderRegular.js"
+        th:src="@{/components/HeaderRegular.js}"
+></script>
+<script
+        src="../../resources/js/components/HeaderAuth.js"
+        th:src="@{/components/HeaderAuth.js}"
+></script>
+
+<main style="min-height: 600px" class="main-tourneypage">
+    <div class="container">
+        <div class="row">
+            <div style="margin-top: 25px; margin-bottom: 50px" class="col-md-3 col-md-offset-1">
+                <h3>Расписание</h3>
+                <table class="table table-hover">
+                    <tr th:each="tourneyItem: ${tourneyList}" th:object="${tourneyItem}">
+                        <td>
+                            <a th:href="*{'/tourney/t' + id}">
+                                <p th:text="*{name}">NAME</p>
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-md-5 col-md-offset-1">
+                <nav style="margin-top: 50px" class="navbar navbar-default">
+                    <h3 style="margin-left: 15px" th:text="${tourneyCur.name}">NAME</h3>
+                    <p class="navbar-text">Парк Южный (Путилина)</p>
+                    <p class="navbar-text">21.04 (Суббота)</p>
+                </nav>
+                <table class="table">
+                    <tr class="active">
+                        <td style="padding: 0 10px 0 10px"><h4>Время</h4></td>
+                        <td style="padding: 0 10px 0 10px"><h4>Матч</h4></td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 0 10px 0 10px"><h5>10:00 - 10:55</h5></td>
+                        <td style="padding: 0 10px 0 10px"><h5>Бугор - Удар</h5></td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 0 10px 0 10px"><h5>11:00 - 11:55</h5></td>
+                        <td style="padding: 0 10px 0 10px"><h5>Торнадо - Вольт</h5></td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 0 10px 0 10px"><h5>12:00 - 12:55</h5></td>
+                        <td style="padding: 0 10px 0 10px"><h5>ВЭБИТ.РФ - Стар</h5></td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 0 10px 0 10px"><h5>13:00 - 13:55</h5></td>
+                        <td style="padding: 0 10px 0 10px"><h5>Империя - Фитиль</h5></td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 0 10px 0 10px"><h5>14:10 - 15:05</h5></td>
+                        <td style="padding: 0 10px 0 10px"><h5>Каталония - ФФ-50</h5></td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 0 10px 0 10px"><h5>15:10 - 16:05</h5></td>
+                        <td style="padding: 0 10px 0 10px"><h5>Отрожка - Чижовка</h5></td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 0 10px 0 10px"><h5>16:10 - 17:05</h5></td>
+                        <td style="padding: 0 10px 0 10px"><h5>Текстильщик - Труд</h5></td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 0 10px 0 10px"><h5>17:10 - 18:05</h5></td>
+                        <td style="padding: 0 10px 0 10px"><h5>Максимум - Черный Бык</h5></td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 0 10px 0 10px"><h5>18:10 - 19:05</h5></td>
+                        <td style="padding: 0 10px 0 10px"><h5>Славяне - Энергия</h5></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer id="footer-regular">
+    <footer-regular link-service="#"
+                    link-contacts="#"
+                    link-feedback="#"
+                    src-vldf-logo="/img/logo-vldf-sm.png"
+                    link-vldf="http://www.vldf.ru/"
+                    link-vldf-vk="https://vk.com/vldfru"
+                    link-vldf-instagram="https://www.instagram.com/vldf2009/"
+                    link-vldf-youtube="https://www.youtube.com/channel/UCgWjF5d6O3ORXolcr1HO-cQ">
+    </footer-regular>
+</footer>
+<script
+        src="../../resources/js/components/FooterRegular.js"
+        th:src="@{/components/FooterRegular.js}"
+></script>
+
+</body>
+<script
+        src="../../resources/js/padding.js"
+        th:src="@{/js/padding.js}"
+></script>
+</html>

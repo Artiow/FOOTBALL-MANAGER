@@ -73,36 +73,34 @@
         <div class="row">
             <div class="col-md-6 col-md-offset-3">
                 <h3 th:inline="text" th:text="${tourneyDTO.name}">TOURNEY NAME</h3>
-                <h4 style="padding: 5px" class="alert-warning">ДОСТУПНЫ НАБОР СОСТАВА И ВЫБОР ВРЕМЕНИ</h4>
+                <h4 style="padding: 5px" class="alert-warning">ДОСТУПЕН НАБОР СОСТАВА</h4>
                 <div class="btn-group">
                     <a th:href="${'/pp/admin/tourney/tourney' + tourneyDTO.id + '/timegrid'}" class="btn btn-default">Временная сетка</a>
-                    <a th:href="${'/pp/admin/tourney/tourney' + tourneyDTO.id + '/timeup'}" class="btn btn-warning">Зафиксировать</a>
                 </div>
             </div>
         </div>
-        <div class="row" th:if="${compositionList != null}">
+        <div style="margin-top: 20px" class="row" th:if="${gameList != null}">
             <div class="col-md-6 col-md-offset-3">
-                <h4>Участвующие команды:</h4>
+                <h4>Матчи:</h4>
             </div>
-            <div style="padding: 10px" class="col-md-3 col-md-offset-3">
+            <div style="padding: 10px" class="col-md-6 col-md-offset-3">
                 <table class="table table-hover">
-                    <tr th:each="compositionItem: ${compositionList}" th:object="${compositionItem}">
+                    <tr th:each="gameItem: ${gameList}" th:object="${gameItem}">
                         <td>
-                            <a th:href="*{'/xxx' + team.id}">
-                                <p th:text="*{name}">NAME</p>
+                            <a th:href="*{'/pp/admin/game' + id + '/protocol'}">
+                                <p th:text="*{red.name}">NAME</p>
+                            </a>
+                        </td>
+                        <td>
+                            <a th:href="*{'/pp/admin/game' + id + '/protocol'}">-</a>
+                        </td>
+                        <td>
+                            <a th:href="*{'/pp/admin/game' + id + '/protocol'}">
+                                <p th:text="*{blue.name}">NAME</p>
                             </a>
                         </td>
                     </tr>
                 </table>
-            </div>
-            <div class="col-md-6 col-md-offset-3">
-                <a th:href="${'/pp/admin/tourney/tourney' + tourneyDTO.id + '/invite'}" type="button" class="btn btn-default">Пригласить команды в турнир</a>
-            </div>
-        </div>
-        <div class="row" th:unless="${compositionList != null}">
-            <div style="padding: 10px" class="col-md-6 col-md-offset-3">
-                <h4 style="margin-bottom: 25px">Нет участвующих команд</h4>
-                <a th:href="${'/pp/admin/tourney/tourney' + tourneyDTO.id + '/invite'}" type="button" class="btn btn-default">Пригласить команды в турнир</a>
             </div>
         </div>
     </div>

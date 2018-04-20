@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Протокол</title>
+    <link rel="stylesheet"
+          href="../../../resources/css/protocol.css"
+          th:href="@{/css/protocol.css}"
+    />
+</head>
+<body>
+<div id="protocol_one" style="top: 0; bottom: 0; left: 0; position: absolute;">
+    <table width="100%" height="1075px">
+        <tr>
+            <td>
+                <img src="../../../resources/img/protocol_head.jpg" th:src="@{/img/protocol_head.jpg}"/><br/>
+                <table width="100%">
+                    <tr>
+                        <td width="60%">
+                            <table width="100%">
+                                <tr height="30px">
+                                    <td width="43%" align="right">
+                                        <a th:text="${redTeamDTO.name}">RED TEAM</a>
+                                    </td>
+                                    <td width="19%" align="center">
+                                        -<hr/>
+                                    </td>
+                                    <td width="43%">
+                                        <a th:text="${blueTeamDTO.name}">BLUE TEAM</a>
+                                    </td>
+                                </tr>
+                                <tr height="30px">
+                                    <td width="43%" align="right">
+                                        Счет первого тайма:
+                                    </td>
+                                    <td width="19%" align="center">
+                                        -<hr/>
+                                    </td>
+                                    <td width="43%">
+
+                                    </td>
+                                </tr>
+                                <tr height="30px">
+                                    <td width="43%" align="right">
+                                        Пенальти:
+                                    </td>
+                                    <td width="19%" align="center">
+                                        -<hr/>
+                                    </td>
+                                    <td width="43%">
+
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td>
+                            <a th:text="${tourneyDTO.name}">TOURNEY</a> (__ тур)<br/>
+                            <br/>Дата:<hr/>
+                            <br/>Время:<hr/>
+                            <br/>Место проведения:<hr/>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <br/>
+                <table width="100%" border="0px">
+                    <tr>
+
+                        <td width="49%" th:if="${redPlayerList != null}">
+                            <a th:text="${redTeamDTO.name}">RED TEAM</a> (хозяева / гости)<br/><br/>
+                            <table border="1px">
+                                <tr>
+                                    <td>Фолы (1 тайм)</td>
+                                    <td width="20px"></td>
+                                    <td width="20px"></td>
+                                    <td width="20px"></td>
+                                    <td width="20px"></td>
+                                    <td width="20px"></td>
+                                </tr>
+                                <tr>
+                                    <td>Фолы (2 тайм)</td>
+                                    <td width="20px"></td>
+                                    <td width="20px"></td>
+                                    <td width="20px"></td>
+                                    <td width="20px"></td>
+                                    <td width="20px"></td>
+                                </tr>
+                            </table>
+                            <br/>Всего ___ игроков на матч<br/>
+                            <table width="100%" border="1px">
+                                <tr height="19px">
+                                    <td width="20px"></td>
+                                    <td width="20px">№</td>
+                                    <td>Игрок</td>
+                                    <td width="20px">+/-</td>
+                                    <td width="25px">Голы</td>
+                                    <td width="50px" colspan="2">Карточки</td>
+                                </tr>
+                                <tr height="19px" th:each="rPlayer,rIter: ${redPlayerList}" th:object="${rPlayer}">
+                                    <td th:text="${rIter.index + 1}">0</td>
+                                    <td></td>
+                                    <td th:text="*{surname + ' ' + name + ' ' + patronymic}"><a>RED PLAYER NAME</a></td>
+                                    <td width="20px"></td>
+                                    <td width="25px"></td>
+                                    <td width="25px"></td>
+                                    <td width="25px"></td>
+                                </tr>
+                                <tr height="19px" th:each="r: ${#numbers.sequence(redPlayerList.size(),18)}">
+                                    <td th:text="${r}">0</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td width="20px"></td>
+                                    <td width="25px"></td>
+                                    <td width="25px"></td>
+                                    <td width="25px"></td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td width="49%" th:unless="${redPlayerList != null}">
+                            <a th:text="${redTeamDTO.name}">RED TEAM</a> (хозяева / гости)<br/><br/>
+                            <table border="1px">
+                                <tr>
+                                    <td>Фолы (1 тайм)</td>
+                                    <td width="20px"></td>
+                                    <td width="20px"></td>
+                                    <td width="20px"></td>
+                                    <td width="20px"></td>
+                                    <td width="20px"></td>
+                                </tr>
+                                <tr>
+                                    <td>Фолы (2 тайм)</td>
+                                    <td width="20px"></td>
+                                    <td width="20px"></td>
+                                    <td width="20px"></td>
+                                    <td width="20px"></td>
+                                    <td width="20px"></td>
+                                </tr>
+                            </table>
+                            <br/>Всего ___ игроков на матч<br/>
+                            <table width="100%" border="1px">
+                                <tr height="19px">
+                                    <td width="20px"></td>
+                                    <td width="20px">№</td>
+                                    <td>Игрок</td>
+                                    <td width="20px">+/-</td>
+                                    <td width="25px">Голы</td>
+                                    <td width="50px" colspan="2">Карточки</td>
+                                </tr>
+                                <tr height="19px" th:each="r: ${#numbers.sequence(0,18)}">
+                                    <td th:text="${r}">0</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td width="20px"></td>
+                                    <td width="25px"></td>
+                                    <td width="25px"></td>
+                                    <td width="25px"></td>
+                                </tr>
+                            </table>
+                        </td>
+
+                        <td width="49%" th:if="${bluePlayerList != null}">
+                            <a th:text="${blueTeamDTO.name}">BLUE TEAM</a> (хозяева / гости)<br/><br/>
+                            <table border="1px">
+                                <tr>
+                                    <td>Фолы (1 тайм)</td>
+                                    <td width="20px"></td>
+                                    <td width="20px"></td>
+                                    <td width="20px"></td>
+                                    <td width="20px"></td>
+                                    <td width="20px"></td>
+                                </tr>
+                                <tr>
+                                    <td>Фолы (2 тайм)</td>
+                                    <td width="20px"></td>
+                                    <td width="20px"></td>
+                                    <td width="20px"></td>
+                                    <td width="20px"></td>
+                                    <td width="20px"></td>
+                                </tr>
+                            </table>
+                            <br/>Всего ___ игроков на матч<br/>
+                            <table width="100%" border="1px">
+                                <tr height="19px">
+                                    <td width="20px"></td>
+                                    <td width="20px">№</td>
+                                    <td>Игрок</td>
+                                    <td width="20px">+/-</td>
+                                    <td width="25px">Голы</td>
+                                    <td width="50px" colspan="2">Карточки</td>
+                                </tr>
+                                <tr height="19px" th:each="bPlayer,bIter: ${bluePlayerList}" th:object="${bPlayer}">
+                                    <td th:text="${bIter.index + 1}">0</td>
+                                    <td></td>
+                                    <td th:text="*{surname + ' ' + name + ' ' + patronymic}"><a>BLUE PLAYER NAME</a></td>
+                                    <td width="20px"></td>
+                                    <td width="25px"></td>
+                                    <td width="25px"></td>
+                                    <td width="25px"></td>
+                                </tr>
+                                <tr height="19px" th:each="b: ${#numbers.sequence(bluePlayerList.size(),18)}">
+                                    <td th:text="${b}">0</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td width="20px"></td>
+                                    <td width="25px"></td>
+                                    <td width="25px"></td>
+                                    <td width="25px"></td>
+                                </tr>
+                            </table>
+                        </td>
+
+                        <td width="49%" th:unless="${bluePlayerList != null}">
+                            <a th:text="${blueTeamDTO.name}">BLUE TEAM</a> (хозяева / гости)<br/><br/>
+                            <table border="1px">
+                                <tr>
+                                    <td>Фолы (1 тайм)</td>
+                                    <td width="20px"></td>
+                                    <td width="20px"></td>
+                                    <td width="20px"></td>
+                                    <td width="20px"></td>
+                                    <td width="20px"></td>
+                                </tr>
+                                <tr>
+                                    <td>Фолы (2 тайм)</td>
+                                    <td width="20px"></td>
+                                    <td width="20px"></td>
+                                    <td width="20px"></td>
+                                    <td width="20px"></td>
+                                    <td width="20px"></td>
+                                </tr>
+                            </table>
+                            <br/>Всего ___ игроков на матч<br/>
+                            <table width="100%" border="1px">
+                                <tr height="19px">
+                                    <td width="20px"></td>
+                                    <td width="20px">№</td>
+                                    <td>Игрок</td>
+                                    <td width="20px">+/-</td>
+                                    <td width="25px">Голы</td>
+                                    <td width="50px" colspan="2">Карточки</td>
+                                </tr>
+                                <tr height="19px" th:each="b: ${#numbers.sequence(0,18)}">
+                                    <td th:text="${b}">0</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td width="20px"></td>
+                                    <td width="25px"></td>
+                                    <td width="25px"></td>
+                                    <td width="25px"></td>
+                                </tr>
+                            </table>
+                        </td>
+
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Предупреждения игрокам (ф.и.о.; команда; причина):
+                <hr/><br/><hr/><br/><hr/><br/><hr/><br/>
+                Замечания по проведению игры (порядок на стадионе; поведение команд, зрителей и т.п.):
+                <hr/><br/><hr/><br/><hr/><br/><hr/><br/>
+                Извещение о подаче протеста (краткое изложение существа протеста):
+                <hr/><br/><hr/><br/><hr/><br/><hr/><br/>
+                Представители команд:<br/>
+                <table width="100%">
+                    <tr>
+                        <td>
+                            <table width="98%">
+                                <tr height="19px">
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr height="19px">
+                                    <td width="35%">
+                                        <hr/>RED TEAM
+                                    </td>
+                                    <td width="15%">
+                                        <hr/>подпись
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td>
+                            <table width="98%">
+                                <tr height="19px">
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr height="19px">
+                                    <td width="35%">
+                                        <hr/>BLUE TEAM
+                                    </td>
+                                    <td width="15%">
+                                        <hr/>подпись
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table width="98%">
+                                <tr height="19px">
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr height="19px">
+                                    <td width="35%">
+                                        <hr/>Первый судья
+                                    </td>
+                                    <td width="15%">
+                                        <hr/>подпись
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td>
+                            <table width="98%">
+                                <tr height="19px">
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr height="19px">
+                                    <td width="35%">
+                                        <hr/>Второй судья
+                                    </td>
+                                    <td width="15%">
+                                        <hr/>подпись
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table width="98%">
+                                <tr height="19px">
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr height="19px">
+                                    <td width="75%">
+                                        <hr/>Куратор
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td>
+                            <table width="98%">
+                                <tr height="19px">
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr height="19px">
+                                    <td width="75%">
+                                        <hr/>Коммисар
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>
