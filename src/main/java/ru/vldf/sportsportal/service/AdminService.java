@@ -281,6 +281,12 @@ public class AdminService {
             tourneyDAO.save(new TourneyEntity(tourneyDTO, status));
         }
 
+        @Transactional
+        public void timeupTourney(TourneyDTO tourneyDTO) {
+            TourneyStatusEntity status = tourneyStatusDAO.findByCode("TOURNEY_TIMEUP");
+            tourneyDAO.updateStatusByID(tourneyDTO.getId(), status);
+        }
+
 
         @Transactional
         public void confirmTeam(Integer id) {

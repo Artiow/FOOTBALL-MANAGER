@@ -73,8 +73,15 @@
         <div class="row">
             <div class="col-md-6 col-md-offset-3">
                 <h3 th:inline="text" th:text="${tourneyDTO.name}">TOURNEY NAME</h3>
-                <h4 style="padding: 5px" class="alert-warning">ИДЕТ НАБОР</h4>
-                <a th:href="${'/pp/admin/tourney/tourney' + tourneyDTO.id + '/timegrid'}" type="button" class="btn btn-default">Timegrid</a>
+                <h4 th:if="${tourneyDTO.status.code == 'TOURNEY_FORMED'}" style="padding: 5px" class="alert-warning">ДОСТУПНЫ НАБОР СОСТАВА И ВЫБОР ВРЕМЕНИ</h4>
+                <div th:if="${tourneyDTO.status.code == 'TOURNEY_FORMED'}" class="btn-group">
+                    <a th:href="${'/pp/admin/tourney/tourney' + tourneyDTO.id + '/timegrid'}" class="btn btn-default">Временная сетка</a>
+                    <a th:href="${'/pp/admin/tourney/tourney' + tourneyDTO.id + '/timeup'}" class="btn btn-warning">Зафиксировать</a>
+                </div>
+                <h4 th:if="${tourneyDTO.status.code == 'TOURNEY_TIMEUP'}" style="padding: 5px" class="alert-warning">ДОСТУПЕН НАБОР СОСТАВА</h4>
+                <div th:if="${tourneyDTO.status.code == 'TOURNEY_TIMEUP'}" class="btn-group">
+                    <a th:href="${'/pp/admin/tourney/tourney' + tourneyDTO.id + '/timegrid'}" class="btn btn-default">Временная сетка</a>
+                </div>
             </div>
         </div>
         <div class="row" th:if="${compositionList != null}">

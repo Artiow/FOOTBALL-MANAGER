@@ -4,6 +4,7 @@ import org.springframework.stereotype.Repository;
 import ru.vldf.sportsportal.dao.generic.abstrct.AbstractDAOImpl;
 import ru.vldf.sportsportal.dao.generic.definite.tourney.TourneyDAO;
 import ru.vldf.sportsportal.domain.tourney.TourneyEntity;
+import ru.vldf.sportsportal.domain.tourney.TourneyStatusEntity;
 
 import java.util.List;
 
@@ -36,5 +37,16 @@ public class TourneyDAOImpl extends AbstractDAOImpl<TourneyEntity, Integer> impl
 
     public List<TourneyEntity> findAll() {
         return super.list();
+    }
+
+//    ==================================================================================
+//    === UPDATE
+
+    public Integer updateStatusByID(Integer id, TourneyStatusEntity status) {
+        return getSession()
+                .createQuery("update TourneyEntity set status=? where id=?")
+                .setParameter(0, status)
+                .setParameter(1, id)
+                .executeUpdate();
     }
 }

@@ -78,12 +78,13 @@
             <div class="col-md-10 col-md-offset-1">
                 <h3 th:text="${compositionDTO.name}">TEAM NAME</h3>
                 <h4 style="padding: 5px" class="alert-success" th:text="${'ПРИГЛАШЕНИЕ В ТУРНИР: ' + compositionDTO.tourney.name.toUpperCase()}">ПРИГЛАШЕНИЕ В ТУРНИР: NULL</h4>
-                <h4 style="padding: 5px" class="alert-warning">СОБЕРИТЕ СОСТАВ И ВЫБЕРИТЕ ВРЕМЯ</h4>
+                <h4 th:if="${compositionDTO.tourney.status.code == 'TOURNEY_FORMED'}" style="padding: 5px" class="alert-warning">СОБЕРИТЕ СОСТАВ И ВЫБЕРИТЕ ВРЕМЯ</h4>
+                <h4 th:if="${compositionDTO.tourney.status.code == 'TOURNEY_FORMED'}" style="padding: 5px" class="alert-warning">СОБЕРИТЕ СОСТАВ</h4>
                 <!--TODO: confirm?-->
                 <!--<a th:href="${'/pp/tourney/composition' + compositionDTO.id + '/confirm'}" class="btn btn-success" th:if="${currentSize != 0}">Подтвердить</a>-->
             </div>
         </div>
-        <div class="row">
+        <div th:if="${compositionDTO.tourney.status.code == 'TOURNEY_FORMED'}" class="row">
             <div class="col-md-10 col-md-offset-1">
                 <h4>Ваш выбор времени:</h4>
                 <script>$('.dropdown-toggle').dropdown()</script>

@@ -185,7 +185,7 @@ public class UserController {
             int status = tourneyDTO.getStatus().getId();
             switch (status) {
                 case 1: return "user/admin/page-tourney-status-formed"; //TOURNEY_FORMED
-                case 2: return "user/admin/page-tourney-status-ready";  //TOURNEY_READY
+                case 2: return "user/admin/page-tourney-status-formed"; //TOURNEY_TIMEUP
 
                 default: return "redirect:/xxx{id}"; //TODO: to tourney page!
             }
@@ -204,6 +204,12 @@ public class UserController {
                     .addAttribute("timegrid", timegrid);
 
             return "user/admin/page-tourney-timegrid";
+        }
+
+        @GetMapping(value = {"/pp/admin/tourney/tourney{id}/timeup"})
+        public String timeup(@PathVariable("id") int id) {
+            tourneyService.timeupTourney(tourneyService.getTourney(id));
+            return "redirect:/pp/admin/tourney/tourney{id}";
         }
 
 
