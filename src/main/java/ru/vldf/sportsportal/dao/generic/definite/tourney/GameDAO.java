@@ -1,16 +1,13 @@
 package ru.vldf.sportsportal.dao.generic.definite.tourney;
 
-import ru.vldf.sportsportal.domain.tourney.CompositionEntity;
 import ru.vldf.sportsportal.domain.tourney.GameEntity;
+import ru.vldf.sportsportal.domain.tourney.TourneyEntity;
 
 import java.util.List;
 
 public interface GameDAO {
 
     Integer save(GameEntity team);
-
-//    ==================================================================================
-//    === GET
 
 //    ==================================================================================
 //    === FIND
@@ -23,8 +20,12 @@ public interface GameDAO {
 
     List<GameEntity> findAll();
 
+    List<GameEntity> findByTourney(Integer id);
+
+    List<GameEntity> findByTourney(TourneyEntity tourney);
+
 //    ==================================================================================
 //    === UPDATE
 
-    Integer updateTimegrid(CompositionEntity red, CompositionEntity blue, String timegrid);
+    Integer updateTimegridByID(Integer id, String timegrid);
 }

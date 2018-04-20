@@ -5,6 +5,7 @@ import ru.vldf.sportsportal.dao.generic.abstrct.AbstractDAOImpl;
 import ru.vldf.sportsportal.dao.generic.definite.tourney.GameDAO;
 import ru.vldf.sportsportal.domain.tourney.CompositionEntity;
 import ru.vldf.sportsportal.domain.tourney.GameEntity;
+import ru.vldf.sportsportal.domain.tourney.TourneyEntity;
 
 import java.util.List;
 
@@ -39,7 +40,7 @@ public class GameDAOImpl extends AbstractDAOImpl<GameEntity, Integer> implements
 
     public GameEntity findByRivalsID(Integer r1ID, Integer r2ID) {
         List games = getSession()
-                .createQuery("from GameEntity where (red.id=? and blue.id=?) or (red.id=? and blue.id=?) ") //TODO: tour?
+                .createQuery("from GameEntity where (red.id=? and blue.id=?) or (red.id=? and blue.id=?)") //TODO: tour?
                 .setParameter(0, r1ID)
                 .setParameter(1, r2ID)
                 .setParameter(0, r2ID)
@@ -54,15 +55,34 @@ public class GameDAOImpl extends AbstractDAOImpl<GameEntity, Integer> implements
         return super.list();
     }
 
+    public List<GameEntity> findByTourney(Integer id) {
+        List games = getSession()
+                .createQuery("from GameEntity where tourney.id=?") //TODO: tour?
+                .setParameter(0, id)
+                .list();
+
+        if ((games != null) && (games.size() > 0)) return (List<GameEntity>) games;
+        else return null;
+    }
+
+    public List<GameEntity> findByTourney(TourneyEntity tourney) {
+        List games = getSession()
+                .createQuery("from GameEntity where tourney=?") //TODO: tour?
+                .setParameter(0, tourney)
+                .list();
+
+        if ((games != null) && (games.size() > 0)) return (List<GameEntity>) games;
+        else return null;
+    }
+
 //    ==================================================================================
 //    === UPDATE
 
-    public Integer updateTimegrid(CompositionEntity red, CompositionEntity blue, String timegrid) {
+    public Integer updateTimegridByID(Integer id, String timegrid) {
         return getSession()
-                .createQuery("update GameEntity set timegrid=? where red=? and blue=?")
+                .createQuery("update GameEntity set timegrid=? where id=?")
                 .setParameter(0, timegrid)
-                .setParameter(1, red)
-                .setParameter(2, blue)
+                .setParameter(1, id)
                 .executeUpdate();
     }
 }

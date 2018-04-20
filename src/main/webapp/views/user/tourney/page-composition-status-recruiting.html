@@ -108,9 +108,9 @@
             </div>
             <div class="col-md-10 col-md-offset-1">
                 <div class="btn-group" th:each="char2,iter2: ${rivalgrid}">
-                    <div class="btn btn-danger" data-toggle="dropdown" th:if="${char2 == 'N'}" th:utext="${(iter2.index + 9) + ':00'}">X:00</div>
-                    <div class="btn btn-warning" data-toggle="dropdown" th:if="${char2 == 'C'}" th:utext="${(iter2.index + 9) + ':00'}">X:00</div>
-                    <div class="btn btn-success" data-toggle="dropdown" th:if="${char2 == 'Y'}" th:utext="${(iter2.index + 9) + ':00'}">X:00</div>
+                    <div class="btn btn-danger" th:if="${char2 == 'N'}" th:utext="${(iter2.index + 9) + ':00'}">X:00</div>
+                    <div class="btn btn-warning" th:if="${char2 == 'C'}" th:utext="${(iter2.index + 9) + ':00'}">X:00</div>
+                    <div class="btn btn-success" th:if="${char2 == 'Y'}" th:utext="${(iter2.index + 9) + ':00'}">X:00</div>
                 </div>
             </div>
         </div>

@@ -185,10 +185,25 @@ public class UserController {
             int status = tourneyDTO.getStatus().getId();
             switch (status) {
                 case 1: return "user/admin/page-tourney-status-formed"; //TOURNEY_FORMED
-                case 2: return "user/admin/page-tourney-status-ready"; //TOURNEY_READY
+                case 2: return "user/admin/page-tourney-status-ready";  //TOURNEY_READY
 
                 default: return "redirect:/xxx{id}"; //TODO: to tourney page!
             }
+        }
+
+        @GetMapping(value = {"/pp/admin/tourney/tourney{id}/timegrid"})
+        public String toTimegridPage(@PathVariable("id") int id, ModelMap map) {
+            TourneyDTO tourneyDTO = tourneyService.getTourney(id);
+
+            List<GameDTO> games = tourneyService.getGames(tourneyDTO);
+            List<String[]> timegrid = tourneyService.updateTimegrid(games); //TODO: remove
+
+            map
+                    .addAttribute("tourneyDTO", tourneyDTO)
+                    .addAttribute("gameList", games)
+                    .addAttribute("timegrid", timegrid);
+
+            return "user/admin/page-tourney-timegrid";
         }
 
 

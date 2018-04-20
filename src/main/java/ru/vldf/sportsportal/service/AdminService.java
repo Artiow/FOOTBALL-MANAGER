@@ -133,6 +133,7 @@ public class AdminService {
         private CompositionStatusDAO compositionStatusDAO;
         private TourneyDAO tourneyDAO;
         private TourneyStatusDAO tourneyStatusDAO;
+        private GameDAO gameDAO;
 
         @Autowired
         public void setTeamDAO(TeamDAO teamDAO) {
@@ -162,6 +163,11 @@ public class AdminService {
         @Autowired
         public void setTourneyStatusDAO(TourneyStatusDAO tourneyStatusDAO) {
             this.tourneyStatusDAO = tourneyStatusDAO;
+        }
+
+        @Autowired
+        public void setGameDAO(GameDAO gameDAO) {
+            this.gameDAO = gameDAO;
         }
 
 
@@ -212,6 +218,62 @@ public class AdminService {
         public TourneyDTO getTourney(Integer id) {
             return new TourneyDTO(tourneyDAO.findByID(id));
         }
+
+        @Transactional(readOnly = true)
+        public List<GameDTO> getGames(TourneyDTO tourney) {
+            List<GameEntity> entityList = gameDAO.findByTourney(tourney.getId());
+            if (entityList == null) return null;
+
+            List<GameDTO> dtoList = new ArrayList<GameDTO>();
+            for (GameEntity entity: entityList) dtoList.add(new GameDTO(entity));
+            return dtoList;
+        }
+
+        @Transactional(readOnly = true)
+        public List<String[]> getTimegrid(List<GameDTO> games) {
+            return null; //TODO:
+        }
+
+        @Transactional
+        public List<String[]> updateTimegrid(List<GameDTO> games) {
+            char[] t1, t2;
+            String[] str;
+            StringBuffer buffer;
+            List<String[]> result = new ArrayList<String[]>(games.size());
+            for (GameDTO game : games) {
+                t1 = compositionDAO.findByID(game.getRed().getId()).getTimegrid().toCharArray();
+                t2 = compositionDAO.findByID(game.getBlue().getId()).getTimegrid().toCharArray();
+
+                int length = t1.length;
+                if (length != t2.length) return null;
+
+                str = new String[length];
+                buffer = new StringBuffer(length);
+
+                char c1, c2, c;
+                for (int i = 0; i < length; i++) {
+                    c1 = t1[i];
+                    c2 = t2[i];
+
+                    if (c1 == c2) c = c1;
+                    else if ((c1 == 'N') || (c2 == 'N')) c = 'N';
+                    else if ((c1 == 'C') || (c2 == 'C')) c = 'C';
+                    else c = 'Y';
+
+                    str[i] = "" + c;
+                    buffer.append(c);
+                }
+
+                result.add(str);
+
+                String tmp = buffer.toString();
+                gameDAO.updateTimegridByID(game.getId(), tmp);
+                game.setTimegrid(tmp);
+            }
+
+            return result;
+        }
+
 
         @Transactional
         public void createTourney(TourneyDTO tourneyDTO) {
