@@ -125,7 +125,7 @@
                                 <tr height="19px" th:each="rPlayer,rIter: ${redPlayerList}" th:object="${rPlayer}">
                                     <td th:text="${rIter.index + 1}">0</td>
                                     <td></td>
-                                    <td th:text="*{surname + ' ' + name + ' ' + patronymic}"><a>RED PLAYER NAME</a></td>
+                                    <td th:text="*{surname + ' ' + name}"><a>RED PLAYER NAME</a></td>
                                     <td width="20px"></td>
                                     <td width="25px"></td>
                                     <td width="25px"></td>
@@ -264,7 +264,7 @@
                                 <tr height="19px" th:each="bPlayer,bIter: ${bluePlayerList}" th:object="${bPlayer}">
                                     <td th:text="${bIter.index + 1}">0</td>
                                     <td></td>
-                                    <td th:text="*{surname + ' ' + name + ' ' + patronymic}"><a>BLUE PLAYER NAME</a></td>
+                                    <td th:text="*{surname + ' ' + name}"><a>BLUE PLAYER NAME</a></td>
                                     <td width="20px"></td>
                                     <td width="25px"></td>
                                     <td width="25px"></td>
