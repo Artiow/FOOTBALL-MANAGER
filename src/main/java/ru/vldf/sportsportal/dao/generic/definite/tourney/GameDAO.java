@@ -1,30 +1,30 @@
 package ru.vldf.sportsportal.dao.generic.definite.tourney;
 
 import ru.vldf.sportsportal.domain.tourney.CompositionEntity;
-import ru.vldf.sportsportal.domain.tourney.TmpEntity;
+import ru.vldf.sportsportal.domain.tourney.GameEntity;
 
 import java.util.List;
 
-public interface TmpDAO {
+public interface GameDAO {
 
-    Integer save(TmpEntity team);
+    Integer save(GameEntity team);
 
 //    ==================================================================================
 //    === GET
 
-    TmpEntity getTimegrid(Integer redID, Integer blueID);
-
 //    ==================================================================================
 //    === FIND
 
-    TmpEntity findByID(Integer id);
+    GameEntity findByID(Integer id);
 
-    List<TmpEntity> findAll();
+    GameEntity findByRivalID(Integer compositionID);
+
+    GameEntity findByRivalsID(Integer r1ID, Integer r2ID);
+
+    List<GameEntity> findAll();
 
 //    ==================================================================================
 //    === UPDATE
-
-    TmpEntity findRivalByID(Integer id);
 
     Integer updateTimegrid(CompositionEntity red, CompositionEntity blue, String timegrid);
 }

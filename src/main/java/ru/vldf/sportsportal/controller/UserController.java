@@ -277,9 +277,12 @@ public class UserController {
             if (playerDTOList != null) currentSize = playerDTOList.size();
             else currentSize = 0;
 
+            char[] chars;
+
             Integer maxImp = 4;
             Integer currentImp = 0;
-            char[] chars = compositionDTO.getTimegrid().toCharArray();
+
+            chars = compositionDTO.getTimegrid().toCharArray();
             String[] timegrid = new String[10];
 
             char tmp;
@@ -290,19 +293,16 @@ public class UserController {
                 timegrid[i] = ("" + chars[i]);
             }
 
-            TmpDTO tmpDTO = userTourneyService.getRival(id);
+            GameDTO gameDTO = userTourneyService.getRival(id);
             CompositionDTO rivalDTO = null;
             String[] rivalgrid = null;
-            if (tmpDTO != null) {
-                if (tmpDTO.getRed().getId() == id) rivalDTO = tmpDTO.getBlue();
-                if (tmpDTO.getBlue().getId() == id) rivalDTO = tmpDTO.getRed();
+            if (gameDTO != null) {
+                if (gameDTO.getRed().getId() == id) rivalDTO = gameDTO.getBlue();
+                if (gameDTO.getBlue().getId() == id) rivalDTO = gameDTO.getRed();
 
-                char[] chars2 = rivalDTO.getTimegrid().toCharArray(); //TODO: wtf
+                chars = rivalDTO.getTimegrid().toCharArray(); //TODO: ?
                 rivalgrid = new String[10];
-
-                for (int i = 0; i < 10; i++) {
-                    rivalgrid[i] = ("" + chars2[i]);
-                }
+                for (int i = 0; i < 10; i++) rivalgrid[i] = ("" + chars[i]);
             }
 
             map

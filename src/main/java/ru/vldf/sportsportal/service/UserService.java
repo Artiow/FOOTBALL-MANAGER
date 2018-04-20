@@ -11,7 +11,7 @@ import ru.vldf.sportsportal.dto.tourney.PlayerDTO;
 import ru.vldf.sportsportal.dto.common.UserDTO;
 import ru.vldf.sportsportal.domain.tourney.*;
 import ru.vldf.sportsportal.domain.common.UserEntity;
-import ru.vldf.sportsportal.dto.tourney.TmpDTO;
+import ru.vldf.sportsportal.dto.tourney.GameDTO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +39,7 @@ public class UserService {
 
         private TeamDAO teamDAO;
         private TeamStatusDAO teamStatusDAO;
+        private GameDAO gameDAO;
         private PlayerDAO playerDAO;
         private CompositionDAO compositionDAO;
         private CompositionStatusDAO compositionStatusDAO;
@@ -52,6 +53,11 @@ public class UserService {
         @Autowired
         public void setTeamStatusDAO(TeamStatusDAO teamStatusDAO) {
             this.teamStatusDAO = teamStatusDAO;
+        }
+
+        @Autowired
+        public void setGameDAO(GameDAO gameDAO) {
+            this.gameDAO = gameDAO;
         }
 
         @Autowired
@@ -117,19 +123,11 @@ public class UserService {
             else return null; //not user's composition
         }
 
-
-        private TmpDAO tmpDAO;
-
-        @Autowired
-        public void setTmpDAO(TmpDAO tmpDAO) {
-            this.tmpDAO = tmpDAO;
-        }
-
         @Transactional(readOnly = true)
-        public TmpDTO getRival(int compositionID) {
-            TmpEntity entity = tmpDAO.findRivalByID(compositionID);
-            if (entity != null) return new TmpDTO(entity);
-            else return null; //TODO: wtf
+        public GameDTO getRival(int compositionID) {
+            GameEntity entity = gameDAO.findByRivalID(compositionID);
+            if (entity != null) return new GameDTO(entity);
+            else return null;
         }
 
 
