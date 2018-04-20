@@ -10,6 +10,7 @@ import ru.vldf.sportsportal.service.AdminService;
 import ru.vldf.sportsportal.service.AuthService;
 import ru.vldf.sportsportal.service.UserService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -191,6 +192,32 @@ public class UserController {
 
                 default: return "redirect:/xxx{id}"; //TODO: to tourney page!
             }
+        }
+
+        @GetMapping(value = {"/pp/admin/tourney/tourney{id}/protocol"})
+        public String toProtocolAllPage(@PathVariable("id") int id, ModelMap map) {
+            TourneyDTO tourneyDTO = tourneyService.getTourney(id);
+            List<GameDTO> gameList = tourneyService.getGames(tourneyDTO);
+
+            List<List<PlayerDTO>> redPlayerLists = new ArrayList<List<PlayerDTO>>();
+            List<List<PlayerDTO>> bluePlayerLists = new ArrayList<List<PlayerDTO>>();
+
+            List<PlayerDTO> redPlayerList;
+            List<PlayerDTO> bluePlayerList;
+            for(GameDTO game: gameList) {
+                redPlayerList = tourneyService.getPlayerList(game.getRed());
+                bluePlayerList = tourneyService.getPlayerList(game.getBlue());
+
+                redPlayerLists.add(redPlayerList);
+                bluePlayerLists.add(bluePlayerList);
+            }
+
+            map
+                    .addAttribute("gameList", gameList)
+                    .addAttribute("redPlayerLists", redPlayerLists)
+                    .addAttribute("bluePlayerLists", bluePlayerLists);
+
+            return "user/admin/page-tourney-protocol-all";
         }
 
         @GetMapping(value = {"/pp/admin/tourney/tourney{id}/timegrid"})

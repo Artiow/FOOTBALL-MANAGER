@@ -77,6 +77,9 @@
                 <div class="btn-group">
                     <a th:href="${'/pp/admin/tourney/tourney' + tourneyDTO.id + '/timegrid'}" class="btn btn-default">Временная сетка</a>
                 </div>
+                <div class="btn-group">
+                    <a th:href="${'/pp/admin/tourney/tourney' + tourneyDTO.id + '/protocol'}" class="btn btn-default">Протокол турнира</a>
+                </div>
             </div>
         </div>
         <div style="margin-top: 20px" class="row" th:if="${gameList != null}">
