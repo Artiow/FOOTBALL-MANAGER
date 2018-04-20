@@ -203,7 +203,9 @@ public class UserController {
                     .addAttribute("gameList", games)
                     .addAttribute("timegrid", timegrid);
 
-            return "user/admin/page-tourney-timegrid";
+            if (tourneyDTO.getStatus().getCode().equals("TOURNEY_FORMED")) return "user/admin/page-tourney-timegrid";
+            if (tourneyDTO.getStatus().getCode().equals("TOURNEY_TIMEUP")) return "user/admin/page-tourney-timeup";
+            else return "user/admin/page-tourney-timegrid"; //TODO: remove!
         }
 
         @GetMapping(value = {"/pp/admin/tourney/tourney{id}/timeup"})
