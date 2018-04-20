@@ -70,25 +70,48 @@
                     <tr>
 
                         <td width="49%" th:if="${redPlayerLists.get(iter.index) != null}">
-                            <a th:text="${gameItem.red.name}">RED TEAM</a> (хозяева / гости)<br/><br/>
-                            <table border="1px">
+                            <a th:text="${gameItem.red.name}">RED TEAM</a> (хозяева). Цвет формы: __________<br/><br/>
+
+                            <table>
                                 <tr>
-                                    <td>Фолы (1 тайм)</td>
-                                    <td width="20px"></td>
-                                    <td width="20px"></td>
-                                    <td width="20px"></td>
-                                    <td width="20px"></td>
-                                    <td width="20px"></td>
-                                </tr>
-                                <tr>
-                                    <td>Фолы (2 тайм)</td>
-                                    <td width="20px"></td>
-                                    <td width="20px"></td>
-                                    <td width="20px"></td>
-                                    <td width="20px"></td>
-                                    <td width="20px"></td>
+                                    <td>
+                                        <table border="1px">
+                                            <tr>
+                                                <td>Фолы (1 тайм)</td>
+                                                <td width="20px"></td>
+                                                <td width="20px"></td>
+                                                <td width="20px"></td>
+                                                <td width="20px"></td>
+                                                <td width="20px"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Фолы (2 тайм)</td>
+                                                <td width="20px"></td>
+                                                <td width="20px"></td>
+                                                <td width="20px"></td>
+                                                <td width="20px"></td>
+                                                <td width="20px"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td width="1%"></td>
+                                    <td>
+                                        <table border="1px">
+                                            <tr>
+                                                <td>Тайм-Аут (1 тайм)</td>
+                                                <td width="20px"></td>
+                                                <td width="20px">мин.</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Тайм-Аут (2 тайм)</td>
+                                                <td width="20px"></td>
+                                                <td width="20px">мин.</td>
+                                            </tr>
+                                        </table>
+                                    </td>
                                 </tr>
                             </table>
+
                             <br/>Всего ___ игроков на матч<br/>
                             <table width="100%" border="1px">
                                 <tr height="19px">
@@ -120,25 +143,48 @@
                             </table>
                         </td>
                         <td width="49%" th:unless="${redPlayerLists.get(iter.index) != null}">
-                            <a th:text="${gameItem.red.name}">RED TEAM</a> (хозяева / гости)<br/><br/>
-                            <table border="1px">
+                            <a th:text="${gameItem.red.name}">RED TEAM</a> (хозяева). Цвет формы: __________<br/><br/>
+
+                            <table>
                                 <tr>
-                                    <td>Фолы (1 тайм)</td>
-                                    <td width="20px"></td>
-                                    <td width="20px"></td>
-                                    <td width="20px"></td>
-                                    <td width="20px"></td>
-                                    <td width="20px"></td>
-                                </tr>
-                                <tr>
-                                    <td>Фолы (2 тайм)</td>
-                                    <td width="20px"></td>
-                                    <td width="20px"></td>
-                                    <td width="20px"></td>
-                                    <td width="20px"></td>
-                                    <td width="20px"></td>
+                                    <td>
+                                        <table border="1px">
+                                            <tr>
+                                                <td>Фолы (1 тайм)</td>
+                                                <td width="20px"></td>
+                                                <td width="20px"></td>
+                                                <td width="20px"></td>
+                                                <td width="20px"></td>
+                                                <td width="20px"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Фолы (2 тайм)</td>
+                                                <td width="20px"></td>
+                                                <td width="20px"></td>
+                                                <td width="20px"></td>
+                                                <td width="20px"></td>
+                                                <td width="20px"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td width="1%"></td>
+                                    <td>
+                                        <table border="1px">
+                                            <tr>
+                                                <td>Тайм-Аут (1 тайм)</td>
+                                                <td width="20px"></td>
+                                                <td width="20px">мин.</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Тайм-Аут (2 тайм)</td>
+                                                <td width="20px"></td>
+                                                <td width="20px">мин.</td>
+                                            </tr>
+                                        </table>
+                                    </td>
                                 </tr>
                             </table>
+
                             <br/>Всего ___ игроков на матч<br/>
                             <table width="100%" border="1px">
                                 <tr height="19px">
@@ -162,25 +208,48 @@
                         </td>
 
                         <td width="49%" th:if="${bluePlayerLists.get(iter.index) != null}">
-                            <a th:text="${gameItem.blue.name}">BLUE TEAM</a> (хозяева / гости)<br/><br/>
-                            <table border="1px">
+                            <a th:text="${gameItem.blue.name}">BLUE TEAM</a> (гости). Цвет формы: __________<br/><br/>
+
+                            <table>
                                 <tr>
-                                    <td>Фолы (1 тайм)</td>
-                                    <td width="20px"></td>
-                                    <td width="20px"></td>
-                                    <td width="20px"></td>
-                                    <td width="20px"></td>
-                                    <td width="20px"></td>
-                                </tr>
-                                <tr>
-                                    <td>Фолы (2 тайм)</td>
-                                    <td width="20px"></td>
-                                    <td width="20px"></td>
-                                    <td width="20px"></td>
-                                    <td width="20px"></td>
-                                    <td width="20px"></td>
+                                    <td>
+                                        <table border="1px">
+                                            <tr>
+                                                <td>Фолы (1 тайм)</td>
+                                                <td width="20px"></td>
+                                                <td width="20px"></td>
+                                                <td width="20px"></td>
+                                                <td width="20px"></td>
+                                                <td width="20px"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Фолы (2 тайм)</td>
+                                                <td width="20px"></td>
+                                                <td width="20px"></td>
+                                                <td width="20px"></td>
+                                                <td width="20px"></td>
+                                                <td width="20px"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td width="1%"></td>
+                                    <td>
+                                        <table border="1px">
+                                            <tr>
+                                                <td>Тайм-Аут (1 тайм)</td>
+                                                <td width="20px"></td>
+                                                <td width="20px">мин.</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Тайм-Аут (2 тайм)</td>
+                                                <td width="20px"></td>
+                                                <td width="20px">мин.</td>
+                                            </tr>
+                                        </table>
+                                    </td>
                                 </tr>
                             </table>
+
                             <br/>Всего ___ игроков на матч<br/>
                             <table width="100%" border="1px">
                                 <tr height="19px">
@@ -213,25 +282,48 @@
                         </td>
 
                         <td width="49%" th:unless="${bluePlayerLists.get(iter.index) != null}">
-                            <a th:text="${gameItem.blue.name}">BLUE TEAM</a> (хозяева / гости)<br/><br/>
-                            <table border="1px">
+                            <a th:text="${gameItem.blue.name}">BLUE TEAM</a> (гости). Цвет формы: __________<br/><br/>
+
+                            <table>
                                 <tr>
-                                    <td>Фолы (1 тайм)</td>
-                                    <td width="20px"></td>
-                                    <td width="20px"></td>
-                                    <td width="20px"></td>
-                                    <td width="20px"></td>
-                                    <td width="20px"></td>
-                                </tr>
-                                <tr>
-                                    <td>Фолы (2 тайм)</td>
-                                    <td width="20px"></td>
-                                    <td width="20px"></td>
-                                    <td width="20px"></td>
-                                    <td width="20px"></td>
-                                    <td width="20px"></td>
+                                    <td>
+                                        <table border="1px">
+                                            <tr>
+                                                <td>Фолы (1 тайм)</td>
+                                                <td width="20px"></td>
+                                                <td width="20px"></td>
+                                                <td width="20px"></td>
+                                                <td width="20px"></td>
+                                                <td width="20px"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Фолы (2 тайм)</td>
+                                                <td width="20px"></td>
+                                                <td width="20px"></td>
+                                                <td width="20px"></td>
+                                                <td width="20px"></td>
+                                                <td width="20px"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td width="1%"></td>
+                                    <td>
+                                        <table border="1px">
+                                            <tr>
+                                                <td>Тайм-Аут (1 тайм)</td>
+                                                <td width="20px"></td>
+                                                <td width="20px">мин.</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Тайм-Аут (2 тайм)</td>
+                                                <td width="20px"></td>
+                                                <td width="20px">мин.</td>
+                                            </tr>
+                                        </table>
+                                    </td>
                                 </tr>
                             </table>
+
                             <br/>Всего ___ игроков на матч<br/>
                             <table width="100%" border="1px">
                                 <tr height="19px">
@@ -277,7 +369,7 @@
                                 </tr>
                                 <tr height="19px">
                                     <td width="35%">
-                                        <hr/>RED TEAM
+                                        <hr/><a th:text="${gameItem.red.name}">RED TEAM</a>
                                     </td>
                                     <td width="15%">
                                         <hr/>подпись
@@ -293,7 +385,7 @@
                                 </tr>
                                 <tr height="19px">
                                     <td width="35%">
-                                        <hr/>BLUE TEAM
+                                        <hr/><a th:text="${gameItem.blue.name}">BLUE TEAM</a>
                                     </td>
                                     <td width="15%">
                                         <hr/>подпись
