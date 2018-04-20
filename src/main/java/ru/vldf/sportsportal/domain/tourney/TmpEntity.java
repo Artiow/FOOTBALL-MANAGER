@@ -6,6 +6,7 @@ import javax.persistence.*;
 @Table(name = "tmp", schema = "tourney", catalog = "sportsportal")
 public class TmpEntity {
     private Integer id;
+    private String timegrid;
 
     private CompositionEntity red;
     private CompositionEntity blue;
@@ -19,6 +20,16 @@ public class TmpEntity {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    @Basic
+    @Column(name = "timegrid", nullable = true, length = 45)
+    public String getTimegrid() {
+        return timegrid;
+    }
+
+    public void setTimegrid(String timegrid) {
+        this.timegrid = timegrid;
     }
 
     @OneToOne
