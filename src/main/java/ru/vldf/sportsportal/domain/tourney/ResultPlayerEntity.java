@@ -13,8 +13,13 @@ public class ResultPlayerEntity {
     private PlayerEntity player;
     private ResultTeamEntity result;
 
+    public ResultPlayerEntity() {
+
+    }
+
     @Id
     @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer getId() {
         return id;
     }

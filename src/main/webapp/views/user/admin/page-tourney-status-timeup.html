@@ -90,17 +90,20 @@
                 <table class="table table-hover">
                     <tr th:each="gameItem: ${gameList}" th:object="${gameItem}">
                         <td>
-                            <a th:href="*{'/pp/admin/game' + id + '/protocol'}">
+                            <a class="table-link" th:href="*{'/pp/admin/game' + id + '/protocol'}">
                                 <p th:text="*{red.name}">NAME</p>
                             </a>
                         </td>
                         <td>
-                            <a th:href="*{'/pp/admin/game' + id + '/protocol'}">-</a>
+                            <a class="table-link" th:href="*{'/pp/admin/game' + id + '/protocol'}">-</a>
                         </td>
                         <td>
-                            <a th:href="*{'/pp/admin/game' + id + '/protocol'}">
+                            <a class="table-link" th:href="*{'/pp/admin/game' + id + '/protocol'}">
                                 <p th:text="*{blue.name}">NAME</p>
                             </a>
+                        </td>
+                        <td>
+                            <a class="btn btn-success" th:href="*{'/pp/admin/game' + id + '/result'}">Внести результаты</a>
                         </td>
                     </tr>
                 </table>

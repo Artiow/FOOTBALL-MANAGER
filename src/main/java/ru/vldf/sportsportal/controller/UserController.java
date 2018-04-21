@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import ru.vldf.sportsportal.domain.tourney.ResultTeamEntity;
 import ru.vldf.sportsportal.dto.tourney.*;
 import ru.vldf.sportsportal.dto.common.UserDTO;
 import ru.vldf.sportsportal.service.AdminService;
@@ -220,6 +221,26 @@ public class UserController {
             return "user/admin/page-tourney-protocol-all";
         }
 
+
+        @GetMapping(value = {"/pp/admin/game{id}/result"})
+        public String toGameResultForm(@PathVariable("id") int id, ModelMap map) {
+            GameDTO gameDTO = tourneyService.getGame(id);
+            map.addAttribute("gameDTO",gameDTO);
+            return "user/admin/form-result-game";
+        }
+
+        @PostMapping(value = {"/pp/admin/game{id}/result"})
+        public String createResultGame(
+                @PathVariable("id") int id,
+                @RequestParam("redGoalNum") Integer redGoalNum,
+                @RequestParam("blueGoalNum") Integer blueGoalNum
+        ) {
+            GameDTO gameDTO = tourneyService.getGame(id);
+            tourneyService.createResultGame(gameDTO, redGoalNum, blueGoalNum);
+            return "redirect:/pp/admin/tourney/tourney" + gameDTO.getTourney().getId();
+        }
+
+
         @GetMapping(value = {"/pp/admin/tourney/tourney{id}/timegrid"})
         public String toTimegridPage(@PathVariable("id") int id, ModelMap map) {
             TourneyDTO tourneyDTO = tourneyService.getTourney(id);
@@ -428,7 +449,6 @@ public class UserController {
                 @PathVariable("id") int id, ModelMap map,
                 @ModelAttribute(value = "playerDTO") PlayerDTO playerDTO
         ) {
-//            TODO: add partial search!
             map.addAttribute("foundedPlayerDTOList", userTourneyService.getPlayers(
                     playerDTO.getName(),
                     playerDTO.getSurname(),

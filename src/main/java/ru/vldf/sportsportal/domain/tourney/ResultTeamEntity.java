@@ -7,15 +7,20 @@ import java.util.Collection;
 @Table(name = "result_team", schema = "tourney", catalog = "sportsportal")
 public class ResultTeamEntity {
     private Integer id;
-    private Integer goal;
+    private Integer goal = 0;
 
     private GameEntity game;
     private CompositionEntity composition;
 
     private Collection<ResultPlayerEntity> results;
 
+    public ResultTeamEntity() {
+
+    }
+
     @Id
     @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer getId() {
         return id;
     }
