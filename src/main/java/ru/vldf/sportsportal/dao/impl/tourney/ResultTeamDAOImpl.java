@@ -22,6 +22,17 @@ public class ResultTeamDAOImpl extends AbstractDAOImpl<ResultTeamEntity, Integer
         return super.get(id);
     }
 
+    public ResultTeamEntity findByGameAndComposition(Integer gameID, Integer compositionID) {
+        List results = getSession()
+                .createQuery("from ResultTeamEntity where game.id=? and composition.id=?")
+                .setParameter(0, gameID)
+                .setParameter(1, compositionID)
+                .list();
+
+        if ((results != null) && (results.size() > 0)) return (ResultTeamEntity) results.get(0);
+        else return null;
+    }
+
     public List<ResultTeamEntity> findAll() {
         return super.list();
     }

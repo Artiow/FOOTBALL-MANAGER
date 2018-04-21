@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Турниры</title>
+    <script
+            src="../../libs/vue.js"
+            th:src="@{/libs/vue.js}"
+    ></script>
+    <script
+            src="../../libs/jquery-3.2.1.js"
+            th:src="@{/libs/jquery-3.2.1.js}"
+    ></script>
+    <link rel="stylesheet"
+          href="../../libs/bootstrap/css/bootstrap.css"
+          th:href="@{/libs/bootstrap/css/bootstrap.css}"
+    />
+    <link rel="stylesheet"
+          href="../../libs/font-awesome/css/font-awesome.css"
+          th:href="@{/libs/font-awesome/css/font-awesome.css}"
+    />
+    <link rel="stylesheet"
+          href="../../resources/css/header.css"
+          th:href="@{/css/header.css}"
+    />
+    <link rel="stylesheet"
+          href="../../resources/css/personalpage.css"
+          th:href="@{/css/personalpage.css}"
+    />
+    <link rel="stylesheet"
+          href="../../resources/css/footer.css"
+          th:href="@{/css/footer.css}"
+    />
+</head>
+<body>
+
+<header id="header-regular">
+    <header-regular id="header-auth" caption="ТУРНИРЫ">
+        <auth-failed sec:authorize="!isAuthenticated()"></auth-failed>
+        <auth-completed sec:authorize="isAuthenticated()"><p th:text="${authUser.name + ' ' + authUser.surname}">USERNAME</p></auth-completed>
+    </header-regular>
+</header>
+<script
+        src="../../resources/js/components/HeaderRegular.js"
+        th:src="@{/components/HeaderRegular.js}"
+></script>
+<script
+        src="../../resources/js/components/HeaderAuth.js"
+        th:src="@{/components/HeaderAuth.js}"
+></script>
+
+<main style="min-height: 600px" class="main-tourneypage">
+    <div class="container">
+        <div class="row">
+            <div style="margin-top: 25px; margin-bottom: 50px" class="col-md-3 col-md-offset-1">
+                <h3>Расписание</h3>
+                <table class="table table-hover">
+                    <tr th:each="tourneyItem: ${tourneyList}" th:object="${tourneyItem}">
+                        <td>
+                            <a th:href="*{'/tourney/t' + id}">
+                                <p th:text="*{name}">NAME</p>
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-md-5 col-md-offset-1">
+                <nav style="margin-top: 50px" class="navbar navbar-default">
+                    <h3 style="margin-left: 15px" th:text="${tourneyCur.name}">NAME</h3>
+                    <p class="navbar-text">Парк Южный (Путилина)</p>
+                    <p class="navbar-text">22.04 (Воскресенье)</p>
+                </nav>
+                <!--<nav style="padding-left: 10px" class="navbar navbar-default">-->
+                    <!--<button type="submit" class="btn btn-default navbar-btn">К турнирной таблице</button>-->
+                <!--</nav>-->
+                <table class="table">
+                    <tr class="active">
+                        <td style="padding: 0 10px 0 10px"><h4>Матч</h4></td>
+                        <td style="padding: 0 10px 0 10px"><h4>Счет</h4></td>
+                    </tr>
+                    <tr th:each="gameItem,iter: ${gameList}" th:object="${gameItem}">
+                        <td style="padding: 0 10px 0 10px"><h5><span th:text="*{red.name}">RED TEAM</span> - <span th:text="*{blue.name}">BLUE TEAM</span></h5></td>
+                        <td style="padding: 0 10px 0 10px" th:if="${(matches.get(iter.index)[0] != null) and (matches.get(iter.index)[1] != null)}"><h5><span th:text="${matches.get(iter.index)[0]}">N/A</span> - <span th:text="${matches.get(iter.index)[1]}">N/A</span></h5></td>
+                        <td style="padding: 0 10px 0 10px" th:unless="${(matches.get(iter.index)[0] != null) and (matches.get(iter.index)[1] != null)}"><h5>N/A</h5></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer id="footer-regular">
+    <footer-regular link-service="#"
+                    link-contacts="#"
+                    link-feedback="#"
+                    src-vldf-logo="/img/logo-vldf-sm.png"
+                    link-vldf="http://www.vldf.ru/"
+                    link-vldf-vk="https://vk.com/vldfru"
+                    link-vldf-instagram="https://www.instagram.com/vldf2009/"
+                    link-vldf-youtube="https://www.youtube.com/channel/UCgWjF5d6O3ORXolcr1HO-cQ">
+    </footer-regular>
+</footer>
+<script
+        src="../../resources/js/components/FooterRegular.js"
+        th:src="@{/components/FooterRegular.js}"
+></script>
+
+</body>
+<script
+        src="../../resources/js/padding.js"
+        th:src="@{/js/padding.js}"
+></script>
+</html>

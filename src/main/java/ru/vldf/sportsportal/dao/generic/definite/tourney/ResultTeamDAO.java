@@ -13,5 +13,7 @@ public interface ResultTeamDAO {
 
     ResultTeamEntity findByID(Integer id);
 
+    ResultTeamEntity findByGameAndComposition(Integer gameID, Integer compositionID);
+
     List<ResultTeamEntity> findAll();
 }
