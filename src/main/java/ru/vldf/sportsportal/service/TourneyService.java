@@ -3,12 +3,15 @@ package ru.vldf.sportsportal.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.vldf.sportsportal.dao.generic.definite.tourney.CompositionStatisticDAO;
 import ru.vldf.sportsportal.dao.generic.definite.tourney.GameDAO;
 import ru.vldf.sportsportal.dao.generic.definite.tourney.ResultTeamDAO;
 import ru.vldf.sportsportal.dao.generic.definite.tourney.TourneyDAO;
+import ru.vldf.sportsportal.domain.tourney.CompositionStatisticEntity;
 import ru.vldf.sportsportal.domain.tourney.GameEntity;
 import ru.vldf.sportsportal.domain.tourney.ResultTeamEntity;
 import ru.vldf.sportsportal.domain.tourney.TourneyEntity;
+import ru.vldf.sportsportal.dto.tourney.CompositionStatisticDTO;
 import ru.vldf.sportsportal.dto.tourney.GameDTO;
 import ru.vldf.sportsportal.dto.tourney.TourneyDTO;
 
@@ -18,6 +21,7 @@ import java.util.List;
 @Service
 public class TourneyService {
 
+    private CompositionStatisticDAO compositionStatisticDAO;
     private ResultTeamDAO resultTeamDAO;
     private TourneyDAO tourneyDAO;
     private GameDAO gameDAO;
@@ -35,6 +39,11 @@ public class TourneyService {
     @Autowired
     public void setGameDAO(GameDAO gameDAO) {
         this.gameDAO = gameDAO;
+    }
+
+    @Autowired
+    public void setCompositionStatisticDAO(CompositionStatisticDAO compositionStatisticDAO) {
+        this.compositionStatisticDAO = compositionStatisticDAO;
     }
 
 
@@ -79,6 +88,16 @@ public class TourneyService {
         }
 
         return result;
+    }
+
+    @Transactional(readOnly = true)
+    public List<CompositionStatisticDTO> getStatistics(TourneyDTO tourney) {
+        List<CompositionStatisticEntity> entityList = compositionStatisticDAO.findByTourney(tourney.getId());
+        if (entityList == null) return null;
+
+        List<CompositionStatisticDTO> dtoList = new ArrayList<CompositionStatisticDTO>();
+        for (CompositionStatisticEntity entity: entityList) dtoList.add(new CompositionStatisticDTO(entity));
+        return dtoList;
     }
 
 }

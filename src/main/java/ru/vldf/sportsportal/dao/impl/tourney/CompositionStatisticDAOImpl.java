@@ -5,6 +5,7 @@ import ru.vldf.sportsportal.dao.generic.abstrct.AbstractDAOImpl;
 import ru.vldf.sportsportal.dao.generic.definite.tourney.CompositionStatisticDAO;
 import ru.vldf.sportsportal.domain.tourney.CompositionEntity;
 import ru.vldf.sportsportal.domain.tourney.CompositionStatisticEntity;
+import ru.vldf.sportsportal.domain.tourney.TourneyEntity;
 
 import java.util.List;
 
@@ -26,10 +27,33 @@ public class CompositionStatisticDAOImpl extends AbstractDAOImpl<CompositionStat
         return get(id);
     }
 
+    public List<CompositionStatisticEntity> findByTourney(Integer id) {
+        List statistics = getSession()
+                .createQuery("from CompositionStatisticEntity where composition.tourney.id=?"
+                        + " order by score desc, winNum desc"
+                ).setParameter(0, id)
+                .list();
+
+        if ((statistics != null) && (statistics.size() > 0)) return (List<CompositionStatisticEntity>) statistics;
+        else return null;
+    }
+
+    public List<CompositionStatisticEntity> findByTourney(TourneyEntity tourney) {
+        List statistics = getSession()
+                .createQuery("from CompositionStatisticEntity where composition.tourney=?"
+                        + " order by score desc, winNum desc"
+                ).setParameter(0, tourney)
+                .list();
+
+        if ((statistics != null) && (statistics.size() > 0)) return (List<CompositionStatisticEntity>) statistics;
+        else return null;
+    }
+
     public List<CompositionStatisticEntity> findByComposition(Integer id) {
         List statistics = getSession()
-                .createQuery("from CompositionStatisticEntity where composition.id=?")
-                .setParameter(0, id)
+                .createQuery("from CompositionStatisticEntity where composition.id=?"
+                        + " order by score desc, winNum desc"
+                ).setParameter(0, id)
                 .list();
 
         if ((statistics != null) && (statistics.size() > 0)) return (List<CompositionStatisticEntity>) statistics;
@@ -38,8 +62,9 @@ public class CompositionStatisticDAOImpl extends AbstractDAOImpl<CompositionStat
 
     public List<CompositionStatisticEntity> findByComposition(CompositionEntity composition) {
         List statistics = getSession()
-                .createQuery("from CompositionStatisticEntity where composition=?")
-                .setParameter(0, composition)
+                .createQuery("from CompositionStatisticEntity where composition=?"
+                        + " order by score desc, winNum desc"
+                ).setParameter(0, composition)
                 .list();
 
         if ((statistics != null) && (statistics.size() > 0)) return (List<CompositionStatisticEntity>) statistics;

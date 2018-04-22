@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import ru.vldf.sportsportal.dto.common.UserDTO;
+import ru.vldf.sportsportal.dto.tourney.CompositionStatisticDTO;
 import ru.vldf.sportsportal.dto.tourney.GameDTO;
 import ru.vldf.sportsportal.dto.tourney.TourneyDTO;
 import ru.vldf.sportsportal.service.AuthService;
@@ -76,7 +77,8 @@ public class TourneyController {
         map.addAttribute("tourneyCur", tourney);
         map.addAttribute("tourneyList", tourneyService.getTourneyList());
 
-
+        List<CompositionStatisticDTO> statistics = tourneyService.getStatistics(tourney);
+        map.addAttribute("statList", statistics);
 
         return "tourney/cover-tourney-table";
     }

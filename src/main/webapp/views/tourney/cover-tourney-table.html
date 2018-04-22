@@ -70,8 +70,29 @@
                     <h3 style="margin-left: 15px" th:text="${tourneyCur.name}">NAME</h3>
                     <a style="margin-left: 10px" class="btn btn-default navbar-btn" th:href="${'/tourney' + tourneyCur.id + '/score'}">К расписанию</a>
                 </nav>
-                <table class="table">
-
+                <table class="table" th:if="${statList != null}">
+                    <tr class="active">
+                        <td style="padding: 0 10px 0 10px"><h4>#</h4></td>
+                        <td style="padding: 0 10px 0 10px"><h4>Команда</h4></td>
+                        <td style="padding: 0 10px 0 10px"><h4>И</h4></td>
+                        <td style="padding: 0 10px 0 10px"><h4>В</h4></td>
+                        <td style="padding: 0 10px 0 10px"><h4>Н</h4></td>
+                        <td style="padding: 0 10px 0 10px"><h4>П</h4></td>
+                        <td style="padding: 0 10px 0 10px"><h4>З</h4></td>
+                        <td style="padding: 0 10px 0 10px"><h4>П</h4></td>
+                        <td style="padding: 0 10px 0 10px"><h4>О</h4></td>
+                    </tr>
+                    <tr th:each="statItem,iter: ${statList}" th:object="${statItem}">
+                        <td style="padding: 0 10px 0 10px"><h5 th:text="${iter.index + 1}">N/A</h5></td>
+                        <td style="padding: 0 10px 0 10px"><h5 th:text="*{composition.name}">TEAM</h5></td>
+                        <td style="padding: 0 10px 0 10px"><h5 th:text="*{gameNum}">N/A</h5></td>
+                        <td style="padding: 0 10px 0 10px"><h5 th:text="*{winNum}">N/A</h5></td>
+                        <td style="padding: 0 10px 0 10px"><h5 th:text="*{drawNum}">N/A</h5></td>
+                        <td style="padding: 0 10px 0 10px"><h5 th:text="*{defeatNum}">N/A</h5></td>
+                        <td style="padding: 0 10px 0 10px"><h5 th:text="*{cloggedNum}">N/A</h5></td>
+                        <td style="padding: 0 10px 0 10px"><h5 th:text="*{missedNum}">N/A</h5></td>
+                        <td style="padding: 0 10px 0 10px"><h5 th:text="*{score}">N/A</h5></td>
+                    </tr>
                 </table>
             </div>
         </div>
