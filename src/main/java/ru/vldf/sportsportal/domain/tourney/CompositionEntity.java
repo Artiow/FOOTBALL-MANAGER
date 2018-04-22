@@ -18,6 +18,7 @@ public class CompositionEntity {
     private CompositionStatusEntity status;
 
     private Collection<CompositionMembershipEntity> memberships;
+    private Collection<CompositionStatisticEntity> statistics;
 
     public CompositionEntity() {
 
@@ -87,7 +88,16 @@ public class CompositionEntity {
         this.memberships = memberships;
     }
 
-//    ==================================================================================
+    @OneToMany(mappedBy = "composition")
+    public Collection<CompositionStatisticEntity> getStatistics() {
+        return statistics;
+    }
+
+    public void setStatistics(Collection<CompositionStatisticEntity> statistics) {
+        this.statistics = statistics;
+    }
+
+    //    ==================================================================================
 //    === MANY-TO-ONE REFERENCES
 
     @ManyToOne
