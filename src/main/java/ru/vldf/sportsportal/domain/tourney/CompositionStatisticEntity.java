@@ -108,10 +108,10 @@ public class CompositionStatisticEntity {
         this.diff = diff;
     }
 
-    //    ==================================================================================
-//    === MANY-TO-ONE REFERENCES
+//    ==================================================================================
+//    === ONE-TO-ONE REFERENCES
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "composition_id", referencedColumnName = "id", nullable = false)
     public CompositionEntity getComposition() {
         return composition;

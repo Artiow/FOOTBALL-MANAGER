@@ -17,8 +17,9 @@ public class CompositionEntity {
     private TourneyEntity tourney;
     private CompositionStatusEntity status;
 
+    private CompositionStatisticEntity statistic;
+
     private Collection<CompositionMembershipEntity> memberships;
-    private Collection<CompositionStatisticEntity> statistics;
 
     public CompositionEntity() {
 
@@ -88,13 +89,13 @@ public class CompositionEntity {
         this.memberships = memberships;
     }
 
-    @OneToMany(mappedBy = "composition")
-    public Collection<CompositionStatisticEntity> getStatistics() {
-        return statistics;
+    @OneToOne(mappedBy = "composition")
+    public CompositionStatisticEntity getStatistic() {
+        return statistic;
     }
 
-    public void setStatistics(Collection<CompositionStatisticEntity> statistics) {
-        this.statistics = statistics;
+    public void setStatistic(CompositionStatisticEntity statistic) {
+        this.statistic = statistic;
     }
 
     //    ==================================================================================
