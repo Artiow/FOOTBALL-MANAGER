@@ -53,22 +53,7 @@ public class TourneyController {
         List<Integer[]> matches = tourneyService.getResults(gameList);
         map.addAttribute("matches", matches);
 
-        switch (id) {
-            case 3:
-                return "tourney/cover-tourney-score";
-            case 4:
-                return "tourney/cover-tourney-2a";
-            case 5:
-                return "tourney/cover-tourney-2b";
-            case 6:
-                return "tourney/cover-tourney-score";
-            case 7:
-                return "tourney/cover-tourney-score";
-            case 8:
-                return "tourney/cover-tourney-1";
-            default:
-                return "tourney/cover-tourney-none";
-        }
+        return "tourney/cover-tourney-score";
     }
 
     @GetMapping(value = {"/tourney{id}/table"})
