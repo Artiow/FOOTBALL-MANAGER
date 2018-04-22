@@ -131,7 +131,7 @@
                                     <td width="25px"></td>
                                     <td width="25px"></td>
                                 </tr>
-                                <tr height="19px" th:each="r: ${#numbers.sequence(redPlayerList.size() + 1,18)}">
+                                <tr height="19px" th:each="r: ${#numbers.sequence(redPlayerList.size() + 1,18)}" th:unless="${redPlayerList.size()} == 18">
                                     <td th:text="${r}">0</td>
                                     <td></td>
                                     <td></td>
@@ -270,7 +270,7 @@
                                     <td width="25px"></td>
                                     <td width="25px"></td>
                                 </tr>
-                                <tr height="19px" th:each="b: ${#numbers.sequence(bluePlayerList.size() + 1,18)}">
+                                <tr height="19px" th:each="b: ${#numbers.sequence(bluePlayerList.size() + 1,18)}" th:unless="${bluePlayerList.size()} == 18">
                                     <td th:text="${b}">0</td>
                                     <td></td>
                                     <td></td>
