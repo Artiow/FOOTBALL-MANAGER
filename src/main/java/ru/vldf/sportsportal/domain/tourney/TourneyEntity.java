@@ -10,9 +10,11 @@ import java.util.Collection;
 public class TourneyEntity {
     private Integer id;
     private String name;
+    private Integer currentTour = 1;
 
     private TourneyStatusEntity status;
 
+    private Collection<TourEntity> tours;
     private Collection<CompositionEntity> compositions;
 
     public TourneyEntity() {
@@ -22,6 +24,7 @@ public class TourneyEntity {
     public TourneyEntity(TourneyDTO tourney, TourneyStatusEntity status) {
         id = tourney.getId();
         name = tourney.getName();
+        currentTour= tourney.getCurrentTour();
 
         this.status = status;
     }
@@ -43,19 +46,38 @@ public class TourneyEntity {
         return name;
     }
 
-//    ==================================================================================
-//    === ONE-TO-MANY REFERENCES
-
     public void setName(String name) {
         this.name = name;
     }
 
+    @Basic
+    @Column(name = "current_tour", nullable = false)
+    public Integer getCurrentTour() {
+        return currentTour;
+    }
+
+    public void setCurrentTour(Integer currentTour) {
+        this.currentTour = currentTour;
+    }
+
+//    ==================================================================================
+//    === ONE-TO-MANY REFERENCES
+
     @OneToMany(mappedBy = "tourney")
-    public Collection<CompositionEntity> getTeamCompositions() {
+    public Collection<TourEntity> getTours() {
+        return tours;
+    }
+
+    public void setTours(Collection<TourEntity> tours) {
+        this.tours = tours;
+    }
+
+    @OneToMany(mappedBy = "tourney")
+    public Collection<CompositionEntity> getCompositions() {
         return compositions;
     }
 
-    public void setTeamCompositions(Collection<CompositionEntity> compositions) {
+    public void setCompositions(Collection<CompositionEntity> compositions) {
         this.compositions = compositions;
     }
 

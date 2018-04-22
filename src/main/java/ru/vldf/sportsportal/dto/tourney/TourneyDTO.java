@@ -5,6 +5,7 @@ import ru.vldf.sportsportal.domain.tourney.TourneyEntity;
 public class TourneyDTO {
     private Integer id;
     private String name;
+    private Integer currentTour = 1;
 
     private TourneyStatusDTO status;
 
@@ -15,6 +16,7 @@ public class TourneyDTO {
     public TourneyDTO(TourneyEntity tourney) {
         id = tourney.getId();
         name = tourney.getName();
+        currentTour = tourney.getCurrentTour();
 
         if (tourney.getStatus() != null) status = new TourneyStatusDTO(tourney.getStatus());
     }
@@ -41,6 +43,14 @@ public class TourneyDTO {
 
     public void setStatus(TourneyStatusDTO status) {
         this.status = status;
+    }
+
+    public Integer getCurrentTour() {
+        return currentTour;
+    }
+
+    public void setCurrentTour(Integer currentTour) {
+        this.currentTour = currentTour;
     }
 
     @Override
