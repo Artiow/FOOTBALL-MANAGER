@@ -6,18 +6,20 @@ import javax.persistence.*;
 @Table(name = "composition_statistic", schema = "tourney", catalog = "sportsportal")
 public class CompositionStatisticEntity {
     private Integer id;
-    private Integer score;
-    private Integer gameNum;
-    private Integer winNum;
-    private Integer drawNum;
-    private Integer defeatNum;
-    private Integer cloggedNum;
-    private Integer missedNum;
+    private Integer score = 0;
+    private Integer gameNum = 0;
+    private Integer winNum = 0;
+    private Integer drawNum = 0;
+    private Integer defeatNum = 0;
+    private Integer cloggedNum = 0;
+    private Integer missedNum = 0;
+    private Integer diff = 0;
 
     private CompositionEntity composition;
 
     @Id
     @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer getId() {
         return id;
     }
@@ -96,7 +98,17 @@ public class CompositionStatisticEntity {
         this.missedNum = missedNum;
     }
 
-//    ==================================================================================
+    @Basic
+    @Column(name = "diff", nullable = false)
+    public Integer getDiff() {
+        return diff;
+    }
+
+    public void setDiff(Integer diff) {
+        this.diff = diff;
+    }
+
+    //    ==================================================================================
 //    === MANY-TO-ONE REFERENCES
 
     @ManyToOne
