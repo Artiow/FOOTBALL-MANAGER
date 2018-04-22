@@ -58,7 +58,7 @@
                 <table class="table table-hover">
                     <tr th:each="tourneyItem: ${tourneyList}" th:object="${tourneyItem}">
                         <td>
-                            <a th:href="*{'/tourney/t' + id}">
+                            <a th:href="*{'/tourney' + id + '/table'}">
                                 <p th:text="*{name}">NAME</p>
                             </a>
                         </td>
@@ -68,38 +68,10 @@
             <div class="col-md-5 col-md-offset-1">
                 <nav style="margin-top: 50px" class="navbar navbar-default">
                     <h3 style="margin-left: 15px" th:text="${tourneyCur.name}">NAME</h3>
-                    <p class="navbar-text">Парк Патриотов</p>
-                    <p class="navbar-text">21.04 (Суббота)</p>
+                    <a style="margin-left: 10px" class="btn btn-default navbar-btn" th:href="${'/tourney' + tourneyCur.id + '/score'}">К расписанию</a>
                 </nav>
                 <table class="table">
-                    <tr class="active">
-                        <td style="padding: 0 10px 0 10px"><h4>Время</h4></td>
-                        <td style="padding: 0 10px 0 10px"><h4>Матч</h4></td>
-                    </tr>
-                    <tr>
-                        <td style="padding: 0 10px 0 10px"><h5>11:00 - 11:55</h5></td>
-                        <td style="padding: 0 10px 0 10px"><h5>Энерджи - Геолог</h5></td>
-                    </tr>
-                    <tr>
-                        <td style="padding: 0 10px 0 10px"><h5>12:00 - 12:55</h5></td>
-                        <td style="padding: 0 10px 0 10px"><h5>ФСА Воронеж - Орбита</h5></td>
-                    </tr>
-                    <tr>
-                        <td style="padding: 0 10px 0 10px"><h5>13:10 - 14:05</h5></td>
-                        <td style="padding: 0 10px 0 10px"><h5>Двадцать - Сатурн</h5></td>
-                    </tr>
-                    <tr>
-                        <td style="padding: 0 10px 0 10px"><h5>14:10 - 15:05</h5></td>
-                        <td style="padding: 0 10px 0 10px"><h5>Флагман - Ералаш</h5></td>
-                    </tr>
-                    <tr>
-                        <td style="padding: 0 10px 0 10px"><h5>15:10 - 16:05</h5></td>
-                        <td style="padding: 0 10px 0 10px"><h5>Факелоны - Алмаз</h5></td>
-                    </tr>
-                    <tr>
-                        <td style="padding: 0 10px 0 10px"><h5>16:10 - 17:05</h5></td>
-                        <td style="padding: 0 10px 0 10px"><h5>Ультрас - Менеджер</h5></td>
-                    </tr>
+
                 </table>
             </div>
         </div>

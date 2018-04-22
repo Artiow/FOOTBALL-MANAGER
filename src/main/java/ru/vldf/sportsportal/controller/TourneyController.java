@@ -36,15 +36,15 @@ public class TourneyController {
 
     @GetMapping(value = {"/tourney"})
     public String toCoverPage(ModelMap map) {
-        return "tourney/cover";
+//        return "tourney/cover";
+        return "redirect:/tourney3/score"; //TODO: wtf
     }
 
-    @GetMapping(value = {"/tourney/t{id}"})
+    @GetMapping(value = {"/tourney{id}/score"})
     public String toTourneyPage(@PathVariable("id") int id, ModelMap map) {
-        map.addAttribute("tourneyList", tourneyService.getTourneyList());
-
         TourneyDTO tourney = tourneyService.getTourney(id);
         map.addAttribute("tourneyCur", tourney);
+        map.addAttribute("tourneyList", tourneyService.getTourneyList());
 
         List<GameDTO> gameList = tourneyService.getGameList(tourney);
         map.addAttribute("gameList", gameList);
@@ -54,19 +54,30 @@ public class TourneyController {
 
         switch (id) {
             case 3:
-                return "tourney/cover-tourney-results";
+                return "tourney/cover-tourney-score";
             case 4:
                 return "tourney/cover-tourney-2a";
             case 5:
                 return "tourney/cover-tourney-2b";
             case 6:
-                return "tourney/cover-tourney-results";
+                return "tourney/cover-tourney-score";
             case 7:
-                return "tourney/cover-tourney-results";
+                return "tourney/cover-tourney-score";
             case 8:
                 return "tourney/cover-tourney-1";
             default:
                 return "tourney/cover-tourney-none";
         }
+    }
+
+    @GetMapping(value = {"/tourney{id}/table"})
+    public String toTourneyTablePage(@PathVariable("id") int id, ModelMap map) {
+        TourneyDTO tourney = tourneyService.getTourney(id);
+        map.addAttribute("tourneyCur", tourney);
+        map.addAttribute("tourneyList", tourneyService.getTourneyList());
+
+
+
+        return "tourney/cover-tourney-table";
     }
 }

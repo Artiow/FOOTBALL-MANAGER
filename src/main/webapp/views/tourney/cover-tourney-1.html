@@ -58,7 +58,7 @@
                 <table class="table table-hover">
                     <tr th:each="tourneyItem: ${tourneyList}" th:object="${tourneyItem}">
                         <td>
-                            <a th:href="*{'/tourney/t' + id}">
+                            <a th:href="*{'/tourney' + id + '/score'}">
                                 <p th:text="*{name}">NAME</p>
                             </a>
                         </td>

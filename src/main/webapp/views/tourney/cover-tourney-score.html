@@ -58,7 +58,7 @@
                 <table class="table table-hover">
                     <tr th:each="tourneyItem: ${tourneyList}" th:object="${tourneyItem}">
                         <td>
-                            <a th:href="*{'/tourney/t' + id}">
+                            <a th:href="*{'/tourney' + id + '/score'}">
                                 <p th:text="*{name}">NAME</p>
                             </a>
                         </td>
@@ -68,12 +68,8 @@
             <div class="col-md-5 col-md-offset-1">
                 <nav style="margin-top: 50px" class="navbar navbar-default">
                     <h3 style="margin-left: 15px" th:text="${tourneyCur.name}">NAME</h3>
-                    <p class="navbar-text">Парк Южный (Путилина)</p>
-                    <p class="navbar-text">22.04 (Воскресенье)</p>
+                    <a style="margin-left: 10px" class="btn btn-default navbar-btn" th:href="${'/tourney' + tourneyCur.id + '/table'}">К таблице</a>
                 </nav>
-                <!--<nav style="padding-left: 10px" class="navbar navbar-default">-->
-                    <!--<button type="submit" class="btn btn-default navbar-btn">К турнирной таблице</button>-->
-                <!--</nav>-->
                 <table class="table">
                     <tr class="active">
                         <td style="padding: 0 10px 0 10px"><h4>Матч</h4></td>
