@@ -8,7 +8,7 @@ public class GameDTO {
 
     private CompositionDTO red;
     private CompositionDTO blue;
-    private TourneyDTO tourney;
+    private TourDTO tour;
 
     public GameDTO() {
 
@@ -20,7 +20,7 @@ public class GameDTO {
 
         if (game.getRed() != null) red = new CompositionDTO(game.getRed());
         if (game.getBlue() != null) blue = new CompositionDTO(game.getBlue());
-        if (game.getTourney() != null) tourney = new TourneyDTO(game.getTourney());
+        if (game.getTour() != null) tour = new TourDTO(game.getTour());
     }
 
     public Integer getId() {
@@ -55,12 +55,12 @@ public class GameDTO {
         this.blue = blue;
     }
 
-    public TourneyDTO getTourney() {
-        return tourney;
+    public TourDTO getTour() {
+        return tour;
     }
 
-    public void setTourney(TourneyDTO tourney) {
-        this.tourney = tourney;
+    public void setTour(TourDTO tour) {
+        this.tour = tour;
     }
 
     @Override

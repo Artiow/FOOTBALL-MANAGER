@@ -10,7 +10,7 @@
 </head>
 <body>
 <div id="protocol_one">
-    <table width="100%" height="1075px" th:each="gameItem,iter: ${gameList}">
+    <table style="height: 1075px" width="100%" th:each="gameItem,iter: ${gameList}">
         <tr>
             <td>
                 <img src="../../../resources/img/protocol_head.jpg" th:src="@{/img/protocol_head.jpg}"/><br/>
@@ -18,7 +18,7 @@
                     <tr>
                         <td width="60%">
                             <table width="100%">
-                                <tr height="30px">
+                                <tr style="height: 30px">
                                     <td width="43%" align="right">
                                         <a th:text="${gameItem.red.name}">RED TEAM</a>
                                     </td>
@@ -29,7 +29,7 @@
                                         <a th:text="${gameItem.blue.name}">BLUE TEAM</a>
                                     </td>
                                 </tr>
-                                <tr height="30px">
+                                <tr style="height: 30px">
                                     <td width="43%" align="right">
                                         Счет первого тайма:
                                     </td>
@@ -40,7 +40,7 @@
 
                                     </td>
                                 </tr>
-                                <tr height="30px">
+                                <tr style="height: 30px">
                                     <td width="43%" align="right">
                                         Пенальти:
                                     </td>
@@ -54,7 +54,7 @@
                             </table>
                         </td>
                         <td>
-                            <a th:text="${gameItem.tourney.name}">TOURNEY</a> (__ тур)<br/>
+                            <a th:text="${gameItem.tour.tourney.name}">TOURNEY</a> (__ тур)<br/>
                             <br/>Дата:<hr/>
                             <br/>Время:<hr/>
                             <br/>Место проведения:<hr/>
@@ -114,7 +114,7 @@
 
                             <br/>Всего ___ игроков на матч<br/>
                             <table width="100%" border="1px">
-                                <tr height="19px">
+                                <tr style="height: 19px">
                                     <td width="20px"></td>
                                     <td width="20px">№</td>
                                     <td>Игрок</td>
@@ -122,7 +122,7 @@
                                     <td width="25px">Голы</td>
                                     <td width="50px" colspan="2">Карточки</td>
                                 </tr>
-                                <tr height="19px" th:each="rPlayer,rIter: ${redPlayerLists.get(iter.index)}" th:object="${rPlayer}">
+                                <tr style="height: 19px" th:each="rPlayer,rIter: ${redPlayerLists.get(iter.index)}" th:object="${rPlayer}">
                                     <td th:text="${rIter.index + 1}">0</td>
                                     <td></td>
                                     <td th:text="*{surname + ' ' + name}"><a>RED PLAYER NAME</a></td>
@@ -131,7 +131,7 @@
                                     <td width="25px"></td>
                                     <td width="25px"></td>
                                 </tr>
-                                <tr height="19px" th:each="r: ${#numbers.sequence(redPlayerLists.get(iter.index).size() + 1,18)}" th:unless="${redPlayerLists.get(iter.index).size()} == 18">
+                                <tr style="height: 19px" th:each="r: ${#numbers.sequence(redPlayerLists.get(iter.index).size() + 1,18)}" th:unless="${redPlayerLists.get(iter.index).size()} == 18">
                                     <td th:text="${r}">0</td>
                                     <td></td>
                                     <td></td>
@@ -187,7 +187,7 @@
 
                             <br/>Всего ___ игроков на матч<br/>
                             <table width="100%" border="1px">
-                                <tr height="19px">
+                                <tr style="height: 19px">
                                     <td width="20px"></td>
                                     <td width="20px">№</td>
                                     <td>Игрок</td>
@@ -195,7 +195,7 @@
                                     <td width="25px">Голы</td>
                                     <td width="50px" colspan="2">Карточки</td>
                                 </tr>
-                                <tr height="19px" th:each="r: ${#numbers.sequence(1,18)}">
+                                <tr style="height: 19px" th:each="r: ${#numbers.sequence(1,18)}">
                                     <td th:text="${r}">0</td>
                                     <td></td>
                                     <td></td>
@@ -252,7 +252,7 @@
 
                             <br/>Всего ___ игроков на матч<br/>
                             <table width="100%" border="1px">
-                                <tr height="19px">
+                                <tr style="height: 19px">
                                     <td width="20px"></td>
                                     <td width="20px">№</td>
                                     <td>Игрок</td>
@@ -260,7 +260,7 @@
                                     <td width="25px">Голы</td>
                                     <td width="50px" colspan="2">Карточки</td>
                                 </tr>
-                                <tr height="19px" th:each="bPlayer,bIter: ${bluePlayerLists.get(iter.index)}" th:object="${bPlayer}">
+                                <tr style="height: 19px" th:each="bPlayer,bIter: ${bluePlayerLists.get(iter.index)}" th:object="${bPlayer}">
                                     <td th:text="${bIter.index + 1}">0</td>
                                     <td></td>
                                     <td th:text="*{surname + ' ' + name}"><a>BLUE PLAYER NAME</a></td>
@@ -269,7 +269,7 @@
                                     <td width="25px"></td>
                                     <td width="25px"></td>
                                 </tr>
-                                <tr height="19px" th:each="b: ${#numbers.sequence(bluePlayerLists.get(iter.index).size() + 1,18)}" th:unless="${bluePlayerLists.get(iter.index).size()} == 18">
+                                <tr style="height: 19px" th:each="b: ${#numbers.sequence(bluePlayerLists.get(iter.index).size() + 1,18)}" th:unless="${bluePlayerLists.get(iter.index).size()} == 18">
                                     <td th:text="${b}">0</td>
                                     <td></td>
                                     <td></td>
@@ -326,7 +326,7 @@
 
                             <br/>Всего ___ игроков на матч<br/>
                             <table width="100%" border="1px">
-                                <tr height="19px">
+                                <tr style="height: 19px">
                                     <td width="20px"></td>
                                     <td width="20px">№</td>
                                     <td>Игрок</td>
@@ -334,7 +334,7 @@
                                     <td width="25px">Голы</td>
                                     <td width="50px" colspan="2">Карточки</td>
                                 </tr>
-                                <tr height="19px" th:each="b: ${#numbers.sequence(1,18)}">
+                                <tr style="height: 19px" th:each="b: ${#numbers.sequence(1,18)}">
                                     <td th:text="${b}">0</td>
                                     <td></td>
                                     <td></td>
@@ -363,11 +363,11 @@
                     <tr>
                         <td>
                             <table width="98%">
-                                <tr height="19px">
+                                <tr style="height: 19px">
                                     <td></td>
                                     <td></td>
                                 </tr>
-                                <tr height="19px">
+                                <tr style="height: 19px">
                                     <td width="35%">
                                         <hr/><a th:text="${gameItem.red.name}">RED TEAM</a>
                                     </td>
@@ -379,11 +379,11 @@
                         </td>
                         <td>
                             <table width="98%">
-                                <tr height="19px">
+                                <tr style="height: 19px">
                                     <td></td>
                                     <td></td>
                                 </tr>
-                                <tr height="19px">
+                                <tr style="height: 19px">
                                     <td width="35%">
                                         <hr/><a th:text="${gameItem.blue.name}">BLUE TEAM</a>
                                     </td>
@@ -397,11 +397,11 @@
                     <tr>
                         <td>
                             <table width="98%">
-                                <tr height="19px">
+                                <tr style="height: 19px">
                                     <td></td>
                                     <td></td>
                                 </tr>
-                                <tr height="19px">
+                                <tr style="height: 19px">
                                     <td width="35%">
                                         <hr/>Первый судья
                                     </td>
@@ -413,11 +413,11 @@
                         </td>
                         <td>
                             <table width="98%">
-                                <tr height="19px">
+                                <tr style="height: 19px">
                                     <td></td>
                                     <td></td>
                                 </tr>
-                                <tr height="19px">
+                                <tr style="height: 19px">
                                     <td width="35%">
                                         <hr/>Второй судья
                                     </td>
@@ -431,11 +431,11 @@
                     <tr>
                         <td>
                             <table width="98%">
-                                <tr height="19px">
+                                <tr style="height: 19px">
                                     <td></td>
                                     <td></td>
                                 </tr>
-                                <tr height="19px">
+                                <tr style="height: 19px">
                                     <td width="75%">
                                         <hr/>Куратор
                                     </td>
@@ -444,11 +444,11 @@
                         </td>
                         <td>
                             <table width="98%">
-                                <tr height="19px">
+                                <tr style="height: 19px">
                                     <td></td>
                                     <td></td>
                                 </tr>
-                                <tr height="19px">
+                                <tr style="height: 19px">
                                     <td width="75%">
                                         <hr/>Коммисар
                                     </td>

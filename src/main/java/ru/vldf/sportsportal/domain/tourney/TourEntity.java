@@ -3,6 +3,7 @@ package ru.vldf.sportsportal.domain.tourney;
 import ru.vldf.sportsportal.dto.tourney.TourDTO;
 
 import javax.persistence.*;
+import java.util.Collection;
 
 @Entity
 @Table(name = "tour", schema = "tourney", catalog = "sportsportal")
@@ -11,6 +12,8 @@ public class TourEntity {
     private Integer num;
 
     private TourneyEntity tourney;
+
+    private Collection<GameEntity> games;
 
     public TourEntity() {
 
@@ -43,6 +46,19 @@ public class TourEntity {
     public void setNum(Integer num) {
         this.num = num;
     }
+
+//    ==================================================================================
+//    === ONE-TO-MANY REFERENCES
+
+    @OneToMany(mappedBy = "tour")
+    public Collection<GameEntity> getGames() {
+        return games;
+    }
+
+    public void setGames(Collection<GameEntity> games) {
+        this.games = games;
+    }
+
 
 //    ==================================================================================
 //    === MANY-TO-ONE REFERENCES

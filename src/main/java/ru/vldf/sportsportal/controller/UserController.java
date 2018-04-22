@@ -237,7 +237,7 @@ public class UserController {
         ) {
             GameDTO gameDTO = tourneyService.getGame(id);
             tourneyService.createResultGame(gameDTO, redGoalNum, blueGoalNum);
-            return "redirect:/pp/admin/tourney/tourney" + gameDTO.getTourney().getId();
+            return "redirect:/pp/admin/tourney/tourney" + gameDTO.getTour().getTourney().getId();
         }
 
 
@@ -272,7 +272,7 @@ public class UserController {
             List<PlayerDTO> bluePlayerList = tourneyService.getPlayerList(game.getBlue());
 
             map
-                    .addAttribute("tourneyDTO", game.getTourney())
+                    .addAttribute("tourneyDTO", game.getTour().getTourney())
                     .addAttribute("redTeamDTO", game.getRed())
                     .addAttribute("blueTeamDTO", game.getBlue())
                     .addAttribute("redPlayerList", redPlayerList)

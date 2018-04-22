@@ -10,7 +10,7 @@ public class GameEntity {
 
     private CompositionEntity red;
     private CompositionEntity blue;
-    private TourneyEntity tourney;
+    private TourEntity tour;
 
     @Id
     @Column(name = "id", nullable = false)
@@ -33,11 +33,11 @@ public class GameEntity {
         this.timegrid = timegrid;
     }
 
+//    ==================================================================================
+//    === ONE-TO-ONE REFERENCES
+
     @OneToOne
-    @JoinColumn(
-            name = "red_id",
-            referencedColumnName = "id"
-    )
+    @JoinColumn(name = "red_id", referencedColumnName = "id", nullable = false)
     public CompositionEntity getRed() {
         return red;
     }
@@ -47,10 +47,7 @@ public class GameEntity {
     }
 
     @OneToOne
-    @JoinColumn(
-            name = "blue_id",
-            referencedColumnName = "id"
-    )
+    @JoinColumn(name = "blue_id", referencedColumnName = "id", nullable = false)
     public CompositionEntity getBlue() {
         return blue;
     }
@@ -59,18 +56,21 @@ public class GameEntity {
         this.blue = blue;
     }
 
-    @OneToOne
-    @JoinColumn(
-            name = "tourney_id",
-            referencedColumnName = "id"
-    )
-    public TourneyEntity getTourney() {
-        return tourney;
+//    ==================================================================================
+//    === MANY-TO-ONE REFERENCES
+
+    @ManyToOne
+    @JoinColumn(name = "tour_id", referencedColumnName = "id", nullable = false)
+    public TourEntity getTour() {
+        return tour;
     }
 
-    public void setTourney(TourneyEntity tourney) {
-        this.tourney = tourney;
+    public void setTour(TourEntity tour) {
+        this.tour = tour;
     }
+
+//    ==================================================================================
+//    === OBJECTS METHODS
 
     @Override
     public boolean equals(Object o) {
