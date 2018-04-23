@@ -212,7 +212,10 @@ public class UserService {
 
         @Transactional
         public void confirmPlayground(int compositionID, Integer playgroundID) {
-            PlaygroundEntity playground = playgroundDAO.findByID(playgroundID);
+            PlaygroundEntity playground;
+            if (playgroundID != null) playground = playgroundDAO.findByID(playgroundID);
+            else playground = null;
+
             compositionDAO.updatePlaygroundByID(compositionID, playground);
         }
     }

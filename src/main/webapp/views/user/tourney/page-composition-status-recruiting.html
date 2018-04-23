@@ -100,9 +100,9 @@
                 </div>
             </div>
             <div class="col-md-3 col-md-offset-1">
+                <h4><label style="font-weight: normal" for="selectPlayground">Площадки:</label></h4>
                 <form class="form-inline" role="form" th:action="${'/pp/tourney/composition' + compositionDTO.id + '/pgconfirm'}" method="post">
                     <div class="form-group">
-                        <h4><label style="font-weight: normal" for="selectPlayground">Площадки:</label></h4>
                         <select name="pgID" id="selectPlayground" class="form-control">
                             <option th:value="${null}" th:if="${compositionDTO.playground != null}" disabled="disabled" selected="selected" th:text="${compositionDTO.playground.name}">SELECTED</option>
                             <option th:value="${null}">Мне все равно</option>
