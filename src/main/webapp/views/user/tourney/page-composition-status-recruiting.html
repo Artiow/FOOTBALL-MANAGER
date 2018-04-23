@@ -100,12 +100,12 @@
                 </div>
             </div>
             <div class="col-md-3 col-md-offset-1">
-                <form class="form-inline" role="form" th:action="${''}" method="post">
+                <form class="form-inline" role="form" th:action="${'/pp/tourney/composition' + compositionDTO.id + '/pgconfirm'}" method="post">
                     <div class="form-group">
                         <h4><label style="font-weight: normal" for="selectPlayground">Площадки:</label></h4>
                         <select id="selectPlayground" class="form-control">
                             <option name="pgIDs" th:value="${null}">Мне все равно</option>
-                            <!--<option name="pgIDs" th:each="playgroundItem: ${playgroundList}" th:value="${playgroundItem.id}" th:text="${playgroundItem.name}">PLAYGROUND</option>-->
+                            <option name="pgIDs" th:each="playgroundItem: ${playgroundList}" th:value="${playgroundItem.id}" th:text="${playgroundItem.name}">PLAYGROUND</option>
                         </select>
                         <button type="submit" class="btn btn-default">Подтвердить</button>
                     </div>

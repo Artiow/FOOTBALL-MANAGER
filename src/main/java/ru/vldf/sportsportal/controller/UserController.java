@@ -5,10 +5,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import ru.vldf.sportsportal.domain.tourney.ResultTeamEntity;
+import ru.vldf.sportsportal.dto.lease.PlaygroundDTO;
 import ru.vldf.sportsportal.dto.tourney.*;
 import ru.vldf.sportsportal.dto.common.UserDTO;
 import ru.vldf.sportsportal.service.AdminService;
 import ru.vldf.sportsportal.service.AuthService;
+import ru.vldf.sportsportal.service.LeaseService;
 import ru.vldf.sportsportal.service.UserService;
 
 import java.util.ArrayList;
@@ -352,6 +354,13 @@ public class UserController {
             return "redirect:/xxx{id}";
         }
 
+        private LeaseService leaseService;
+
+        @Autowired
+        public void setLeaseService(LeaseService leaseService) {
+            this.leaseService = leaseService;
+        }
+
         @GetMapping(value = {"/pp/tourney/composition{id}"})
         public String toRecruitingCompositionPage(@PathVariable("id") int id, ModelMap map) {
             CompositionDTO compositionDTO = userTourneyService.getComposition(id);
@@ -395,6 +404,8 @@ public class UserController {
                 for (int i = 0; i < 10; i++) rivalgrid[i] = ("" + chars[i]);
             }
 
+            List<PlaygroundDTO> playgroundList = leaseService.getPlaygroundList();
+
             map
                     .addAttribute("maxSize", maxSize)
                     .addAttribute("currentSize", currentSize)
@@ -402,6 +413,8 @@ public class UserController {
                     .addAttribute("teamDTO", compositionDTO.getTeam())
                     .addAttribute("compositionDTO", compositionDTO)
                     .addAttribute("rivalDTO", rivalDTO)
+
+                    .addAttribute("playgroundList", playgroundList)
 
                     .addAttribute("timegrid", timegrid)
                     .addAttribute("rivalgrid", rivalgrid)
@@ -414,6 +427,12 @@ public class UserController {
                     .addAttribute("isFull", !(currentSize < maxSize));
 
             return "user/tourney/page-composition-status-recruiting";
+        }
+
+        @PostMapping(value = {"/pp/tourney/composition{id}/pgconfirm"})
+        public String confirmPlayground(@PathVariable("id") int id, @RequestParam("pgIDs") Integer pgID) {
+            int k = pgID;
+            return "redirect:/pp/tourney/composition{id}";
         }
 
         @GetMapping(value = {"/pp/tourney/composition{id}/confirm"})
