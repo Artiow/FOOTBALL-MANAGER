@@ -57,19 +57,15 @@
                 <h3>Турнир:</h3>
                 <table class="table table-hover">
                     <tr th:each="tourneyItem: ${tourneyList}" th:object="${tourneyItem}">
-                        <td>
-                            <a th:href="*{'/tourney' + id + '/score'}">
-                                <p th:text="*{name}">TOURNEY</p>
-                            </a>
-                        </td>
+                        <td><a th:href="*{'/tourney' + id}"><p th:text="*{name}">TOURNEY</p></a></td>
                     </tr>
                 </table>
             </div>
-            <div style="margin-top: 25px; margin-bottom: 50px" class="col-md-2">
+            <div style="margin-top: 25px; margin-bottom: 50px" class="col-md-1">
                 <h3>Тур:</h3>
                 <table class="table table-hover">
-                    <tr>
-                        <td><a><p th:text="*{name}">TOUR</p></a></td>
+                    <tr th:each="tourItem: ${tourList}" th:object="${tourItem}">
+                        <td><a th:href="${'/tourney' + tourneyCur.id + '/tour' + tourItem.id}"><p th:text="${tourItem.num}">0</p></a></td>
                     </tr>
                 </table>
             </div>

@@ -26,7 +26,7 @@ public class TourDAOImpl extends AbstractDAOImpl<TourEntity, Integer> implements
         return super.get(id);
     }
 
-    public TourEntity findByTourney(Integer tourneyID, Integer num) {
+    public TourEntity findCurrentByTourney(Integer tourneyID, Integer num) {
         List tours = getSession()
                 .createQuery("from TourEntity where tourney.id=? and num=?")
                 .setParameter(0, tourneyID)
@@ -45,6 +45,26 @@ public class TourDAOImpl extends AbstractDAOImpl<TourEntity, Integer> implements
                 .list();
 
         if ((tours != null) && (tours.size() > 0)) return (TourEntity) tours.get(0);
+        else return null;
+    }
+
+    public List<TourEntity> findByTourney(Integer tourneyID) {
+        List tours = getSession()
+                .createQuery("from TourEntity where tourney.id=? order by num")
+                .setParameter(0, tourneyID)
+                .list();
+
+        if ((tours != null) && (tours.size() > 0)) return (List<TourEntity>) tours;
+        else return null;
+    }
+
+    public List<TourEntity> findByTourney(TourneyEntity tourney) {
+        List tours = getSession()
+                .createQuery("from TourEntity where tourney=? order by num")
+                .setParameter(0, tourney)
+                .list();
+
+        if ((tours != null) && (tours.size() > 0)) return (List<TourEntity>) tours;
         else return null;
     }
 

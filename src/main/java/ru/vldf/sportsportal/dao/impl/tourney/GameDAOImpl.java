@@ -5,6 +5,7 @@ import ru.vldf.sportsportal.dao.generic.abstrct.AbstractDAOImpl;
 import ru.vldf.sportsportal.dao.generic.definite.tourney.GameDAO;
 import ru.vldf.sportsportal.domain.tourney.CompositionEntity;
 import ru.vldf.sportsportal.domain.tourney.GameEntity;
+import ru.vldf.sportsportal.domain.tourney.TourEntity;
 import ru.vldf.sportsportal.domain.tourney.TourneyEntity;
 
 import java.util.List;
@@ -55,7 +56,27 @@ public class GameDAOImpl extends AbstractDAOImpl<GameEntity, Integer> implements
         return super.list();
     }
 
-    public List<GameEntity> findByTourney(Integer id) {
+    public List<GameEntity> findByTour(Integer id) {
+        List games = getSession()
+                .createQuery("from GameEntity where tour.id=?")
+                .setParameter(0, id)
+                .list();
+
+        if ((games != null) && (games.size() > 0)) return (List<GameEntity>) games;
+        else return null;
+    }
+
+    public List<GameEntity> findByTour(TourEntity tour) {
+        List games = getSession()
+                .createQuery("from GameEntity where tour=?")
+                .setParameter(0, tour)
+                .list();
+
+        if ((games != null) && (games.size() > 0)) return (List<GameEntity>) games;
+        else return null;
+    }
+
+    public List<GameEntity> findCurrentByTourney(Integer id) {
         List games = getSession()
                 .createQuery("select g from GameEntity as g, TourneyEntity as t"
                         + " where g.tour.tourney.id=? and t.id=? and g.tour.num=t.currentTour"
@@ -67,7 +88,7 @@ public class GameDAOImpl extends AbstractDAOImpl<GameEntity, Integer> implements
         else return null;
     }
 
-    public List<GameEntity> findByTourney(TourneyEntity tourney) {
+    public List<GameEntity> findCurrentByTourney(TourneyEntity tourney) {
         List games = getSession()
                 .createQuery("from GameEntity where tour.tourney=? and tour.num=?")
                 .setParameter(0, tourney)

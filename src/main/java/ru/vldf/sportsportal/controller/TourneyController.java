@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import ru.vldf.sportsportal.dto.common.UserDTO;
 import ru.vldf.sportsportal.dto.tourney.CompositionStatisticDTO;
 import ru.vldf.sportsportal.dto.tourney.GameDTO;
+import ru.vldf.sportsportal.dto.tourney.TourDTO;
 import ru.vldf.sportsportal.dto.tourney.TourneyDTO;
 import ru.vldf.sportsportal.service.AuthService;
 import ru.vldf.sportsportal.service.TourneyService;
@@ -37,17 +38,26 @@ public class TourneyController {
 
     @GetMapping(value = {"/tourney"})
     public String toCoverPage(ModelMap map) {
-//        return "tourney/cover";
-        return "redirect:/tourney3/score"; //TODO: wtf
+        return "redirect:/tourney3"; //TODO: wtf
     }
 
-    @GetMapping(value = {"/tourney{id}/score"})
-    public String toTourneyPage(@PathVariable("id") int id, ModelMap map) {
-        TourneyDTO tourney = tourneyService.getTourney(id);
+    @GetMapping(value = {"/tourney{tourneyID}"})
+    public String toTourneyPage(@PathVariable("tourneyID") int tourneyID) {
+        TourneyDTO tourney = tourneyService.getTourney(tourneyID);
+        Integer tourID = tourneyService.getTourList(tourneyID).get(0).getId();
+        return "redirect:/tourney{tourneyID}/tour" + tourID;
+    }
+
+    @GetMapping(value = {"/tourney{tourneyID}/tour{tourID}"})
+    public String toTourneyPage(@PathVariable("tourneyID") int tourneyID, @PathVariable("tourID") int tourID, ModelMap map) {
+        TourneyDTO tourney = tourneyService.getTourney(tourneyID);
         map.addAttribute("tourneyCur", tourney);
         map.addAttribute("tourneyList", tourneyService.getTourneyList());
+        map.addAttribute("tourList", tourneyService.getTourList(tourneyID));
 
-        List<GameDTO> gameList = tourneyService.getGameList(tourney);
+        TourDTO tour = tourneyService.getTour(tourID);
+
+        List<GameDTO> gameList = tourneyService.getGameList(tour);
         map.addAttribute("gameList", gameList);
 
         List<Integer[]> matches = tourneyService.getResults(gameList);

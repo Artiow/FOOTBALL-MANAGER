@@ -280,7 +280,7 @@ public class AdminService {
 
         @Transactional(readOnly = true)
         public List<GameDTO> getGames(TourneyDTO tourney) {
-            List<GameEntity> entityList = gameDAO.findByTourney(tourney.getId());
+            List<GameEntity> entityList = gameDAO.findCurrentByTourney(tourney.getId());
             if (entityList == null) return null;
 
             List<GameDTO> dtoList = new ArrayList<GameDTO>();

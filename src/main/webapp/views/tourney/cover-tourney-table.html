@@ -68,7 +68,7 @@
             <div class="col-md-5 col-md-offset-1">
                 <nav style="margin-top: 50px" class="navbar navbar-default">
                     <h3 style="margin-left: 15px" th:text="${tourneyCur.name}">NAME</h3>
-                    <a style="margin-left: 10px" class="btn btn-default navbar-btn" th:href="${'/tourney' + tourneyCur.id + '/score'}">К результатам</a>
+                    <a style="margin-left: 10px" class="btn btn-default navbar-btn" th:href="${'/tourney' + tourneyCur.id}">К результатам</a>
                 </nav>
                 <table class="table" th:if="${statList != null}">
                     <tr class="active">

@@ -3,16 +3,11 @@ package ru.vldf.sportsportal.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.vldf.sportsportal.dao.generic.definite.tourney.CompositionStatisticDAO;
-import ru.vldf.sportsportal.dao.generic.definite.tourney.GameDAO;
-import ru.vldf.sportsportal.dao.generic.definite.tourney.ResultTeamDAO;
-import ru.vldf.sportsportal.dao.generic.definite.tourney.TourneyDAO;
-import ru.vldf.sportsportal.domain.tourney.CompositionStatisticEntity;
-import ru.vldf.sportsportal.domain.tourney.GameEntity;
-import ru.vldf.sportsportal.domain.tourney.ResultTeamEntity;
-import ru.vldf.sportsportal.domain.tourney.TourneyEntity;
+import ru.vldf.sportsportal.dao.generic.definite.tourney.*;
+import ru.vldf.sportsportal.domain.tourney.*;
 import ru.vldf.sportsportal.dto.tourney.CompositionStatisticDTO;
 import ru.vldf.sportsportal.dto.tourney.GameDTO;
+import ru.vldf.sportsportal.dto.tourney.TourDTO;
 import ru.vldf.sportsportal.dto.tourney.TourneyDTO;
 
 import java.util.ArrayList;
@@ -24,7 +19,13 @@ public class TourneyService {
     private CompositionStatisticDAO compositionStatisticDAO;
     private ResultTeamDAO resultTeamDAO;
     private TourneyDAO tourneyDAO;
+    private TourDAO tourDAO;
     private GameDAO gameDAO;
+
+    @Autowired
+    public void setCompositionStatisticDAO(CompositionStatisticDAO compositionStatisticDAO) {
+        this.compositionStatisticDAO = compositionStatisticDAO;
+    }
 
     @Autowired
     public void setResultTeamDAO(ResultTeamDAO resultTeamDAO) {
@@ -37,13 +38,13 @@ public class TourneyService {
     }
 
     @Autowired
-    public void setGameDAO(GameDAO gameDAO) {
-        this.gameDAO = gameDAO;
+    public void setTourDAO(TourDAO tourDAO) {
+        this.tourDAO = tourDAO;
     }
 
     @Autowired
-    public void setCompositionStatisticDAO(CompositionStatisticDAO compositionStatisticDAO) {
-        this.compositionStatisticDAO = compositionStatisticDAO;
+    public void setGameDAO(GameDAO gameDAO) {
+        this.gameDAO = gameDAO;
     }
 
 
@@ -58,19 +59,36 @@ public class TourneyService {
     }
 
     @Transactional(readOnly = true)
+    public List<TourDTO> getTourList(int tourneyID) {
+        List<TourEntity> entityList = tourDAO.findByTourney(tourneyID);
+        if (entityList == null) return null;
+
+        List<TourDTO> dtoList = new ArrayList<TourDTO>();
+        for (TourEntity entity: entityList) dtoList.add(new TourDTO(entity));
+        return dtoList;
+    }
+
+    @Transactional(readOnly = true)
     public TourneyDTO getTourney(Integer id) {
         return new TourneyDTO(tourneyDAO.findByID(id));
     }
 
     @Transactional(readOnly = true)
-    public List<GameDTO> getGameList(TourneyDTO tourneyDTO) {
-        List<GameEntity> entityList = gameDAO.findByTourney(tourneyDTO.getId());
+    public TourDTO getTour(int id) {
+        return new TourDTO(tourDAO.findByID(id));
+    }
+
+
+    @Transactional(readOnly = true)
+    public List<GameDTO> getGameList(TourDTO tourDTO) {
+        List<GameEntity> entityList = gameDAO.findByTour(tourDTO.getId());
 
         if (entityList == null) return null;
         List<GameDTO> dtoList = new ArrayList<GameDTO>();
         for (GameEntity entity: entityList) dtoList.add(new GameDTO(entity));
         return dtoList;
     }
+
 
     @Transactional(readOnly = true)
     public List<Integer[]> getResults(List<GameDTO> gameDTOList) {
@@ -99,5 +117,4 @@ public class TourneyService {
         for (CompositionStatisticEntity entity: entityList) dtoList.add(new CompositionStatisticDTO(entity));
         return dtoList;
     }
-
 }
