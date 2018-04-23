@@ -124,8 +124,8 @@ public class UserService {
         }
 
         @Transactional(readOnly = true)
-        public GameDTO getRival(int compositionID) {
-            GameEntity entity = gameDAO.findByRivalID(compositionID);
+        public GameDTO getRival(int compositionID, int tourNum) {
+            GameEntity entity = gameDAO.findByRivalID(compositionID, tourNum);
             if (entity != null) return new GameDTO(entity);
             else return null;
         }

@@ -383,7 +383,7 @@ public class UserController {
                 timegrid[i] = ("" + chars[i]);
             }
 
-            GameDTO gameDTO = userTourneyService.getRival(id);
+            GameDTO gameDTO = userTourneyService.getRival(id, compositionDTO.getTourney().getNextTour());
             CompositionDTO rivalDTO = null;
             String[] rivalgrid = null;
             if (gameDTO != null) {

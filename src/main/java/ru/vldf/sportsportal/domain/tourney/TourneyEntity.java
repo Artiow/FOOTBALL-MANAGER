@@ -10,7 +10,8 @@ import java.util.Collection;
 public class TourneyEntity {
     private Integer id;
     private String name;
-    private Integer currentTour = 1;
+    private Integer currentTour = 0;
+    private Integer nextTour = 1;
 
     private TourneyStatusEntity status;
 
@@ -58,6 +59,16 @@ public class TourneyEntity {
 
     public void setCurrentTour(Integer currentTour) {
         this.currentTour = currentTour;
+    }
+
+    @Basic
+    @Column(name = "next_tour", nullable = false)
+    public Integer getNextTour() {
+        return nextTour;
+    }
+
+    public void setNextTour(Integer nextTour) {
+        this.nextTour = nextTour;
     }
 
 //    ==================================================================================

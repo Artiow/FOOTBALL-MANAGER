@@ -28,11 +28,12 @@ public class GameDAOImpl extends AbstractDAOImpl<GameEntity, Integer> implements
         return super.get(id);
     }
 
-    public GameEntity findByRivalID(Integer compositionID) {
+    public GameEntity findByRivalID(Integer compositionID, Integer tourNum) {
         List games = getSession()
-                .createQuery("from GameEntity where red.id=? or blue.id=?" //TODO: tour?
-                ).setParameter(0, compositionID)
+                .createQuery("from GameEntity where tour.num=? and (red.id=? or blue.id=?)")
+                .setParameter(0, tourNum)
                 .setParameter(1, compositionID)
+                .setParameter(2, compositionID)
                 .list();
 
         if ((games != null) && (games.size() > 0)) return (GameEntity) games.get(0);
@@ -41,7 +42,7 @@ public class GameDAOImpl extends AbstractDAOImpl<GameEntity, Integer> implements
 
     public GameEntity findByRivalsID(Integer r1ID, Integer r2ID) {
         List games = getSession()
-                .createQuery("from GameEntity where (red.id=? and blue.id=?) or (red.id=? and blue.id=?)") //TODO: tour?
+                .createQuery("from GameEntity where (red.id=? and blue.id=?) or (red.id=? and blue.id=?)")
                 .setParameter(0, r1ID)
                 .setParameter(1, r2ID)
                 .setParameter(0, r2ID)
@@ -93,6 +94,29 @@ public class GameDAOImpl extends AbstractDAOImpl<GameEntity, Integer> implements
                 .createQuery("from GameEntity where tour.tourney=? and tour.num=?")
                 .setParameter(0, tourney)
                 .setParameter(1, tourney.getCurrentTour())
+                .list();
+
+        if ((games != null) && (games.size() > 0)) return (List<GameEntity>) games;
+        else return null;
+    }
+
+    public List<GameEntity> findNextByTourney(Integer id) {
+        List games = getSession()
+                .createQuery("select g from GameEntity as g, TourneyEntity as t"
+                        + " where g.tour.tourney.id=? and t.id=? and g.tour.num=t.nextTour"
+                ).setParameter(0, id)
+                .setParameter(1, id)
+                .list();
+
+        if ((games != null) && (games.size() > 0)) return (List<GameEntity>) games;
+        else return null;
+    }
+
+    public List<GameEntity> findNextByTourney(TourneyEntity tourney) {
+        List games = getSession()
+                .createQuery("from GameEntity where tour.tourney=? and tour.num=?")
+                .setParameter(0, tourney)
+                .setParameter(1, tourney.getNextTour())
                 .list();
 
         if ((games != null) && (games.size() > 0)) return (List<GameEntity>) games;

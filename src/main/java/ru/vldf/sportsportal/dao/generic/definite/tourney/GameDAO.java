@@ -15,7 +15,7 @@ public interface GameDAO {
 
     GameEntity findByID(Integer id);
 
-    GameEntity findByRivalID(Integer compositionID);
+    GameEntity findByRivalID(Integer compositionID, Integer tourNum);
 
     GameEntity findByRivalsID(Integer r1ID, Integer r2ID);
 
@@ -28,6 +28,10 @@ public interface GameDAO {
     List<GameEntity> findCurrentByTourney(Integer id);
 
     List<GameEntity> findCurrentByTourney(TourneyEntity tourney);
+
+    List<GameEntity> findNextByTourney(Integer id);
+
+    List<GameEntity> findNextByTourney(TourneyEntity tourney);
 
 //    ==================================================================================
 //    === UPDATE
