@@ -1,5 +1,6 @@
 package ru.vldf.sportsportal.domain.tourney;
 
+import ru.vldf.sportsportal.domain.lease.PlaygroundEntity;
 import ru.vldf.sportsportal.dto.tourney.CompositionDTO;
 
 import javax.persistence.*;
@@ -18,6 +19,8 @@ public class CompositionEntity {
     private CompositionStatusEntity status;
 
     private CompositionStatisticEntity statistic;
+
+    private PlaygroundEntity playground;
 
     private Collection<CompositionMembershipEntity> memberships;
 
@@ -98,8 +101,18 @@ public class CompositionEntity {
         this.statistic = statistic;
     }
 
-    //    ==================================================================================
+//    ==================================================================================
 //    === MANY-TO-ONE REFERENCES
+
+    @ManyToOne
+    @JoinColumn(name = "playground_id", referencedColumnName = "id", nullable = true)
+    public PlaygroundEntity getPlayground() {
+        return playground;
+    }
+
+    public void setPlayground(PlaygroundEntity playground) {
+        this.playground = playground;
+    }
 
     @ManyToOne
     @JoinColumn(name = "team_id", referencedColumnName = "id", nullable = false)

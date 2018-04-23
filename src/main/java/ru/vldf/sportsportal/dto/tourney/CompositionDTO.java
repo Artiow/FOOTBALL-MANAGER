@@ -1,6 +1,7 @@
 package ru.vldf.sportsportal.dto.tourney;
 
 import ru.vldf.sportsportal.domain.tourney.CompositionEntity;
+import ru.vldf.sportsportal.dto.lease.PlaygroundDTO;
 
 public class CompositionDTO {
     private Integer id;
@@ -11,6 +12,8 @@ public class CompositionDTO {
     private TeamDTO team;
     private TourneyDTO tourney;
     private CompositionStatusDTO status;
+
+    private PlaygroundDTO playground;
 
     public CompositionDTO() {
 
@@ -25,6 +28,8 @@ public class CompositionDTO {
         if (composition.getTeam() != null) team = new TeamDTO(composition.getTeam());
         if (composition.getTourney() != null) tourney = new TourneyDTO(composition.getTourney());
         if (composition.getStatus() != null) status = new CompositionStatusDTO(composition.getStatus());
+
+        if (composition.getPlayground() != null) playground = new PlaygroundDTO(composition.getPlayground());
     }
 
     public Integer getId() {
@@ -81,6 +86,14 @@ public class CompositionDTO {
 
     public void setStatus(CompositionStatusDTO status) {
         this.status = status;
+    }
+
+    public PlaygroundDTO getPlayground() {
+        return playground;
+    }
+
+    public void setPlayground(PlaygroundDTO playground) {
+        this.playground = playground;
     }
 
     @Override
