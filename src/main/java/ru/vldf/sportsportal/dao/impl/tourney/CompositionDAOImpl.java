@@ -3,6 +3,7 @@ package ru.vldf.sportsportal.dao.impl.tourney;
 import org.springframework.stereotype.Repository;
 import ru.vldf.sportsportal.dao.generic.abstrct.AbstractDAOImpl;
 import ru.vldf.sportsportal.dao.generic.definite.tourney.CompositionDAO;
+import ru.vldf.sportsportal.domain.lease.PlaygroundEntity;
 import ru.vldf.sportsportal.domain.tourney.CompositionEntity;
 import ru.vldf.sportsportal.domain.tourney.CompositionStatusEntity;
 import ru.vldf.sportsportal.domain.tourney.TeamEntity;
@@ -79,6 +80,14 @@ public class CompositionDAOImpl extends AbstractDAOImpl<CompositionEntity, Integ
         return getSession()
                 .createQuery("update CompositionEntity set status=? where id=?")
                 .setParameter(0, status)
+                .setParameter(1, id)
+                .executeUpdate();
+    }
+
+    public Integer updatePlaygroundByID(Integer id, PlaygroundEntity playground) {
+        return getSession()
+                .createQuery("update CompositionEntity set playground=? where id=?")
+                .setParameter(0, playground)
                 .setParameter(1, id)
                 .executeUpdate();
     }

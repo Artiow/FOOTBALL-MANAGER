@@ -430,8 +430,8 @@ public class UserController {
         }
 
         @PostMapping(value = {"/pp/tourney/composition{id}/pgconfirm"})
-        public String confirmPlayground(@PathVariable("id") int id, @RequestParam("pgIDs") Integer pgID) {
-            int k = pgID;
+        public String confirmPlayground(@PathVariable("id") int id, @RequestParam("pgID") Integer pgID) {
+            userTourneyService.confirmPlayground(id, pgID);
             return "redirect:/pp/tourney/composition{id}";
         }
 

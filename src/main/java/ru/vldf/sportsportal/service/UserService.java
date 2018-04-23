@@ -3,8 +3,10 @@ package ru.vldf.sportsportal.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.vldf.sportsportal.dao.generic.definite.lease.PlaygroundDAO;
 import ru.vldf.sportsportal.dao.generic.definite.tourney.*;
 import ru.vldf.sportsportal.dao.generic.definite.common.UserDAO;
+import ru.vldf.sportsportal.domain.lease.PlaygroundEntity;
 import ru.vldf.sportsportal.dto.tourney.CompositionDTO;
 import ru.vldf.sportsportal.dto.tourney.TeamDTO;
 import ru.vldf.sportsportal.dto.tourney.PlayerDTO;
@@ -200,5 +202,18 @@ public class UserService {
             compositionDAO.updateStatusByID(compositionID, compositionStatusDAO.findByCode(COMPOSITION_UNCONFIRMED_CODE));
         }
 
+
+        private PlaygroundDAO playgroundDAO;
+
+        @Autowired
+        public void setPlaygroundDAO(PlaygroundDAO playgroundDAO) {
+            this.playgroundDAO = playgroundDAO;
+        }
+
+        @Transactional
+        public void confirmPlayground(int compositionID, Integer playgroundID) {
+            PlaygroundEntity playground = playgroundDAO.findByID(playgroundID);
+            compositionDAO.updatePlaygroundByID(compositionID, playground);
+        }
     }
 }

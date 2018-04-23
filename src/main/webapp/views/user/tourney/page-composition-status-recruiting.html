@@ -103,16 +103,17 @@
                 <form class="form-inline" role="form" th:action="${'/pp/tourney/composition' + compositionDTO.id + '/pgconfirm'}" method="post">
                     <div class="form-group">
                         <h4><label style="font-weight: normal" for="selectPlayground">Площадки:</label></h4>
-                        <select id="selectPlayground" class="form-control">
-                            <option name="pgIDs" th:value="${null}">Мне все равно</option>
-                            <option name="pgIDs" th:each="playgroundItem: ${playgroundList}" th:value="${playgroundItem.id}" th:text="${playgroundItem.name}">PLAYGROUND</option>
+                        <select name="pgID" id="selectPlayground" class="form-control">
+                            <option th:value="${null}" th:if="${compositionDTO.playground != null}" disabled="disabled" selected="selected" th:text="${compositionDTO.playground.name}">SELECTED</option>
+                            <option th:value="${null}">Мне все равно</option>
+                            <option th:each="playgroundItem: ${playgroundList}" th:value="${playgroundItem.id}" th:text="${playgroundItem.name}">PLAYGROUND</option>
                         </select>
                         <button type="submit" class="btn btn-default">Подтвердить</button>
                     </div>
                 </form>
             </div>
         </div>
-        <div th:if="${(compositionDTO.tourney.status.code == 'TOURNEY_FORMED') and (rivalDTO != null)}" class="row">
+        <div style="margin-top: 20px" th:if="${(compositionDTO.tourney.status.code == 'TOURNEY_FORMED') and (rivalDTO != null)}" class="row">
             <div class="col-md-10 col-md-offset-1">
                 <h4 th:text="'Выбор времени соперника ' + ${rivalDTO.name} + ':'">Выбор времени соперника NULL:</h4>
             </div>
@@ -122,6 +123,10 @@
                     <div class="btn btn-warning" th:if="${char2 == 'C'}" th:utext="${(iter2.index + 9) + ':00'}">X:00</div>
                     <div class="btn btn-success" th:if="${char2 == 'Y'}" th:utext="${(iter2.index + 9) + ':00'}">X:00</div>
                 </div>
+            </div>
+            <div class="col-md-10 col-md-offset-1">
+                <h4 th:if="${rivalDTO.playground != null}" th:text="'Площадка: ' + ${rivalDTO.playground.name}">Площадка: NULL</h4>
+                <h4 th:unless="${rivalDTO.playground != null}">Площадка не важна</h4>
             </div>
         </div>
         <div style="margin-top: 10px; margin-bottom: 20px" class="row">
