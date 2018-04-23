@@ -57,8 +57,10 @@ public class GameDAOImpl extends AbstractDAOImpl<GameEntity, Integer> implements
 
     public List<GameEntity> findByTourney(Integer id) {
         List games = getSession()
-                .createQuery("from GameEntity where tour.tourney.id=?") //TODO: tour?
-                .setParameter(0, id)
+                .createQuery("select g from GameEntity as g, TourneyEntity as t"
+                        + " where g.tour.tourney.id=? and t.id=? and g.tour.num=t.currentTour"
+                ).setParameter(0, id)
+                .setParameter(1, id)
                 .list();
 
         if ((games != null) && (games.size() > 0)) return (List<GameEntity>) games;
@@ -67,8 +69,9 @@ public class GameDAOImpl extends AbstractDAOImpl<GameEntity, Integer> implements
 
     public List<GameEntity> findByTourney(TourneyEntity tourney) {
         List games = getSession()
-                .createQuery("from GameEntity where tour.tourney=?") //TODO: tour?
+                .createQuery("from GameEntity where tour.tourney=? and tour.num=?")
                 .setParameter(0, tourney)
+                .setParameter(1, tourney.getCurrentTour())
                 .list();
 
         if ((games != null) && (games.size() > 0)) return (List<GameEntity>) games;

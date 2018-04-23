@@ -28,6 +28,7 @@ public class TourEntity {
 
     @Id
     @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer getId() {
         return id;
     }
@@ -38,7 +39,6 @@ public class TourEntity {
 
     @Basic
     @Column(name = "num", nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer getNum() {
         return num;
     }

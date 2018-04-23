@@ -6,7 +6,7 @@ import javax.persistence.*;
 @Table(name = "game", schema = "tourney", catalog = "sportsportal")
 public class GameEntity {
     private Integer id;
-    private String timegrid;
+    private String timegrid = "CCCCCCCCCC";
 
     private CompositionEntity red;
     private CompositionEntity blue;
