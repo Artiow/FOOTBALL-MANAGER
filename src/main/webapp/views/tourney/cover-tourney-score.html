@@ -53,15 +53,23 @@
 <main style="min-height: 600px" class="main-tourneypage">
     <div class="container">
         <div class="row">
-            <div style="margin-top: 25px; margin-bottom: 50px" class="col-md-3 col-md-offset-1">
-                <h3>Расписание</h3>
+            <div style="margin-top: 25px; margin-bottom: 50px" class="col-md-3">
+                <h3>Турнир:</h3>
                 <table class="table table-hover">
                     <tr th:each="tourneyItem: ${tourneyList}" th:object="${tourneyItem}">
                         <td>
                             <a th:href="*{'/tourney' + id + '/score'}">
-                                <p th:text="*{name}">NAME</p>
+                                <p th:text="*{name}">TOURNEY</p>
                             </a>
                         </td>
+                    </tr>
+                </table>
+            </div>
+            <div style="margin-top: 25px; margin-bottom: 50px" class="col-md-2">
+                <h3>Тур:</h3>
+                <table class="table table-hover">
+                    <tr>
+                        <td><a><p th:text="*{name}">TOUR</p></a></td>
                     </tr>
                 </table>
             </div>
@@ -77,8 +85,8 @@
                     </tr>
                     <tr th:each="gameItem,iter: ${gameList}" th:object="${gameItem}">
                         <td style="padding: 0 10px 0 10px"><h5><span th:text="*{red.name}">RED TEAM</span> - <span th:text="*{blue.name}">BLUE TEAM</span></h5></td>
-                        <td style="padding: 0 10px 0 10px" th:if="${(matches.get(iter.index)[0] != null) and (matches.get(iter.index)[1] != null)}"><h5><span th:text="${matches.get(iter.index)[0]}">N/A</span> - <span th:text="${matches.get(iter.index)[1]}">N/A</span></h5></td>
-                        <td style="padding: 0 10px 0 10px" th:unless="${(matches.get(iter.index)[0] != null) and (matches.get(iter.index)[1] != null)}"><h5>N/A</h5></td>
+                        <td style="padding: 0 10px 0 10px" th:if="${(matchList.get(iter.index)[0] != null) and (matchList.get(iter.index)[1] != null)}"><h5><span th:text="${matchList.get(iter.index)[0]}">N/A</span> - <span th:text="${matchList.get(iter.index)[1]}">N/A</span></h5></td>
+                        <td style="padding: 0 10px 0 10px" th:unless="${(matchList.get(iter.index)[0] != null) and (matchList.get(iter.index)[1] != null)}"><h5>N/A</h5></td>
                     </tr>
                 </table>
             </div>

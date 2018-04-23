@@ -51,7 +51,7 @@ public class TourneyController {
         map.addAttribute("gameList", gameList);
 
         List<Integer[]> matches = tourneyService.getResults(gameList);
-        map.addAttribute("matches", matches);
+        map.addAttribute("matchList", matches);
 
         return "tourney/cover-tourney-score";
     }
