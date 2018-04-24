@@ -100,7 +100,7 @@
                 </div>
             </div>
             <div class="col-md-3 col-md-offset-1">
-                <h4><label style="font-weight: normal" for="selectPlayground">Площадки:</label></h4>
+                <h4><label style="font-weight: normal" for="selectPlayground">Выбор дня:</label></h4> <!--TODO: tmp solution-->
                 <form class="form-inline" role="form" th:action="${'/pp/tourney/composition' + compositionDTO.id + '/pgconfirm'}" method="post">
                     <div class="form-group">
                         <select name="pgID" id="selectPlayground" class="form-control">
@@ -108,7 +108,7 @@
                             <option th:value="${null}">Мне все равно</option>
                             <option th:each="playgroundItem: ${playgroundList}" th:value="${playgroundItem.id}" th:text="${playgroundItem.name}">PLAYGROUND</option>
                         </select>
-                        <button style="margin-top: 5px" type="submit" class="btn btn-default">Подтвердить</button>
+                        <button type="submit" class="btn btn-default">Подтвердить</button>
                     </div>
                 </form>
             </div>
@@ -125,8 +125,8 @@
                 </div>
             </div>
             <div class="col-md-10 col-md-offset-1">
-                <h4 th:if="${rivalDTO.playground != null}" th:text="'Площадка: ' + ${rivalDTO.playground.name}">Площадка: NULL</h4>
-                <h4 th:unless="${rivalDTO.playground != null}">Площадка не важна</h4>
+                <h4 th:if="${rivalDTO.playground != null}" th:text="'Площадка: ' + ${rivalDTO.playground.name}">День: NULL</h4> <!--TODO: tmp solution-->
+                <h4 th:unless="${rivalDTO.playground != null}">День не важен</h4> <!--TODO: tmp solution-->
             </div>
         </div>
         <div style="margin-top: 10px; margin-bottom: 20px" class="row">

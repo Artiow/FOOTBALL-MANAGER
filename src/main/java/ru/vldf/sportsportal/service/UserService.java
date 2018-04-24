@@ -41,11 +41,11 @@ public class UserService {
 
         private TeamDAO teamDAO;
         private TeamStatusDAO teamStatusDAO;
+        private CompositionDAO compositionDAO;
+        private CompositionMembershipDAO compositionMembershipDAO;
+
         private GameDAO gameDAO;
         private PlayerDAO playerDAO;
-        private CompositionDAO compositionDAO;
-        private CompositionStatusDAO compositionStatusDAO;
-        private CompositionMembershipDAO compositionMembershipDAO;
 
         @Autowired
         public void setTeamDAO(TeamDAO teamDAO) {
@@ -70,11 +70,6 @@ public class UserService {
         @Autowired
         public void setCompositionDAO(CompositionDAO compositionDAO) {
             this.compositionDAO = compositionDAO;
-        }
-
-        @Autowired
-        public void setCompositionStatusDAO(CompositionStatusDAO compositionStatusDAO) {
-            this.compositionStatusDAO = compositionStatusDAO;
         }
 
         @Autowired
@@ -194,12 +189,6 @@ public class UserService {
         @Transactional
         public void deletePlayerFromComposition(Integer compositionID, Integer playerID) {
             compositionMembershipDAO.deleteByMembership(playerID, compositionID);
-        }
-
-        @Transactional
-        public void confirmComposition(Integer compositionID) {
-            String COMPOSITION_UNCONFIRMED_CODE = "COMPOSITION_UNCONFIRMED";
-            compositionDAO.updateStatusByID(compositionID, compositionStatusDAO.findByCode(COMPOSITION_UNCONFIRMED_CODE));
         }
 
 

@@ -16,11 +16,10 @@ public class CompositionEntity {
 
     private TeamEntity team;
     private TourneyEntity tourney;
-    private CompositionStatusEntity status;
-
-    private CompositionStatisticEntity statistic;
 
     private PlaygroundEntity playground;
+
+    private CompositionStatisticEntity statistic;
 
     private Collection<CompositionMembershipEntity> memberships;
 
@@ -28,7 +27,7 @@ public class CompositionEntity {
 
     }
 
-    public CompositionEntity(CompositionDTO composition, TeamEntity team, TourneyEntity tourney, CompositionStatusEntity status) {
+    public CompositionEntity(CompositionDTO composition, TeamEntity team, TourneyEntity tourney) {
         id = composition.getId();
         name = composition.getName();
         shiftbalance = composition.getShiftBalance();
@@ -36,7 +35,6 @@ public class CompositionEntity {
 
         this.team = team;
         this.tourney = tourney;
-        this.status = status;
     }
 
     @Id
@@ -81,16 +79,7 @@ public class CompositionEntity {
     }
 
 //    ==================================================================================
-//    === ONE-TO-MANY REFERENCES
-
-    @OneToMany(mappedBy = "composition")
-    public Collection<CompositionMembershipEntity> getMemberships() {
-        return memberships;
-    }
-
-    public void setMemberships(Collection<CompositionMembershipEntity> memberships) {
-        this.memberships = memberships;
-    }
+//    === ONE-TO-ONE REFERENCES
 
     @OneToOne(mappedBy = "composition")
     public CompositionStatisticEntity getStatistic() {
@@ -102,17 +91,19 @@ public class CompositionEntity {
     }
 
 //    ==================================================================================
+//    === ONE-TO-MANY REFERENCES
+
+    @OneToMany(mappedBy = "composition")
+    public Collection<CompositionMembershipEntity> getMemberships() {
+        return memberships;
+    }
+
+    public void setMemberships(Collection<CompositionMembershipEntity> memberships) {
+        this.memberships = memberships;
+    }
+
+//    ==================================================================================
 //    === MANY-TO-ONE REFERENCES
-
-    @ManyToOne
-    @JoinColumn(name = "playground_id", referencedColumnName = "id", nullable = true)
-    public PlaygroundEntity getPlayground() {
-        return playground;
-    }
-
-    public void setPlayground(PlaygroundEntity playground) {
-        this.playground = playground;
-    }
 
     @ManyToOne
     @JoinColumn(name = "team_id", referencedColumnName = "id", nullable = false)
@@ -135,13 +126,13 @@ public class CompositionEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "status_id", referencedColumnName = "id", nullable = false)
-    public CompositionStatusEntity getStatus() {
-        return status;
+    @JoinColumn(name = "playground_id", referencedColumnName = "id", nullable = true)
+    public PlaygroundEntity getPlayground() {
+        return playground;
     }
 
-    public void setStatus(CompositionStatusEntity status) {
-        this.status = status;
+    public void setPlayground(PlaygroundEntity playground) {
+        this.playground = playground;
     }
 
 //    ==================================================================================

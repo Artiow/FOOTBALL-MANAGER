@@ -1,6 +1,10 @@
 package ru.vldf.sportsportal.dto.tourney;
 
+import ru.vldf.sportsportal.domain.lease.PlaygroundEntity;
 import ru.vldf.sportsportal.domain.tourney.CompositionEntity;
+import ru.vldf.sportsportal.domain.tourney.TeamEntity;
+import ru.vldf.sportsportal.domain.tourney.TourEntity;
+import ru.vldf.sportsportal.domain.tourney.TourneyEntity;
 import ru.vldf.sportsportal.dto.lease.PlaygroundDTO;
 
 public class CompositionDTO {
@@ -11,7 +15,6 @@ public class CompositionDTO {
 
     private TeamDTO team;
     private TourneyDTO tourney;
-    private CompositionStatusDTO status;
 
     private PlaygroundDTO playground;
 
@@ -25,11 +28,13 @@ public class CompositionDTO {
         shiftbalance = composition.getShiftBalance();
         timegrid = composition.getTimegrid();
 
-        if (composition.getTeam() != null) team = new TeamDTO(composition.getTeam());
-        if (composition.getTourney() != null) tourney = new TourneyDTO(composition.getTourney());
-        if (composition.getStatus() != null) status = new CompositionStatusDTO(composition.getStatus());
+        TeamEntity teamEntity = composition.getTeam();
+        if (teamEntity != null) team = new TeamDTO(teamEntity);
+        TourneyEntity tourneyEntity = composition.getTourney();
+        if (tourneyEntity != null) tourney = new TourneyDTO(tourneyEntity);
 
-        if (composition.getPlayground() != null) playground = new PlaygroundDTO(composition.getPlayground());
+        PlaygroundEntity playgroundEntity = composition.getPlayground();
+        if (playgroundEntity != null) playground = new PlaygroundDTO(playgroundEntity);
     }
 
     public Integer getId() {
@@ -78,14 +83,6 @@ public class CompositionDTO {
 
     public void setTourney(TourneyDTO tourney) {
         this.tourney = tourney;
-    }
-
-    public CompositionStatusDTO getStatus() {
-        return status;
-    }
-
-    public void setStatus(CompositionStatusDTO status) {
-        this.status = status;
     }
 
     public PlaygroundDTO getPlayground() {

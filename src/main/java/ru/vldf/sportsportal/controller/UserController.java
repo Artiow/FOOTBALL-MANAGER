@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-import ru.vldf.sportsportal.domain.tourney.ResultTeamEntity;
 import ru.vldf.sportsportal.dto.lease.PlaygroundDTO;
 import ru.vldf.sportsportal.dto.tourney.*;
 import ru.vldf.sportsportal.dto.common.UserDTO;
@@ -366,9 +365,6 @@ public class UserController {
             CompositionDTO compositionDTO = userTourneyService.getComposition(id);
             if (compositionDTO == null) return "redirect:/xxx" + id; //not user's composition
 
-            if (!compositionDTO.getStatus().getCode().equals("COMPOSITION_RECRUITING"))
-                return "redirect:/500"; //TODO: lol wut?
-
             Integer maxSize = 18;
             Integer currentSize;
 
@@ -426,26 +422,13 @@ public class UserController {
 
                     .addAttribute("isFull", !(currentSize < maxSize));
 
-            return "user/tourney/page-composition-status-recruiting";
+            return "user/tourney/page-composition";
         }
 
         @PostMapping(value = {"/pp/tourney/composition{id}/pgconfirm"})
         public String confirmPlayground(@PathVariable("id") int id, @RequestParam("pgID") Integer pgID) {
             userTourneyService.confirmPlayground(id, pgID);
             return "redirect:/pp/tourney/composition{id}";
-        }
-
-        @GetMapping(value = {"/pp/tourney/composition{id}/confirm"})
-        public String confirmComposition(@PathVariable("id") int id) {
-//            TODO: optimize
-            CompositionDTO compositionDTO = userTourneyService.getComposition(id);
-            if (compositionDTO == null) return "redirect:/500"; //not user's composition
-
-//            TODO: that's right, huh?
-            userTourneyService.confirmComposition(compositionDTO.getId());
-
-            Integer teamID = compositionDTO.getTeam().getId();
-            return "redirect:/pp/tourney/team" + teamID;
         }
 
 

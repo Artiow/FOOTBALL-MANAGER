@@ -130,7 +130,7 @@ public class AdminService {
         private TeamDAO teamDAO;
         private TeamStatusDAO teamStatusDAO;
         private CompositionDAO compositionDAO;
-        private CompositionStatusDAO compositionStatusDAO;
+
         private TourneyDAO tourneyDAO;
         private TourneyStatusDAO tourneyStatusDAO;
 
@@ -153,11 +153,6 @@ public class AdminService {
         @Autowired
         public void setCompositionDAO(CompositionDAO compositionDAO) {
             this.compositionDAO = compositionDAO;
-        }
-
-        @Autowired
-        public void setCompositionStatusDAO(CompositionStatusDAO compositionStatusDAO) {
-            this.compositionStatusDAO = compositionStatusDAO;
         }
 
         @Autowired
@@ -412,16 +407,13 @@ public class AdminService {
 //            TODO: upgrade and optimize this!
             TourneyEntity tourney = tourneyDAO.findByID(tourneyID);
 
-            String COMPOSITION_RECRUITING_CODE = "COMPOSITION_RECRUITING";
-            CompositionStatusEntity compositionStatus = compositionStatusDAO.findByCode(COMPOSITION_RECRUITING_CODE);
-
             for (Integer teamID: teamsID) {
                 TeamEntity team = teamDAO.findByID(teamID);
 
                 CompositionDTO compositionDTO = new CompositionDTO();
                 compositionDTO.setName(team.getName());
 
-                compositionDAO.save(new CompositionEntity(compositionDTO, team, tourney, compositionStatus));
+                compositionDAO.save(new CompositionEntity(compositionDTO, team, tourney));
             }
         }
     }

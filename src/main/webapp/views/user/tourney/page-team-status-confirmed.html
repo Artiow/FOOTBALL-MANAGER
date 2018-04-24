@@ -91,26 +91,6 @@
                                 <p th:text="*{tourney.name}">TOURNEY</p>
                             </a>
                         </td>
-                        <td th:if="*{status.code == 'COMPOSITION_RECRUITING'}" class="info">
-                            <a th:href="*{'/pp/tourney/composition' + id}">
-                                <p>ПРИГЛАШЕНИЕ В ТУРНИР</p>
-                            </a>
-                        </td>
-                        <td th:if="*{status.code == 'COMPOSITION_UNCONFIRMED'}" class="warning">
-                            <a th:href="*{'/pp/tourney/composition' + id}">
-                                <p>ОЖИДАЕТ ПОДТВЕРЖДЕНИЯ</p>
-                            </a>
-                        </td>
-                        <td th:if="*{status.code == 'COMPOSITION_CONFIRMED'}" class="success">
-                            <a th:href="*{'/pp/tourney/composition' + id}">
-                                <p>СОСТАВ ПОДТВЕРЖДЕН</p>
-                            </a>
-                        </td>
-                        <td th:if="*{status.code == 'COMPOSITION_REJECTED'}" class="danger">
-                            <a th:href="*{'/pp/tourney/composition' + id}">
-                                <p>СОСТАВ НЕ ПОДТВЕРЖДЕН</p>
-                            </a>
-                        </td>
                     </tr>
                 </table>
             </div>
