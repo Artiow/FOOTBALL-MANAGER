@@ -388,7 +388,10 @@ public class UserController {
                 timegrid[i] = ("" + chars[i]);
             }
 
-            GameDTO gameDTO = userTourneyService.getRival(id, compositionDTO.getTourney().getNextTour());
+            Integer tourNum = compositionDTO.getTourney().getNextTour();
+//            TourDTO tourDTO = userTourneyService.getNextTour(compositionDTO.getTourney(), tourNum);
+
+            GameDTO gameDTO = userTourneyService.getRival(id, tourNum);
             CompositionDTO rivalDTO = null;
             String[] rivalgrid = null;
             if (gameDTO != null) {
@@ -405,6 +408,7 @@ public class UserController {
             map
                     .addAttribute("maxSize", maxSize)
                     .addAttribute("currentSize", currentSize)
+//                    .addAttribute("tourDTO", tourDTO)
 
                     .addAttribute("teamDTO", compositionDTO.getTeam())
                     .addAttribute("compositionDTO", compositionDTO)
@@ -426,7 +430,7 @@ public class UserController {
         }
 
         @PostMapping(value = {"/pp/tourney/composition{id}/pgconfirm"})
-        public String confirmPlayground(@PathVariable("id") int id, @RequestParam("pgID") Integer pgID) {
+        public String confirmPlayground(@PathVariable("id") int id, @RequestParam(value = "pgID", required = false) Integer pgID) {
             userTourneyService.confirmPlayground(id, pgID);
             return "redirect:/pp/tourney/composition{id}";
         }

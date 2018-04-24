@@ -4,17 +4,15 @@ import javax.persistence.*;
 import java.util.Collection;
 
 @Entity
-@Table(name = "result_team", schema = "tourney", catalog = "sportsportal")
-public class ResultTeamEntity {
+@Table(name = "composition_result", schema = "tourney", catalog = "sportsportal")
+public class CompositionResultEntity {
     private Integer id;
     private Integer goal = 0;
 
     private GameEntity game;
     private CompositionEntity composition;
 
-    private Collection<ResultPlayerEntity> results;
-
-    public ResultTeamEntity() {
+    public CompositionResultEntity() {
 
     }
 
@@ -37,18 +35,6 @@ public class ResultTeamEntity {
 
     public void setGoal(Integer goal) {
         this.goal = goal;
-    }
-
-//    ==================================================================================
-//    === ONE-TO-MANY REFERENCES
-
-    @OneToMany(mappedBy = "result")
-    public Collection<ResultPlayerEntity> getResults() {
-        return results;
-    }
-
-    public void setResults(Collection<ResultPlayerEntity> results) {
-        this.results = results;
     }
 
 //    ==================================================================================
@@ -82,7 +68,7 @@ public class ResultTeamEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        ResultTeamEntity that = (ResultTeamEntity) o;
+        CompositionResultEntity that = (CompositionResultEntity) o;
 
         return id != null ? id.equals(that.id) : that.id == null;
     }

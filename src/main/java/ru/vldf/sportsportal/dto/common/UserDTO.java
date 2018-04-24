@@ -1,6 +1,7 @@
 package ru.vldf.sportsportal.dto.common;
 
 import ru.vldf.sportsportal.domain.common.UserEntity;
+import ru.vldf.sportsportal.domain.common.UserRoleEntity;
 
 import java.io.Serializable;
 import java.sql.Date;
@@ -30,10 +31,14 @@ public class UserDTO implements Serializable {
         name = user.getName();
         surname = user.getSurname();
         patronymic = user.getPatronymic();
-        if (user.getBirthday() != null) birthday = ((Date) user.getBirthday().clone()); else birthday = null;
+
+        Date date = user.getBirthday();
+        if (date != null) this.birthday = ((Date) date.clone());
+
         phone = user.getPhone();
 
-        if (user.getRole() != null) role = new UserRoleDTO(user.getRole());
+        UserRoleEntity role = user.getRole();
+        if (role != null) this.role = new UserRoleDTO(role);
     }
 
     public Integer getId() {

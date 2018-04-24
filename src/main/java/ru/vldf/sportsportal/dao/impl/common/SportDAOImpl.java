@@ -25,6 +25,16 @@ public class SportDAOImpl extends AbstractDAOImpl<SportEntity, Integer> implemen
         return super.get(id);
     }
 
+    public SportEntity findByCode(String code) {
+        List roles = getSession()
+                .createQuery("from SportEntity where code=?")
+                .setParameter(0, code)
+                .list();
+
+        if ((roles != null) && (roles.size() == 1)) return (SportEntity) roles.get(0);
+        else return null;
+    }
+
     public List<SportEntity> findAll() {
         return super.list();
     }

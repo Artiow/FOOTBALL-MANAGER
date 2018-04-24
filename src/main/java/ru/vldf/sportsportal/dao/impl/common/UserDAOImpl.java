@@ -51,9 +51,9 @@ public class UserDAOImpl extends AbstractDAOImpl<UserEntity, Integer> implements
         List count = getSession()
                 .createQuery("select count(*) from UserEntity where role.id=?")
                 .setParameter(0, roleID)
-                .list(); //TODO: list?
+                .list();
 
-        if ((count != null) && (count.size() > 0)) return ((Long) count.get(0));
+        if ((count != null) && (count.size() == 1)) return ((Long) count.get(0));
         else return null;
     }
 
@@ -61,9 +61,9 @@ public class UserDAOImpl extends AbstractDAOImpl<UserEntity, Integer> implements
         List count = getSession()
                 .createQuery("select count(*) from UserEntity where role.code=?")
                 .setParameter(0, roleCode)
-                .list(); //TODO: list?
+                .list();
 
-        if ((count != null) && (count.size() > 0)) return ((Long) count.get(0));
+        if ((count != null) && (count.size() == 1)) return ((Long) count.get(0));
         else return null;
     }
 
@@ -73,7 +73,7 @@ public class UserDAOImpl extends AbstractDAOImpl<UserEntity, Integer> implements
                 .setParameter(0, role)
                 .list(); //TODO: list?
 
-        if ((count != null) && (count.size() > 0)) return ((Long) count.get(0));
+        if ((count != null) && (count.size() == 1)) return ((Long) count.get(0));
         else return null;
     }
 
@@ -112,9 +112,9 @@ public class UserDAOImpl extends AbstractDAOImpl<UserEntity, Integer> implements
 
     public Integer updateRoleByID(Integer id, UserRoleEntity role) {
         return getSession()
-                .createQuery("update UserEntity set role=? where id=?")
-                .setParameter(0, role)
-                .setParameter(1, id)
+                .createQuery("update UserEntity set role=:role where id=:id")
+                .setParameter("role", role)
+                .setParameter("id", id)
                 .executeUpdate();
     }
 }

@@ -7,13 +7,10 @@ import ru.vldf.sportsportal.dao.generic.definite.lease.PlaygroundDAO;
 import ru.vldf.sportsportal.dao.generic.definite.tourney.*;
 import ru.vldf.sportsportal.dao.generic.definite.common.UserDAO;
 import ru.vldf.sportsportal.domain.lease.PlaygroundEntity;
-import ru.vldf.sportsportal.dto.tourney.CompositionDTO;
-import ru.vldf.sportsportal.dto.tourney.TeamDTO;
-import ru.vldf.sportsportal.dto.tourney.PlayerDTO;
+import ru.vldf.sportsportal.dto.tourney.*;
 import ru.vldf.sportsportal.dto.common.UserDTO;
 import ru.vldf.sportsportal.domain.tourney.*;
 import ru.vldf.sportsportal.domain.common.UserEntity;
-import ru.vldf.sportsportal.dto.tourney.GameDTO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -206,6 +203,18 @@ public class UserService {
             else playground = null;
 
             compositionDAO.updatePlaygroundByID(compositionID, playground);
+        }
+
+        private TourDAO tourDAO;
+
+        @Autowired
+        public void setTourDAO(TourDAO tourDAO) {
+            this.tourDAO = tourDAO;
+        }
+
+        @Transactional(readOnly = true)
+        public TourDTO getNextTour(TourneyDTO tourneyDTO, Integer tourNum) {
+            return new TourDTO(tourDAO.findByTourney(tourneyDTO.getId(), tourNum));
         }
     }
 }

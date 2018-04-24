@@ -23,8 +23,7 @@ public class UserEntity {
 
     private UserRoleEntity role;
 
-    private PlayerOwnershipEntity playerOwnership;
-
+    private PlayerOwnershipEntity ownership;
     private Collection<TeamEntity> teams;
 
     public UserEntity() {
@@ -39,7 +38,10 @@ public class UserEntity {
         name = user.getName();
         surname = user.getSurname();
         patronymic = user.getPatronymic();
-        if (user.getBirthday() != null) birthday = ((Date) user.getBirthday().clone()); else birthday = null;
+
+        Date date = user.getBirthday();
+        if (date != null) this.birthday = ((Date) date.clone());
+
         phone = user.getPhone();
 
         this.role = role;
@@ -140,13 +142,16 @@ public class UserEntity {
 //    === ONE-TO-ONE REFERENCES
 
     @OneToOne(mappedBy = "user")
-    public PlayerOwnershipEntity getPlayerOwnership() {
-        return playerOwnership;
+    public PlayerOwnershipEntity getOwnership() {
+        return ownership;
     }
 
-    public void setPlayerOwnership(PlayerOwnershipEntity playerOwnership) {
-        this.playerOwnership = playerOwnership;
+    public void setOwnership(PlayerOwnershipEntity ownership) {
+        this.ownership = ownership;
     }
+
+//    ==================================================================================
+//    === ONE-TO-MANY REFERENCES
 
     @OneToMany(mappedBy = "captain")
     public Collection<TeamEntity> getTeams() {
@@ -157,16 +162,11 @@ public class UserEntity {
         this.teams = teams;
     }
 
-
 //    ==================================================================================
 //    === MANY-TO-ONE REFERENCES
 
     @ManyToOne
-    @JoinColumn(
-            name = "role_id",
-            referencedColumnName = "id",
-            nullable = false
-    )
+    @JoinColumn(name = "role_id", referencedColumnName = "id", nullable = false)
     public UserRoleEntity getRole() {
         return role;
     }

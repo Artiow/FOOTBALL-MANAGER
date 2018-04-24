@@ -1,19 +1,19 @@
 package ru.vldf.sportsportal.dto.tourney;
 
-import ru.vldf.sportsportal.domain.tourney.ResultTeamEntity;
+import ru.vldf.sportsportal.domain.tourney.CompositionResultEntity;
 
-public class ResultTeamDTO {
+public class CompositionResultDTO {
     private Integer id;
     private Integer goal;
 
     private GameDTO game;
     private CompositionDTO composition;
 
-    public ResultTeamDTO() {
+    public CompositionResultDTO() {
 
     }
 
-    public ResultTeamDTO(ResultTeamEntity result) {
+    public CompositionResultDTO(CompositionResultEntity result) {
         id = result.getId();
         goal = result.getGoal();
 
@@ -58,7 +58,7 @@ public class ResultTeamDTO {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        ResultTeamDTO that = (ResultTeamDTO) o;
+        CompositionResultDTO that = (CompositionResultDTO) o;
 
         return id != null ? id.equals(that.id) : that.id == null;
     }

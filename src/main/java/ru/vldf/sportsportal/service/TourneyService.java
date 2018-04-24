@@ -17,7 +17,7 @@ import java.util.List;
 public class TourneyService {
 
     private CompositionStatisticDAO compositionStatisticDAO;
-    private ResultTeamDAO resultTeamDAO;
+    private CompositionResultDAO compositionResultDAO;
     private TourneyDAO tourneyDAO;
     private TourDAO tourDAO;
     private GameDAO gameDAO;
@@ -28,8 +28,8 @@ public class TourneyService {
     }
 
     @Autowired
-    public void setResultTeamDAO(ResultTeamDAO resultTeamDAO) {
-        this.resultTeamDAO = resultTeamDAO;
+    public void setCompositionResultDAO(CompositionResultDAO compositionResultDAO) {
+        this.compositionResultDAO = compositionResultDAO;
     }
 
     @Autowired
@@ -96,8 +96,8 @@ public class TourneyService {
         for(GameDTO gameDTO: gameDTOList) {
             Integer[] game = new Integer[2];
 
-            ResultTeamEntity r = resultTeamDAO.findByGameAndComposition(gameDTO.getId(), gameDTO.getRed().getId());
-            ResultTeamEntity b = resultTeamDAO.findByGameAndComposition(gameDTO.getId(), gameDTO.getBlue().getId());
+            CompositionResultEntity r = compositionResultDAO.findByGameAndComposition(gameDTO.getId(), gameDTO.getRed().getId());
+            CompositionResultEntity b = compositionResultDAO.findByGameAndComposition(gameDTO.getId(), gameDTO.getBlue().getId());
 
             if (r != null) game[0] = r.getGoal(); else game[0] = null;
             if (b != null) game[1] = b.getGoal(); else game[1] = null;

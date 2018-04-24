@@ -124,21 +124,21 @@ public class AdminService {
 
     }
 
-
     @Service //TOURNEY
     public class AdminTourneyService {
+
         private TeamDAO teamDAO;
         private TeamStatusDAO teamStatusDAO;
-        private CompositionDAO compositionDAO;
 
         private TourneyDAO tourneyDAO;
         private TourneyStatusDAO tourneyStatusDAO;
 
         private GameDAO gameDAO;
-        private PlayerDAO playerDAO;
 
-        private ResultTeamDAO resultTeamDAO;
-        private ResultPlayerDAO resultPlayerDAO;
+        private CompositionDAO compositionDAO;
+        private CompositionResultDAO compositionResultDAO;
+
+        private PlayerDAO playerDAO;
 
         @Autowired
         public void setTeamDAO(TeamDAO teamDAO) {
@@ -176,13 +176,8 @@ public class AdminService {
         }
 
         @Autowired
-        public void setResultTeamDAO(ResultTeamDAO resultTeamDAO) {
-            this.resultTeamDAO = resultTeamDAO;
-        }
-
-        @Autowired
-        public void setResultPlayerDAO(ResultPlayerDAO resultPlayerDAO) {
-            this.resultPlayerDAO = resultPlayerDAO;
+        public void setCompositionResultDAO(CompositionResultDAO compositionResultDAO) {
+            this.compositionResultDAO = compositionResultDAO;
         }
 
 
@@ -230,8 +225,8 @@ public class AdminService {
 
         @Transactional
         public void createResultGame(GameDTO gameDTO, Integer r, Integer b) {
-            ResultTeamEntity redResult = new ResultTeamEntity();
-            ResultTeamEntity blueResult = new ResultTeamEntity();
+            CompositionResultEntity redResult = new CompositionResultEntity();
+            CompositionResultEntity blueResult = new CompositionResultEntity();
 
             redResult.setGame(gameDAO.findByID(gameDTO.getId()));
             blueResult.setGame(gameDAO.findByID(gameDTO.getId()));
@@ -242,18 +237,13 @@ public class AdminService {
             redResult.setGoal(r);
             blueResult.setGoal(b);
 
-            resultTeamDAO.save(redResult);
-            resultTeamDAO.save(blueResult);
+            compositionResultDAO.save(redResult);
+            compositionResultDAO.save(blueResult);
         }
 
 
         @Transactional(readOnly = true)
-        public ResultTeamDTO getResultTeam(CompositionDTO composition) {
-            return null;
-        }
-
-        @Transactional(readOnly = true)
-        public List<ResultPlayerDTO> getResultPlayerList(ResultTeamDTO team) {
+        public CompositionResultDTO getResultTeam(CompositionDTO composition) {
             return null;
         }
 
