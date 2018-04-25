@@ -62,7 +62,6 @@ public class AdminService {
 
 //    =========================================
 //    TODO: lol wtf dude? add pagination!
-
     @Transactional(readOnly = true)
     public UserDTO getFirstUnconfirmedUser() {
         List<UserEntity> entityList = userDAO.findByRole(ROLE_UNCONFIRMED_CODE);
@@ -70,6 +69,7 @@ public class AdminService {
 
         return new UserDTO(entityList.get(0));
     }
+//    =========================================
 
     @Transactional(readOnly = true)
     public UserDTO getUser(Integer id) {

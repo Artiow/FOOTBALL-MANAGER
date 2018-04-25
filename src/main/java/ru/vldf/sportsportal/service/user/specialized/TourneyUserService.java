@@ -19,14 +19,6 @@ import java.util.List;
 @Service
 public class TourneyUserService {
 
-    private AuthService authService;
-
-    @Autowired
-    public void setAuthService(AuthService authService) {
-        this.authService = authService;
-    }
-
-
     private UserDAO userDAO;
 
     private TeamDAO teamDAO;
@@ -35,8 +27,10 @@ public class TourneyUserService {
     private CompositionDAO compositionDAO;
     private CompositionMembershipDAO compositionMembershipDAO;
 
+    private TourDAO tourDAO;
     private GameDAO gameDAO;
     private PlayerDAO playerDAO;
+    private PlaygroundDAO playgroundDAO;
 
     @Autowired
     public void setUserDAO(UserDAO userDAO) {
@@ -64,6 +58,11 @@ public class TourneyUserService {
     }
 
     @Autowired
+    public void setTourDAO(TourDAO tourDAO) {
+        this.tourDAO = tourDAO;
+    }
+
+    @Autowired
     public void setGameDAO(GameDAO gameDAO) {
         this.gameDAO = gameDAO;
     }
@@ -71,6 +70,19 @@ public class TourneyUserService {
     @Autowired
     public void setPlayerDAO(PlayerDAO playerDAO) {
         this.playerDAO = playerDAO;
+    }
+
+    @Autowired
+    public void setPlaygroundDAO(PlaygroundDAO playgroundDAO) {
+        this.playgroundDAO = playgroundDAO;
+    }
+
+
+    private AuthService authService;
+
+    @Autowired
+    public void setAuthService(AuthService authService) {
+        this.authService = authService;
     }
 
 
@@ -116,8 +128,8 @@ public class TourneyUserService {
 
 
     @Transactional(readOnly = true)
-    public GameDTO getRival(int compositionID, int tourNum) {
-        GameEntity entity = gameDAO.findByRivalID(compositionID, tourNum);
+    public GameDTO getRival(Integer compositionID, Integer tour) {
+        GameEntity entity = gameDAO.findByRivalID(compositionID, tour);
         if (entity != null) return new GameDTO(entity);
         else return null;
     }
@@ -187,13 +199,6 @@ public class TourneyUserService {
     }
 
 
-    private PlaygroundDAO playgroundDAO;
-
-    @Autowired
-    public void setPlaygroundDAO(PlaygroundDAO playgroundDAO) {
-        this.playgroundDAO = playgroundDAO;
-    }
-
     @Transactional
     public void confirmPlayground(int compositionID, Integer playgroundID) {
         PlaygroundEntity playground;
@@ -201,13 +206,6 @@ public class TourneyUserService {
         else playground = null;
 
         compositionDAO.updatePlaygroundByID(compositionID, playground);
-    }
-
-    private TourDAO tourDAO;
-
-    @Autowired
-    public void setTourDAO(TourDAO tourDAO) {
-        this.tourDAO = tourDAO;
     }
 
     @Transactional(readOnly = true)
