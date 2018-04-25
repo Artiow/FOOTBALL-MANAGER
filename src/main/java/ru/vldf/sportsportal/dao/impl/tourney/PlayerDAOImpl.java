@@ -71,11 +71,11 @@ public class PlayerDAOImpl extends AbstractDAOImpl<PlayerEntity, Integer> implem
 
     public List<PlayerEntity> findByTeamComposition(Integer compositionID) {
         List players = getSession()
-                .createQuery("select ePlayer from PlayerEntity as ePlayer"
-                        + " join ePlayer.memberships as eMembership"
-                        + " join eMembership.composition as eComposition"
-                        + " with eComposition.id=?")
-                .setParameter(0, compositionID)
+                .createQuery("select p from PlayerEntity as p"
+                        + " join p.memberships as m"
+                        + " join m.composition as c"
+                        + " with c.id=?"
+                ).setParameter(0, compositionID)
                 .list();
 
         if ((players != null) && (players.size() > 0)) return (List<PlayerEntity>) players;

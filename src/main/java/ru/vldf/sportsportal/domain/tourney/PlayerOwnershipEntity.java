@@ -36,10 +36,7 @@ public class PlayerOwnershipEntity {
 //    === ONE-TO-ONE REFERENCES
 
     @OneToOne
-    @JoinColumn(
-            name = "user_id",
-            referencedColumnName = "id"
-    )
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     public UserEntity getUser() {
         return user;
     }
@@ -49,10 +46,7 @@ public class PlayerOwnershipEntity {
     }
 
     @OneToOne
-    @JoinColumn(
-            name = "player_id",
-            referencedColumnName = "id"
-    )
+    @JoinColumn(name = "player_id", referencedColumnName = "id", nullable = false)
     public PlayerEntity getPlayer() {
         return player;
     }

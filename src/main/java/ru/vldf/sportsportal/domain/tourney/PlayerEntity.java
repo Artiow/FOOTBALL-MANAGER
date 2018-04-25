@@ -15,8 +15,7 @@ public class PlayerEntity {
     private String patronymic;
     private Date birthday;
 
-    private PlayerOwnershipEntity playerOwnership;
-
+    private PlayerOwnershipEntity ownership;
     private Collection<CompositionMembershipEntity> memberships;
 
     public PlayerEntity() {
@@ -85,12 +84,12 @@ public class PlayerEntity {
 //    === ONE-TO-ONE REFERENCES
 
     @OneToOne(mappedBy = "player")
-    public PlayerOwnershipEntity getPlayerOwnership() {
-        return playerOwnership;
+    public PlayerOwnershipEntity getOwnership() {
+        return ownership;
     }
 
-    public void setPlayerOwnership(PlayerOwnershipEntity playerOwnership) {
-        this.playerOwnership = playerOwnership;
+    public void setOwnership(PlayerOwnershipEntity playerOwnership) {
+        this.ownership = playerOwnership;
     }
 
 //    ==================================================================================
