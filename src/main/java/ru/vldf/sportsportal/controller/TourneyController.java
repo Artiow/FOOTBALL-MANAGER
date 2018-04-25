@@ -31,15 +31,18 @@ public class TourneyController {
         this.tourneyService = tourneyService;
     }
 
+
     @ModelAttribute("authUser")
     public UserDTO getAuthUser() {
         return authService.getAuthUser();
     }
 
+
     @GetMapping(value = {"/tourney"})
     public String toCoverPage() {
         return "redirect:/tourney3"; //TODO: wtf
     }
+
 
     @GetMapping(value = {"/tourney{tourneyID}"})
     public String toTourneyPage(@PathVariable("tourneyID") int tourneyID) {

@@ -59,7 +59,7 @@ public class TourneyService {
     }
 
     @Transactional(readOnly = true)
-    public List<TourDTO> getTourList(int tourneyID) {
+    public List<TourDTO> getTourList(Integer tourneyID) {
         List<TourEntity> entityList = tourDAO.findByTourney(tourneyID);
         if (entityList == null) return null;
 
@@ -69,12 +69,44 @@ public class TourneyService {
     }
 
     @Transactional(readOnly = true)
+    public TourneyDTO getFirstTourney() {
+        List<TourneyEntity> entityList = tourneyDAO.findAllOrderByID();
+        if (entityList == null) return null;
+
+        return new TourneyDTO(entityList.get(0));
+    }
+
+    @Transactional(readOnly = true)
+    public Integer getFirstTourneyID() {
+        List<TourneyEntity> entityList = tourneyDAO.findAllOrderByID();
+        if (entityList == null) return null;
+
+        return entityList.get(0).getId();
+    }
+
+    @Transactional(readOnly = true)
+    public TourDTO getFirstTour(Integer tourneyID) {
+        List<TourEntity> entityList = tourDAO.findByTourney(tourneyID);
+        if (entityList == null) return null;
+
+        return new TourDTO(entityList.get(0));
+    }
+
+    @Transactional(readOnly = true)
+    public Integer getFirstTourID(Integer tourneyID) {
+        List<TourEntity> entityList = tourDAO.findByTourney(tourneyID);
+        if (entityList == null) return null;
+
+        return entityList.get(0).getId();
+    }
+
+    @Transactional(readOnly = true)
     public TourneyDTO getTourney(Integer id) {
         return new TourneyDTO(tourneyDAO.findByID(id));
     }
 
     @Transactional(readOnly = true)
-    public TourDTO getTour(int id) {
+    public TourDTO getTour(Integer id) {
         return new TourDTO(tourDAO.findByID(id));
     }
 
@@ -89,15 +121,16 @@ public class TourneyService {
         return dtoList;
     }
 
-
     @Transactional(readOnly = true)
-    public List<Integer[]> getResults(List<GameDTO> gameDTOList) {
-        ArrayList<Integer[]> result = new ArrayList<Integer[]>(gameDTOList.size());
-        for(GameDTO gameDTO: gameDTOList) {
+    public List<Integer[]> getResults(List<GameDTO> dtos) {
+        ArrayList<Integer[]> result = new ArrayList<Integer[]>(dtos.size());
+
+        for(GameDTO dto: dtos) {
             Integer[] game = new Integer[2];
 
-            CompositionResultEntity r = compositionResultDAO.findByGameAndComposition(gameDTO.getId(), gameDTO.getRed().getId());
-            CompositionResultEntity b = compositionResultDAO.findByGameAndComposition(gameDTO.getId(), gameDTO.getBlue().getId());
+            Integer gameID = dto.getId();
+            CompositionResultEntity r = compositionResultDAO.findByGameAndComposition(gameID, dto.getRed().getId());
+            CompositionResultEntity b = compositionResultDAO.findByGameAndComposition(gameID, dto.getBlue().getId());
 
             if (r != null) game[0] = r.getGoal(); else game[0] = null;
             if (b != null) game[1] = b.getGoal(); else game[1] = null;
