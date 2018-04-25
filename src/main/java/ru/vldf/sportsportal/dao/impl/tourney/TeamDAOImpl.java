@@ -130,10 +130,33 @@ public class TeamDAOImpl extends AbstractDAOImpl<TeamEntity, Integer> implements
         else return null;
     }
 
-    public List<TeamEntity> findByNameLike(String name) {
+    public List<TeamEntity> findByStatusAndNameLike(Integer statusID, String name) {
         List teams = getSession()
-                .createQuery("from TeamEntity where name like ? order by name")
-                .setParameter(0, "%" + name + "%")
+                .createQuery("from TeamEntity where status.id=:statusID and name like :name order by name")
+                .setParameter("name", "%" + name + "%")
+                .setParameter("statusID", statusID)
+                .list();
+
+        if ((teams != null) && (teams.size() > 0)) return (List<TeamEntity>) teams;
+        else return null;
+    }
+
+    public List<TeamEntity> findByStatusAndNameLike(String statusCode, String name) {
+        List teams = getSession()
+                .createQuery("from TeamEntity where status.code=:statusCode and name like :name order by name")
+                .setParameter("name", "%" + name + "%")
+                .setParameter("statusCode", statusCode)
+                .list();
+
+        if ((teams != null) && (teams.size() > 0)) return (List<TeamEntity>) teams;
+        else return null;
+    }
+
+    public List<TeamEntity> findByStatusAndNameLike(TeamStatusEntity status, String name) {
+        List teams = getSession()
+                .createQuery("from TeamEntity where status=:status and name like :name order by name")
+                .setParameter("name", "%" + name + "%")
+                .setParameter("status", status)
                 .list();
 
         if ((teams != null) && (teams.size() > 0)) return (List<TeamEntity>) teams;
@@ -151,6 +174,22 @@ public class TeamDAOImpl extends AbstractDAOImpl<TeamEntity, Integer> implements
         getSession()
                 .createQuery("update TeamEntity set name=:name where id=:id")
                 .setParameter("name", name)
+                .setParameter("id", id)
+                .executeUpdate();
+    }
+
+    public void updateStatusByID(Integer id, Integer statusID) {
+        getSession()
+                .createQuery("update TeamEntity set status = (from TeamStatusEntity as s where s.id=:statusID) where id=:id")
+                .setParameter("statusID", statusID)
+                .setParameter("id", id)
+                .executeUpdate();
+    }
+
+    public void updateStatusByID(Integer id, String statusCode) {
+        getSession()
+                .createQuery("update TeamEntity set status = (from TeamStatusEntity as s where s.code=:statusCode) where id=:id")
+                .setParameter("statusCode", statusCode)
                 .setParameter("id", id)
                 .executeUpdate();
     }

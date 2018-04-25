@@ -7,10 +7,10 @@ import org.springframework.web.bind.annotation.*;
 import ru.vldf.sportsportal.dto.lease.PlaygroundDTO;
 import ru.vldf.sportsportal.dto.tourney.*;
 import ru.vldf.sportsportal.dto.common.UserDTO;
-import ru.vldf.sportsportal.service.AdminService;
 import ru.vldf.sportsportal.service.AuthService;
 import ru.vldf.sportsportal.service.LeaseService;
 import ru.vldf.sportsportal.service.UserService;
+import ru.vldf.sportsportal.service.admin.TourneyAdminService;
 import ru.vldf.sportsportal.service.admin.UserAdminService;
 
 import java.util.ArrayList;
@@ -27,13 +27,14 @@ public class UserController {
     }
 
 //    TODO: tmp solution! move to 'TOURNEY'!
-    private UserService.UserTourneyService userTourneyService;
+    private UserService userTourneyService;
 
 //    TODO: tmp solution! move to 'TOURNEY'!
     @Autowired
-    public void setUserTourneyService(UserService.UserTourneyService userTourneyService) {
+    public void setUserTourneyService(UserService userTourneyService) {
         this.userTourneyService = userTourneyService;
     }
+
 
 
     @ModelAttribute("authUser")
@@ -51,17 +52,23 @@ public class UserController {
     @Controller //ADMIN
     public class UserAdminController {
 
-        private UserAdminService userService;
-        private AdminService.AdminTourneyService tourneyService;
+        private UserService userService;
+        private UserAdminService userAdminService;
+        private TourneyAdminService tourneyAdminService;
 
         @Autowired
-        public void setUserService(UserAdminService userService) {
+        public void setUserService(UserService userService) {
             this.userService = userService;
         }
 
         @Autowired
-        public void setTourneyService(AdminService.AdminTourneyService tourneyService) {
-            this.tourneyService = tourneyService;
+        public void setUserAdminService(UserAdminService userAdminService) {
+            this.userAdminService = userAdminService;
+        }
+
+        @Autowired
+        public void setTourneyAdminService(TourneyAdminService tourneyAdminService) {
+            this.tourneyAdminService = tourneyAdminService;
         }
 
 
@@ -73,8 +80,8 @@ public class UserController {
         @GetMapping(value = {"/pp/admin"})
         public String toAdminMenu(ModelMap map) {
             map
-                    .addAttribute("uUsersNum", userService.getUnconfirmedUsersNum())
-                    .addAttribute("uTeamsNum", tourneyService.getUnconfirmedTeamsNum());
+                    .addAttribute("uUsersNum", userAdminService.getUnconfirmedUsersNum())
+                    .addAttribute("uTeamsNum", tourneyAdminService.getUnconfirmedTeamsNum());
 
             return "user/admin/menu-admin";
         }
@@ -84,11 +91,11 @@ public class UserController {
 
         @GetMapping(value = {"/pp/admin/check-user"})
         public String toCheckUserPage(ModelMap map) {
-            UserDTO user = userService.getFirstUnconfirmedUser(); //TODO: lol wtf dude? add pagination!
+            UserDTO user = userAdminService.getFirstUnconfirmedUser(); //TODO: lol wtf dude? add pagination!
             if (user == null) return "redirect:/pp/admin";
 
             List<PlayerDTO> duplicates
-                    = userService.getDuplicates(user);
+                    = userAdminService.getDuplicates(user);
             map
                     .addAttribute("uUser", user)
                     .addAttribute("duplicates", duplicates);
@@ -98,11 +105,11 @@ public class UserController {
 
         @GetMapping(value = {"/pp/admin/check-user/user{id}"})
         public String toCheckUserPage(@PathVariable("id") int id, ModelMap map) {
-            UserDTO user = userService.getUser(id);
+            UserDTO user = userAdminService.getUser(id);
             if (user == null) return "redirect:/404";
 
             List<PlayerDTO> duplicates
-                    = userService.getDuplicates(user);
+                    = userAdminService.getDuplicates(user);
             map
                     .addAttribute("uUser", user)
                     .addAttribute("duplicates", duplicates);
@@ -113,25 +120,25 @@ public class UserController {
 
         @GetMapping(value = {"/pp/admin/check-user/user{id}/confirm"})
         public String confirmUser(@PathVariable("id") int id) {
-            userService.confirmUser(id);
+            userAdminService.confirmUser(id);
             return "redirect:/pp/admin/check-user";
         }
 
         @GetMapping(value = {"/pp/admin/check-user/user{id}/reject"})
         public String rejectUser(@PathVariable("id") int id) {
-            userService.rejectUser(id);
+            userAdminService.rejectUser(id);
             return "redirect:/pp/admin/check-user";
         }
 
         @GetMapping(value = {"/pp/admin/check-user/duplicate{id}/delete"})
         public String deleteDuplicate(@PathVariable("id") int id) {
-            userService.deleteDuplicate(id);
+            userAdminService.deleteDuplicate(id);
             return "redirect:/pp/admin/check-user";
         }
 
         @GetMapping(value = "/pp/admin/check-user/user{userID}/bind/duplicate{duplicateID}")
         public String bindDuplicate(@PathVariable("userID") int userID, @PathVariable("duplicateID") int duplicateID) {
-            userService.bindUser(userID, duplicateID);
+            userAdminService.bindUser(userID, duplicateID);
             return "redirect:/pp/admin/check-user";
         }
 
@@ -140,52 +147,52 @@ public class UserController {
 
         @GetMapping(value = {"/pp/admin/check-team"})
         public String toConfirmTeamPage(ModelMap map) {
-            map.addAttribute("uTeams", tourneyService.getUnconfirmedTeams());
+            map.addAttribute("uTeams", tourneyAdminService.getUnconfirmedTeams());
             return "user/admin/page-check-team";
         }
 
 
         @GetMapping(value = {"/pp/admin/check-team/team{id}/confirm"})
         public String confirmTeam(@PathVariable("id") int id) {
-            tourneyService.confirmTeam(id);
+            tourneyAdminService.confirmTeam(id);
             return "redirect:/pp/admin/check-team";
         }
 
         @GetMapping(value = {"/pp/admin/check-team/team{id}/reject"})
         public String rejectTeam(@PathVariable("id") int id) {
-            tourneyService.rejectTeam(id);
+            tourneyAdminService.rejectTeam(id);
             return "redirect:/pp/admin/check-team";
         }
 
         @GetMapping(value = {"/pp/admin/check-team/team{id}/rename"})
         public String renameTeam(@PathVariable("id") int id, ModelMap map) {
-            map.addAttribute("teamDTO", tourneyService.getTeam(id));
+            map.addAttribute("teamDTO", tourneyAdminService.getTeam(id));
             return "user/admin/form-rename-team";
         }
 
         @PostMapping(value = {"/pp/admin/check-team/team{id}/rename"})
         public String createTeam(@PathVariable("id") int id, @ModelAttribute(value="teamDTO") TeamDTO teamDTO) {
             teamDTO.setId(id);
-            tourneyService.renameTeam(teamDTO);
-            tourneyService.confirmTeam(teamDTO.getId());
+            tourneyAdminService.renameTeam(teamDTO);
+            tourneyAdminService.confirmTeam(teamDTO.getId());
             return "redirect:/pp/admin/check-team";
         }
 
 
         @GetMapping(value = {"/pp/admin/tourney"})
         public String toTourneyCatalogPage(ModelMap map) {
-            map.addAttribute("tourneyList", tourneyService.getTourneyList());
+            map.addAttribute("tourneyList", tourneyAdminService.getTourneyList());
             return "user/admin/page-tourney-catalog";
         }
 
         @GetMapping(value = {"/pp/admin/tourney/tourney{id}"})
         public String toTourneyPage(@PathVariable("id") int id, ModelMap map) {
-            TourneyDTO tourneyDTO = tourneyService.getTourney(id);
+            TourneyDTO tourneyDTO = tourneyAdminService.getTourney(id);
 
             map
                     .addAttribute("tourneyDTO", tourneyDTO)
-                    .addAttribute("gameList", tourneyService.getGames(tourneyDTO))
-                    .addAttribute("compositionList", tourneyService.getTeamCompositions(tourneyDTO));
+                    .addAttribute("gameList", tourneyAdminService.getNextGames(tourneyDTO))
+                    .addAttribute("compositionList", tourneyAdminService.getCompositionList(tourneyDTO));
 
 
             int status = tourneyDTO.getStatus().getId();
@@ -199,8 +206,8 @@ public class UserController {
 
         @GetMapping(value = {"/pp/admin/tourney/tourney{id}/protocol"})
         public String toProtocolAllPage(@PathVariable("id") int id, ModelMap map) {
-            TourneyDTO tourneyDTO = tourneyService.getTourney(id);
-            List<GameDTO> gameList = tourneyService.getGames(tourneyDTO);
+            TourneyDTO tourneyDTO = tourneyAdminService.getTourney(id);
+            List<GameDTO> gameList = tourneyAdminService.getNextGames(tourneyDTO);
 
             List<List<PlayerDTO>> redPlayerLists = new ArrayList<List<PlayerDTO>>();
             List<List<PlayerDTO>> bluePlayerLists = new ArrayList<List<PlayerDTO>>();
@@ -208,8 +215,8 @@ public class UserController {
             List<PlayerDTO> redPlayerList;
             List<PlayerDTO> bluePlayerList;
             for(GameDTO game: gameList) {
-                redPlayerList = tourneyService.getPlayerList(game.getRed());
-                bluePlayerList = tourneyService.getPlayerList(game.getBlue());
+                redPlayerList = userService.getPlayerList(game.getRed());
+                bluePlayerList = userService.getPlayerList(game.getBlue());
 
                 redPlayerLists.add(redPlayerList);
                 bluePlayerLists.add(bluePlayerList);
@@ -226,7 +233,7 @@ public class UserController {
 
         @GetMapping(value = {"/pp/admin/game{id}/result"})
         public String toGameResultForm(@PathVariable("id") int id, ModelMap map) {
-            GameDTO gameDTO = tourneyService.getGame(id);
+            GameDTO gameDTO = tourneyAdminService.getGame(id);
             map.addAttribute("gameDTO",gameDTO);
             return "user/admin/form-result-game";
         }
@@ -237,18 +244,18 @@ public class UserController {
                 @RequestParam("redGoalNum") Integer redGoalNum,
                 @RequestParam("blueGoalNum") Integer blueGoalNum
         ) {
-            GameDTO gameDTO = tourneyService.getGame(id);
-            tourneyService.createResultGame(gameDTO, redGoalNum, blueGoalNum);
+            GameDTO gameDTO = tourneyAdminService.getGame(id);
+            tourneyAdminService.createResultGame(gameDTO, redGoalNum, blueGoalNum);
             return "redirect:/pp/admin/tourney/tourney" + gameDTO.getTour().getTourney().getId();
         }
 
 
         @GetMapping(value = {"/pp/admin/tourney/tourney{id}/timegrid"})
         public String toTimegridPage(@PathVariable("id") int id, ModelMap map) {
-            TourneyDTO tourneyDTO = tourneyService.getTourney(id);
+            TourneyDTO tourneyDTO = tourneyAdminService.getTourney(id);
 
-            List<GameDTO> games = tourneyService.getGames(tourneyDTO);
-            List<String[]> timegrid = tourneyService.updateTimegrid(games); //TODO: remove
+            List<GameDTO> games = tourneyAdminService.getNextGames(tourneyDTO);
+            List<String[]> timegrid = tourneyAdminService.updateTimegrid(games); //TODO: remove
 
             map
                     .addAttribute("tourneyDTO", tourneyDTO)
@@ -262,16 +269,16 @@ public class UserController {
 
         @GetMapping(value = {"/pp/admin/tourney/tourney{id}/timeup"})
         public String timeup(@PathVariable("id") int id) {
-            tourneyService.timeupTourney(tourneyService.getTourney(id));
+            tourneyAdminService.startTourney(tourneyAdminService.getTourney(id));
             return "redirect:/pp/admin/tourney/tourney{id}";
         }
 
         @GetMapping(value = {"/pp/admin/game{id}/protocol"})
         public String toProtocolPage(@PathVariable("id") int id, ModelMap map) {
-            GameDTO game = tourneyService.getGame(id);
+            GameDTO game = tourneyAdminService.getGame(id);
 
-            List<PlayerDTO> redPlayerList = tourneyService.getPlayerList(game.getRed());
-            List<PlayerDTO> bluePlayerList = tourneyService.getPlayerList(game.getBlue());
+            List<PlayerDTO> redPlayerList = userService.getPlayerList(game.getRed());
+            List<PlayerDTO> bluePlayerList = userService.getPlayerList(game.getBlue());
 
             map
                     .addAttribute("tourneyDTO", game.getTour().getTourney())
@@ -292,7 +299,7 @@ public class UserController {
 
         @PostMapping(value = {"/pp/admin/tourney/create-tourney"})
         public String createTourney(@ModelAttribute(value="tourneyDTO") TourneyDTO tourneyDTO) {
-            tourneyService.createTourney(tourneyDTO);
+            tourneyAdminService.createTourney(tourneyDTO);
             return "redirect:/pp/admin/tourney";
         }
 
@@ -300,15 +307,15 @@ public class UserController {
         @GetMapping(value = {"/pp/admin/tourney/tourney{id}/invite"})
         public String toTeamInviteForm(@PathVariable("id") int id, ModelMap map) {
             map //TODO: add search by name!
-                    .addAttribute("tourneyDTO", tourneyService.getTourney(id))
-                    .addAttribute("teamList", tourneyService.getTeamsLike(""));
+                    .addAttribute("tourneyDTO", tourneyAdminService.getTourney(id))
+                    .addAttribute("teamList", tourneyAdminService.getTeamListLike(""));
 
             return "user/admin/form-invite-team";
         }
 
         @PostMapping(value = {"/pp/admin/tourney/tourney{tourneyID}/invite"})
         public String inviteTeam(@PathVariable("tourneyID") int tourneyID, @RequestParam("teamsID") List<Integer> teamsID) {
-            tourneyService.inviteTeams(tourneyID, teamsID);
+            tourneyAdminService.inviteTeamList(tourneyID, teamsID);
             return "redirect:/pp/admin/tourney/tourney" + tourneyID;
         }
 
@@ -369,7 +376,7 @@ public class UserController {
             Integer maxSize = 18;
             Integer currentSize;
 
-            List<PlayerDTO> playerDTOList = userTourneyService.getPlayers(compositionDTO);
+            List<PlayerDTO> playerDTOList = userTourneyService.getPlayerList(compositionDTO);
             if (playerDTOList != null) currentSize = playerDTOList.size();
             else currentSize = 0;
 
@@ -456,7 +463,7 @@ public class UserController {
                 @PathVariable("id") int id, ModelMap map,
                 @ModelAttribute(value = "playerDTO") PlayerDTO playerDTO
         ) {
-            map.addAttribute("foundedPlayerDTOList", userTourneyService.getPlayers(
+            map.addAttribute("foundedPlayerDTOList", userTourneyService.getPlayerList(
                     playerDTO.getName(),
                     playerDTO.getSurname(),
                     playerDTO.getPatronymic()

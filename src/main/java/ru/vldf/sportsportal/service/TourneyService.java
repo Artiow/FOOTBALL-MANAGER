@@ -122,32 +122,27 @@ public class TourneyService {
     }
 
     @Transactional(readOnly = true)
-    public List<GameDTO> getGameList(TourDTO tourDTO) {
-        return getGameList(tourDTO.getId());
-    }
+    public List<Integer[]> getResultList(List<GameDTO> games) {
+        ArrayList<Integer[]> results = new ArrayList<Integer[]>(games.size());
 
-    @Transactional(readOnly = true)
-    public List<Integer[]> getResults(List<GameDTO> dtos) {
-        ArrayList<Integer[]> result = new ArrayList<Integer[]>(dtos.size());
+        for(GameDTO game: games) {
+            Integer[] result = new Integer[2];
 
-        for(GameDTO dto: dtos) {
-            Integer[] game = new Integer[2];
+            Integer gameID = game.getId();
+            CompositionResultEntity r = compositionResultDAO.findByGameAndComposition(gameID, game.getRed().getId());
+            CompositionResultEntity b = compositionResultDAO.findByGameAndComposition(gameID, game.getBlue().getId());
 
-            Integer gameID = dto.getId();
-            CompositionResultEntity r = compositionResultDAO.findByGameAndComposition(gameID, dto.getRed().getId());
-            CompositionResultEntity b = compositionResultDAO.findByGameAndComposition(gameID, dto.getBlue().getId());
+            if (r != null) result[0] = r.getGoal(); else result[0] = null;
+            if (b != null) result[1] = b.getGoal(); else result[1] = null;
 
-            if (r != null) game[0] = r.getGoal(); else game[0] = null;
-            if (b != null) game[1] = b.getGoal(); else game[1] = null;
-
-            result.add(game);
+            results.add(result);
         }
 
-        return result;
+        return results;
     }
 
     @Transactional(readOnly = true)
-    public List<CompositionStatisticDTO> getStatistics(TourneyDTO tourney) {
+    public List<CompositionStatisticDTO> getStatisticList(TourneyDTO tourney) {
         List<CompositionStatisticEntity> entityList = compositionStatisticDAO.findByTourney(tourney.getId());
         if (entityList == null) return null;
 

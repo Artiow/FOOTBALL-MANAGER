@@ -23,5 +23,9 @@ public interface TourneyDAO {
 //    ==================================================================================
 //    === UPDATE
 
+    void updateStatusByID(Integer id, Integer statusID);
+
+    void updateStatusByID(Integer id, String statusCode);
+
     void updateStatusByID(Integer id, TourneyStatusEntity status);
 }

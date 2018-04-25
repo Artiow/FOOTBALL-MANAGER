@@ -36,7 +36,11 @@ public interface TeamDAO {
 
     List<TeamEntity> findByStatus(TeamStatusEntity status);
 
-    List<TeamEntity> findByNameLike(String name);
+    List<TeamEntity> findByStatusAndNameLike(Integer statusID, String name);
+
+    List<TeamEntity> findByStatusAndNameLike(String statusCode, String name);
+
+    List<TeamEntity> findByStatusAndNameLike(TeamStatusEntity status, String name);
 
     List<TeamEntity> findAll();
 
@@ -44,6 +48,10 @@ public interface TeamDAO {
 //    === UPDATE
 
     void updateNameByID(Integer id, String name);
+
+    void updateStatusByID(Integer id, Integer statusID);
+
+    void updateStatusByID(Integer id, String statusCode);
 
     void updateStatusByID(Integer id, TeamStatusEntity status);
 }

@@ -65,7 +65,7 @@ public class TourneyController {
         List<GameDTO> gameList = tourneyService.getGameList(tourID);
         map.addAttribute("gameList", gameList);
 
-        List<Integer[]> matches = tourneyService.getResults(gameList);
+        List<Integer[]> matches = tourneyService.getResultList(gameList);
         map.addAttribute("matchList", matches);
 
         return "tourney/cover-tourney-score";
@@ -79,7 +79,7 @@ public class TourneyController {
         List<TourneyDTO> tourneyList = tourneyService.getTourneyList();
         map.addAttribute("tourneyList", tourneyList);
 
-        List<CompositionStatisticDTO> statList = tourneyService.getStatistics(tourneyCur);
+        List<CompositionStatisticDTO> statList = tourneyService.getStatisticList(tourneyCur);
         map.addAttribute("statList", statList);
 
         return "tourney/cover-tourney-table";

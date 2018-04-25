@@ -48,11 +48,28 @@ public class TourneyDAOImpl extends AbstractDAOImpl<TourneyEntity, Integer> impl
 //    ==================================================================================
 //    === UPDATE
 
+
+    public void updateStatusByID(Integer id, Integer statusID) {
+        getSession()
+                .createQuery("update TourneyEntity set status = (from TourneyStatusEntity as s where s.id=:statusID) where id=:id")
+                .setParameter("statusID", statusID)
+                .setParameter("id", id)
+                .executeUpdate();
+    }
+
+    public void updateStatusByID(Integer id, String statusCode) {
+        getSession()
+                .createQuery("update TourneyEntity set status = (from TourneyStatusEntity as s where s.code=:statusCode) where id=:id")
+                .setParameter("statusCode", statusCode)
+                .setParameter("id", id)
+                .executeUpdate();
+    }
+
     public void updateStatusByID(Integer id, TourneyStatusEntity status) {
         getSession()
-                .createQuery("update TourneyEntity set status=? where id=?")
-                .setParameter(0, status)
-                .setParameter(1, id)
+                .createQuery("update TourneyEntity set status=:status where id=:id")
+                .setParameter("status", status)
+                .setParameter("id", id)
                 .executeUpdate();
     }
 }

@@ -14,6 +14,7 @@ import ru.vldf.sportsportal.service.security.SecurityPrincipal;
 
 @Service
 public class AuthService {
+
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     private UserDAO userDAO;
@@ -25,13 +26,13 @@ public class AuthService {
     }
 
     @Autowired
-    public void setUserRoleDAO(UserRoleDAO userRoleDAO) {
-        this.userRoleDAO = userRoleDAO;
+    public void setUserDAO(UserDAO userDAO) {
+        this.userDAO = userDAO;
     }
 
     @Autowired
-    public void setUserDAO(UserDAO userDAO) {
-        this.userDAO = userDAO;
+    public void setUserRoleDAO(UserRoleDAO userRoleDAO) {
+        this.userRoleDAO = userRoleDAO;
     }
 
     private Authentication getAuthentication() {
@@ -69,7 +70,7 @@ public class AuthService {
         else return ((SecurityPrincipal) principal).getUser();
     }
 
-//    TODO: cut out this method
+//    TODO: remove this method!
     public String getAuthUserShortName() {
         UserDTO user = getAuthUser();
         if (user != null) return (user.getName() + ' ' + user.getSurname());
