@@ -10,7 +10,7 @@ import ru.vldf.sportsportal.dao.generic.definite.common.UserRoleDAO;
 import ru.vldf.sportsportal.dao.generic.definite.common.UserDAO;
 import ru.vldf.sportsportal.dto.common.UserDTO;
 import ru.vldf.sportsportal.domain.common.UserEntity;
-import ru.vldf.sportsportal.service.security.SecurityPrincipal;
+import ru.vldf.sportsportal.security.SecurityPrincipal;
 
 @Service
 public class AuthService {

@@ -1,4 +1,4 @@
-package ru.vldf.sportsportal.service;
+package ru.vldf.sportsportal.service.user.specialized;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,34 +11,37 @@ import ru.vldf.sportsportal.dto.tourney.*;
 import ru.vldf.sportsportal.dto.common.UserDTO;
 import ru.vldf.sportsportal.domain.tourney.*;
 import ru.vldf.sportsportal.domain.common.UserEntity;
+import ru.vldf.sportsportal.service.AuthService;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class UserService {
+public class TourneyUserService {
 
     private AuthService authService;
-
-    private UserDAO userDAO;
 
     @Autowired
     public void setAuthService(AuthService authService) {
         this.authService = authService;
     }
 
-    @Autowired
-    public void setUserDAO(UserDAO userDAO) {
-        this.userDAO = userDAO;
-    }
+
+    private UserDAO userDAO;
 
     private TeamDAO teamDAO;
     private TeamStatusDAO teamStatusDAO;
+
     private CompositionDAO compositionDAO;
     private CompositionMembershipDAO compositionMembershipDAO;
 
     private GameDAO gameDAO;
     private PlayerDAO playerDAO;
+
+    @Autowired
+    public void setUserDAO(UserDAO userDAO) {
+        this.userDAO = userDAO;
+    }
 
     @Autowired
     public void setTeamDAO(TeamDAO teamDAO) {
@@ -51,16 +54,6 @@ public class UserService {
     }
 
     @Autowired
-    public void setGameDAO(GameDAO gameDAO) {
-        this.gameDAO = gameDAO;
-    }
-
-    @Autowired
-    public void setPlayerDAO(PlayerDAO playerDAO) {
-        this.playerDAO = playerDAO;
-    }
-
-    @Autowired
     public void setCompositionDAO(CompositionDAO compositionDAO) {
         this.compositionDAO = compositionDAO;
     }
@@ -70,48 +63,57 @@ public class UserService {
         this.compositionMembershipDAO = compositionMembershipDAO;
     }
 
+    @Autowired
+    public void setGameDAO(GameDAO gameDAO) {
+        this.gameDAO = gameDAO;
+    }
+
+    @Autowired
+    public void setPlayerDAO(PlayerDAO playerDAO) {
+        this.playerDAO = playerDAO;
+    }
+
 
     @Transactional(readOnly = true)
     public List<TeamDTO> getTeamList() {
-//            TODO: optimize this
-        List<TeamEntity> entityList = teamDAO.findByUser(authService.getAuthUser().getId());
-
+        UserDTO user = authService.getAuthUser();
+        List<TeamEntity> entityList = teamDAO.findByUser(user.getId());
         if (entityList == null) return null;
+
         List<TeamDTO> dtoList = new ArrayList<TeamDTO>();
         for (TeamEntity entity: entityList) dtoList.add(new TeamDTO(entity));
         return dtoList;
     }
 
     @Transactional(readOnly = true)
-    public TeamDTO getTeam(int teamID) {
-//            TODO: optimize this
-        UserDTO user = authService.getAuthUser();
-        TeamDTO team = new TeamDTO(teamDAO.findByID(teamID));
+    public TeamDTO getTeamSafely(Integer id) {
+        TeamDTO team = new TeamDTO(teamDAO.findByID(id));
 
+        UserDTO user = authService.getAuthUser();
         if (user.equals(team.getCaptain())) return team;
-        else return null; //not user's team
+        else return null;
     }
+
 
     @Transactional(readOnly = true)
     public List<CompositionDTO> getCompositionList(TeamDTO team) {
-//            TODO: optimize this
         List<CompositionEntity> entityList = compositionDAO.findByTeam(team.getId());
-
         if (entityList == null) return null;
+
         List<CompositionDTO> dtoList = new ArrayList<CompositionDTO>();
         for (CompositionEntity entity: entityList) dtoList.add(new CompositionDTO(entity));
         return dtoList;
     }
 
     @Transactional(readOnly = true)
-    public CompositionDTO getComposition(int compositionID) {
-//            TODO: optimize this
-        UserDTO user = authService.getAuthUser();
-        CompositionDTO composition = new CompositionDTO(compositionDAO.findByID(compositionID));
+    public CompositionDTO getCompositionSafely(Integer id) {
+        CompositionDTO composition = new CompositionDTO(compositionDAO.findByID(id));
 
+        UserDTO user = authService.getAuthUser();
         if (user.equals(composition.getTeam().getCaptain())) return composition;
-        else return null; //not user's composition
+        else return null;
     }
+
 
     @Transactional(readOnly = true)
     public GameDTO getRival(int compositionID, int tourNum) {
@@ -123,10 +125,9 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public List<PlayerDTO> getPlayerList(CompositionDTO composition) {
-//            TODO: optimize this
         List<PlayerEntity> entityList = playerDAO.findByTeamComposition(composition.getId());
-
         if (entityList == null) return null;
+
         List<PlayerDTO> dtoList = new ArrayList<PlayerDTO>();
         for (PlayerEntity entity : entityList) dtoList.add(new PlayerDTO(entity));
         return dtoList;
@@ -134,7 +135,6 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public List<PlayerDTO> getPlayerList(String name, String surname, String patronymic) {
-//            TODO: optimize this
         List<PlayerEntity> entityList;
 
         if ((name.equals("")) && (patronymic.equals("")))
@@ -152,6 +152,8 @@ public class UserService {
         return dtoList;
     }
 
+//=======================================
+//  TODO: check that below!
 
     @Transactional
     public void timeChoice(CompositionDTO composition, Integer time, Character choice) {

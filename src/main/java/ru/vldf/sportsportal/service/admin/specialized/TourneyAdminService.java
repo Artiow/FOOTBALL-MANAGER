@@ -1,4 +1,4 @@
-package ru.vldf.sportsportal.service.admin;
+package ru.vldf.sportsportal.service.admin.specialized;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -234,8 +234,8 @@ public class TourneyAdminService {
 
 
     @Transactional(readOnly = true)
-    public List<CompositionDTO> getCompositionList(Integer tourneyID) {
-        List<CompositionEntity> entityList = compositionDAO.findByTourney(tourneyID);
+    public List<CompositionDTO> getCompositionList(TourneyDTO tourney) {
+        List<CompositionEntity> entityList = compositionDAO.findByTourney(tourney.getId());
         if (entityList == null) return null;
 
         List<CompositionDTO> dtoList = new ArrayList<CompositionDTO>();

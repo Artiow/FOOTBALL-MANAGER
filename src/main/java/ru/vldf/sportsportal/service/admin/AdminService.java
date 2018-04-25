@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class UserAdminService {
+public class AdminService {
 
     private final String ROLE_UNCONFIRMED_CODE = "ROLE_UNCONFIRMED";
     private final String ROLE_CONFIRMED_CODE = "ROLE_USER";

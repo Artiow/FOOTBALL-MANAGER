@@ -1,4 +1,4 @@
-package ru.vldf.sportsportal.service.security;
+package ru.vldf.sportsportal.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
