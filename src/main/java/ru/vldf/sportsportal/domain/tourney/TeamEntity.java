@@ -12,8 +12,8 @@ public class TeamEntity {
     private Integer id;
     private String name;
 
-    private TeamStatusEntity status;
     private UserEntity captain;
+    private TeamStatusEntity status;
 
     private Collection<CompositionEntity> compositions;
 
@@ -66,11 +66,7 @@ public class TeamEntity {
 //    === MANY-TO-ONE REFERENCES
 
     @ManyToOne
-    @JoinColumn(
-            name = "captain_id",
-            referencedColumnName = "id",
-            nullable = false
-    )
+    @JoinColumn(name = "captain_id", referencedColumnName = "id", nullable = false)
     public UserEntity getCaptain() {
         return captain;
     }
@@ -80,11 +76,7 @@ public class TeamEntity {
     }
 
     @ManyToOne
-    @JoinColumn(
-            name = "status_id",
-            referencedColumnName = "id",
-            nullable = false
-    )
+    @JoinColumn(name = "status_id", referencedColumnName = "id", nullable = false)
     public TeamStatusEntity getStatus() {
         return status;
     }

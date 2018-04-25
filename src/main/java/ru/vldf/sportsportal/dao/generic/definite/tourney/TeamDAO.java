@@ -43,7 +43,7 @@ public interface TeamDAO {
 //    ==================================================================================
 //    === UPDATE
 
-    Integer updateStatusByID(Integer id, TeamStatusEntity status);
+    void updateNameByID(Integer id, String name);
 
-    Integer updateNameByID(Integer id, String name);
+    void updateStatusByID(Integer id, TeamStatusEntity status);
 }
