@@ -50,7 +50,7 @@ public class TourneyService {
 
     @Transactional(readOnly = true)
     public List<TourneyDTO> getTourneyList() {
-        List<TourneyEntity> entityList = tourneyDAO.findAll();
+        List<TourneyEntity> entityList = tourneyDAO.findAllOrderByID();
         if (entityList == null) return null;
 
         List<TourneyDTO> dtoList = new ArrayList<TourneyDTO>();

@@ -35,15 +35,12 @@ public class TourneyDAOImpl extends AbstractDAOImpl<TourneyEntity, Integer> impl
         else return null;
     }
 
-//    public List<TourneyEntity> findAll() {
-//        return super.list();
-//    }
-
     public List<TourneyEntity> findAll() {
-        List tourneys = getSession()
-                .createQuery("from TourneyEntity order by id")
-                .list();
+        return super.list();
+    }
 
+    public List<TourneyEntity> findAllOrderByID() {
+        List tourneys = getSession().createQuery("from TourneyEntity order by id").list();
         if ((tourneys != null) && (tourneys.size() > 0)) return (List<TourneyEntity>) tourneys;
         else return null;
     }
@@ -51,8 +48,8 @@ public class TourneyDAOImpl extends AbstractDAOImpl<TourneyEntity, Integer> impl
 //    ==================================================================================
 //    === UPDATE
 
-    public Integer updateStatusByID(Integer id, TourneyStatusEntity status) {
-        return getSession()
+    public void updateStatusByID(Integer id, TourneyStatusEntity status) {
+        getSession()
                 .createQuery("update TourneyEntity set status=? where id=?")
                 .setParameter(0, status)
                 .setParameter(1, id)

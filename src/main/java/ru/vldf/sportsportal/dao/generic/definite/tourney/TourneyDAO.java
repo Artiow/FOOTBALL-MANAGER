@@ -18,8 +18,10 @@ public interface TourneyDAO {
 
     List<TourneyEntity> findAll();
 
+    List<TourneyEntity> findAllOrderByID();
+
 //    ==================================================================================
 //    === UPDATE
 
-    Integer updateStatusByID(Integer id, TourneyStatusEntity status);
+    void updateStatusByID(Integer id, TourneyStatusEntity status);
 }

@@ -1,6 +1,7 @@
 package ru.vldf.sportsportal.dto.tourney;
 
 import ru.vldf.sportsportal.domain.tourney.TourneyEntity;
+import ru.vldf.sportsportal.domain.tourney.TourneyStatusEntity;
 
 public class TourneyDTO {
     private Integer id;
@@ -20,7 +21,8 @@ public class TourneyDTO {
         currentTour = tourney.getCurrentTour();
         nextTour = tourney.getNextTour();
 
-        if (tourney.getStatus() != null) status = new TourneyStatusDTO(tourney.getStatus());
+        TourneyStatusEntity tourneyStatusEntity = tourney.getStatus();
+        if (tourneyStatusEntity != null) status = new TourneyStatusDTO(tourneyStatusEntity);
     }
 
     public Integer getId() {
