@@ -34,29 +34,6 @@ public class GameEntity {
     }
 
 //    ==================================================================================
-//    === ONE-TO-ONE REFERENCES
-
-    @OneToOne
-    @JoinColumn(name = "red_id", referencedColumnName = "id", nullable = false)
-    public CompositionEntity getRed() {
-        return red;
-    }
-
-    public void setRed(CompositionEntity red) {
-        this.red = red;
-    }
-
-    @OneToOne
-    @JoinColumn(name = "blue_id", referencedColumnName = "id", nullable = false)
-    public CompositionEntity getBlue() {
-        return blue;
-    }
-
-    public void setBlue(CompositionEntity blue) {
-        this.blue = blue;
-    }
-
-//    ==================================================================================
 //    === MANY-TO-ONE REFERENCES
 
     @ManyToOne
@@ -67,6 +44,26 @@ public class GameEntity {
 
     public void setTour(TourEntity tour) {
         this.tour = tour;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "red_id", referencedColumnName = "id", nullable = false)
+    public CompositionEntity getRed() {
+        return red;
+    }
+
+    public void setRed(CompositionEntity red) {
+        this.red = red;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "blue_id", referencedColumnName = "id", nullable = false)
+    public CompositionEntity getBlue() {
+        return blue;
+    }
+
+    public void setBlue(CompositionEntity blue) {
+        this.blue = blue;
     }
 
 //    ==================================================================================

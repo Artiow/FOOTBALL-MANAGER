@@ -2,8 +2,8 @@ package ru.vldf.sportsportal.dto.tourney;
 
 import ru.vldf.sportsportal.domain.lease.PlaygroundEntity;
 import ru.vldf.sportsportal.domain.tourney.CompositionEntity;
+import ru.vldf.sportsportal.domain.tourney.CompositionStatisticEntity;
 import ru.vldf.sportsportal.domain.tourney.TeamEntity;
-import ru.vldf.sportsportal.domain.tourney.TourEntity;
 import ru.vldf.sportsportal.domain.tourney.TourneyEntity;
 import ru.vldf.sportsportal.dto.lease.PlaygroundDTO;
 
@@ -15,8 +15,9 @@ public class CompositionDTO {
 
     private TeamDTO team;
     private TourneyDTO tourney;
-
     private PlaygroundDTO playground;
+
+    private CompositionStatisticDTO statistic;
 
     public CompositionDTO() {
 
@@ -25,16 +26,18 @@ public class CompositionDTO {
     public CompositionDTO(CompositionEntity composition) {
         id = composition.getId();
         name = composition.getName();
-        shiftbalance = composition.getShiftBalance();
+        shiftbalance = composition.getShiftbalance();
         timegrid = composition.getTimegrid();
 
         TeamEntity teamEntity = composition.getTeam();
         if (teamEntity != null) team = new TeamDTO(teamEntity);
         TourneyEntity tourneyEntity = composition.getTourney();
         if (tourneyEntity != null) tourney = new TourneyDTO(tourneyEntity);
-
         PlaygroundEntity playgroundEntity = composition.getPlayground();
         if (playgroundEntity != null) playground = new PlaygroundDTO(playgroundEntity);
+
+        CompositionStatisticEntity statisticEntity = composition.getStatistic();
+        if (statisticEntity != null) statistic = new CompositionStatisticDTO(statisticEntity);
     }
 
     public Integer getId() {

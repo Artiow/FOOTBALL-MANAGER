@@ -33,12 +33,12 @@ public class UserDTO implements Serializable {
         patronymic = user.getPatronymic();
 
         Date date = user.getBirthday();
-        if (date != null) this.birthday = ((Date) date.clone());
+        if (date != null) birthday = ((Date) date.clone());
 
         phone = user.getPhone();
 
-        UserRoleEntity role = user.getRole();
-        if (role != null) this.role = new UserRoleDTO(role);
+        UserRoleEntity roleEntity = user.getRole();
+        if (role != null) role = new UserRoleDTO(roleEntity);
     }
 
     public Integer getId() {

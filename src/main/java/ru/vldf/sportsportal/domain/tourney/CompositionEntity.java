@@ -16,12 +16,13 @@ public class CompositionEntity {
 
     private TeamEntity team;
     private TourneyEntity tourney;
-
     private PlaygroundEntity playground;
 
     private CompositionStatisticEntity statistic;
-
     private Collection<CompositionMembershipEntity> memberships;
+    private Collection<CompositionResultEntity> results;
+    private Collection<GameEntity> redGames;
+    private Collection<GameEntity> blueGames;
 
     public CompositionEntity() {
 
@@ -60,16 +61,16 @@ public class CompositionEntity {
 
     @Basic
     @Column(name = "shiftbalance", nullable = false)
-    public Integer getShiftBalance() {
+    public Integer getShiftbalance() {
         return shiftbalance;
     }
 
-    public void setShiftBalance(Integer shiftbalance) {
+    public void setShiftbalance(Integer shiftbalance) {
         this.shiftbalance = shiftbalance;
     }
 
     @Basic
-    @Column(name = "timegrid", nullable = false)
+    @Column(name = "timegrid", nullable = false, length = 10)
     public String getTimegrid() {
         return timegrid;
     }
@@ -100,6 +101,33 @@ public class CompositionEntity {
 
     public void setMemberships(Collection<CompositionMembershipEntity> memberships) {
         this.memberships = memberships;
+    }
+
+    @OneToMany(mappedBy = "composition")
+    public Collection<CompositionResultEntity> getResults() {
+        return results;
+    }
+
+    public void setResults(Collection<CompositionResultEntity> results) {
+        this.results = results;
+    }
+
+    @OneToMany(mappedBy = "red")
+    public Collection<GameEntity> getRedGames() {
+        return redGames;
+    }
+
+    public void setRedGames(Collection<GameEntity> redGames) {
+        this.redGames = redGames;
+    }
+
+    @OneToMany(mappedBy = "blue")
+    public Collection<GameEntity> getBlueGames() {
+        return blueGames;
+    }
+
+    public void setBlueGames(Collection<GameEntity> blueGames) {
+        this.blueGames = blueGames;
     }
 
 //    ==================================================================================

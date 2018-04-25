@@ -30,7 +30,7 @@ public class CompositionDAOImpl extends AbstractDAOImpl<CompositionEntity, Integ
 
     public List<CompositionEntity> findByTeam(Integer teamID) {
         List compositions = getSession()
-                .createQuery("from CompositionEntity as eTeamComposition where eTeamComposition.team.id=?")
+                .createQuery("from CompositionEntity where team.id=?")
                 .setParameter(0, teamID)
                 .list();
 
@@ -40,7 +40,7 @@ public class CompositionDAOImpl extends AbstractDAOImpl<CompositionEntity, Integ
 
     public List<CompositionEntity> findByTeam(TeamEntity team) {
         List compositions = getSession()
-                .createQuery("from CompositionEntity as eTeamComposition where eTeamComposition.team=?")
+                .createQuery("from CompositionEntity where team=?")
                 .setParameter(0, team)
                 .list();
 
@@ -50,7 +50,7 @@ public class CompositionDAOImpl extends AbstractDAOImpl<CompositionEntity, Integ
 
     public List<CompositionEntity> findByTourney(Integer tourneyID) {
         List compositions = getSession()
-                .createQuery("from CompositionEntity as eTeamComposition where eTeamComposition.tourney.id=?")
+                .createQuery("from CompositionEntity where tourney.id=?")
                 .setParameter(0, tourneyID)
                 .list();
 
@@ -60,7 +60,7 @@ public class CompositionDAOImpl extends AbstractDAOImpl<CompositionEntity, Integ
 
     public List<CompositionEntity> findByTourney(TourneyEntity tourney) {
         List compositions = getSession()
-                .createQuery("from CompositionEntity as eTeamComposition where eTeamComposition.tourney=?")
+                .createQuery("from CompositionEntity where tourney=?")
                 .setParameter(0, tourney)
                 .list();
 
@@ -75,19 +75,41 @@ public class CompositionDAOImpl extends AbstractDAOImpl<CompositionEntity, Integ
 //    ==================================================================================
 //    === UPDATE
 
-    public Integer updateTimeGridByID(Integer id, String timegrid) {
-        return getSession()
-                .createQuery("update CompositionEntity set timegrid=? where id=?")
-                .setParameter(0, timegrid)
-                .setParameter(1, id)
+    public void updateTimegridByID(Integer id, String timegrid) {
+        getSession()
+                .createQuery("update CompositionEntity set timegrid=:timegrid where id=:id")
+                .setParameter("id", id)
+                .setParameter("timegrid", timegrid)
                 .executeUpdate();
     }
 
-    public Integer updatePlaygroundByID(Integer id, PlaygroundEntity playground) {
-        return getSession()
-                .createQuery("update CompositionEntity set playground=? where id=?")
-                .setParameter(0, playground)
-                .setParameter(1, id)
+    public void incShiftbalanceByID(Integer id) {
+        getSession()
+                .createQuery("update CompositionEntity set shiftbalance = (shiftbalance + 1) where id=?")
+                .setParameter(0, id)
+                .executeUpdate();
+    }
+
+    public void decShiftbalanceByID(Integer id) {
+        getSession()
+                .createQuery("update CompositionEntity set shiftbalance = (shiftbalance - 1) where id=?")
+                .setParameter(0, id)
+                .executeUpdate();
+    }
+
+    public void updateShiftbalanceByID(Integer id, String shiftbalance) {
+        getSession()
+                .createQuery("update CompositionEntity set shiftbalance=:shiftbalance where id=:id")
+                .setParameter("id", id)
+                .setParameter("shiftbalance", shiftbalance)
+                .executeUpdate();
+    }
+
+    public void updatePlaygroundByID(Integer id, PlaygroundEntity playground) {
+        getSession()
+                .createQuery("update CompositionEntity set playground=:playground where id=:id")
+                .setParameter("id", id)
+                .setParameter("playground", playground)
                 .executeUpdate();
     }
 }

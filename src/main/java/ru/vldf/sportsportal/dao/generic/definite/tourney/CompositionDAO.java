@@ -29,7 +29,13 @@ public interface CompositionDAO {
 //    ==================================================================================
 //    === UPDATE
 
-    Integer updateTimeGridByID(Integer id, String timegrid);
+    void updateTimegridByID(Integer id, String timegrid);
 
-    Integer updatePlaygroundByID(Integer id, PlaygroundEntity playground);
+    void incShiftbalanceByID(Integer id);
+
+    void decShiftbalanceByID(Integer id);
+
+    void updateShiftbalanceByID(Integer id, String shiftbalance);
+
+    void updatePlaygroundByID(Integer id, PlaygroundEntity playground);
 }
