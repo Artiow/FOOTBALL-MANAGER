@@ -11,6 +11,7 @@ import ru.vldf.sportsportal.service.AdminService;
 import ru.vldf.sportsportal.service.AuthService;
 import ru.vldf.sportsportal.service.LeaseService;
 import ru.vldf.sportsportal.service.UserService;
+import ru.vldf.sportsportal.service.admin.UserAdminService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,11 +51,11 @@ public class UserController {
     @Controller //ADMIN
     public class UserAdminController {
 
-        private AdminService.AdminUserService userService;
+        private UserAdminService userService;
         private AdminService.AdminTourneyService tourneyService;
 
         @Autowired
-        public void setUserService(AdminService.AdminUserService userService) {
+        public void setUserService(UserAdminService userService) {
             this.userService = userService;
         }
 

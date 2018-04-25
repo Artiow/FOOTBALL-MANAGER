@@ -37,8 +37,8 @@ public class UserDTO implements Serializable {
 
         phone = user.getPhone();
 
-        UserRoleEntity roleEntity = user.getRole();
-        if (role != null) role = new UserRoleDTO(roleEntity);
+        UserRoleEntity userRoleEntity = user.getRole();
+        if (userRoleEntity != null) role = new UserRoleDTO(userRoleEntity);
     }
 
     public Integer getId() {

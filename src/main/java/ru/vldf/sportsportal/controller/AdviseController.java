@@ -45,8 +45,8 @@ public class AdviseController {
         return "redirect:/404";
     }
 
-    @ExceptionHandler(Exception.class)
-    public String handle500(Exception ex) {
-        return "redirect:/500";
-    }
+//    @ExceptionHandler(Exception.class)
+//    public String handle500(Exception ex) {
+//        return "redirect:/500";
+//    }
 }

@@ -114,7 +114,7 @@ public class TourneyService {
         if (entityList == null) return null;
 
         List<CompositionStatisticDTO> dtoList = new ArrayList<CompositionStatisticDTO>();
-        for (CompositionStatisticEntity entity: entityList) dtoList.add(new CompositionStatisticDTO(entity));
+        for (CompositionStatisticEntity entity: entityList) dtoList.add(new CompositionStatisticDTO(entity, true));
         return dtoList;
     }
 }

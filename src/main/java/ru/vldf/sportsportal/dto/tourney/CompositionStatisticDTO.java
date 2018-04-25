@@ -30,9 +30,15 @@ public class CompositionStatisticDTO {
         cloggedNum = statistic.getCloggedNum();
         missedNum = statistic.getMissedNum();
         diff = statistic.getDiff();
+    }
 
-        CompositionEntity compositionEntity = statistic.getComposition();
-        if (compositionEntity != null) composition = new CompositionDTO(compositionEntity);
+    public CompositionStatisticDTO(CompositionStatisticEntity statistic, boolean includeComposition) {
+        this(statistic);
+
+        if (includeComposition) {
+            CompositionEntity compositionEntity = statistic.getComposition();
+            if (compositionEntity != null) composition = new CompositionDTO(compositionEntity);
+        }
     }
 
     public Integer getId() {

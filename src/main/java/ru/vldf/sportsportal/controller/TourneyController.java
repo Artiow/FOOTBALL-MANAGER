@@ -37,7 +37,7 @@ public class TourneyController {
     }
 
     @GetMapping(value = {"/tourney"})
-    public String toCoverPage(ModelMap map) {
+    public String toCoverPage() {
         return "redirect:/tourney3"; //TODO: wtf
     }
 
@@ -68,11 +68,13 @@ public class TourneyController {
 
     @GetMapping(value = {"/tourney{id}/table"})
     public String toTourneyTablePage(@PathVariable("id") int id, ModelMap map) {
-        TourneyDTO tourney = tourneyService.getTourney(id);
-        map.addAttribute("tourneyCur", tourney);
-        map.addAttribute("tourneyList", tourneyService.getTourneyList());
+        TourneyDTO tourneyCur = tourneyService.getTourney(id);
+        map.addAttribute("tourneyCur", tourneyCur);
 
-        List<CompositionStatisticDTO> statistics = tourneyService.getStatistics(tourney);
+        List<TourneyDTO> tourneyList = tourneyService.getTourneyList();
+        map.addAttribute("tourneyList", tourneyList);
+
+        List<CompositionStatisticDTO> statistics = tourneyService.getStatistics(tourneyCur);
         map.addAttribute("statList", statistics);
 
         return "tourney/cover-tourney-table";

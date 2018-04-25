@@ -33,9 +33,9 @@ public interface UserDAO {
 //    ==================================================================================
 //    === UPDATE
 
-    Integer updateRoleByID(Integer id, Integer roleID);
+    void updateRoleByID(Integer id, Integer roleID);
 
-    Integer updateRoleByID(Integer id, String roleCode);
+    void updateRoleByID(Integer id, String roleCode);
 
-    Integer updateRoleByID(Integer id, UserRoleEntity role);
+    void updateRoleByID(Integer id, UserRoleEntity role);
 }

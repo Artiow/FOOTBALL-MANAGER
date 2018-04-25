@@ -38,6 +38,7 @@ public class AuthService {
         return SecurityContextHolder.getContext().getAuthentication();
     }
 
+
     @Transactional(readOnly = true)
     public Boolean check(UserDTO userDTO) {
         return ((userDAO.findByLogin(userDTO.getLogin()) == null) && (userDAO.findByEMail(userDTO.getEMail()) == null));

@@ -110,24 +110,24 @@ public class UserDAOImpl extends AbstractDAOImpl<UserEntity, Integer> implements
 //    ==================================================================================
 //    === UPDATE
 
-    public Integer updateRoleByID(Integer id, Integer roleID) {
-        return getSession()
+    public void updateRoleByID(Integer id, Integer roleID) {
+        getSession()
                 .createQuery("update UserEntity set role = (from UserRoleEntity as r where r.id=:roleID) where id=:id")
                 .setParameter("roleID", roleID)
                 .setParameter("id", id)
                 .executeUpdate();
     }
 
-    public Integer updateRoleByID(Integer id, String roleCode) {
-        return getSession()
+    public void updateRoleByID(Integer id, String roleCode) {
+        getSession()
                 .createQuery("update UserEntity set role = (from UserRoleEntity as r where r.code=:roleCode) where id=:id")
                 .setParameter("roleCode", roleCode)
                 .setParameter("id", id)
                 .executeUpdate();
     }
 
-    public Integer updateRoleByID(Integer id, UserRoleEntity role) {
-        return getSession()
+    public void updateRoleByID(Integer id, UserRoleEntity role) {
+        getSession()
                 .createQuery("update UserEntity set role=:role where id=:id")
                 .setParameter("role", role)
                 .setParameter("id", id)

@@ -1,6 +1,8 @@
 package ru.vldf.sportsportal.dto.tourney;
 
+import ru.vldf.sportsportal.domain.tourney.CompositionEntity;
 import ru.vldf.sportsportal.domain.tourney.CompositionResultEntity;
+import ru.vldf.sportsportal.domain.tourney.GameEntity;
 
 public class CompositionResultDTO {
     private Integer id;
@@ -17,8 +19,10 @@ public class CompositionResultDTO {
         id = result.getId();
         goal = result.getGoal();
 
-        if (result.getGame() != null) game = new GameDTO(result.getGame());
-        if (result.getComposition() != null) composition = new CompositionDTO(result.getComposition());
+        GameEntity gameEntity = result.getGame();
+        if (gameEntity != null) game = new GameDTO(gameEntity);
+        CompositionEntity compositionEntity = result.getComposition();
+        if (compositionEntity != null) composition = new CompositionDTO(compositionEntity);
     }
 
     public Integer getId() {

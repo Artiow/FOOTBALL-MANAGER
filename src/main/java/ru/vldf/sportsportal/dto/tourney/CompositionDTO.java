@@ -35,9 +35,15 @@ public class CompositionDTO {
         if (tourneyEntity != null) tourney = new TourneyDTO(tourneyEntity);
         PlaygroundEntity playgroundEntity = composition.getPlayground();
         if (playgroundEntity != null) playground = new PlaygroundDTO(playgroundEntity);
+    }
 
-        CompositionStatisticEntity statisticEntity = composition.getStatistic();
-        if (statisticEntity != null) statistic = new CompositionStatisticDTO(statisticEntity);
+    public CompositionDTO(CompositionEntity composition, boolean includeStatistic) {
+        this(composition);
+
+        if (includeStatistic) {
+            CompositionStatisticEntity statisticEntity = composition.getStatistic();
+            if (statisticEntity != null) statistic = new CompositionStatisticDTO(statisticEntity);
+        }
     }
 
     public Integer getId() {
