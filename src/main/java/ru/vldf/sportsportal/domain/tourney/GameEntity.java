@@ -24,7 +24,7 @@ public class GameEntity {
     }
 
     @Basic
-    @Column(name = "timegrid", nullable = true, length = 45)
+    @Column(name = "timegrid", nullable = false, length = 10)
     public String getTimegrid() {
         return timegrid;
     }

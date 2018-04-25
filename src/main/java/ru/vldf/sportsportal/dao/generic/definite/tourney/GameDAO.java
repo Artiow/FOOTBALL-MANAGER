@@ -36,5 +36,5 @@ public interface GameDAO {
 //    ==================================================================================
 //    === UPDATE
 
-    Integer updateTimegridByID(Integer id, String timegrid);
+    void updateTimegridByID(Integer id, String timegrid);
 }

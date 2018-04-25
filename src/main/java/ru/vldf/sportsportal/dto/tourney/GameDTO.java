@@ -1,6 +1,8 @@
 package ru.vldf.sportsportal.dto.tourney;
 
+import ru.vldf.sportsportal.domain.tourney.CompositionEntity;
 import ru.vldf.sportsportal.domain.tourney.GameEntity;
+import ru.vldf.sportsportal.domain.tourney.TourEntity;
 
 public class GameDTO {
     private Integer id;
@@ -18,9 +20,12 @@ public class GameDTO {
         id = game.getId();
         timegrid = game.getTimegrid();
 
-        if (game.getRed() != null) red = new CompositionDTO(game.getRed());
-        if (game.getBlue() != null) blue = new CompositionDTO(game.getBlue());
-        if (game.getTour() != null) tour = new TourDTO(game.getTour());
+        CompositionEntity redEntity = game.getRed();
+        if (redEntity != null) red = new CompositionDTO(redEntity);
+        CompositionEntity blueEntity = game.getBlue();
+        if (blueEntity != null) blue = new CompositionDTO(blueEntity);
+        TourEntity tourEntity = game.getTour();
+        if (tourEntity != null) tour = new TourDTO(tourEntity);
     }
 
     public Integer getId() {

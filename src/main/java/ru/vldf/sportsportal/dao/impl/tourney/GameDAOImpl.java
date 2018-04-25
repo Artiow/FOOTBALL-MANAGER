@@ -30,26 +30,23 @@ public class GameDAOImpl extends AbstractDAOImpl<GameEntity, Integer> implements
 
     public GameEntity findByRivalID(Integer compositionID, Integer tourNum) {
         List games = getSession()
-                .createQuery("from GameEntity where tour.num=? and (red.id=? or blue.id=?)")
-                .setParameter(0, tourNum)
-                .setParameter(1, compositionID)
-                .setParameter(2, compositionID)
+                .createQuery("from GameEntity where tour.num=:tourNum and (red.id=:compositionID or blue.id=:compositionID)")
+                .setParameter("compositionID", compositionID)
+                .setParameter("tourNum", tourNum)
                 .list();
 
-        if ((games != null) && (games.size() > 0)) return (GameEntity) games.get(0);
+        if ((games != null) && (games.size() == 1)) return (GameEntity) games.get(0);
         else return null;
     }
 
     public GameEntity findByRivalsID(Integer r1ID, Integer r2ID) {
         List games = getSession()
-                .createQuery("from GameEntity where (red.id=? and blue.id=?) or (red.id=? and blue.id=?)")
-                .setParameter(0, r1ID)
-                .setParameter(1, r2ID)
-                .setParameter(0, r2ID)
-                .setParameter(1, r1ID)
+                .createQuery("from GameEntity where (red.id=:r1ID and blue.id=:r2ID) or (red.id=:r2ID and blue.id=:r1ID)")
+                .setParameter("r1ID", r1ID)
+                .setParameter("r2ID", r2ID)
                 .list();
 
-        if ((games != null) && (games.size() > 0)) return (GameEntity) games.get(0);
+        if ((games != null) && (games.size() == 1)) return (GameEntity) games.get(0);
         else return null;
     }
 
@@ -80,9 +77,8 @@ public class GameDAOImpl extends AbstractDAOImpl<GameEntity, Integer> implements
     public List<GameEntity> findCurrentByTourney(Integer id) {
         List games = getSession()
                 .createQuery("select g from GameEntity as g, TourneyEntity as t"
-                        + " where g.tour.tourney.id=? and t.id=? and g.tour.num=t.currentTour"
+                        + " where (g.tour.tourney.id=?) and (t.id = g.tour.tourney.id) and (g.tour.num = t.currentTour)"
                 ).setParameter(0, id)
-                .setParameter(1, id)
                 .list();
 
         if ((games != null) && (games.size() > 0)) return (List<GameEntity>) games;
@@ -91,9 +87,9 @@ public class GameDAOImpl extends AbstractDAOImpl<GameEntity, Integer> implements
 
     public List<GameEntity> findCurrentByTourney(TourneyEntity tourney) {
         List games = getSession()
-                .createQuery("from GameEntity where tour.tourney=? and tour.num=?")
-                .setParameter(0, tourney)
-                .setParameter(1, tourney.getCurrentTour())
+                .createQuery("from GameEntity where tour.tourney=:tourney and tour.num=:num")
+                .setParameter("num", tourney.getCurrentTour())
+                .setParameter("tourney", tourney)
                 .list();
 
         if ((games != null) && (games.size() > 0)) return (List<GameEntity>) games;
@@ -103,9 +99,8 @@ public class GameDAOImpl extends AbstractDAOImpl<GameEntity, Integer> implements
     public List<GameEntity> findNextByTourney(Integer id) {
         List games = getSession()
                 .createQuery("select g from GameEntity as g, TourneyEntity as t"
-                        + " where g.tour.tourney.id=? and t.id=? and g.tour.num=t.nextTour"
+                        + " where (g.tour.tourney.id=?) and (t.id = g.tour.tourney.id) and (g.tour.num = t.nextTour)"
                 ).setParameter(0, id)
-                .setParameter(1, id)
                 .list();
 
         if ((games != null) && (games.size() > 0)) return (List<GameEntity>) games;
@@ -114,9 +109,9 @@ public class GameDAOImpl extends AbstractDAOImpl<GameEntity, Integer> implements
 
     public List<GameEntity> findNextByTourney(TourneyEntity tourney) {
         List games = getSession()
-                .createQuery("from GameEntity where tour.tourney=? and tour.num=?")
-                .setParameter(0, tourney)
-                .setParameter(1, tourney.getNextTour())
+                .createQuery("from GameEntity where tour.tourney=:tourney and tour.num=:num")
+                .setParameter("num", tourney.getNextTour())
+                .setParameter("tourney", tourney)
                 .list();
 
         if ((games != null) && (games.size() > 0)) return (List<GameEntity>) games;
@@ -126,11 +121,11 @@ public class GameDAOImpl extends AbstractDAOImpl<GameEntity, Integer> implements
 //    ==================================================================================
 //    === UPDATE
 
-    public Integer updateTimegridByID(Integer id, String timegrid) {
-        return getSession()
-                .createQuery("update GameEntity set timegrid=? where id=?")
-                .setParameter(0, timegrid)
-                .setParameter(1, id)
+    public void updateTimegridByID(Integer id, String timegrid) {
+        getSession()
+                .createQuery("update GameEntity set timegrid=:timegrid where id=:id")
+                .setParameter("timegrid", timegrid)
+                .setParameter("id", id)
                 .executeUpdate();
     }
 }
