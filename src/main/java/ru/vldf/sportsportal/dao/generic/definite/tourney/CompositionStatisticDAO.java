@@ -7,6 +7,7 @@ import ru.vldf.sportsportal.domain.tourney.TourneyEntity;
 import java.util.List;
 
 public interface CompositionStatisticDAO {
+
     Integer save(CompositionStatisticEntity result);
 
 //    ==================================================================================

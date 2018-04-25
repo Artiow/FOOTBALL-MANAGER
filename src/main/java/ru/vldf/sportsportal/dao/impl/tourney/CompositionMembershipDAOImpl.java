@@ -41,9 +41,9 @@ public class CompositionMembershipDAOImpl extends AbstractDAOImpl<CompositionMem
 
     public void deleteByMembership(Integer playerID, Integer compositionID) {
         getSession()
-                .createQuery("delete CompositionMembershipEntity where player.id=? and composition.id=?")
-                .setParameter(0, playerID)
-                .setParameter(1, compositionID)
+                .createQuery("delete CompositionMembershipEntity where player.id=:playerID and composition.id=:compositionID")
+                .setParameter("compositionID", compositionID)
+                .setParameter("playerID", playerID)
                 .executeUpdate();
     }
 }

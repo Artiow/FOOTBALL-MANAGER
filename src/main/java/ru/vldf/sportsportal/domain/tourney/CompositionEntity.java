@@ -31,7 +31,7 @@ public class CompositionEntity {
     public CompositionEntity(CompositionDTO composition, TeamEntity team, TourneyEntity tourney) {
         id = composition.getId();
         name = composition.getName();
-        shiftbalance = composition.getShiftBalance();
+        shiftbalance = composition.getShiftbalance();
         timegrid = composition.getTimegrid();
 
         this.team = team;

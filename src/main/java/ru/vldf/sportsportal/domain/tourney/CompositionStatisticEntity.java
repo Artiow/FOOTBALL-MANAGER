@@ -1,5 +1,7 @@
 package ru.vldf.sportsportal.domain.tourney;
 
+import ru.vldf.sportsportal.dto.tourney.CompositionStatisticDTO;
+
 import javax.persistence.*;
 
 @Entity
@@ -16,6 +18,24 @@ public class CompositionStatisticEntity {
     private Integer diff = 0;
 
     private CompositionEntity composition;
+
+    public CompositionStatisticEntity() {
+
+    }
+
+    public CompositionStatisticEntity(CompositionStatisticDTO statistic, CompositionEntity composition) {
+        id = statistic.getId();
+        score = statistic.getScore();
+        gameNum = statistic.getGameNum();
+        winNum = statistic.getWinNum();
+        drawNum = statistic.getDrawNum();
+        defeatNum = statistic.getDefeatNum();
+        cloggedNum = statistic.getCloggedNum();
+        missedNum = statistic.getMissedNum();
+        diff = statistic.getDiff();
+
+        this.composition = composition;
+    }
 
     @Id
     @Column(name = "id", nullable = false)

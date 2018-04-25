@@ -56,11 +56,11 @@ public class CompositionDTO {
         this.name = name;
     }
 
-    public Integer getShiftBalance() {
+    public Integer getShiftbalance() {
         return shiftbalance;
     }
 
-    public void setShiftBalance(Integer shiftbalance) {
+    public void setShiftbalance(Integer shiftbalance) {
         this.shiftbalance = shiftbalance;
     }
 
@@ -94,6 +94,14 @@ public class CompositionDTO {
 
     public void setPlayground(PlaygroundDTO playground) {
         this.playground = playground;
+    }
+
+    public CompositionStatisticDTO getStatistic() {
+        return statistic;
+    }
+
+    public void setStatistic(CompositionStatisticDTO statistic) {
+        this.statistic = statistic;
     }
 
     @Override

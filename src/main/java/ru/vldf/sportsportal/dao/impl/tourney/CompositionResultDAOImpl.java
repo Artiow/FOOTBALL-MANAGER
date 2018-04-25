@@ -24,12 +24,12 @@ public class CompositionResultDAOImpl extends AbstractDAOImpl<CompositionResultE
 
     public CompositionResultEntity findByGameAndComposition(Integer gameID, Integer compositionID) {
         List results = getSession()
-                .createQuery("from CompositionResultEntity where game.id=? and composition.id=?")
-                .setParameter(0, gameID)
-                .setParameter(1, compositionID)
+                .createQuery("from CompositionResultEntity where game.id=:gameID and composition.id=:compositionID")
+                .setParameter("compositionID", compositionID)
+                .setParameter("gameID", gameID)
                 .list();
 
-        if ((results != null) && (results.size() > 0)) return (CompositionResultEntity) results.get(0);
+        if ((results != null) && (results.size() == 1)) return (CompositionResultEntity) results.get(0);
         else return null;
     }
 

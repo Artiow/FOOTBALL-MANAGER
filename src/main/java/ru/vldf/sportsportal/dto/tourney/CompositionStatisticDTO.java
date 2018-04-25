@@ -1,5 +1,6 @@
 package ru.vldf.sportsportal.dto.tourney;
 
+import ru.vldf.sportsportal.domain.tourney.CompositionEntity;
 import ru.vldf.sportsportal.domain.tourney.CompositionStatisticEntity;
 
 public class CompositionStatisticDTO {
@@ -11,6 +12,7 @@ public class CompositionStatisticDTO {
     private Integer defeatNum = 0;
     private Integer cloggedNum = 0;
     private Integer missedNum = 0;
+    private Integer diff = 0;
 
     private CompositionDTO composition;
 
@@ -27,8 +29,10 @@ public class CompositionStatisticDTO {
         defeatNum = statistic.getDefeatNum();
         cloggedNum = statistic.getCloggedNum();
         missedNum = statistic.getMissedNum();
+        diff = statistic.getDiff();
 
-        if (statistic.getComposition() != null) composition = new CompositionDTO(statistic.getComposition());
+        CompositionEntity compositionEntity = statistic.getComposition();
+        if (compositionEntity != null) composition = new CompositionDTO(compositionEntity);
     }
 
     public Integer getId() {
@@ -101,6 +105,14 @@ public class CompositionStatisticDTO {
 
     public void setComposition(CompositionDTO composition) {
         this.composition = composition;
+    }
+
+    public Integer getDiff() {
+        return diff;
+    }
+
+    public void setDiff(Integer diff) {
+        this.diff = diff;
     }
 
     @Override
