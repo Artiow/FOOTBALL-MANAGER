@@ -1,6 +1,9 @@
 package ru.vldf.sportsportal.domain.tourney;
 
+import ru.vldf.sportsportal.dto.tourney.TourStatusDTO;
+
 import javax.persistence.*;
+import java.util.Collection;
 
 @Entity
 @Table(name = "tour_status", schema = "tourney", catalog = "sportsportal")
@@ -9,8 +12,21 @@ public class TourStatusEntity {
     private String code;
     private String description;
 
+    private Collection<TourEntity> tours;
+
+    public TourStatusEntity() {
+
+    }
+
+    public TourStatusEntity(TourStatusDTO status) {
+        id = status.getId();
+        code = status.getCode();
+        description = status.getDescription();
+    }
+
     @Id
     @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer getId() {
         return id;
     }
@@ -39,6 +55,21 @@ public class TourStatusEntity {
         this.description = description;
     }
 
+//    ==================================================================================
+//    === ONE-TO-MANY REFERENCES
+
+    @OneToMany(mappedBy = "status")
+    public Collection<TourEntity> getTours() {
+        return tours;
+    }
+
+    public void setTours(Collection<TourEntity> tours) {
+        this.tours = tours;
+    }
+
+//    ==================================================================================
+//    === OBJECTS METHODS
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -46,18 +77,19 @@ public class TourStatusEntity {
 
         TourStatusEntity that = (TourStatusEntity) o;
 
-        if (id != null ? !id.equals(that.id) : that.id != null) return false;
-        if (code != null ? !code.equals(that.code) : that.code != null) return false;
-        if (description != null ? !description.equals(that.description) : that.description != null) return false;
-
-        return true;
+        return id != null ? id.equals(that.id) : that.id == null;
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (code != null ? code.hashCode() : 0);
-        result = 31 * result + (description != null ? description.hashCode() : 0);
-        return result;
+        return id != null ? id.hashCode() : 0;
+    }
+
+    @Override
+    public String toString() {
+        return "TourStatusEntity{" +
+                "id=" + id +
+                ", code='" + code + '\'' +
+                '}';
     }
 }

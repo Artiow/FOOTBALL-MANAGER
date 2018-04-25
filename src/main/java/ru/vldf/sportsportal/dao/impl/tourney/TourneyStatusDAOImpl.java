@@ -31,7 +31,7 @@ public class TourneyStatusDAOImpl extends AbstractDAOImpl<TourneyStatusEntity, I
                 .setParameter(0, code)
                 .list();
 
-        if ((statuses != null) && (statuses.size() > 0)) return (TourneyStatusEntity) statuses.get(0);
+        if ((statuses != null) && (statuses.size() == 1)) return (TourneyStatusEntity) statuses.get(0);
         else return null;
     }
 

@@ -12,6 +12,7 @@ public class TourEntity {
     private Integer num;
 
     private TourneyEntity tourney;
+    private TourStatusEntity status;
 
     private Collection<GameEntity> games;
 
@@ -19,11 +20,12 @@ public class TourEntity {
 
     }
 
-    public TourEntity(TourDTO tour, TourneyEntity tourney) {
+    public TourEntity(TourDTO tour, TourneyEntity tourney, TourStatusEntity status) {
         id = tour.getId();
         num = tour.getNum();
 
         this.tourney = tourney;
+        this.status = status;
     }
 
     @Id
@@ -73,6 +75,16 @@ public class TourEntity {
         this.tourney = tourney;
     }
 
+    @ManyToOne
+    @JoinColumn(name = "status_id", referencedColumnName = "id", nullable = false)
+    public TourStatusEntity getStatus() {
+        return status;
+    }
+
+    public void setStatus(TourStatusEntity status) {
+        this.status = status;
+    }
+
 //    ==================================================================================
 //    === OBJECTS METHODS
 
@@ -95,6 +107,7 @@ public class TourEntity {
     public String toString() {
         return "TourEntity{" +
                 "id=" + id +
+                ", num=" + num +
                 '}';
     }
 }

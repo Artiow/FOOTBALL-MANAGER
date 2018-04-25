@@ -14,11 +14,15 @@ public interface TourDAO {
 
     TourEntity findByID(Integer id);
 
-    TourEntity findByTourney(Integer tourneyID, Integer num);
+    TourEntity findCurrentByTourney(Integer tourneyID);
 
     TourEntity findCurrentByTourney(TourneyEntity tourney);
 
+    TourEntity findNextByTourney(Integer tourneyID);
+
     TourEntity findNextByTourney(TourneyEntity tourney);
+
+    TourEntity findByTourney(Integer tourneyID, Integer num);
 
     List<TourEntity> findByTourney(Integer tourneyID);
 

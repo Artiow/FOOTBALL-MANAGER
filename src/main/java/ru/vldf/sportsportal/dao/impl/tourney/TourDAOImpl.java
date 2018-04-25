@@ -26,36 +26,58 @@ public class TourDAOImpl extends AbstractDAOImpl<TourEntity, Integer> implements
         return super.get(id);
     }
 
-    public TourEntity findByTourney(Integer tourneyID, Integer num) {
+    public TourEntity findCurrentByTourney(Integer tourneyID) {
         List tours = getSession()
-                .createQuery("from TourEntity where tourney.id=? and num=?")
-                .setParameter(0, tourneyID)
-                .setParameter(1, num)
+                .createQuery("select t from TourEntity as t, TourneyEntity as tt"
+                        + " where tt.id=? and t.tourney=tt and t.num=tt.currentTour"
+                ).setParameter(0, tourneyID)
                 .list();
 
-        if ((tours != null) && (tours.size() > 0)) return (TourEntity) tours.get(0);
+        if ((tours != null) && (tours.size() == 1)) return (TourEntity) tours.get(0);
         else return null;
     }
 
     public TourEntity findCurrentByTourney(TourneyEntity tourney) {
         List tours = getSession()
-                .createQuery("from TourEntity where tourney=? and num=?")
-                .setParameter(0, tourney)
-                .setParameter(1, tourney.getCurrentTour())
+                .createQuery("from TourEntity where tourney=:tourney and num=:num")
+                .setParameter("tourney", tourney)
+                .setParameter("num", tourney.getCurrentTour())
                 .list();
 
-        if ((tours != null) && (tours.size() > 0)) return (TourEntity) tours.get(0);
+        if ((tours != null) && (tours.size() == 1)) return (TourEntity) tours.get(0);
+        else return null;
+    }
+
+    public TourEntity findNextByTourney(Integer tourneyID) {
+        List tours = getSession()
+                .createQuery("select t from TourEntity as t, TourneyEntity as tt"
+                        + " where tt.id=? and t.tourney=tt and t.num=tt.nextTour"
+                ).setParameter(0, tourneyID)
+                .list();
+
+        if ((tours != null) && (tours.size() == 1)) return (TourEntity) tours.get(0);
         else return null;
     }
 
     public TourEntity findNextByTourney(TourneyEntity tourney) {
         List tours = getSession()
-                .createQuery("from TourEntity where tourney=? and num=?")
-                .setParameter(0, tourney)
-                .setParameter(1, tourney.getNextTour())
+                .createQuery("from TourEntity where tourney=:tourney and num=:num")
+                .setParameter("tourney", tourney)
+                .setParameter("num", tourney.getNextTour())
                 .list();
 
-        if ((tours != null) && (tours.size() > 0)) return (TourEntity) tours.get(0);
+        if ((tours != null) && (tours.size() == 1)) return (TourEntity) tours.get(0);
+        else return null;
+    }
+
+    public TourEntity findByTourney(Integer tourneyID, Integer num) {
+        List tours = getSession()
+                .createQuery("from TourEntity where tourney.id=:tourneyID and num=:num")
+                .setParameter("tourneyID", tourneyID)
+                .setParameter("num", num)
+                .list();
+
+        if ((tours != null) && (tours.size() == 1)) return (TourEntity) tours.get(0);
         else return null;
     }
 

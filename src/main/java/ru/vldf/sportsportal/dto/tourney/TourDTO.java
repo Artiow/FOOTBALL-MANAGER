@@ -1,12 +1,15 @@
 package ru.vldf.sportsportal.dto.tourney;
 
 import ru.vldf.sportsportal.domain.tourney.TourEntity;
+import ru.vldf.sportsportal.domain.tourney.TourStatusEntity;
+import ru.vldf.sportsportal.domain.tourney.TourneyEntity;
 
 public class TourDTO {
     private Integer id;
     private Integer num;
 
     private TourneyDTO tourney;
+    private TourStatusDTO status;
 
     public TourDTO() {
 
@@ -16,7 +19,10 @@ public class TourDTO {
         id = tour.getId();
         num = tour.getNum();
 
-        if (tour.getTourney() != null) tourney = new TourneyDTO(tour.getTourney());
+        TourneyEntity tourneyEntity = tour.getTourney();
+        if (tourneyEntity != null) tourney = new TourneyDTO(tourneyEntity);
+        TourStatusEntity tourStatusEntity = tour.getStatus();
+        if (tourStatusEntity != null) status = new TourStatusDTO(tourStatusEntity);
     }
 
     public Integer getId() {
@@ -43,6 +49,14 @@ public class TourDTO {
         this.tourney = tourney;
     }
 
+    public TourStatusDTO getStatus() {
+        return status;
+    }
+
+    public void setStatus(TourStatusDTO status) {
+        this.status = status;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -62,6 +76,7 @@ public class TourDTO {
     public String toString() {
         return "TourDTO{" +
                 "id=" + id +
+                ", num=" + num +
                 '}';
     }
 }

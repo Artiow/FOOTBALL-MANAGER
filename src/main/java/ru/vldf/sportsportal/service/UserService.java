@@ -162,7 +162,7 @@ public class UserService {
             StringBuilder timegrid = new StringBuilder(composition.getTimegrid());
             timegrid.setCharAt(time, choice);
 
-            compositionDAO.updateTimeGridByID(composition.getId(),timegrid.toString());
+            compositionDAO.updateTimegridByID(composition.getId(),timegrid.toString());
         }
 
 
