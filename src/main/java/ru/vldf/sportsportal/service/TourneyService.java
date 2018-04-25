@@ -112,13 +112,18 @@ public class TourneyService {
 
 
     @Transactional(readOnly = true)
-    public List<GameDTO> getGameList(TourDTO tourDTO) {
-        List<GameEntity> entityList = gameDAO.findByTour(tourDTO.getId());
+    public List<GameDTO> getGameList(Integer tourID) {
+        List<GameEntity> entityList = gameDAO.findByTour(tourID);
 
         if (entityList == null) return null;
         List<GameDTO> dtoList = new ArrayList<GameDTO>();
         for (GameEntity entity: entityList) dtoList.add(new GameDTO(entity));
         return dtoList;
+    }
+
+    @Transactional(readOnly = true)
+    public List<GameDTO> getGameList(TourDTO tourDTO) {
+        return getGameList(tourDTO.getId());
     }
 
     @Transactional(readOnly = true)

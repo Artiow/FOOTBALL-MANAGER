@@ -40,27 +40,29 @@ public class TourneyController {
 
     @GetMapping(value = {"/tourney"})
     public String toCoverPage() {
-        return "redirect:/tourney3"; //TODO: wtf
+        Integer tourneyID = tourneyService.getFirstTourneyID();
+        return "redirect:/tourney" + tourneyID;
     }
 
 
     @GetMapping(value = {"/tourney{tourneyID}"})
     public String toTourneyPage(@PathVariable("tourneyID") int tourneyID) {
-        TourneyDTO tourney = tourneyService.getTourney(tourneyID);
-        Integer tourID = tourneyService.getTourList(tourneyID).get(0).getId();
+        Integer tourID = tourneyService.getFirstTourID(tourneyID);
         return "redirect:/tourney{tourneyID}/tour" + tourID;
     }
 
     @GetMapping(value = {"/tourney{tourneyID}/tour{tourID}"})
     public String toTourneyPage(@PathVariable("tourneyID") int tourneyID, @PathVariable("tourID") int tourID, ModelMap map) {
-        TourneyDTO tourney = tourneyService.getTourney(tourneyID);
-        map.addAttribute("tourneyCur", tourney);
-        map.addAttribute("tourneyList", tourneyService.getTourneyList());
-        map.addAttribute("tourList", tourneyService.getTourList(tourneyID));
+        TourneyDTO tourneyCur = tourneyService.getTourney(tourneyID);
+        map.addAttribute("tourneyCur", tourneyCur);
 
-        TourDTO tour = tourneyService.getTour(tourID);
+        List<TourneyDTO> tourneyList = tourneyService.getTourneyList();
+        map.addAttribute("tourneyList", tourneyList);
 
-        List<GameDTO> gameList = tourneyService.getGameList(tour);
+        List<TourDTO> tourList = tourneyService.getTourList(tourneyID);
+        map.addAttribute("tourList", tourList);
+
+        List<GameDTO> gameList = tourneyService.getGameList(tourID);
         map.addAttribute("gameList", gameList);
 
         List<Integer[]> matches = tourneyService.getResults(gameList);
@@ -69,16 +71,16 @@ public class TourneyController {
         return "tourney/cover-tourney-score";
     }
 
-    @GetMapping(value = {"/tourney{id}/table"})
-    public String toTourneyTablePage(@PathVariable("id") int id, ModelMap map) {
-        TourneyDTO tourneyCur = tourneyService.getTourney(id);
+    @GetMapping(value = {"/tourney{tourneyID}/table"})
+    public String toTourneyTablePage(@PathVariable("tourneyID") int tourneyID, ModelMap map) {
+        TourneyDTO tourneyCur = tourneyService.getTourney(tourneyID);
         map.addAttribute("tourneyCur", tourneyCur);
 
         List<TourneyDTO> tourneyList = tourneyService.getTourneyList();
         map.addAttribute("tourneyList", tourneyList);
 
-        List<CompositionStatisticDTO> statistics = tourneyService.getStatistics(tourneyCur);
-        map.addAttribute("statList", statistics);
+        List<CompositionStatisticDTO> statList = tourneyService.getStatistics(tourneyCur);
+        map.addAttribute("statList", statList);
 
         return "tourney/cover-tourney-table";
     }
