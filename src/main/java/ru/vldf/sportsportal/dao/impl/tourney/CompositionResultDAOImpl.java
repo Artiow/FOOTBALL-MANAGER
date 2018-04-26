@@ -18,6 +18,9 @@ public class CompositionResultDAOImpl extends AbstractDAOImpl<CompositionResultE
         return super.save(entity);
     }
 
+//    ==================================================================================
+//    === FIND
+
     public CompositionResultEntity findByID(Integer id) {
         return super.get(id);
     }
