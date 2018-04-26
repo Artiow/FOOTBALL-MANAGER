@@ -21,8 +21,11 @@ public class TourneyAdminService {
     private final String TOURNEY_ALREADY_CODE = "TOURNEY_ALREADY";
 
     private TeamDAO teamDAO;
+
     private TourneyDAO tourneyDAO;
     private TourneyStatusDAO tourneyStatusDAO;
+    private TourDAO tourDAO;
+    private TourStatusDAO tourStatusDAO;
 
     private CompositionDAO compositionDAO;
     private CompositionResultDAO compositionResultDAO;
@@ -42,6 +45,16 @@ public class TourneyAdminService {
     @Autowired
     public void setTourneyStatusDAO(TourneyStatusDAO tourneyStatusDAO) {
         this.tourneyStatusDAO = tourneyStatusDAO;
+    }
+
+    @Autowired
+    public void setTourDAO(TourDAO tourDAO) {
+        this.tourDAO = tourDAO;
+    }
+
+    @Autowired
+    public void setTourStatusDAO(TourStatusDAO tourStatusDAO) {
+        this.tourStatusDAO = tourStatusDAO;
     }
 
     @Autowired
@@ -108,7 +121,28 @@ public class TourneyAdminService {
 
 
     @Transactional(readOnly = true)
-    public List<GameDTO> getNextGames(TourneyDTO tourney) {
+    public TourDTO getCurrentTour(TourneyDTO tourneyDTO) {
+        return new TourDTO(tourDAO.findCurrentByTourney(tourneyDTO.getId()));
+    }
+
+    @Transactional(readOnly = true)
+    public TourDTO getNextTour(TourneyDTO tourneyDTO) {
+        return new TourDTO(tourDAO.findNextByTourney(tourneyDTO.getId()));
+    }
+
+
+    @Transactional(readOnly = true)
+    public List<GameDTO> getCurrentGameList(TourneyDTO tourney) {
+        List<GameEntity> entityList = gameDAO.findCurrentByTourney(tourney.getId());
+        if (entityList == null) return null;
+
+        List<GameDTO> dtoList = new ArrayList<GameDTO>();
+        for (GameEntity entity: entityList) dtoList.add(new GameDTO(entity));
+        return dtoList;
+    }
+
+    @Transactional(readOnly = true)
+    public List<GameDTO> getNextGameList(TourneyDTO tourney) {
         List<GameEntity> entityList = gameDAO.findNextByTourney(tourney.getId());
         if (entityList == null) return null;
 

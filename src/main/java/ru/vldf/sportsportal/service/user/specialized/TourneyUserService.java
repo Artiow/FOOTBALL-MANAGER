@@ -128,8 +128,8 @@ public class TourneyUserService {
 
 
     @Transactional(readOnly = true)
-    public GameDTO getRival(Integer compositionID, Integer tour) {
-        GameEntity entity = gameDAO.findByRivalID(compositionID, tour);
+    public GameDTO getRival(Integer compositionID, Integer tourID) {
+        GameEntity entity = gameDAO.findByRivalID(compositionID, tourID);
         if (entity != null) return new GameDTO(entity);
         else return null;
     }
@@ -209,7 +209,7 @@ public class TourneyUserService {
     }
 
     @Transactional(readOnly = true)
-    public TourDTO getNextTour(TourneyDTO tourneyDTO, Integer tourNum) {
-        return new TourDTO(tourDAO.findByTourney(tourneyDTO.getId(), tourNum));
+    public TourDTO getNextTour(TourneyDTO tourneyDTO) {
+        return new TourDTO(tourDAO.findNextByTourney(tourneyDTO.getId()));
     }
 }

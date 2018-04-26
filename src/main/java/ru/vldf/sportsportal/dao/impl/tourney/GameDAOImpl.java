@@ -28,11 +28,11 @@ public class GameDAOImpl extends AbstractDAOImpl<GameEntity, Integer> implements
         return super.get(id);
     }
 
-    public GameEntity findByRivalID(Integer compositionID, Integer tourNum) {
+    public GameEntity findByRivalID(Integer compositionID, Integer tourID) {
         List games = getSession()
-                .createQuery("from GameEntity where tour.num=:tourNum and (red.id=:compositionID or blue.id=:compositionID)")
+                .createQuery("from GameEntity where tour.id=:tourID and (red.id=:compositionID or blue.id=:compositionID)")
                 .setParameter("compositionID", compositionID)
-                .setParameter("tourNum", tourNum)
+                .setParameter("tourID", tourID)
                 .list();
 
         if ((games != null) && (games.size() == 1)) return (GameEntity) games.get(0);

@@ -77,12 +77,12 @@
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
                 <h3 th:text="${compositionDTO.name}">TEAM NAME</h3>
-                <h4 style="padding: 5px" class="alert-success" th:text="${'ПРИГЛАШЕНИЕ В ТУРНИР: ' + compositionDTO.tourney.name.toUpperCase()}">УЧАСТИЕ В ТУРНИРЕ: NULL</h4>
-                <h4 th:if="${compositionDTO.tourney.status.code == 'TOURNEY_FORMED'}" style="padding: 5px" class="alert-warning">СОБЕРИТЕ СОСТАВ, ВЫБЕРИТЕ ВРЕМЯ И ПЛОЩАДКУ</h4>
-                <h4 th:if="${compositionDTO.tourney.status.code == 'TOURNEY_TIMEUP'}" style="padding: 5px" class="alert-warning">СОБЕРИТЕ СОСТАВ</h4>
+                <h4 style="padding: 5px" class="alert-success" th:text="${'УЧАСТИЕ В ТУРНИРЕ: ' + compositionDTO.tourney.name.toUpperCase() + '. ТУР ' + tourDTO.num}">УЧАСТИЕ В ТУРНИРЕ: NULL. ТУР NULL</h4>
+                <h4 th:if="${compositionDTO.tourney.status.code == 'TOURNEY_FORMED'}" style="padding: 5px" class="alert-warning">СОБЕРИТЕ СОСТАВ</h4>
+                <h4 th:if="${tourDTO.status.code == 'TOUR_TIMING'}" style="padding: 5px" class="alert-warning">ВЫБЕРИТЕ ВРЕМЯ И ПЛОЩАДКУ</h4>
             </div>
         </div>
-        <div th:if="${(compositionDTO.tourney.status.code == 'TOURNEY_FORMED') or (compositionDTO.tourney.status.code == 'TOURNEY_ALREADY')}" class="row">
+        <div th:if="${tourDTO.status.code == 'TOUR_TIMING'}" class="row">
             <div class="col-md-10 col-md-offset-1">
                 <h4>Ваш выбор времени:</h4>
                 <script>$('.dropdown-toggle').dropdown()</script>
@@ -113,7 +113,7 @@
                 </form>
             </div>
         </div>
-        <div style="margin-top: 20px" th:if="${((compositionDTO.tourney.status.code == 'TOURNEY_FORMED') or (compositionDTO.tourney.status.code == 'TOURNEY_ALREADY')) and (rivalDTO != null)}" class="row">
+        <div style="margin-top: 20px" th:if="${(tourDTO.status.code == 'TOUR_TIMING') and (rivalDTO != null)}" class="row">
             <div class="col-md-10 col-md-offset-1">
                 <h4 th:text="'Выбор времени соперника ' + ${rivalDTO.name} + ':'">Выбор времени соперника NULL:</h4>
             </div>
@@ -140,8 +140,9 @@
                             <p style="margin: 0; font-weight: bold" th:text="*{patronymic}">PATRONYMIC</p>
                             <p style="margin: 0" th:text="*{birthday}">BIRTHDAY</p>
                         </td>
-                        <td th:unless="${compositionDTO.tourney.status.code == 'TOURNEY_ALREADY'}">
-                            <a th:href="${'/pp/tourney/composition' + compositionDTO.id + '/player' + playerDTO.id + '/delete'}" style="margin-top: 12px" class="btn btn-danger">Удалить</a>
+                        <td>
+                            <a th:if="${compositionDTO.tourney.status.code == 'TOURNEY_FORMED'}" th:href="${'/pp/tourney/composition' + compositionDTO.id + '/player' + playerDTO.id + '/delete'}" style="margin-top: 12px" class="btn btn-danger">Удалить</a>
+                            <a th:if="${compositionDTO.tourney.status.code == 'TOURNEY_ALREADY'}" th:href="${'/pp/tourney/composition' + compositionDTO.id + '/player' + playerDTO.id + '/xxx'}" style="margin-top: 12px" class="btn btn-danger" disabled="disabled">Отзаявить</a>
                         </td>
                     </tr>
                 </table>
@@ -176,7 +177,7 @@
                             <p style="margin: 0" th:text="*{birthday}">BIRTHDAY</p>
                         </td>
                         <td>
-                            <a th:unless="${compositionDTO.tourney.status.code == 'TOURNEY_ALREADY'}" th:href="${'/pp/tourney/composition' + compositionDTO.id + '/player' + playerDTO.id + '/add'}" style="margin-top: 12px" class="btn btn-success">Добавить</a>
+                            <a th:if="${compositionDTO.tourney.status.code == 'TOURNEY_FORMED'}" th:href="${'/pp/tourney/composition' + compositionDTO.id + '/player' + playerDTO.id + '/add'}" style="margin-top: 12px" class="btn btn-success">Добавить</a>
                             <a th:if="${compositionDTO.tourney.status.code == 'TOURNEY_ALREADY'}" th:href="${'/pp/tourney/composition' + compositionDTO.id + '/player' + playerDTO.id + '/xxx'}" style="margin-top: 12px" class="btn btn-warning" disabled="disabled">Дозаявить</a>
                         </td>
                     </tr>

@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import ru.vldf.sportsportal.dto.common.UserDTO;
 import ru.vldf.sportsportal.dto.tourney.*;
+import ru.vldf.sportsportal.service.AuthService;
 import ru.vldf.sportsportal.service.admin.specialized.TourneyAdminService;
 import ru.vldf.sportsportal.service.user.specialized.TourneyUserService;
 
@@ -13,8 +15,15 @@ import java.util.List;
 
 @Controller
 public class TourneyAdminController {
+    private AuthService authService;
+
     private TourneyUserService tourneyUserService;
     private TourneyAdminService tourneyAdminService;
+
+    @Autowired
+    public void setAuthService(AuthService authService) {
+        this.authService = authService;
+    }
 
     @Autowired
     public void setTourneyUserService(TourneyUserService tourneyUserService) {
@@ -24,6 +33,12 @@ public class TourneyAdminController {
     @Autowired
     public void setTourneyAdminService(TourneyAdminService tourneyAdminService) {
         this.tourneyAdminService = tourneyAdminService;
+    }
+
+
+    @ModelAttribute("authUser")
+    public UserDTO getAuthUser() {
+        return authService.getAuthUser();
     }
 
 
@@ -70,8 +85,9 @@ public class TourneyAdminController {
     @GetMapping(value = {"/pp/admin/tourney/tourney{id}"})
     public String toTourneyPage(@PathVariable("id") int id, ModelMap map) {
         TourneyDTO tourneyDTO = tourneyAdminService.getTourney(id);
+
         List<CompositionDTO> compositionList = tourneyAdminService.getCompositionList(tourneyDTO);
-        List<GameDTO> gameList = tourneyAdminService.getNextGames(tourneyDTO);
+        List<GameDTO> gameList = tourneyAdminService.getCurrentGameList(tourneyDTO);
 
         map
                 .addAttribute("tourneyDTO", tourneyDTO)
@@ -79,22 +95,18 @@ public class TourneyAdminController {
                 .addAttribute("gameList", gameList);
 
 
-        int status = tourneyDTO.getStatus().getId();
-        switch (status) {
-            case 1:
-                return "user/admin/page-tourney-status-formed"; //TOURNEY_FORMED
-            case 2:
-                return "user/admin/page-tourney-status-timeup"; //TOURNEY_TIMEUP
+        TourneyStatusDTO statusDTO = tourneyDTO.getStatus();
+        String code = statusDTO.getCode();
 
-            default:
-                return "redirect:/xxx{id}"; //TODO: to tourney page!
-        }
+        if (code.equals("TOURNEY_FORMED")) return "user/admin/page-tourney-status-formed";
+        else if (code.equals("TOURNEY_ALREADY")) return "user/admin/page-tourney-status-ready";
+        else return "redirect:/xxx{id}"; //TODO: to tourney page!
     }
 
     @GetMapping(value = {"/pp/admin/tourney/tourney{id}/protocol"})
     public String toProtocolAllPage(@PathVariable("id") int id, ModelMap map) {
         TourneyDTO tourneyDTO = tourneyAdminService.getTourney(id);
-        List<GameDTO> gameList = tourneyAdminService.getNextGames(tourneyDTO);
+        List<GameDTO> gameList = tourneyAdminService.getNextGameList(tourneyDTO);
 
         List<List<PlayerDTO>> redPlayerLists = new ArrayList<List<PlayerDTO>>();
         List<List<PlayerDTO>> bluePlayerLists = new ArrayList<List<PlayerDTO>>();
@@ -140,8 +152,9 @@ public class TourneyAdminController {
     @GetMapping(value = {"/pp/admin/tourney/tourney{id}/timegrid"})
     public String toTimegridPage(@PathVariable("id") int id, ModelMap map) {
         TourneyDTO tourneyDTO = tourneyAdminService.getTourney(id);
+        TourDTO tourDTO = tourneyAdminService.getNextTour(tourneyDTO);
 
-        List<GameDTO> games = tourneyAdminService.getNextGames(tourneyDTO);
+        List<GameDTO> games = tourneyAdminService.getNextGameList(tourneyDTO);
         List<String[]> timegrid = tourneyAdminService.updateTimegrid(games); //TODO: remove
 
         map
@@ -149,8 +162,9 @@ public class TourneyAdminController {
                 .addAttribute("gameList", games)
                 .addAttribute("timegrid", timegrid);
 
-        if (tourneyDTO.getStatus().getCode().equals("TOURNEY_FORMED")) return "user/admin/page-tourney-timegrid";
-        if (tourneyDTO.getStatus().getCode().equals("TOURNEY_TIMEUP")) return "user/admin/page-tourney-timegrid-done";
+        String code = tourDTO.getStatus().getCode();
+        if (code.equals("TOUR_TIMING")) return "user/admin/page-tourney-timegrid";
+        if (code.equals("TOUR_FIXED")) return "user/admin/page-tourney-timegrid-done";
         else return "redirect:/500";
     }
 

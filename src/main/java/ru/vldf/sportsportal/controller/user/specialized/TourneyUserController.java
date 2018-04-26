@@ -97,10 +97,8 @@ public class TourneyUserController {
             timegrid[i] = ("" + chars[i]);
         }
 
-        Integer tourNum = compositionDTO.getTourney().getNextTour();
-//            TourDTO tourDTO = userTourneyService.getNextTour(compositionDTO.getTourney(), tourNum);
-
-        GameDTO gameDTO = userTourneyService.getRival(id, tourNum);
+        TourDTO tourDTO = userTourneyService.getNextTour(compositionDTO.getTourney());
+        GameDTO gameDTO = userTourneyService.getRival(id, tourDTO.getId());
         CompositionDTO rivalDTO = null;
         String[] rivalgrid = null;
         if (gameDTO != null) {
@@ -117,9 +115,10 @@ public class TourneyUserController {
         map
                 .addAttribute("maxSize", maxSize)
                 .addAttribute("currentSize", currentSize)
-//                    .addAttribute("tourDTO", tourDTO)
 
                 .addAttribute("teamDTO", compositionDTO.getTeam())
+
+                .addAttribute("tourDTO", tourDTO)
                 .addAttribute("compositionDTO", compositionDTO)
                 .addAttribute("rivalDTO", rivalDTO)
 

@@ -15,7 +15,7 @@ public interface GameDAO {
 
     GameEntity findByID(Integer id);
 
-    GameEntity findByRivalID(Integer compositionID, Integer tourNum);
+    GameEntity findByRivalID(Integer compositionID, Integer tourID);
 
     GameEntity findByRivalsID(Integer r1ID, Integer r2ID);
 
