@@ -22,7 +22,7 @@ public class CompositionResultDTO {
         GameEntity gameEntity = result.getGame();
         if (gameEntity != null) game = new GameDTO(gameEntity);
         CompositionStatisticEntity statisticEntity = result.getStatistic();
-        if (statisticEntity != null) statistic = new CompositionStatisticDTO(statisticEntity);
+        if (statisticEntity != null) statistic = new CompositionStatisticDTO(statisticEntity, true);
     }
 
     public Integer getId() {

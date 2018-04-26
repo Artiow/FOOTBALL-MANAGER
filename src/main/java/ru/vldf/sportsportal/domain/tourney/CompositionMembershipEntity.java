@@ -10,6 +10,8 @@ public class CompositionMembershipEntity {
     private PlayerEntity player;
     private CompositionEntity composition;
 
+    private PlayerStatisticEntity statistic;
+
     public CompositionMembershipEntity() {
 
     }
@@ -28,6 +30,18 @@ public class CompositionMembershipEntity {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+//    ==================================================================================
+//    === ONE-TO-ONE REFERENCES
+
+    @OneToOne(mappedBy = "membership")
+    public PlayerStatisticEntity getStatistic() {
+        return statistic;
+    }
+
+    public void setStatistic(PlayerStatisticEntity statistic) {
+        this.statistic = statistic;
     }
 
 

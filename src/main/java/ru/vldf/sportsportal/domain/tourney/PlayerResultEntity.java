@@ -1,18 +1,17 @@
 package ru.vldf.sportsportal.domain.tourney;
 
 import javax.persistence.*;
-import java.util.Collection;
 
 @Entity
-@Table(name = "composition_result", schema = "tourney", catalog = "sportsportal")
-public class CompositionResultEntity {
+@Table(name = "player_result", schema = "tourney", catalog = "sportsportal")
+public class PlayerResultEntity {
     private Integer id;
     private Integer goal = 0;
+    private Integer yellowCard = 0;
+    private Integer redCard = 0;
 
-    private GameEntity game;
-    private CompositionStatisticEntity statistic;
-
-    private Collection<PlayerResultEntity> results;
+    private CompositionResultEntity result;
+    private PlayerStatisticEntity statistic;
 
     @Id
     @Column(name = "id", nullable = false)
@@ -35,51 +34,58 @@ public class CompositionResultEntity {
         this.goal = goal;
     }
 
-//    ==================================================================================
-//    === ONE-TO_MANY REFERENCES
-
-    @OneToMany(mappedBy = "result")
-    public Collection<PlayerResultEntity> getResults() {
-        return results;
+    @Basic
+    @Column(name = "yellow_card", nullable = false)
+    public Integer getYellowCard() {
+        return yellowCard;
     }
 
-    public void setResults(Collection<PlayerResultEntity> results) {
-        this.results = results;
+    public void setYellowCard(Integer yellowCard) {
+        this.yellowCard = yellowCard;
     }
 
+    @Basic
+    @Column(name = "red_card", nullable = false)
+    public Integer getRedCard() {
+        return redCard;
+    }
+
+    public void setRedCard(Integer redCard) {
+        this.redCard = redCard;
+    }
 
 //    ==================================================================================
 //    === MANY-TO-ONE REFERENCES
 
     @ManyToOne
-    @JoinColumn(name = "game_id", referencedColumnName = "id", nullable = false)
-    public GameEntity getGame() {
-        return game;
+    @JoinColumn(name = "result_id", referencedColumnName = "id", nullable = false)
+    public CompositionResultEntity getResult() {
+        return result;
     }
 
-    public void setGame(GameEntity game) {
-        this.game = game;
+    public void setResult(CompositionResultEntity result) {
+        this.result = result;
     }
 
     @ManyToOne
     @JoinColumn(name = "statistic_id", referencedColumnName = "id", nullable = false)
-    public CompositionStatisticEntity getStatistic() {
+    public PlayerStatisticEntity getStatistic() {
         return statistic;
     }
 
-    public void setStatistic(CompositionStatisticEntity statistic) {
-        this.statistic = statistic;
+    public void setStatistic(PlayerStatisticEntity playerStatisticByStatisticId) {
+        this.statistic = playerStatisticByStatisticId;
     }
 
 //    ==================================================================================
-//    === OBJECT METHODS
+//    === OBJECTS METHODS
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        CompositionResultEntity that = (CompositionResultEntity) o;
+        PlayerResultEntity that = (PlayerResultEntity) o;
 
         return id != null ? id.equals(that.id) : that.id == null;
     }
@@ -91,8 +97,11 @@ public class CompositionResultEntity {
 
     @Override
     public String toString() {
-        return "ResultTeamEntity{" +
+        return "PlayerResultEntity{" +
                 "id=" + id +
+                ", goal=" + goal +
+                ", yellowCard=" + yellowCard +
+                ", redCard=" + redCard +
                 '}';
     }
 }
