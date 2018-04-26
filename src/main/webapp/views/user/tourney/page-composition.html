@@ -73,7 +73,7 @@
             </div>
         </div>
     </div>
-    <div class="container" th:if="${teamDTO != null}">
+    <div class="container" style="margin-bottom: 50px" th:if="${teamDTO != null}">
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
                 <h3 th:text="${compositionDTO.name}">TEAM NAME</h3>
@@ -129,7 +129,7 @@
                 <h4 th:unless="${rivalDTO.playground != null}">День не важен</h4> <!--TODO: tmp solution-->
             </div>
         </div>
-        <div style="margin-top: 10px; margin-bottom: 20px" class="row">
+        <div style="margin-top: 10px;" class="row">
             <div class="col-md-4 col-md-offset-1">
                 <h4 th:text="${'Текущий состав (' + currentSize + '/' + maxSize + '):'}">Текущий состав: NULL</h4>
                 <p th:if="${currentPlayerDTOList == null}">Пусто</p>

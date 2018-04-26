@@ -10,7 +10,7 @@ public class CompositionResultEntity {
     private Integer goal = 0;
 
     private GameEntity game;
-    private CompositionEntity composition;
+    private CompositionStatisticEntity statistic;
 
     public CompositionResultEntity() {
 
@@ -51,13 +51,13 @@ public class CompositionResultEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "composition_id", referencedColumnName = "id", nullable = false)
-    public CompositionEntity getComposition() {
-        return composition;
+    @JoinColumn(name = "statistic_id", referencedColumnName = "id", nullable = false)
+    public CompositionStatisticEntity getStatistic() {
+        return statistic;
     }
 
-    public void setComposition(CompositionEntity composition) {
-        this.composition = composition;
+    public void setStatistic(CompositionStatisticEntity statistic) {
+        this.statistic = statistic;
     }
 
 //    ==================================================================================

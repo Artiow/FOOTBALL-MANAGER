@@ -3,6 +3,7 @@ package ru.vldf.sportsportal.domain.tourney;
 import ru.vldf.sportsportal.dto.tourney.CompositionStatisticDTO;
 
 import javax.persistence.*;
+import java.util.Collection;
 
 @Entity
 @Table(name = "composition_statistic", schema = "tourney", catalog = "sportsportal")
@@ -18,6 +19,8 @@ public class CompositionStatisticEntity {
     private Integer diff = 0;
 
     private CompositionEntity composition;
+
+    private Collection<CompositionResultEntity> results;
 
     public CompositionStatisticEntity() {
 
@@ -141,6 +144,17 @@ public class CompositionStatisticEntity {
         this.composition = composition;
     }
 
+//    ==================================================================================
+//    === ONE-TO-MANY REFERENCES
+
+    @OneToMany(mappedBy = "statistic")
+    public Collection<CompositionResultEntity> getResults() {
+        return results;
+    }
+
+    public void setResults(Collection<CompositionResultEntity> results) {
+        this.results = results;
+    }
 
 //    ==================================================================================
 //    === OBJECTS METHODS

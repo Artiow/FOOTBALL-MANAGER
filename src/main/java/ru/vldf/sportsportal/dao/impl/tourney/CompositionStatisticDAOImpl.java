@@ -30,7 +30,7 @@ public class CompositionStatisticDAOImpl extends AbstractDAOImpl<CompositionStat
     public List<CompositionStatisticEntity> findByTourney(Integer id) {
         List statistics = getSession()
                 .createQuery("from CompositionStatisticEntity where composition.tourney.id=?"
-                        + " order by score desc, winNum desc, diff desc, cloggedNum desc"
+                        + " order by score desc, winNum desc, diff desc, cloggedNum desc, gameNum desc"
                 ).setParameter(0, id)
                 .list();
 
@@ -41,7 +41,7 @@ public class CompositionStatisticDAOImpl extends AbstractDAOImpl<CompositionStat
     public List<CompositionStatisticEntity> findByTourney(TourneyEntity tourney) {
         List statistics = getSession()
                 .createQuery("from CompositionStatisticEntity where composition.tourney=?"
-                        + " order by score desc, winNum desc, diff desc, cloggedNum desc"
+                        + " order by score desc, winNum desc, diff desc, cloggedNum desc, gameNum desc"
                 ).setParameter(0, tourney)
                 .list();
 
@@ -52,7 +52,7 @@ public class CompositionStatisticDAOImpl extends AbstractDAOImpl<CompositionStat
     public List<CompositionStatisticEntity> findByComposition(Integer id) {
         List statistics = getSession()
                 .createQuery("from CompositionStatisticEntity where composition.id=?"
-                        + " order by score desc, winNum desc, diff desc, cloggedNum desc"
+                        + " order by score desc, winNum desc, diff desc, cloggedNum desc, gameNum desc"
                 ).setParameter(0, id)
                 .list();
 
@@ -63,7 +63,7 @@ public class CompositionStatisticDAOImpl extends AbstractDAOImpl<CompositionStat
     public List<CompositionStatisticEntity> findByComposition(CompositionEntity composition) {
         List statistics = getSession()
                 .createQuery("from CompositionStatisticEntity where composition=?"
-                        + " order by score desc, winNum desc, diff desc, cloggedNum desc"
+                        + " order by score desc, winNum desc, diff desc, cloggedNum desc, gameNum desc"
                 ).setParameter(0, composition)
                 .list();
 

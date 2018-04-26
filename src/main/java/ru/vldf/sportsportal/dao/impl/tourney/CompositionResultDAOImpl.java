@@ -22,9 +22,20 @@ public class CompositionResultDAOImpl extends AbstractDAOImpl<CompositionResultE
         return super.get(id);
     }
 
+    public CompositionResultEntity findByGameAndStatistic(Integer gameID, Integer statisticID) {
+        List results = getSession()
+                .createQuery("from CompositionResultEntity where game.id=:gameID and statistic.id=:statisticID")
+                .setParameter("statisticID", statisticID)
+                .setParameter("gameID", gameID)
+                .list();
+
+        if ((results != null) && (results.size() == 1)) return (CompositionResultEntity) results.get(0);
+        else return null;
+    }
+
     public CompositionResultEntity findByGameAndComposition(Integer gameID, Integer compositionID) {
         List results = getSession()
-                .createQuery("from CompositionResultEntity where game.id=:gameID and composition.id=:compositionID")
+                .createQuery("from CompositionResultEntity where game.id=:gameID and statistic.composition.id=:compositionID")
                 .setParameter("compositionID", compositionID)
                 .setParameter("gameID", gameID)
                 .list();

@@ -145,9 +145,34 @@ public class TourneyAdminController {
     ) {
         GameDTO gameDTO = tourneyAdminService.getGame(id);
         tourneyAdminService.createResultGame(gameDTO, redGoalNum, blueGoalNum);
+
+
+
         return "redirect:/pp/admin/tourney/tourney" + gameDTO.getTour().getTourney().getId();
     }
 
+
+//    ===========================================================================================
+//    TODO: lol wtf
+    @GetMapping(value = {"/pp/admin/game{id}/result/protocol"})
+    public String toGameResultProtocolForm(@PathVariable("id") int id, ModelMap map) {
+        GameDTO gameDTO = tourneyAdminService.getGame(id);
+        map.addAttribute("gameDTO", gameDTO);
+
+
+
+        return "user/admin/form-result-protocol-game";
+    }
+
+    @PostMapping(value = {"/pp/admin/game{id}/protocol"})
+    public String createResultProtocolGame(@PathVariable("id") int id) {
+        GameDTO gameDTO = tourneyAdminService.getGame(id);
+
+
+
+        return "redirect:/pp/admin/tourney/tourney" + gameDTO.getTour().getTourney().getId();
+    }
+//    ===========================================================================================
 
     @GetMapping(value = {"/pp/admin/tourney/tourney{id}/timegrid"})
     public String toTimegridPage(@PathVariable("id") int id, ModelMap map) {

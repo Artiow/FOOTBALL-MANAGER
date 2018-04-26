@@ -19,10 +19,9 @@ public class CompositionEntity {
     private PlaygroundEntity playground;
 
     private CompositionStatisticEntity statistic;
-    private Collection<CompositionMembershipEntity> memberships;
-    private Collection<CompositionResultEntity> results;
     private Collection<GameEntity> redGames;
     private Collection<GameEntity> blueGames;
+    private Collection<CompositionMembershipEntity> memberships;
 
     public CompositionEntity() {
 
@@ -94,24 +93,6 @@ public class CompositionEntity {
 //    ==================================================================================
 //    === ONE-TO-MANY REFERENCES
 
-    @OneToMany(mappedBy = "composition")
-    public Collection<CompositionMembershipEntity> getMemberships() {
-        return memberships;
-    }
-
-    public void setMemberships(Collection<CompositionMembershipEntity> memberships) {
-        this.memberships = memberships;
-    }
-
-    @OneToMany(mappedBy = "composition")
-    public Collection<CompositionResultEntity> getResults() {
-        return results;
-    }
-
-    public void setResults(Collection<CompositionResultEntity> results) {
-        this.results = results;
-    }
-
     @OneToMany(mappedBy = "red")
     public Collection<GameEntity> getRedGames() {
         return redGames;
@@ -128,6 +109,15 @@ public class CompositionEntity {
 
     public void setBlueGames(Collection<GameEntity> blueGames) {
         this.blueGames = blueGames;
+    }
+
+    @OneToMany(mappedBy = "composition")
+    public Collection<CompositionMembershipEntity> getMemberships() {
+        return memberships;
+    }
+
+    public void setMemberships(Collection<CompositionMembershipEntity> memberships) {
+        this.memberships = memberships;
     }
 
 //    ==================================================================================

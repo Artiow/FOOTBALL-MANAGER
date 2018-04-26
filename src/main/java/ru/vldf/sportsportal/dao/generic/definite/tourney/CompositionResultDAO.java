@@ -13,6 +13,8 @@ public interface CompositionResultDAO {
 
     CompositionResultEntity findByID(Integer id);
 
+    CompositionResultEntity findByGameAndStatistic(Integer gameID, Integer statisticID);
+
     CompositionResultEntity findByGameAndComposition(Integer gameID, Integer compositionID);
 
     List<CompositionResultEntity> findAll();

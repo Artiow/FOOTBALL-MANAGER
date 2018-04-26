@@ -162,11 +162,15 @@ public class TourneyAdminService {
         CompositionResultEntity redResult = new CompositionResultEntity();
         CompositionResultEntity blueResult = new CompositionResultEntity();
 
-        redResult.setGame(gameDAO.findByID(gameDTO.getId()));
-        blueResult.setGame(gameDAO.findByID(gameDTO.getId()));
+        GameEntity gameEntity = gameDAO.findByID(gameDTO.getId());
+        redResult.setGame(gameEntity);
+        blueResult.setGame(gameEntity);
 
-        redResult.setComposition(compositionDAO.findByID(gameDTO.getRed().getId()));
-        blueResult.setComposition(compositionDAO.findByID(gameDTO.getBlue().getId()));
+        Integer redID = gameDTO.getRed().getId(),
+                blueID = gameDTO.getBlue().getId();
+
+        redResult.setStatistic(compositionDAO.findByID(redID).getStatistic());
+        blueResult.setStatistic(compositionDAO.findByID(blueID).getStatistic());
 
         redResult.setGoal(redGoalNum);
         blueResult.setGoal(blueGoalNum);
