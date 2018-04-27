@@ -27,7 +27,7 @@ public class PlayerDAOImpl extends AbstractDAOImpl<PlayerEntity, Integer> implem
 
     public List<PlayerEntity> findBySurname(String surname) {
         List players = getSession()
-                .createQuery("from PlayerEntity where surname=?")
+                .createQuery("from PlayerEntity where surname=? order by surname")
                 .setParameter(0, surname)
                 .list();
 
@@ -37,7 +37,7 @@ public class PlayerDAOImpl extends AbstractDAOImpl<PlayerEntity, Integer> implem
 
     public List<PlayerEntity> findBySurnameAndName(String surname, String name) {
         List players = getSession()
-                .createQuery("from PlayerEntity where surname=? and name=?")
+                .createQuery("from PlayerEntity where surname=? and name=? order by surname")
                 .setParameter(0, surname)
                 .setParameter(1, name)
                 .list();
@@ -48,7 +48,7 @@ public class PlayerDAOImpl extends AbstractDAOImpl<PlayerEntity, Integer> implem
 
     public List<PlayerEntity> findBySurnameAndPatronymic(String surname, String patronymic) {
         List players = getSession()
-                .createQuery("from PlayerEntity where surname=? and patronymic=?")
+                .createQuery("from PlayerEntity where surname=? and patronymic=? order by surname")
                 .setParameter(0, surname)
                 .setParameter(1, patronymic)
                 .list();
@@ -59,7 +59,7 @@ public class PlayerDAOImpl extends AbstractDAOImpl<PlayerEntity, Integer> implem
 
     public List<PlayerEntity> findByFullName(String name, String surname, String patronymic) {
         List players = getSession()
-                .createQuery("from PlayerEntity where name=? and surname=? and  patronymic=?")
+                .createQuery("from PlayerEntity where name=? and surname=? and  patronymic=? order by surname")
                 .setParameter(0, name)
                 .setParameter(1, surname)
                 .setParameter(2, patronymic)
@@ -75,6 +75,7 @@ public class PlayerDAOImpl extends AbstractDAOImpl<PlayerEntity, Integer> implem
                         + " join p.memberships as m"
                         + " join m.composition as c"
                         + " with c.id=?"
+                        + " order by p.surname"
                 ).setParameter(0, compositionID)
                 .list();
 

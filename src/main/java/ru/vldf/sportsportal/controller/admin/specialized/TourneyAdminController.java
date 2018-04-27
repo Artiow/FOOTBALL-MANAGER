@@ -164,7 +164,7 @@ public class TourneyAdminController {
         return "user/admin/form-result-protocol-game";
     }
 
-    @PostMapping(value = {"/pp/admin/game{id}/protocol"})
+    @PostMapping(value = {"/pp/admin/game{id}/result/protocol"})
     public String createResultProtocolGame(@PathVariable("id") int id) {
         GameDTO gameDTO = tourneyAdminService.getGame(id);
 

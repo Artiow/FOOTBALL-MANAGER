@@ -12,6 +12,10 @@
             src="../../../libs/jquery-3.2.1.js"
             th:src="@{/libs/jquery-3.2.1.js}"
     ></script>
+    <script
+            src="../../../libs/bootstrap/js/bootstrap.js"
+            th:src="@{/libs/bootstrap/js/bootstrap.js}"
+    ></script>
     <link rel="stylesheet"
           href="../../../libs/bootstrap/css/bootstrap.css"
           th:href="@{/libs/bootstrap/css/bootstrap.css}"
@@ -62,7 +66,93 @@
 <main style="min-height: 600px">
     <div class="container">
         <div class="row">
-
+            <div class="col-md-10 col-md-offset-1">
+                <form role="form" th:action="${'/pp/admin/game' + gameDTO.id + '/result/protocol'}" method="post">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h3 th:text="${gameDTO.red.name}">RED TEAM</h3>
+                            <table class="table">
+                                <tr style="font-weight: bold">
+                                    <td>#</td>
+                                    <td>Игрок</td>
+                                    <td>+/-</td>
+                                    <td>Голы</td>
+                                    <td>Карточки</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <p style="margin-top: 5px">0.</p>
+                                    </td>
+                                    <td>
+                                        <p style="margin-top: 5px">RED PLAYER FULLNAME</p>
+                                    </td>
+                                    <td>
+                                        <!--<label style="margin-top: 5px" for="redPlayerCheck" th:for="*{'redPlayerCheck' + id}">-->
+                                            <!--<input name="redPlayerID" id="redPlayerCheck" th:id="*{'redPlayerCheck' + id}" type="checkbox" th:value="*{id}"/>-->
+                                        <!--</label>-->
+                                        <label style="margin-top: 5px" for="redPlayerCheck">
+                                            <input name="redPlayerID" id="redPlayerCheck" type="checkbox"/>
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <input style="width: 45px" class="form-control" name="redGoalNums" type="text" value="0"/>
+                                    </td>
+                                    <td>
+                                        <select name="redCards" id="selectPlaygroundRed" class="form-control">
+                                            <option th:value="${null}" selected="selected">нет</option>
+                                            <option th:value="${'Y'}">Ж</option>
+                                            <option th:value="${'YY'}">ЖЖ</option>
+                                            <option th:value="${'YR'}">ЖК</option>
+                                            <option th:value="${'R'}">К</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-md-6">
+                            <h3 th:text="${gameDTO.blue.name}">BLUE TEAM</h3>
+                            <table class="table">
+                                <tr style="font-weight: bold">
+                                    <td>#</td>
+                                    <td>Игрок</td>
+                                    <td>+/-</td>
+                                    <td>Голы</td>
+                                    <td>Карточки</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <p style="margin-top: 5px">0.</p>
+                                    </td>
+                                    <td>
+                                        <p style="margin-top: 5px">BLUE PLAYER FULLNAME</p>
+                                    </td>
+                                    <td>
+                                        <!--<label style="margin-top: 5px" for="bluePlayerCheck" th:for="*{'bluePlayerCheck' + id}">-->
+                                            <!--<input name="bluePlayerID" id="bluePlayerCheck" th:id="*{'bluePlayerCheck' + id}" type="checkbox" th:value="*{id}"/>-->
+                                        <!--</label>-->
+                                        <label style="margin-top: 5px" for="bluePlayerCheck">
+                                            <input name="bluePlayerID" id="bluePlayerCheck" type="checkbox"/>
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <input style="width: 45px" class="form-control" name="blueGoalNums" type="text" value="0"/>
+                                    </td>
+                                    <td>
+                                        <select name="blueCards" id="selectPlaygroundBlue" class="form-control">
+                                            <option th:value="${null}" selected="selected">нет</option>
+                                            <option th:value="${'Y'}">Ж</option>
+                                            <option th:value="${'YY'}">ЖЖ</option>
+                                            <option th:value="${'YR'}">ЖК</option>
+                                            <option th:value="${'R'}">К</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-success">Подтвердить</button>
+                </form>
+            </div>
         </div>
     </div>
 </main>
