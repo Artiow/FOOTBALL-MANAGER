@@ -3,10 +3,7 @@ package ru.vldf.sportsportal.dao.impl.tourney;
 import org.springframework.stereotype.Repository;
 import ru.vldf.sportsportal.dao.generic.abstrct.AbstractDAOImpl;
 import ru.vldf.sportsportal.dao.generic.definite.tourney.GameDAO;
-import ru.vldf.sportsportal.domain.tourney.CompositionEntity;
-import ru.vldf.sportsportal.domain.tourney.GameEntity;
-import ru.vldf.sportsportal.domain.tourney.TourEntity;
-import ru.vldf.sportsportal.domain.tourney.TourneyEntity;
+import ru.vldf.sportsportal.domain.tourney.*;
 
 import java.util.List;
 
@@ -125,6 +122,22 @@ public class GameDAOImpl extends AbstractDAOImpl<GameEntity, Integer> implements
         getSession()
                 .createQuery("update GameEntity set timegrid=:timegrid where id=:id")
                 .setParameter("timegrid", timegrid)
+                .setParameter("id", id)
+                .executeUpdate();
+    }
+
+    public void updateTimeByID(Integer id, Integer timeID) {
+        getSession()
+                .createQuery("update GameEntity set time = (from TimegridEntity where id=:timeID) where id=:id")
+                .setParameter("timeID", timeID)
+                .setParameter("id", id)
+                .executeUpdate();
+    }
+
+    public void updateTimeByID(Integer id, TimegridEntity time) {
+        getSession()
+                .createQuery("update GameEntity set time=:time where id=:id")
+                .setParameter("time", time)
                 .setParameter("id", id)
                 .executeUpdate();
     }

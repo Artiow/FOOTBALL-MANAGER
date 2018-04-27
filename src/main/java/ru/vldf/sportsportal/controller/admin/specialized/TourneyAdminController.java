@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-import ru.vldf.sportsportal.dao.generic.definite.tourney.PlayerResultDAO;
 import ru.vldf.sportsportal.dto.common.UserDTO;
 import ru.vldf.sportsportal.dto.tourney.*;
 import ru.vldf.sportsportal.service.AuthService;
@@ -146,10 +145,36 @@ public class TourneyAdminController {
     ) {
         GameDTO gameDTO = tourneyAdminService.getGame(id);
         tourneyAdminService.createResultGame(gameDTO, redGoalNum, blueGoalNum);
-
-
-
         return "redirect:/pp/admin/tourney/tourney" + gameDTO.getTour().getTourney().getId();
+    }
+
+
+    @GetMapping(value = {"/pp/admin/tourney/tourney{id}/timegrid"})
+    public String toTimegridPage(@PathVariable("id") int id, ModelMap map) {
+        TourneyDTO tourneyDTO = tourneyAdminService.getTourney(id);
+
+        List<GameDTO> games = tourneyAdminService.getNextGameList(tourneyDTO);
+        List<TimegridDTO> times = tourneyAdminService.getTimegrid(tourneyDTO);
+
+        List<String[]> timegrid = tourneyAdminService.updateTimegrid(games); //TODO: remove
+
+        map
+                .addAttribute("tourneyDTO", tourneyDTO)
+                .addAttribute("gameList", games)
+                .addAttribute("timeList", times)
+                .addAttribute("timegrid", timegrid);
+
+        return "user/admin/page-tourney-timegrid";
+    }
+
+    @GetMapping(value = {"/pp/admin/tourney{tourneyID}/game{gameID}/set/time{timeID}"})
+    public String setTimeForGame(
+            @PathVariable("tourneyID") int tourneyID,
+            @PathVariable("gameID") int gameID,
+            @PathVariable("timeID") int timeID
+    ) {
+        tourneyAdminService.setGameTime(gameID, timeID);
+        return "redirect:/pp/admin/tourney/tourney{tourneyID}/timegrid";
     }
 
 
@@ -232,24 +257,7 @@ public class TourneyAdminController {
     }
 //    ===========================================================================================
 
-    @GetMapping(value = {"/pp/admin/tourney/tourney{id}/timegrid"})
-    public String toTimegridPage(@PathVariable("id") int id, ModelMap map) {
-        TourneyDTO tourneyDTO = tourneyAdminService.getTourney(id);
-        TourDTO tourDTO = tourneyAdminService.getNextTour(tourneyDTO);
 
-        List<GameDTO> games = tourneyAdminService.getNextGameList(tourneyDTO);
-        List<String[]> timegrid = tourneyAdminService.updateTimegrid(games); //TODO: remove
-
-        map
-                .addAttribute("tourneyDTO", tourneyDTO)
-                .addAttribute("gameList", games)
-                .addAttribute("timegrid", timegrid);
-
-        String code = tourDTO.getStatus().getCode();
-        if (code.equals("TOUR_TIMING")) return "user/admin/page-tourney-timegrid";
-        if (code.equals("TOUR_FIXED")) return "user/admin/page-tourney-timegrid-done";
-        else return "redirect:/500";
-    }
 
     @GetMapping(value = {"/pp/admin/tourney/tourney{id}/timeup"})
     public String timeup(@PathVariable("id") int id) {

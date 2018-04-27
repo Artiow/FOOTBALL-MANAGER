@@ -69,22 +69,23 @@
             <div class="col-md-12">
                 <script>$('.dropdown-toggle').dropdown()</script>
                 <table class="table table-bordered">
-                    <tr th:each="game,gIter: ${gameList}">
+                    <tr th:each="gameItem,gIter: ${gameList}">
                         <td>
-                            <p style="margin: 0; font-size: 12px" th:text="${game.red.name}">RED TEAM</p>
-                            <p style="margin: 0; font-size: 12px" th:text="${game.blue.name}">BLUE TEAM</p>
+                            <p style="margin: 0; font-size: 12px" th:text="${gameItem.red.name}">RED TEAM</p>
+                            <p style="margin: 0; font-size: 12px" th:text="${gameItem.blue.name}">BLUE TEAM</p>
                         </td>
                         <td>
-                            <p style="margin: 0; font-size: 12px" th:if="${game.red.playground != null}" th:text="${game.red.playground.name}">RED PG</p>
-                            <p style="margin: 0; font-size: 12px" th:unless="${game.red.playground != null}">N/A</p>
-                            <p style="margin: 0; font-size: 12px" th:if="${game.blue.playground != null}"  th:text="${game.blue.playground.name}">BLUE PG</p>
-                            <p style="margin: 0; font-size: 12px" th:unless="${game.blue.playground != null}">N/A</p>
+                            <p style="margin: 0; font-size: 12px" th:if="${gameItem.red.playground != null}" th:text="${gameItem.red.playground.name}">RED PG</p>
+                            <p style="margin: 0; font-size: 12px" th:unless="${gameItem.red.playground != null}">N/A</p>
+                            <p style="margin: 0; font-size: 12px" th:if="${gameItem.blue.playground != null}" th:text="${gameItem.blue.playground.name}">BLUE PG</p>
+                            <p style="margin: 0; font-size: 12px" th:unless="${gameItem.blue.playground != null}">N/A</p>
                         </td>
                         <td>
                             <div class="btn-group">
-                                <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" th:utext="${'XX' + ':00 ' + '&lt;span class=&quot;caret&quot;&gt;&lt;/span&gt;'}">XX:00 <span class="caret"></span></button>
+                                <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" th:if="${gameItem.time != null}" th:utext="${gameItem.time.startTime + ' - ' + gameItem.time.endTime + ' &lt;span class=&quot;caret&quot;&gt;&lt;/span&gt;'}">XX:00 - XX:00 <span class="caret"></span></button>
+                                <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" th:unless="${gameItem.time != null}">N/A <span class="caret"></span></button>
                                 <ul class="dropdown-menu">
-                                    <li><a th:href="${'/'}">XX:00</a></li>
+                                    <li th:each="timeItem: ${timeList}" th:object="${timeItem}"><a th:href="${'/pp/admin/tourney' + gameItem.tour.tourney.id + '/game' + gameItem.id + '/set/time' + timeItem.id}" th:text="*{startTime + ' - ' + endTime}">XX:00 - XX:00</a></li>
                                 </ul>
                             </div>
                         </td>

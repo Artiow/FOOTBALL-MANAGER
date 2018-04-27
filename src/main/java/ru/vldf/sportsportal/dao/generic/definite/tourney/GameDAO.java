@@ -1,6 +1,7 @@
 package ru.vldf.sportsportal.dao.generic.definite.tourney;
 
 import ru.vldf.sportsportal.domain.tourney.GameEntity;
+import ru.vldf.sportsportal.domain.tourney.TimegridEntity;
 import ru.vldf.sportsportal.domain.tourney.TourEntity;
 import ru.vldf.sportsportal.domain.tourney.TourneyEntity;
 
@@ -37,4 +38,8 @@ public interface GameDAO {
 //    === UPDATE
 
     void updateTimegridByID(Integer id, String timegrid);
+
+    void updateTimeByID(Integer id, Integer timeID);
+
+    void updateTimeByID(Integer id, TimegridEntity time);
 }

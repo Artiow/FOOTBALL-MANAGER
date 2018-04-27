@@ -28,7 +28,7 @@ public class TimegridDAOImpl extends AbstractDAOImpl<TimegridEntity, Integer> im
 
     public List<TimegridEntity> findByTimegridType(Integer typeID) {
         List timegrid = getSession()
-                .createQuery("from TimegridEntity where type.id=?")
+                .createQuery("from TimegridEntity where type.id=? order by id")
                 .setParameter(0, typeID)
                 .list();
 
@@ -38,7 +38,7 @@ public class TimegridDAOImpl extends AbstractDAOImpl<TimegridEntity, Integer> im
 
     public List<TimegridEntity> findByTimegridType(TimegridTypeEntity type) {
         List timegrid = getSession()
-                .createQuery("from TimegridEntity where type=?")
+                .createQuery("from TimegridEntity where type=? order by id")
                 .setParameter(0, type)
                 .list();
 

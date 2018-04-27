@@ -32,6 +32,8 @@ public class TourneyAdminService {
 
     private GameDAO gameDAO;
 
+    private TimegridDAO timegridDAO;
+
     @Autowired
     public void setTeamDAO(TeamDAO teamDAO) {
         this.teamDAO = teamDAO;
@@ -70,6 +72,11 @@ public class TourneyAdminService {
     @Autowired
     public void setGameDAO(GameDAO gameDAO) {
         this.gameDAO = gameDAO;
+    }
+
+    @Autowired
+    public void setTimegridDAO(TimegridDAO timegridDAO) {
+        this.timegridDAO = timegridDAO;
     }
 
 
@@ -154,6 +161,22 @@ public class TourneyAdminService {
     @Transactional(readOnly = true)
     public GameDTO getGame(Integer id) {
         return new GameDTO(gameDAO.findByID(id));
+    }
+
+    @Transactional(readOnly = true)
+    public List<TimegridDTO> getTimegrid(TourneyDTO tourney) {
+        List<TimegridEntity> entityList = timegridDAO.findByTimegridType(tourney.getTimegrid().getId());
+        if (entityList == null) return null;
+
+        List<TimegridDTO> dtoList = new ArrayList<TimegridDTO>();
+        for (TimegridEntity entity: entityList) dtoList.add(new TimegridDTO(entity));
+        return dtoList;
+    }
+
+
+    @Transactional
+    public void setGameTime(Integer gameID, Integer timeID) {
+        gameDAO.updateTimeByID(gameID, timeID);
     }
 
 
