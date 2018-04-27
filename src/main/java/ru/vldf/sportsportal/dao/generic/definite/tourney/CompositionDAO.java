@@ -35,6 +35,8 @@ public interface CompositionDAO {
 
     void decShiftbalanceByID(Integer id);
 
+    Integer getShiftbalanceByID(Integer id);
+
     void updateShiftbalanceByID(Integer id, String shiftbalance);
 
     void updatePlaygroundByID(Integer id, PlaygroundEntity playground);

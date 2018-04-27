@@ -142,7 +142,7 @@
                         </td>
                         <td>
                             <a th:if="${compositionDTO.tourney.status.code == 'TOURNEY_FORMED'}" th:href="${'/pp/tourney/composition' + compositionDTO.id + '/player' + playerDTO.id + '/delete'}" style="margin-top: 12px" class="btn btn-danger">Удалить</a>
-                            <a th:if="${compositionDTO.tourney.status.code == 'TOURNEY_ALREADY'}" th:href="${'/pp/tourney/composition' + compositionDTO.id + '/player' + playerDTO.id + '/xxx'}" style="margin-top: 12px" class="btn btn-danger" disabled="disabled">Отзаявить</a>
+                            <a th:if="${compositionDTO.tourney.status.code == 'TOURNEY_ALREADY'}" th:href="${'/pp/tourney/composition' + compositionDTO.id + '/player' + playerDTO.id + '/dec'}" style="margin-top: 12px" class="btn btn-danger">Отзаявить</a>
                         </td>
                     </tr>
                 </table>
@@ -178,7 +178,7 @@
                         </td>
                         <td>
                             <a th:if="${compositionDTO.tourney.status.code == 'TOURNEY_FORMED'}" th:href="${'/pp/tourney/composition' + compositionDTO.id + '/player' + playerDTO.id + '/add'}" style="margin-top: 12px" class="btn btn-success">Добавить</a>
-                            <a th:if="${compositionDTO.tourney.status.code == 'TOURNEY_ALREADY'}" th:href="${'/pp/tourney/composition' + compositionDTO.id + '/player' + playerDTO.id + '/xxx'}" style="margin-top: 12px" class="btn btn-warning" disabled="disabled">Дозаявить</a>
+                            <a th:if="${compositionDTO.tourney.status.code == 'TOURNEY_ALREADY'}" th:href="${'/pp/tourney/composition' + compositionDTO.id + '/player' + playerDTO.id + '/inc'}" style="margin-top: 12px" class="btn btn-warning">Дозаявить</a>
                         </td>
                     </tr>
                 </table>

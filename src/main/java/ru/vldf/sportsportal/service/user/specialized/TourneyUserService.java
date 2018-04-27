@@ -184,6 +184,7 @@ public class TourneyUserService {
         teamDAO.save(new TeamEntity(teamDTO, captain, status));
     }
 
+
     @Transactional
     public void addPlayerToComposition(Integer compositionID, Integer playerID) {
         CompositionMembershipEntity membership = new CompositionMembershipEntity();
@@ -196,6 +197,25 @@ public class TourneyUserService {
     @Transactional
     public void deletePlayerFromComposition(Integer compositionID, Integer playerID) {
         compositionMembershipDAO.deleteByMembership(playerID, compositionID);
+    }
+
+    @Transactional
+    public boolean incPlayerToComposition(Integer compositionID, int playerID) {
+        Integer shiftbalance = compositionDAO.getShiftbalanceByID(compositionID);
+        if (shiftbalance == 0) return false;
+
+        CompositionMembershipEntity membership = new CompositionMembershipEntity();
+        membership.setComposition(compositionDAO.findByID(compositionID));
+        membership.setPlayer(playerDAO.findByID(playerID));
+
+        compositionMembershipDAO.save(membership);
+        return true;
+    }
+
+    @Transactional
+    public boolean decPlayerFromComposition(Integer compositionID, int playerID) {
+//        TODO: dec player from composition!
+        return false;
     }
 
 

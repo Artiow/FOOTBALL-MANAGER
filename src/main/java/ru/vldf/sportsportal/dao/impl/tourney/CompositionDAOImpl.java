@@ -105,6 +105,10 @@ public class CompositionDAOImpl extends AbstractDAOImpl<CompositionEntity, Integ
                 .executeUpdate();
     }
 
+    public Integer getShiftbalanceByID(Integer id) {
+        return super.get(id).getShiftbalance();
+    }
+
     public void updatePlaygroundByID(Integer id, PlaygroundEntity playground) {
         getSession()
                 .createQuery("update CompositionEntity set playground=:playground where id=:id")

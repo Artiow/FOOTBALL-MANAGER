@@ -17,11 +17,17 @@ import java.util.List;
 public class TourneyUserController {
 
     private AuthService authService;
+    private LeaseService leaseService;
     private TourneyUserService userTourneyService;
 
     @Autowired
     public void setAuthService(AuthService authService) {
         this.authService = authService;
+    }
+
+    @Autowired
+    public void setLeaseService(LeaseService leaseService) {
+        this.leaseService = leaseService;
     }
 
     @Autowired
@@ -60,13 +66,6 @@ public class TourneyUserController {
         if (code.equals("TEAM_CONFIRMED")) return "user/tourney/page-team-status-confirmed";
 
         return "redirect:/xxx{id}";
-    }
-
-    private LeaseService leaseService;
-
-    @Autowired
-    public void setLeaseService(LeaseService leaseService) {
-        this.leaseService = leaseService;
     }
 
     @GetMapping(value = {"/pp/tourney/composition{id}"})
@@ -195,6 +194,32 @@ public class TourneyUserController {
         if (compositionDTO == null) return "redirect:/500"; //not user's composition
 
         userTourneyService.deletePlayerFromComposition(compositionDTO.getId(), playerID);
+        return "redirect:/pp/tourney/composition{compositionID}";
+    }
+
+    @GetMapping(value = {"/pp/tourney/composition{compositionID}/player{playerID}/inc"})
+    public String incPlayer(
+            @PathVariable("compositionID") int compositionID,
+            @PathVariable("playerID") int playerID
+    ) {
+//            TODO: optimize
+        CompositionDTO compositionDTO = userTourneyService.getCompositionSafely(compositionID);
+        if (compositionDTO == null) return "redirect:/500"; //not user's composition
+
+        if (!userTourneyService.incPlayerToComposition(compositionDTO.getId(), playerID)) return "redirect:/500";
+        return "redirect:/pp/tourney/composition{compositionID}";
+    }
+
+    @GetMapping(value = {"/pp/tourney/composition{compositionID}/player{playerID}/dec"})
+    public String decPlayer(
+            @PathVariable("compositionID") int compositionID,
+            @PathVariable("playerID") int playerID
+    ) {
+//            TODO: optimize
+        CompositionDTO compositionDTO = userTourneyService.getCompositionSafely(compositionID);
+        if (compositionDTO == null) return "redirect:/500"; //not user's composition
+
+        if (!userTourneyService.decPlayerFromComposition(compositionDTO.getId(), playerID)) return "redirect:/500";
         return "redirect:/pp/tourney/composition{compositionID}";
     }
 
