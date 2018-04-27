@@ -88,8 +88,8 @@
                                         <p style="margin-top: 5px" th:text="*{surname + ' ' + name}">RED PLAYER FULLNAME</p>
                                     </td>
                                     <td>
-                                        <label style="margin-top: 5px" for="redPlayerCheck" th:for="*{'redPlayerCheck' + id}">
-                                            <input name="redPlayerCheckList" id="redPlayerCheck" th:id="*{'redPlayerCheck' + id}" type="checkbox" th:value="*{id}"/>
+                                        <label style="margin-top: 5px" for="redPlayerCheck" th:for="${'redPlayerCheck' + redIter.index}">
+                                            <input name="redPlayerCheckList" id="redPlayerCheck" th:id="${'redPlayerCheck' + redIter.index}" type="checkbox" th:value="${redIter.index}"/>
                                         </label>
                                     </td>
                                     <td>
@@ -97,7 +97,7 @@
                                     </td>
                                     <td>
                                         <select name="redCards" id="selectPlaygroundRed" class="form-control">
-                                            <option th:value="${null}" selected="selected">нет</option>
+                                            <option th:value="${''}" selected="selected">нет</option>
                                             <option th:value="${'Y'}">Ж</option>
                                             <option th:value="${'YY'}">ЖЖ</option>
                                             <option th:value="${'YR'}">ЖК</option>
@@ -126,8 +126,8 @@
                                         <p style="margin-top: 5px" th:text="*{surname + ' ' + name}">RED PLAYER FULLNAME</p>
                                     </td>
                                     <td>
-                                        <label style="margin-top: 5px" for="bluePlayerCheck" th:for="*{'bluePlayerCheck' + id}">
-                                            <input name="bluePlayerCheckList" id="bluePlayerCheck" th:id="*{'bluePlayerCheck' + id}" type="checkbox" th:value="*{id}"/>
+                                        <label style="margin-top: 5px" for="bluePlayerCheck" th:for="${'bluePlayerCheck' + blueIter.index}">
+                                            <input name="bluePlayerCheckList" id="bluePlayerCheck" th:id="${'bluePlayerCheck' + blueIter.index}" type="checkbox" th:value="${blueIter.index}"/>
                                         </label>
                                     </td>
                                     <td>

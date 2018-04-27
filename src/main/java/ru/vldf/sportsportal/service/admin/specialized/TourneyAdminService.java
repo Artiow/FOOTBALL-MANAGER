@@ -179,6 +179,71 @@ public class TourneyAdminService {
         compositionResultDAO.save(blueResult);
     }
 
+    private PlayerResultDAO playerResultDAO;
+    private PlayerStatisticDAO playerStatisticDAO;
+
+    @Autowired
+    public void setPlayerResultDAO(PlayerResultDAO playerResultDAO) {
+        this.playerResultDAO = playerResultDAO;
+    }
+
+    @Autowired
+    public void setPlayerStatisticDAO(PlayerStatisticDAO playerStatisticDAO) {
+        this.playerStatisticDAO = playerStatisticDAO;
+    }
+
+    @Transactional
+    public void createResultProtocolGame(GameDTO gameDTO, List<PlayerResultDTO> redResultList, List<PlayerResultDTO> blueResultList) {
+        PlayerResultEntity playerResultEntity;
+        CompositionResultEntity compositionResultEntity;
+
+        compositionResultEntity
+                = compositionResultDAO.findByGameAndComposition(gameDTO.getId(), gameDTO.getRed().getId());
+        for(PlayerResultDTO result: redResultList) {
+            playerResultEntity = new PlayerResultEntity();
+
+            Boolean present = result.getPresent();
+            if (present) {
+                playerResultEntity.setPresent(true);
+                playerResultEntity.setGoal(result.getGoal());
+                playerResultEntity.setYellowCard(result.getYellowCard());
+                playerResultEntity.setRedCard(result.getRedCard());
+            }
+
+            PlayerStatisticEntity playerStatisticEntity
+                    = playerStatisticDAO.findByCompositionAndPlayer(gameDTO.getRed().getId(), result.getId());
+            playerResultEntity.setStatistic(playerStatisticEntity);
+            playerResultEntity.setResult(compositionResultEntity);
+
+//            TODO: update composition_result and composition_statistic here!
+
+            playerResultDAO.save(playerResultEntity);
+        }
+
+        compositionResultEntity
+                = compositionResultDAO.findByGameAndComposition(gameDTO.getId(), gameDTO.getBlue().getId());
+        for(PlayerResultDTO result: blueResultList) {
+            playerResultEntity = new PlayerResultEntity();
+
+            Boolean present = result.getPresent();
+            if (present) {
+                playerResultEntity.setPresent(true);
+                playerResultEntity.setGoal(result.getGoal());
+                playerResultEntity.setYellowCard(result.getYellowCard());
+                playerResultEntity.setRedCard(result.getRedCard());
+            }
+
+            PlayerStatisticEntity playerStatisticEntity
+                    = playerStatisticDAO.findByCompositionAndPlayer(gameDTO.getBlue().getId(), result.getId());
+            playerResultEntity.setStatistic(playerStatisticEntity);
+            playerResultEntity.setResult(compositionResultEntity);
+
+//            TODO: update composition_result and composition_statistic here!
+
+            playerResultDAO.save(playerResultEntity);
+        }
+    }
+
 
     @Transactional
     public List<String[]> updateTimegrid(List<GameDTO> games) {

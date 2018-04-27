@@ -9,7 +9,7 @@ public class PlayerResultEntity {
     private Integer goal = 0;
     private Integer yellowCard = 0;
     private Integer redCard = 0;
-    private Boolean present = true;
+    private Boolean present = false;
 
     private CompositionResultEntity result;
     private PlayerStatisticEntity statistic;
@@ -84,8 +84,8 @@ public class PlayerResultEntity {
         return statistic;
     }
 
-    public void setStatistic(PlayerStatisticEntity playerStatisticByStatisticId) {
-        this.statistic = playerStatisticByStatisticId;
+    public void setStatistic(PlayerStatisticEntity statistic) {
+        this.statistic = statistic;
     }
 
 //    ==================================================================================

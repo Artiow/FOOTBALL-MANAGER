@@ -4,6 +4,7 @@ import org.springframework.stereotype.Repository;
 import ru.vldf.sportsportal.dao.generic.abstrct.AbstractDAOImpl;
 import ru.vldf.sportsportal.dao.generic.definite.tourney.PlayerStatisticDAO;
 import ru.vldf.sportsportal.domain.tourney.CompositionEntity;
+import ru.vldf.sportsportal.domain.tourney.PlayerEntity;
 import ru.vldf.sportsportal.domain.tourney.PlayerStatisticEntity;
 import ru.vldf.sportsportal.domain.tourney.TourneyEntity;
 
@@ -64,6 +65,28 @@ public class PlayerStatisticDAOImpl extends AbstractDAOImpl<PlayerStatisticEntit
                 .list();
 
         if ((statistics != null) && (statistics.size() > 0)) return (List<PlayerStatisticEntity>) statistics;
+        else return null;
+    }
+
+    public PlayerStatisticEntity findByCompositionAndPlayer(Integer compositionID, Integer playerID) {
+        List statistics = getSession()
+                .createQuery("from PlayerStatisticEntity where membership.composition.id=:compositionID and membership.player.id=:playerID")
+                .setParameter("compositionID", compositionID)
+                .setParameter("playerID", playerID)
+                .list();
+
+        if ((statistics != null) && (statistics.size() == 1)) return (PlayerStatisticEntity) statistics.get(0);
+        else return null;
+    }
+
+    public PlayerStatisticEntity findByCompositionAndPlayer(CompositionEntity composition, PlayerEntity player) {
+        List statistics = getSession()
+                .createQuery("from PlayerStatisticEntity where membership.composition=:composition and membership.player=:player")
+                .setParameter("composition", composition)
+                .setParameter("player", player)
+                .list();
+
+        if ((statistics != null) && (statistics.size() == 1)) return (PlayerStatisticEntity) statistics.get(0);
         else return null;
     }
 

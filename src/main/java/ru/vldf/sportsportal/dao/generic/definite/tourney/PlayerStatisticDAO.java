@@ -1,6 +1,7 @@
 package ru.vldf.sportsportal.dao.generic.definite.tourney;
 
 import ru.vldf.sportsportal.domain.tourney.CompositionEntity;
+import ru.vldf.sportsportal.domain.tourney.PlayerEntity;
 import ru.vldf.sportsportal.domain.tourney.PlayerStatisticEntity;
 import ru.vldf.sportsportal.domain.tourney.TourneyEntity;
 
@@ -22,6 +23,10 @@ public interface PlayerStatisticDAO {
     List<PlayerStatisticEntity> findByComposition(Integer id);
 
     List<PlayerStatisticEntity> findByComposition(CompositionEntity composition);
+
+    PlayerStatisticEntity findByCompositionAndPlayer(Integer compositionID, Integer playerID);
+
+    PlayerStatisticEntity findByCompositionAndPlayer(CompositionEntity composition, PlayerEntity player);
 
     List<PlayerStatisticEntity> findAll();
 }

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import ru.vldf.sportsportal.dao.generic.definite.tourney.PlayerResultDAO;
 import ru.vldf.sportsportal.dto.common.UserDTO;
 import ru.vldf.sportsportal.dto.tourney.*;
 import ru.vldf.sportsportal.service.AuthService;
@@ -182,8 +183,51 @@ public class TourneyAdminController {
     ) {
         GameDTO game = tourneyAdminService.getGame(id);
 
+        Integer rSize = redPlayerIDList.size();
+        ArrayList<PlayerResultDTO> redResultList = new ArrayList<PlayerResultDTO>(rSize);
+        for (int i = 0; i < rSize; i++) {
+            PlayerResultDTO player = new PlayerResultDTO();
+            player.setId(redPlayerIDList.get(i));
+            redResultList.add(player);
+        }
 
+        Integer bSize = bluePlayerIDList.size();
+        ArrayList<PlayerResultDTO> blueResultList = new ArrayList<PlayerResultDTO>(bSize);
+        for (int i = 0; i < bSize; i++) {
+            PlayerResultDTO player = new PlayerResultDTO();
+            player.setId(bluePlayerIDList.get(i));
+            blueResultList.add(player);
+        }
 
+        for (Integer i: redPlayerCheckList) {
+            PlayerResultDTO player = redResultList.get(i);
+            player.setPresent(true);
+            player.setGoal(redGoalNums.get(i));
+
+            String card = redCards.get(i);
+            if (card.equals("Y")) player.setYellowCard(1);
+            else if ((card.equals("YY")) || (card.equals("R"))) player.setRedCard(1);
+            else if (card.equals("YR")) {
+                player.setYellowCard(1);
+                player.setRedCard(1);
+            }
+        }
+
+        for (Integer i: bluePlayerCheckList) {
+            PlayerResultDTO player = blueResultList.get(i);
+            player.setPresent(true);
+            player.setGoal(blueGoalNums.get(i));
+
+            String card = blueCards.get(i);
+            if (card.equals("Y")) player.setYellowCard(1);
+            else if ((card.equals("YY")) || (card.equals("R"))) player.setRedCard(1);
+            else if (card.equals("YR")) {
+                player.setYellowCard(1);
+                player.setRedCard(1);
+            }
+        }
+
+        tourneyAdminService.createResultProtocolGame(game, redResultList, blueResultList);
         return "redirect:/pp/admin/tourney/tourney" + game.getTour().getTourney().getId();
     }
 //    ===========================================================================================

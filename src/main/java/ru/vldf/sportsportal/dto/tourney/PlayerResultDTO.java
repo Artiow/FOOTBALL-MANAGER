@@ -9,7 +9,7 @@ public class PlayerResultDTO {
     private Integer goal = 0;
     private Integer yellowCard = 0;
     private Integer redCard = 0;
-    private Boolean present = true;
+    private Boolean present = false;
 
     private CompositionResultDTO result;
     private PlayerStatisticDTO statistic;
