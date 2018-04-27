@@ -9,6 +9,7 @@ public class PlayerResultEntity {
     private Integer goal = 0;
     private Integer yellowCard = 0;
     private Integer redCard = 0;
+    private Boolean present = true;
 
     private CompositionResultEntity result;
     private PlayerStatisticEntity statistic;
@@ -54,7 +55,17 @@ public class PlayerResultEntity {
         this.redCard = redCard;
     }
 
-//    ==================================================================================
+    @Basic
+    @Column(name = "present", nullable = false)
+    public Boolean getPresent() {
+        return present;
+    }
+
+    public void setPresent(Boolean present) {
+        this.present = present;
+    }
+
+    //    ==================================================================================
 //    === MANY-TO-ONE REFERENCES
 
     @ManyToOne

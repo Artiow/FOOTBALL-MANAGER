@@ -9,6 +9,7 @@ public class PlayerResultDTO {
     private Integer goal = 0;
     private Integer yellowCard = 0;
     private Integer redCard = 0;
+    private Boolean present = true;
 
     private CompositionResultDTO result;
     private PlayerStatisticDTO statistic;
@@ -22,6 +23,7 @@ public class PlayerResultDTO {
         goal = result.getGoal();
         yellowCard = result.getYellowCard();
         redCard = result.getRedCard();
+        present = result.getPresent();
 
         CompositionResultEntity compositionResultEntity = result.getResult();
         if (compositionResultEntity != null) this.result = new CompositionResultDTO(compositionResultEntity);
@@ -59,6 +61,14 @@ public class PlayerResultDTO {
 
     public void setRedCard(Integer redCard) {
         this.redCard = redCard;
+    }
+
+    public Boolean getPresent() {
+        return present;
+    }
+
+    public void setPresent(Boolean present) {
+        this.present = present;
     }
 
     public CompositionResultDTO getResult() {

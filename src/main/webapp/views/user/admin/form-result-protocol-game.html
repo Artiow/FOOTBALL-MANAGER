@@ -82,13 +82,14 @@
                                 <tr th:each="redPlayer,redIter: ${redPlayerList}" th:object="${redPlayer}">
                                     <td>
                                         <p style="margin-top: 5px" th:text="${redIter.index + 1} + '.'">0.</p>
+                                        <input style="display: none" name="redPlayerIDList" th:value="*{id}"/>
                                     </td>
                                     <td>
                                         <p style="margin-top: 5px" th:text="*{surname + ' ' + name}">RED PLAYER FULLNAME</p>
                                     </td>
                                     <td>
                                         <label style="margin-top: 5px" for="redPlayerCheck" th:for="*{'redPlayerCheck' + id}">
-                                            <input name="redPlayerID" id="redPlayerCheck" th:id="*{'redPlayerCheck' + id}" type="checkbox" th:value="*{id}"/>
+                                            <input name="redPlayerCheckList" id="redPlayerCheck" th:id="*{'redPlayerCheck' + id}" type="checkbox" th:value="*{id}"/>
                                         </label>
                                     </td>
                                     <td>
@@ -119,13 +120,14 @@
                                 <tr th:each="bluePlayer,blueIter: ${bluePlayerList}" th:object="${bluePlayer}">
                                     <td>
                                         <p style="margin-top: 5px" th:text="${blueIter.index + 1} + '.'">0.</p>
+                                        <input style="display: none" name="bluePlayerIDList" th:value="*{id}"/>
                                     </td>
                                     <td>
                                         <p style="margin-top: 5px" th:text="*{surname + ' ' + name}">RED PLAYER FULLNAME</p>
                                     </td>
                                     <td>
                                         <label style="margin-top: 5px" for="bluePlayerCheck" th:for="*{'bluePlayerCheck' + id}">
-                                            <input name="bluePlayerID" id="bluePlayerCheck" th:id="*{'bluePlayerCheck' + id}" type="checkbox" th:value="*{id}"/>
+                                            <input name="bluePlayerCheckList" id="bluePlayerCheck" th:id="*{'bluePlayerCheck' + id}" type="checkbox" th:value="*{id}"/>
                                         </label>
                                     </td>
                                     <td>

@@ -169,12 +169,22 @@ public class TourneyAdminController {
     }
 
     @PostMapping(value = {"/pp/admin/game{id}/result/protocol"})
-    public String createResultProtocolGame(@PathVariable("id") int id) {
-        GameDTO gameDTO = tourneyAdminService.getGame(id);
+    public String createResultProtocolGame(
+            @PathVariable("id") int id,
+            @RequestParam("redPlayerIDList") List<Integer> redPlayerIDList,
+            @RequestParam("bluePlayerIDList") List<Integer> bluePlayerIDList,
+            @RequestParam("redPlayerCheckList") List<Integer> redPlayerCheckList,
+            @RequestParam("bluePlayerCheckList") List<Integer> bluePlayerCheckList,
+            @RequestParam("redGoalNums") List<Integer> redGoalNums,
+            @RequestParam("blueGoalNums") List<Integer> blueGoalNums,
+            @RequestParam("redCards") List<String> redCards,
+            @RequestParam("blueCards") List<String> blueCards
+    ) {
+        GameDTO game = tourneyAdminService.getGame(id);
 
 
 
-        return "redirect:/pp/admin/tourney/tourney" + gameDTO.getTour().getTourney().getId();
+        return "redirect:/pp/admin/tourney/tourney" + game.getTour().getTourney().getId();
     }
 //    ===========================================================================================
 

@@ -10,6 +10,7 @@ public class PlayerStatisticEntity {
     private Integer goal = 0;
     private Integer yellowCard = 0;
     private Integer redCard = 0;
+    private Integer gameNum = 0;
 
     private CompositionMembershipEntity membership;
 
@@ -54,6 +55,16 @@ public class PlayerStatisticEntity {
 
     public void setRedCard(Integer redCard) {
         this.redCard = redCard;
+    }
+
+    @Basic
+    @Column(name = "game_num", nullable = false)
+    public Integer getGameNum() {
+        return gameNum;
+    }
+
+    public void setGameNum(Integer gameNum) {
+        this.gameNum = gameNum;
     }
 
 //    ==================================================================================

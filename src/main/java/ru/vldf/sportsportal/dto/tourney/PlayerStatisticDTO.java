@@ -8,6 +8,7 @@ public class PlayerStatisticDTO {
     private Integer goal = 0;
     private Integer yellowCard = 0;
     private Integer redCard = 0;
+    private Integer gameNum = 0;
 
     private CompositionMembershipDTO membership;
 
@@ -20,6 +21,7 @@ public class PlayerStatisticDTO {
         goal = statistic.getGoal();
         yellowCard = statistic.getYellowCard();
         redCard = statistic.getRedCard();
+        gameNum = statistic.getGameNum();
     }
 
     public PlayerStatisticDTO(PlayerStatisticEntity statistic, boolean includeMembership) {
@@ -61,6 +63,14 @@ public class PlayerStatisticDTO {
 
     public void setRedCard(Integer redCard) {
         this.redCard = redCard;
+    }
+
+    public Integer getGameNum() {
+        return gameNum;
+    }
+
+    public void setGameNum(Integer gameNum) {
+        this.gameNum = gameNum;
     }
 
     public CompositionMembershipDTO getMembership() {
