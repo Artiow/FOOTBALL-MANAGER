@@ -64,7 +64,7 @@
 </nav>
 
 <main style="min-height: 600px">
-    <div class="container">
+    <div style="margin-bottom: 50px" class="container">
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
                 <form role="form" th:action="${'/pp/admin/game' + gameDTO.id + '/result/protocol'}" method="post">
@@ -79,19 +79,16 @@
                                     <td>Голы</td>
                                     <td>Карточки</td>
                                 </tr>
-                                <tr>
+                                <tr th:each="redPlayer,redIter: ${redPlayerList}" th:object="${redPlayer}">
                                     <td>
-                                        <p style="margin-top: 5px">0.</p>
+                                        <p style="margin-top: 5px" th:text="${redIter.index + 1} + '.'">0.</p>
                                     </td>
                                     <td>
-                                        <p style="margin-top: 5px">RED PLAYER FULLNAME</p>
+                                        <p style="margin-top: 5px" th:text="*{surname + ' ' + name}">RED PLAYER FULLNAME</p>
                                     </td>
                                     <td>
-                                        <!--<label style="margin-top: 5px" for="redPlayerCheck" th:for="*{'redPlayerCheck' + id}">-->
-                                            <!--<input name="redPlayerID" id="redPlayerCheck" th:id="*{'redPlayerCheck' + id}" type="checkbox" th:value="*{id}"/>-->
-                                        <!--</label>-->
-                                        <label style="margin-top: 5px" for="redPlayerCheck">
-                                            <input name="redPlayerID" id="redPlayerCheck" type="checkbox"/>
+                                        <label style="margin-top: 5px" for="redPlayerCheck" th:for="*{'redPlayerCheck' + id}">
+                                            <input name="redPlayerID" id="redPlayerCheck" th:id="*{'redPlayerCheck' + id}" type="checkbox" th:value="*{id}"/>
                                         </label>
                                     </td>
                                     <td>
@@ -119,19 +116,16 @@
                                     <td>Голы</td>
                                     <td>Карточки</td>
                                 </tr>
-                                <tr>
+                                <tr th:each="bluePlayer,blueIter: ${bluePlayerList}" th:object="${bluePlayer}">
                                     <td>
-                                        <p style="margin-top: 5px">0.</p>
+                                        <p style="margin-top: 5px" th:text="${blueIter.index + 1} + '.'">0.</p>
                                     </td>
                                     <td>
-                                        <p style="margin-top: 5px">BLUE PLAYER FULLNAME</p>
+                                        <p style="margin-top: 5px" th:text="*{surname + ' ' + name}">RED PLAYER FULLNAME</p>
                                     </td>
                                     <td>
-                                        <!--<label style="margin-top: 5px" for="bluePlayerCheck" th:for="*{'bluePlayerCheck' + id}">-->
-                                            <!--<input name="bluePlayerID" id="bluePlayerCheck" th:id="*{'bluePlayerCheck' + id}" type="checkbox" th:value="*{id}"/>-->
-                                        <!--</label>-->
-                                        <label style="margin-top: 5px" for="bluePlayerCheck">
-                                            <input name="bluePlayerID" id="bluePlayerCheck" type="checkbox"/>
+                                        <label style="margin-top: 5px" for="bluePlayerCheck" th:for="*{'bluePlayerCheck' + id}">
+                                            <input name="bluePlayerID" id="bluePlayerCheck" th:id="*{'bluePlayerCheck' + id}" type="checkbox" th:value="*{id}"/>
                                         </label>
                                     </td>
                                     <td>

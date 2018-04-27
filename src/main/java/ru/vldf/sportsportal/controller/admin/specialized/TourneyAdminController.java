@@ -156,10 +156,14 @@ public class TourneyAdminController {
 //    TODO: lol wtf
     @GetMapping(value = {"/pp/admin/game{id}/result/protocol"})
     public String toGameResultProtocolForm(@PathVariable("id") int id, ModelMap map) {
-        GameDTO gameDTO = tourneyAdminService.getGame(id);
-        map.addAttribute("gameDTO", gameDTO);
+        GameDTO game = tourneyAdminService.getGame(id);
+        map.addAttribute("gameDTO", game);
 
+        List<PlayerDTO> redPlayerList = tourneyUserService.getPlayerList(game.getRed());
+        List<PlayerDTO> bluePlayerList = tourneyUserService.getPlayerList(game.getBlue());
 
+        map.addAttribute("redPlayerList", redPlayerList);
+        map.addAttribute("bluePlayerList", bluePlayerList);
 
         return "user/admin/form-result-protocol-game";
     }

@@ -63,7 +63,7 @@
     <div class="alert-danger" th:unless="${tourneyDTO != null}">
         <div class="container">
             <div class="row">
-                <div class="col-md-6 col-md-offset-3">
+                <div class="col-md-8 col-md-offset-2">
                     <h3 style="margin: 20px 0 20px 0">НЕТ ДОСТУПА</h3>
                 </div>
             </div>
@@ -71,33 +71,33 @@
     </div>
     <div class="container" th:if="${tourneyDTO != null}">
         <div class="row">
-            <div class="col-md-6 col-md-offset-3">
+            <div class="col-md-8 col-md-offset-2">
                 <h3 th:inline="text" th:text="${tourneyDTO.name}">TOURNEY NAME</h3>
                 <div class="btn-group">
                     <a th:href="${'/pp/admin/tourney/tourney' + tourneyDTO.id + '/timegrid'}" class="btn btn-default">Временная сетка</a>
                 </div>
                 <div class="btn-group">
-                    <a th:href="${'/pp/admin/tourney/tourney' + tourneyDTO.id + '/protocol'}" class="btn btn-default">Протокол турнира</a>
+                    <a th:href="${'/pp/admin/tourney/tourney' + tourneyDTO.id + '/protocol'}" class="btn btn-default">Протоколы следующих матчей</a>
                 </div>
             </div>
         </div>
         <div style="margin-top: 20px" class="row" th:if="${gameList != null}">
-            <div class="col-md-6 col-md-offset-3">
-                <h4>Матчи:</h4>
+            <div class="col-md-8 col-md-offset-2">
+                <h4>Прошедшие матчи:</h4>
             </div>
-            <div style="padding: 10px" class="col-md-6 col-md-offset-3">
+            <div style="padding: 10px" class="col-md-8 col-md-offset-2">
                 <table class="table table-hover">
                     <tr th:each="gameItem: ${gameList}" th:object="${gameItem}">
                         <td>
-                            <a class="table-link" th:href="*{'/pp/admin/game' + id + '/protocol'}">
+                            <a style="padding-top: 20px" class="table-link" th:href="*{'/pp/admin/game' + id + '/protocol'}">
                                 <p th:text="*{red.name}">NAME</p>
                             </a>
                         </td>
                         <td>
-                            <a class="table-link" th:href="*{'/pp/admin/game' + id + '/protocol'}">-</a>
+                            <a style="padding-top: 20px" class="table-link" th:href="*{'/pp/admin/game' + id + '/protocol'}">-</a>
                         </td>
                         <td>
-                            <a class="table-link" th:href="*{'/pp/admin/game' + id + '/protocol'}">
+                            <a style="padding-top: 20px" class="table-link" th:href="*{'/pp/admin/game' + id + '/protocol'}">
                                 <p th:text="*{blue.name}">NAME</p>
                             </a>
                         </td>
