@@ -12,6 +12,10 @@
             src="../../../libs/jquery-3.2.1.js"
             th:src="@{/libs/jquery-3.2.1.js}"
     ></script>
+    <script
+            src="../../../libs/bootstrap/js/bootstrap.js"
+            th:src="@{/libs/bootstrap/js/bootstrap.js}"
+    ></script>
     <link rel="stylesheet"
           href="../../../libs/bootstrap/css/bootstrap.css"
           th:href="@{/libs/bootstrap/css/bootstrap.css}"
@@ -62,12 +66,27 @@
 <main style="min-height: 600px">
     <div class="container">
         <div style="margin-top: 20px; margin-bottom: 20px" class="row">
-            <div class="col-md-8 col-md-offset-2">
+            <div class="col-md-12">
+                <script>$('.dropdown-toggle').dropdown()</script>
                 <table class="table table-bordered">
                     <tr th:each="game,gIter: ${gameList}">
                         <td>
-                            <p style="margin: 0; font-size: 12px" th:text="${game.getRed().name}">TEAM-RED</p>
-                            <p style="margin: 0; font-size: 12px" th:text="${game.getBlue().name}">TEAM-BLUE</p>
+                            <p style="margin: 0; font-size: 12px" th:text="${game.red.name}">RED TEAM</p>
+                            <p style="margin: 0; font-size: 12px" th:text="${game.blue.name}">BLUE TEAM</p>
+                        </td>
+                        <td>
+                            <p style="margin: 0; font-size: 12px" th:if="${game.red.playground != null}" th:text="${game.red.playground.name}">RED PG</p>
+                            <p style="margin: 0; font-size: 12px" th:unless="${game.red.playground != null}">N/A</p>
+                            <p style="margin: 0; font-size: 12px" th:if="${game.blue.playground != null}"  th:text="${game.blue.playground.name}">BLUE PG</p>
+                            <p style="margin: 0; font-size: 12px" th:unless="${game.blue.playground != null}">N/A</p>
+                        </td>
+                        <td>
+                            <div class="btn-group">
+                                <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" th:utext="${'XX' + ':00 ' + '&lt;span class=&quot;caret&quot;&gt;&lt;/span&gt;'}">XX:00 <span class="caret"></span></button>
+                                <ul class="dropdown-menu">
+                                    <li><a th:href="${'/'}">XX:00</a></li>
+                                </ul>
+                            </div>
                         </td>
                         <td th:each="char,cIter: ${timegrid.get(gIter.index)}">
                             <div class="btn btn-danger" th:if="${char == 'N'}" th:text="${(cIter.index + 9) + ':00'}">X:00</div>

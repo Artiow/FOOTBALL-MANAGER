@@ -1,5 +1,6 @@
 package ru.vldf.sportsportal.dto.tourney;
 
+import ru.vldf.sportsportal.domain.tourney.TimegridTypeEntity;
 import ru.vldf.sportsportal.domain.tourney.TourneyEntity;
 import ru.vldf.sportsportal.domain.tourney.TourneyStatusEntity;
 
@@ -10,6 +11,7 @@ public class TourneyDTO {
     private Integer nextTour = 1;
 
     private TourneyStatusDTO status;
+    private TimegridTypeDTO timegrid;
 
     public TourneyDTO() {
 
@@ -23,6 +25,8 @@ public class TourneyDTO {
 
         TourneyStatusEntity tourneyStatusEntity = tourney.getStatus();
         if (tourneyStatusEntity != null) status = new TourneyStatusDTO(tourneyStatusEntity);
+        TimegridTypeEntity timegridTypeEntity = tourney.getTimegrid();
+        if (timegridTypeEntity != null) timegrid = new TimegridTypeDTO(timegridTypeEntity);
     }
 
     public Integer getId() {
@@ -47,6 +51,14 @@ public class TourneyDTO {
 
     public void setStatus(TourneyStatusDTO status) {
         this.status = status;
+    }
+
+    public TimegridTypeDTO getTimegrid() {
+        return timegrid;
+    }
+
+    public void setTimegrid(TimegridTypeDTO timegrid) {
+        this.timegrid = timegrid;
     }
 
     public Integer getCurrentTour() {

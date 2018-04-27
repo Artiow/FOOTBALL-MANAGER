@@ -14,6 +14,7 @@ public class TourneyEntity {
     private Integer nextTour = 1;
 
     private TourneyStatusEntity status;
+    private TimegridTypeEntity timegrid;
 
     private Collection<TourEntity> tours;
     private Collection<CompositionEntity> compositions;
@@ -105,7 +106,17 @@ public class TourneyEntity {
         this.status = status;
     }
 
-//    ==================================================================================
+    @ManyToOne
+    @JoinColumn(name = "timegrid_type_id", referencedColumnName = "id", nullable = false)
+    public TimegridTypeEntity getTimegrid() {
+        return timegrid;
+    }
+
+    public void setTimegrid(TimegridTypeEntity timegrid) {
+        this.timegrid = timegrid;
+    }
+
+    //    ==================================================================================
 //    === OBJECTS METHODS
 
     @Override
