@@ -209,6 +209,7 @@ public class TourneyUserService {
         membership.setPlayer(playerDAO.findByID(playerID));
 
         compositionMembershipDAO.save(membership);
+        compositionDAO.decShiftbalanceByID(compositionID);
         return true;
     }
 
