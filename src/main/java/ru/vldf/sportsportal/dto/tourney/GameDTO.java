@@ -2,12 +2,14 @@ package ru.vldf.sportsportal.dto.tourney;
 
 import ru.vldf.sportsportal.domain.tourney.CompositionEntity;
 import ru.vldf.sportsportal.domain.tourney.GameEntity;
+import ru.vldf.sportsportal.domain.tourney.TimegridEntity;
 import ru.vldf.sportsportal.domain.tourney.TourEntity;
 
 public class GameDTO {
     private Integer id;
     private String timegrid;
 
+    private TimegridDTO time;
     private CompositionDTO red;
     private CompositionDTO blue;
     private TourDTO tour;
@@ -20,6 +22,8 @@ public class GameDTO {
         id = game.getId();
         timegrid = game.getTimegrid();
 
+        TimegridEntity timegridEntity = game.getTime();
+        if (timegridEntity != null) time = new TimegridDTO(timegridEntity);
         CompositionEntity redEntity = game.getRed();
         if (redEntity != null) red = new CompositionDTO(redEntity);
         CompositionEntity blueEntity = game.getBlue();
@@ -42,6 +46,14 @@ public class GameDTO {
 
     public void setTimegrid(String timegrid) {
         this.timegrid = timegrid;
+    }
+
+    public TimegridDTO getTime() {
+        return time;
+    }
+
+    public void setTime(TimegridDTO time) {
+        this.time = time;
     }
 
     public CompositionDTO getRed() {

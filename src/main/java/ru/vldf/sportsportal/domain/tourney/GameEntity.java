@@ -8,6 +8,7 @@ public class GameEntity {
     private Integer id;
     private String timegrid = "CCCCCCCCCC";
 
+    private TimegridEntity time;
     private CompositionEntity red;
     private CompositionEntity blue;
     private TourEntity tour;
@@ -37,13 +38,13 @@ public class GameEntity {
 //    === MANY-TO-ONE REFERENCES
 
     @ManyToOne
-    @JoinColumn(name = "tour_id", referencedColumnName = "id", nullable = false)
-    public TourEntity getTour() {
-        return tour;
+    @JoinColumn(name = "time_id", referencedColumnName = "id", nullable = true)
+    public TimegridEntity getTime() {
+        return time;
     }
 
-    public void setTour(TourEntity tour) {
-        this.tour = tour;
+    public void setTime(TimegridEntity time) {
+        this.time = time;
     }
 
     @ManyToOne
@@ -64,6 +65,16 @@ public class GameEntity {
 
     public void setBlue(CompositionEntity blue) {
         this.blue = blue;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "tour_id", referencedColumnName = "id", nullable = false)
+    public TourEntity getTour() {
+        return tour;
+    }
+
+    public void setTour(TourEntity tour) {
+        this.tour = tour;
     }
 
 //    ==================================================================================
