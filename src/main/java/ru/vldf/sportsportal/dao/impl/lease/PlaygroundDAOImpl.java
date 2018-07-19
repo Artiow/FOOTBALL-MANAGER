@@ -25,6 +25,26 @@ public class PlaygroundDAOImpl extends AbstractDAOImpl<PlaygroundEntity, Integer
         return super.get(id);
     }
 
+    public PlaygroundEntity findByName(String name) {
+        List playgrounds = getSession()
+                .createQuery("from PlaygroundEntity where name=?")
+                .setParameter(0, name)
+                .list();
+
+        if ((playgrounds != null) && (playgrounds.size() == 1)) return (PlaygroundEntity) playgrounds.get(0);
+        else return null;
+    }
+
+    public PlaygroundEntity findByAddress(String address) {
+        List playgrounds = getSession()
+                .createQuery("from PlaygroundEntity where address=?")
+                .setParameter(0, address)
+                .list();
+
+        if ((playgrounds != null) && (playgrounds.size() == 1)) return (PlaygroundEntity) playgrounds.get(0);
+        else return null;
+    }
+
     public List<PlaygroundEntity> findAll() {
         return super.list();
     }

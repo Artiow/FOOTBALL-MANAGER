@@ -1,6 +1,6 @@
 $ cat .gitignore
 
-SPORTSPORTAL.iml
+*.iml
 /src/main/webapp/libs
 /src/main/resources
 /target

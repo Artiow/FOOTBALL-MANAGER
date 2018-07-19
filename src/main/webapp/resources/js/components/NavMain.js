@@ -1,6 +1,6 @@
 let dataNavMain = {
     textTourney: '',
-    linkTourney: '/xxx',
+    linkTourney: '/tourney',
     textLease: '',
     linkLease: '/xxx',
     textMatches: '',

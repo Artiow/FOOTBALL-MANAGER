@@ -1,5 +1,6 @@
 package ru.vldf.sportsportal.domain.tourney;
 
+import ru.vldf.sportsportal.domain.lease.PlaygroundEntity;
 import ru.vldf.sportsportal.dto.tourney.CompositionDTO;
 
 import javax.persistence.*;
@@ -15,23 +16,25 @@ public class CompositionEntity {
 
     private TeamEntity team;
     private TourneyEntity tourney;
-    private CompositionStatusEntity status;
+    private PlaygroundEntity playground;
 
+    private CompositionStatisticEntity statistic;
+    private Collection<GameEntity> redGames;
+    private Collection<GameEntity> blueGames;
     private Collection<CompositionMembershipEntity> memberships;
 
     public CompositionEntity() {
 
     }
 
-    public CompositionEntity(CompositionDTO composition, TeamEntity team, TourneyEntity tourney, CompositionStatusEntity status) {
+    public CompositionEntity(CompositionDTO composition, TeamEntity team, TourneyEntity tourney) {
         id = composition.getId();
         name = composition.getName();
-        shiftbalance = composition.getShiftBalance();
+        shiftbalance = composition.getShiftbalance();
         timegrid = composition.getTimegrid();
 
         this.team = team;
         this.tourney = tourney;
-        this.status = status;
     }
 
     @Id
@@ -57,16 +60,16 @@ public class CompositionEntity {
 
     @Basic
     @Column(name = "shiftbalance", nullable = false)
-    public Integer getShiftBalance() {
+    public Integer getShiftbalance() {
         return shiftbalance;
     }
 
-    public void setShiftBalance(Integer shiftbalance) {
+    public void setShiftbalance(Integer shiftbalance) {
         this.shiftbalance = shiftbalance;
     }
 
     @Basic
-    @Column(name = "timegrid", nullable = false)
+    @Column(name = "timegrid", nullable = false, length = 10)
     public String getTimegrid() {
         return timegrid;
     }
@@ -76,7 +79,37 @@ public class CompositionEntity {
     }
 
 //    ==================================================================================
+//    === ONE-TO-ONE REFERENCES
+
+    @OneToOne(mappedBy = "composition")
+    public CompositionStatisticEntity getStatistic() {
+        return statistic;
+    }
+
+    public void setStatistic(CompositionStatisticEntity statistic) {
+        this.statistic = statistic;
+    }
+
+//    ==================================================================================
 //    === ONE-TO-MANY REFERENCES
+
+    @OneToMany(mappedBy = "red")
+    public Collection<GameEntity> getRedGames() {
+        return redGames;
+    }
+
+    public void setRedGames(Collection<GameEntity> redGames) {
+        this.redGames = redGames;
+    }
+
+    @OneToMany(mappedBy = "blue")
+    public Collection<GameEntity> getBlueGames() {
+        return blueGames;
+    }
+
+    public void setBlueGames(Collection<GameEntity> blueGames) {
+        this.blueGames = blueGames;
+    }
 
     @OneToMany(mappedBy = "composition")
     public Collection<CompositionMembershipEntity> getMemberships() {
@@ -111,13 +144,13 @@ public class CompositionEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "status_id", referencedColumnName = "id", nullable = false)
-    public CompositionStatusEntity getStatus() {
-        return status;
+    @JoinColumn(name = "playground_id", referencedColumnName = "id", nullable = true)
+    public PlaygroundEntity getPlayground() {
+        return playground;
     }
 
-    public void setStatus(CompositionStatusEntity status) {
-        this.status = status;
+    public void setPlayground(PlaygroundEntity playground) {
+        this.playground = playground;
     }
 
 //    ==================================================================================

@@ -30,9 +30,8 @@ public class TeamDAOImpl extends AbstractDAOImpl<TeamEntity, Integer> implements
 
     public List<TeamEntity> findByUser(Integer userID) {
         List teams = getSession()
-                .createQuery("from TeamEntity where captain.id=?"
-                        + " order by name"
-                ).setParameter(0, userID)
+                .createQuery("from TeamEntity where captain.id=? order by name")
+                .setParameter(0, userID)
                 .list();
 
         if ((teams != null) && (teams.size() > 0)) return (List<TeamEntity>) teams;
@@ -41,9 +40,8 @@ public class TeamDAOImpl extends AbstractDAOImpl<TeamEntity, Integer> implements
 
     public List<TeamEntity> findByUser(UserEntity user) {
         List teams = getSession()
-                .createQuery("from TeamEntity where captain=?"
-                        + " order by name"
-                ).setParameter(0, user)
+                .createQuery("from TeamEntity where captain=? order by name")
+                .setParameter(0, user)
                 .list();
 
         if ((teams != null) && (teams.size() > 0)) return (List<TeamEntity>) teams;
@@ -52,9 +50,8 @@ public class TeamDAOImpl extends AbstractDAOImpl<TeamEntity, Integer> implements
 
     public List<TeamEntity> findByTourney(Integer tourneyID) {
         List teams = getSession()
-                .createQuery("select eTeam from TeamEntity as eTeam, CompositionEntity as eComposition"
-                        + " where eComposition.team = eTeam and eComposition.tourney.id=?"
-                        + " order by eTeam.name"
+                .createQuery("select t from TeamEntity as t, CompositionEntity as c"
+                        + " where c.tourney.id=? and c.team = t order by t.name"
                 ).setParameter(0, tourneyID)
                 .list();
 
@@ -64,9 +61,8 @@ public class TeamDAOImpl extends AbstractDAOImpl<TeamEntity, Integer> implements
 
     public List<TeamEntity> findByTourney(TourneyEntity tourney) {
         List teams = getSession()
-                .createQuery("select eTeam from TeamEntity as eTeam, CompositionEntity as eComposition"
-                        + " where eComposition.team = eTeam and eComposition.tourney=?"
-                        + " order by eTeam.name"
+                .createQuery("select t from TeamEntity as t, CompositionEntity as c"
+                        + " where c.tourney=? and c.team = t order by t.name"
                 ).setParameter(0, tourney)
                 .list();
 
@@ -78,9 +74,9 @@ public class TeamDAOImpl extends AbstractDAOImpl<TeamEntity, Integer> implements
         List count = getSession()
                 .createQuery("select count(*) from TeamEntity where status.id=?")
                 .setParameter(0, statusID)
-                .list(); //TODO: list?
+                .list();
 
-        if ((count != null) && (count.size() > 0)) return ((Long) count.get(0));
+        if ((count != null) && (count.size() == 1)) return ((Long) count.get(0));
         else return null;
     }
 
@@ -88,9 +84,9 @@ public class TeamDAOImpl extends AbstractDAOImpl<TeamEntity, Integer> implements
         List count = getSession()
                 .createQuery("select count(*) from TeamEntity where status.code=?")
                 .setParameter(0, statusCode)
-                .list(); //TODO: list?
+                .list();
 
-        if ((count != null) && (count.size() > 0)) return ((Long) count.get(0));
+        if ((count != null) && (count.size() == 1)) return ((Long) count.get(0));
         else return null;
     }
 
@@ -98,17 +94,16 @@ public class TeamDAOImpl extends AbstractDAOImpl<TeamEntity, Integer> implements
         List count = getSession()
                 .createQuery("select count(*) from TeamEntity where status=?")
                 .setParameter(0, status)
-                .list(); //TODO: list?
+                .list();
 
-        if ((count != null) && (count.size() > 0)) return ((Long) count.get(0));
+        if ((count != null) && (count.size() == 1)) return ((Long) count.get(0));
         else return null;
     }
 
     public List<TeamEntity> findByStatus(Integer statusID) {
         List teams = getSession()
-                .createQuery("from TeamEntity where status.id=?"
-                        + " order by name"
-                ).setParameter(0, statusID)
+                .createQuery("from TeamEntity where status.id=? order by name")
+                .setParameter(0, statusID)
                 .list();
 
         if ((teams != null) && (teams.size() > 0)) return (List<TeamEntity>) teams;
@@ -117,9 +112,8 @@ public class TeamDAOImpl extends AbstractDAOImpl<TeamEntity, Integer> implements
 
     public List<TeamEntity> findByStatus(String statusCode) {
         List teams = getSession()
-                .createQuery("from TeamEntity where status.code=?"
-                        + " order by name"
-                ).setParameter(0, statusCode)
+                .createQuery("from TeamEntity where status.code=? order by name")
+                .setParameter(0, statusCode)
                 .list();
 
         if ((teams != null) && (teams.size() > 0)) return (List<TeamEntity>) teams;
@@ -128,20 +122,41 @@ public class TeamDAOImpl extends AbstractDAOImpl<TeamEntity, Integer> implements
 
     public List<TeamEntity> findByStatus(TeamStatusEntity status) {
         List teams = getSession()
-                .createQuery("from TeamEntity where status=?"
-                        + " order by name"
-                ).setParameter(0, status)
+                .createQuery("from TeamEntity where status=? order by name")
+                .setParameter(0, status)
                 .list();
 
         if ((teams != null) && (teams.size() > 0)) return (List<TeamEntity>) teams;
         else return null;
     }
 
-    public List<TeamEntity> findByNameLike(String name) {
+    public List<TeamEntity> findByStatusAndNameLike(Integer statusID, String name) {
         List teams = getSession()
-                .createQuery("from TeamEntity where name like ?"
-                        + " order by name"
-                ).setParameter(0, "%" + name + "%")
+                .createQuery("from TeamEntity where status.id=:statusID and name like :name order by name")
+                .setParameter("name", "%" + name + "%")
+                .setParameter("statusID", statusID)
+                .list();
+
+        if ((teams != null) && (teams.size() > 0)) return (List<TeamEntity>) teams;
+        else return null;
+    }
+
+    public List<TeamEntity> findByStatusAndNameLike(String statusCode, String name) {
+        List teams = getSession()
+                .createQuery("from TeamEntity where status.code=:statusCode and name like :name order by name")
+                .setParameter("name", "%" + name + "%")
+                .setParameter("statusCode", statusCode)
+                .list();
+
+        if ((teams != null) && (teams.size() > 0)) return (List<TeamEntity>) teams;
+        else return null;
+    }
+
+    public List<TeamEntity> findByStatusAndNameLike(TeamStatusEntity status, String name) {
+        List teams = getSession()
+                .createQuery("from TeamEntity where status=:status and name like :name order by name")
+                .setParameter("name", "%" + name + "%")
+                .setParameter("status", status)
                 .list();
 
         if ((teams != null) && (teams.size() > 0)) return (List<TeamEntity>) teams;
@@ -155,19 +170,35 @@ public class TeamDAOImpl extends AbstractDAOImpl<TeamEntity, Integer> implements
 //    ==================================================================================
 //    === UPDATE
 
-    public Integer updateStatusByID(Integer id, TeamStatusEntity status) {
-        return getSession()
-                .createQuery("update TeamEntity set status=? where id=?")
-                .setParameter(0, status)
-                .setParameter(1, id)
+    public void updateNameByID(Integer id, String name) {
+        getSession()
+                .createQuery("update TeamEntity set name=:name where id=:id")
+                .setParameter("name", name)
+                .setParameter("id", id)
                 .executeUpdate();
     }
 
-    public Integer updateNameByID(Integer id, String name) {
-        return getSession()
-                .createQuery("update TeamEntity set name=? where id=?")
-                .setParameter(0, name)
-                .setParameter(1, id)
+    public void updateStatusByID(Integer id, Integer statusID) {
+        getSession()
+                .createQuery("update TeamEntity set status = (from TeamStatusEntity as s where s.id=:statusID) where id=:id")
+                .setParameter("statusID", statusID)
+                .setParameter("id", id)
+                .executeUpdate();
+    }
+
+    public void updateStatusByID(Integer id, String statusCode) {
+        getSession()
+                .createQuery("update TeamEntity set status = (from TeamStatusEntity as s where s.code=:statusCode) where id=:id")
+                .setParameter("statusCode", statusCode)
+                .setParameter("id", id)
+                .executeUpdate();
+    }
+
+    public void updateStatusByID(Integer id, TeamStatusEntity status) {
+        getSession()
+                .createQuery("update TeamEntity set status=:status where id=:id")
+                .setParameter("status", status)
+                .setParameter("id", id)
                 .executeUpdate();
     }
 }

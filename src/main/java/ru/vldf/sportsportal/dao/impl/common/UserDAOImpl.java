@@ -51,9 +51,9 @@ public class UserDAOImpl extends AbstractDAOImpl<UserEntity, Integer> implements
         List count = getSession()
                 .createQuery("select count(*) from UserEntity where role.id=?")
                 .setParameter(0, roleID)
-                .list(); //TODO: list?
+                .list();
 
-        if ((count != null) && (count.size() > 0)) return ((Long) count.get(0));
+        if ((count != null) && (count.size() == 1)) return ((Long) count.get(0));
         else return null;
     }
 
@@ -61,9 +61,9 @@ public class UserDAOImpl extends AbstractDAOImpl<UserEntity, Integer> implements
         List count = getSession()
                 .createQuery("select count(*) from UserEntity where role.code=?")
                 .setParameter(0, roleCode)
-                .list(); //TODO: list?
+                .list();
 
-        if ((count != null) && (count.size() > 0)) return ((Long) count.get(0));
+        if ((count != null) && (count.size() == 1)) return ((Long) count.get(0));
         else return null;
     }
 
@@ -73,7 +73,7 @@ public class UserDAOImpl extends AbstractDAOImpl<UserEntity, Integer> implements
                 .setParameter(0, role)
                 .list(); //TODO: list?
 
-        if ((count != null) && (count.size() > 0)) return ((Long) count.get(0));
+        if ((count != null) && (count.size() == 1)) return ((Long) count.get(0));
         else return null;
     }
 
@@ -110,11 +110,27 @@ public class UserDAOImpl extends AbstractDAOImpl<UserEntity, Integer> implements
 //    ==================================================================================
 //    === UPDATE
 
-    public Integer updateRoleByID(Integer id, UserRoleEntity role) {
-        return getSession()
-                .createQuery("update UserEntity set role=? where id=?")
-                .setParameter(0, role)
-                .setParameter(1, id)
+    public void updateRoleByID(Integer id, Integer roleID) {
+        getSession()
+                .createQuery("update UserEntity set role = (from UserRoleEntity as r where r.id=:roleID) where id=:id")
+                .setParameter("roleID", roleID)
+                .setParameter("id", id)
+                .executeUpdate();
+    }
+
+    public void updateRoleByID(Integer id, String roleCode) {
+        getSession()
+                .createQuery("update UserEntity set role = (from UserRoleEntity as r where r.code=:roleCode) where id=:id")
+                .setParameter("roleCode", roleCode)
+                .setParameter("id", id)
+                .executeUpdate();
+    }
+
+    public void updateRoleByID(Integer id, UserRoleEntity role) {
+        getSession()
+                .createQuery("update UserEntity set role=:role where id=:id")
+                .setParameter("role", role)
+                .setParameter("id", id)
                 .executeUpdate();
     }
 }

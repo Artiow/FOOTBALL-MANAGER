@@ -13,5 +13,7 @@ public interface SportDAO {
 
     SportEntity findByID(Integer id);
 
+    SportEntity findByCode(String code);
+
     List<SportEntity> findAll();
 }

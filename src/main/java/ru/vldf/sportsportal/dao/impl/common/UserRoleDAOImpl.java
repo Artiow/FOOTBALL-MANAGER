@@ -34,4 +34,8 @@ public class UserRoleDAOImpl extends AbstractDAOImpl<UserRoleEntity, Integer> im
         if ((roles != null) && (roles.size() == 1)) return (UserRoleEntity) roles.get(0);
         else return null;
     }
+
+    public List<UserRoleEntity> findAll() {
+        return super.list();
+    }
 }

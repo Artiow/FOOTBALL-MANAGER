@@ -12,6 +12,12 @@ public interface PlayerDAO {
 
     PlayerEntity findByID(Integer id);
 
+    List<PlayerEntity> findBySurname(String surname);
+
+    List<PlayerEntity> findBySurnameAndName(String surname, String name);
+
+    List<PlayerEntity> findBySurnameAndPatronymic(String surname, String patronymic);
+
     List<PlayerEntity> findByFullName(String name, String surname, String patronymic);
 
     List<PlayerEntity> findByTeamComposition(Integer compositionID);

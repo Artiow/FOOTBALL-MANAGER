@@ -13,5 +13,9 @@ public interface PlaygroundDAO {
 
     PlaygroundEntity findByID(Integer id);
 
+    PlaygroundEntity findByName(String name);
+
+    PlaygroundEntity findByAddress(String address);
+
     List<PlaygroundEntity> findAll();
 }

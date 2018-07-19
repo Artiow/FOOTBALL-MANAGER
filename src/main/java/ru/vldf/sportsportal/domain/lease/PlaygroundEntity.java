@@ -1,6 +1,7 @@
 package ru.vldf.sportsportal.domain.lease;
 
 import ru.vldf.sportsportal.domain.common.SportEntity;
+import ru.vldf.sportsportal.domain.tourney.CompositionEntity;
 import ru.vldf.sportsportal.dto.lease.PlaygroundDTO;
 
 import javax.persistence.*;
@@ -12,8 +13,10 @@ public class PlaygroundEntity {
     private Integer id;
     private String name;
     private String address;
+    private String description;
 
     private Collection<SportEntity> sports;
+    private Collection<CompositionEntity> compositions;
 
     public PlaygroundEntity() {
 
@@ -23,6 +26,7 @@ public class PlaygroundEntity {
         id = playground.getId();
         name = playground.getName();
         address = playground.getAddress();
+        description = playground.getDescription();
     }
 
     @Id
@@ -55,6 +59,29 @@ public class PlaygroundEntity {
     public void setAddress(String address) {
         this.address = address;
     }
+
+    @Basic
+    @Column(name = "description", nullable = true, length = 90)
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+//    ==================================================================================
+//    === ONE-TO-MANY REFERENCES
+
+    @OneToMany(mappedBy = "playground")
+    public Collection<CompositionEntity> getCompositions() {
+        return compositions;
+    }
+
+    public void setCompositions(Collection<CompositionEntity> compositions) {
+        this.compositions = compositions;
+    }
+
 
 //    ==================================================================================
 //    === MANY-TO-MANY REFERENCES
@@ -96,6 +123,7 @@ public class PlaygroundEntity {
         return "PlaygroundEntity{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", address='" + address + '\'' +
                 '}';
     }
 }

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Личный кабинет</title>
+    <script
+            src="../../../libs/vue.js"
+            th:src="@{/libs/vue.js}"
+    ></script>
+    <script
+            src="../../../libs/jquery-3.2.1.js"
+            th:src="@{/libs/jquery-3.2.1.js}"
+    ></script>
+    <script
+            src="../../../libs/bootstrap/js/bootstrap.js"
+            th:src="@{/libs/bootstrap/js/bootstrap.js}"
+    ></script>
+    <link rel="stylesheet"
+          href="../../../libs/bootstrap/css/bootstrap.css"
+          th:href="@{/libs/bootstrap/css/bootstrap.css}"
+    />
+    <link rel="stylesheet"
+          href="../../../libs/font-awesome/css/font-awesome.css"
+          th:href="@{/libs/font-awesome/css/font-awesome.css}"
+    />
+    <link rel="stylesheet"
+          href="../../../resources/css/personalpage.css"
+          th:href="@{/css/personalpage.css}"
+    />
+    <link rel="stylesheet"
+          href="../../../resources/css/header.css"
+          th:href="@{/css/header.css}"
+    />
+    <link rel="stylesheet"
+          href="../../../resources/css/footer.css"
+          th:href="@{/css/footer.css}"
+    />
+</head>
+<body>
+
+<header id="header-regular">
+    <header-regular id="header-auth"
+                    caption="АДМИНИСТРИРОВАНИЕ">
+        <auth-failed sec:authorize="!isAuthenticated()"></auth-failed>
+        <auth-completed sec:authorize="isAuthenticated()"><p th:text="${authUser.name + ' ' + authUser.surname}">USERNAME</p></auth-completed>
+    </header-regular>
+</header>
+<script
+        src="../../../resources/js/components/HeaderRegular.js"
+        th:src="@{/components/HeaderRegular.js}"
+></script>
+<script
+        src="../../../resources/js/components/HeaderAuth.js"
+        th:src="@{/components/HeaderAuth.js}"
+></script>
+
+<nav class="nav-ppage">
+    <div class="container">
+        <ul class="list-inline">
+            <li><a th:href="${'/pp/admin/tourney/tourney' + gameDTO.tour.tourney.id}"><i class="fa fa-reply" aria-hidden="true"></i> Назад</a></li>
+        </ul>
+    </div>
+</nav>
+
+<main style="min-height: 600px">
+    <div style="margin-bottom: 50px" class="container">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <form role="form" th:action="${'/pp/admin/game' + gameDTO.id + '/result/protocol'}" method="post">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h3 th:text="${gameDTO.red.name}">RED TEAM</h3>
+                            <table class="table">
+                                <tr style="font-weight: bold">
+                                    <td>#</td>
+                                    <td>Игрок</td>
+                                    <td>+/-</td>
+                                    <td>Голы</td>
+                                    <td>Карточки</td>
+                                </tr>
+                                <tr th:each="redPlayer,redIter: ${redPlayerList}" th:object="${redPlayer}">
+                                    <td>
+                                        <p style="margin-top: 5px" th:text="${redIter.index + 1} + '.'">0.</p>
+                                        <input style="display: none" name="redPlayerIDList" th:value="*{id}"/>
+                                    </td>
+                                    <td>
+                                        <p style="margin-top: 5px" th:text="*{surname + ' ' + name}">RED PLAYER FULLNAME</p>
+                                    </td>
+                                    <td>
+                                        <label style="margin-top: 5px" for="redPlayerCheck" th:for="${'redPlayerCheck' + redIter.index}">
+                                            <input name="redPlayerCheckList" id="redPlayerCheck" th:id="${'redPlayerCheck' + redIter.index}" type="checkbox" th:value="${redIter.index}"/>
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <input style="width: 45px" class="form-control" name="redGoalNums" type="text" value="0"/>
+                                    </td>
+                                    <td>
+                                        <select name="redCards" id="selectPlaygroundRed" class="form-control">
+                                            <option th:value="${''}" selected="selected">нет</option>
+                                            <option th:value="${'Y'}">Ж</option>
+                                            <option th:value="${'YY'}">ЖЖ</option>
+                                            <option th:value="${'YR'}">ЖК</option>
+                                            <option th:value="${'R'}">К</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-md-6">
+                            <h3 th:text="${gameDTO.blue.name}">BLUE TEAM</h3>
+                            <table class="table">
+                                <tr style="font-weight: bold">
+                                    <td>#</td>
+                                    <td>Игрок</td>
+                                    <td>+/-</td>
+                                    <td>Голы</td>
+                                    <td>Карточки</td>
+                                </tr>
+                                <tr th:each="bluePlayer,blueIter: ${bluePlayerList}" th:object="${bluePlayer}">
+                                    <td>
+                                        <p style="margin-top: 5px" th:text="${blueIter.index + 1} + '.'">0.</p>
+                                        <input style="display: none" name="bluePlayerIDList" th:value="*{id}"/>
+                                    </td>
+                                    <td>
+                                        <p style="margin-top: 5px" th:text="*{surname + ' ' + name}">RED PLAYER FULLNAME</p>
+                                    </td>
+                                    <td>
+                                        <label style="margin-top: 5px" for="bluePlayerCheck" th:for="${'bluePlayerCheck' + blueIter.index}">
+                                            <input name="bluePlayerCheckList" id="bluePlayerCheck" th:id="${'bluePlayerCheck' + blueIter.index}" type="checkbox" th:value="${blueIter.index}"/>
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <input style="width: 45px" class="form-control" name="blueGoalNums" type="text" value="0"/>
+                                    </td>
+                                    <td>
+                                        <select name="blueCards" id="selectPlaygroundBlue" class="form-control">
+                                            <option th:value="${null}" selected="selected">нет</option>
+                                            <option th:value="${'Y'}">Ж</option>
+                                            <option th:value="${'YY'}">ЖЖ</option>
+                                            <option th:value="${'YR'}">ЖК</option>
+                                            <option th:value="${'R'}">К</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-success">Подтвердить</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer id="footer-regular">
+    <footer-regular link-service="#"
+                    link-contacts="#"
+                    link-feedback="#"
+                    src-vldf-logo="/img/logo-vldf-sm.png"
+                    link-vldf="http://www.vldf.ru/"
+                    link-vldf-vk="https://vk.com/vldfru"
+                    link-vldf-instagram="https://www.instagram.com/vldf2009/"
+                    link-vldf-youtube="https://www.youtube.com/channel/UCgWjF5d6O3ORXolcr1HO-cQ">
+    </footer-regular>
+</footer>
+<script
+        src="../../../resources/js/components/FooterRegular.js"
+        th:src="@{/components/FooterRegular.js}"
+></script>
+
+</body>
+<script
+        src="../../../resources/js/padding.js"
+        th:src="@{/js/padding.js}"
+></script>
+</html>

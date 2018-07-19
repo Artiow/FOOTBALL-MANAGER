@@ -31,7 +31,7 @@ public class TeamStatusDAOImpl extends AbstractDAOImpl<TeamStatusEntity, Integer
                 .setParameter(0, code)
                 .list();
 
-        if ((statuses != null) && (statuses.size() > 0)) return (TeamStatusEntity) statuses.get(0);
+        if ((statuses != null) && (statuses.size() == 1)) return (TeamStatusEntity) statuses.get(0);
         else return null;
     }
 

@@ -25,9 +25,41 @@ public class PlayerDAOImpl extends AbstractDAOImpl<PlayerEntity, Integer> implem
         return super.get(id);
     }
 
+    public List<PlayerEntity> findBySurname(String surname) {
+        List players = getSession()
+                .createQuery("from PlayerEntity where surname=? order by surname")
+                .setParameter(0, surname)
+                .list();
+
+        if ((players != null) && (players.size() > 0)) return (List<PlayerEntity>) players;
+        else return null;
+    }
+
+    public List<PlayerEntity> findBySurnameAndName(String surname, String name) {
+        List players = getSession()
+                .createQuery("from PlayerEntity where surname=? and name=? order by surname")
+                .setParameter(0, surname)
+                .setParameter(1, name)
+                .list();
+
+        if ((players != null) && (players.size() > 0)) return (List<PlayerEntity>) players;
+        else return null;
+    }
+
+    public List<PlayerEntity> findBySurnameAndPatronymic(String surname, String patronymic) {
+        List players = getSession()
+                .createQuery("from PlayerEntity where surname=? and patronymic=? order by surname")
+                .setParameter(0, surname)
+                .setParameter(1, patronymic)
+                .list();
+
+        if ((players != null) && (players.size() > 0)) return (List<PlayerEntity>) players;
+        else return null;
+    }
+
     public List<PlayerEntity> findByFullName(String name, String surname, String patronymic) {
         List players = getSession()
-                .createQuery("from PlayerEntity where name=? and surname=? and  patronymic=?")
+                .createQuery("from PlayerEntity where name=? and surname=? and  patronymic=? order by surname")
                 .setParameter(0, name)
                 .setParameter(1, surname)
                 .setParameter(2, patronymic)
@@ -39,11 +71,12 @@ public class PlayerDAOImpl extends AbstractDAOImpl<PlayerEntity, Integer> implem
 
     public List<PlayerEntity> findByTeamComposition(Integer compositionID) {
         List players = getSession()
-                .createQuery("select ePlayer from PlayerEntity as ePlayer"
-                        + " join ePlayer.memberships as eMembership"
-                        + " join eMembership.composition as eComposition"
-                        + " with eComposition.id=?")
-                .setParameter(0, compositionID)
+                .createQuery("select p from PlayerEntity as p"
+                        + " join p.memberships as m"
+                        + " join m.composition as c"
+                        + " with c.id=?"
+                        + " order by p.surname"
+                ).setParameter(0, compositionID)
                 .list();
 
         if ((players != null) && (players.size() > 0)) return (List<PlayerEntity>) players;

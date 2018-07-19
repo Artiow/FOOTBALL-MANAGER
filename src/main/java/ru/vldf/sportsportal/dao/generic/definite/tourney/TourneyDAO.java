@@ -1,6 +1,7 @@
 package ru.vldf.sportsportal.dao.generic.definite.tourney;
 
 import ru.vldf.sportsportal.domain.tourney.TourneyEntity;
+import ru.vldf.sportsportal.domain.tourney.TourneyStatusEntity;
 
 import java.util.List;
 
@@ -16,4 +17,15 @@ public interface TourneyDAO {
     Long numAll();
 
     List<TourneyEntity> findAll();
+
+    List<TourneyEntity> findAllOrderByID();
+
+//    ==================================================================================
+//    === UPDATE
+
+    void updateStatusByID(Integer id, Integer statusID);
+
+    void updateStatusByID(Integer id, String statusCode);
+
+    void updateStatusByID(Integer id, TourneyStatusEntity status);
 }

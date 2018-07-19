@@ -1,27 +1,27 @@
 package ru.vldf.sportsportal.domain.tourney;
 
-import ru.vldf.sportsportal.dto.tourney.CompositionStatusDTO;
+import ru.vldf.sportsportal.dto.tourney.TourStatusDTO;
 
 import javax.persistence.*;
 import java.util.Collection;
 
 @Entity
-@Table(name = "composition_status", schema = "tourney", catalog = "sportsportal")
-public class CompositionStatusEntity {
+@Table(name = "tour_status", schema = "tourney", catalog = "sportsportal")
+public class TourStatusEntity {
     private Integer id;
     private String code;
     private String description;
 
-    private Collection<CompositionEntity> compositions;
+    private Collection<TourEntity> tours;
 
-    public CompositionStatusEntity() {
+    public TourStatusEntity() {
 
     }
 
-    public CompositionStatusEntity(CompositionStatusDTO statusDTO) {
-        id = statusDTO.getId();
-        code = statusDTO.getCode();
-        description = statusDTO.getDescription();
+    public TourStatusEntity(TourStatusDTO status) {
+        id = status.getId();
+        code = status.getCode();
+        description = status.getDescription();
     }
 
     @Id
@@ -59,12 +59,12 @@ public class CompositionStatusEntity {
 //    === ONE-TO-MANY REFERENCES
 
     @OneToMany(mappedBy = "status")
-    public Collection<CompositionEntity> getCompositions() {
-        return compositions;
+    public Collection<TourEntity> getTours() {
+        return tours;
     }
 
-    public void setCompositions(Collection<CompositionEntity> compositions) {
-        this.compositions = compositions;
+    public void setTours(Collection<TourEntity> tours) {
+        this.tours = tours;
     }
 
 //    ==================================================================================
@@ -75,7 +75,7 @@ public class CompositionStatusEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        CompositionStatusEntity that = (CompositionStatusEntity) o;
+        TourStatusEntity that = (TourStatusEntity) o;
 
         return id != null ? id.equals(that.id) : that.id == null;
     }
@@ -87,7 +87,7 @@ public class CompositionStatusEntity {
 
     @Override
     public String toString() {
-        return "CompositionStatusEntity{" +
+        return "TourStatusEntity{" +
                 "id=" + id +
                 ", code='" + code + '\'' +
                 '}';

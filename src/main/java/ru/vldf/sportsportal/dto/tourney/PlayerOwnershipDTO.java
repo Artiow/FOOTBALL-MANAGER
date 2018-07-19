@@ -1,5 +1,7 @@
 package ru.vldf.sportsportal.dto.tourney;
 
+import ru.vldf.sportsportal.domain.common.UserEntity;
+import ru.vldf.sportsportal.domain.tourney.PlayerEntity;
 import ru.vldf.sportsportal.domain.tourney.PlayerOwnershipEntity;
 import ru.vldf.sportsportal.dto.common.UserDTO;
 
@@ -13,11 +15,13 @@ public class PlayerOwnershipDTO {
 
     }
 
-    public PlayerOwnershipDTO(PlayerOwnershipEntity playerOwnership) {
-        id = playerOwnership.getId();
+    public PlayerOwnershipDTO(PlayerOwnershipEntity ownership) {
+        id = ownership.getId();
 
-        if (playerOwnership.getUser() != null) user = new UserDTO(playerOwnership.getUser());
-        if (playerOwnership.getPlayer() != null) player = new PlayerDTO(playerOwnership.getPlayer());
+        UserEntity userEntity = ownership.getUser();
+        if (userEntity != null) user = new UserDTO(userEntity);
+        PlayerEntity playerEntity = ownership.getPlayer();
+        if (playerEntity != null) player = new PlayerDTO(playerEntity);
     }
 
     public Integer getId() {

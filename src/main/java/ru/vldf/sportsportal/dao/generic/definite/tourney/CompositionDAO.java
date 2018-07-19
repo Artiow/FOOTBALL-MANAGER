@@ -1,7 +1,7 @@
 package ru.vldf.sportsportal.dao.generic.definite.tourney;
 
+import ru.vldf.sportsportal.domain.lease.PlaygroundEntity;
 import ru.vldf.sportsportal.domain.tourney.CompositionEntity;
-import ru.vldf.sportsportal.domain.tourney.CompositionStatusEntity;
 import ru.vldf.sportsportal.domain.tourney.TeamEntity;
 import ru.vldf.sportsportal.domain.tourney.TourneyEntity;
 
@@ -29,16 +29,15 @@ public interface CompositionDAO {
 //    ==================================================================================
 //    === UPDATE
 
-    Integer updateStatusByID(Integer id, CompositionStatusEntity status);
+    void updateTimegridByID(Integer id, String timegrid);
 
-    Integer updateTimeGridByID(Integer id, String timegrid);
+    void incShiftbalanceByID(Integer id);
 
-//    ==================================================================================
-//    === SPECIAL
+    void decShiftbalanceByID(Integer id);
 
-    List<CompositionEntity> findByTeamAndStatus(Integer teamID, Integer statusID);
+    Integer getShiftbalanceByID(Integer id);
 
-    List<CompositionEntity> findByTeamAndStatus(Integer teamID, String statusCode);
+    void updateShiftbalanceByID(Integer id, String shiftbalance);
 
-    List<CompositionEntity> findByTeamAndStatus(TeamEntity team, CompositionStatusEntity status);
+    void updatePlaygroundByID(Integer id, PlaygroundEntity playground);
 }

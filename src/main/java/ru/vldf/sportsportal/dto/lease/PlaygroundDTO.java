@@ -6,6 +6,7 @@ public class PlaygroundDTO {
     private Integer id;
     private String name;
     private String address;
+    private String description;
 
     public PlaygroundDTO() {
 
@@ -15,6 +16,7 @@ public class PlaygroundDTO {
         id = playground.getId();
         name = playground.getName();
         address = playground.getAddress();
+        description = playground.getDescription();
     }
 
     public void setId(Integer id) {
@@ -41,6 +43,14 @@ public class PlaygroundDTO {
         return address;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -61,6 +71,7 @@ public class PlaygroundDTO {
         return "PlaygroundDTO{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", address='" + address + '\'' +
                 '}';
     }
 }

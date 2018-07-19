@@ -1,5 +1,7 @@
 package ru.vldf.sportsportal.dto.tourney;
 
+import ru.vldf.sportsportal.domain.common.UserEntity;
+import ru.vldf.sportsportal.domain.tourney.TeamStatusEntity;
 import ru.vldf.sportsportal.dto.common.UserDTO;
 import ru.vldf.sportsportal.domain.tourney.TeamEntity;
 
@@ -18,8 +20,10 @@ public class TeamDTO {
         id = team.getId();
         name = team.getName();
 
-        if (team.getCaptain() != null) status = new TeamStatusDTO(team.getStatus());
-        if (team.getCaptain() != null) captain = new UserDTO(team.getCaptain());
+        TeamStatusEntity teamStatusEntity = team.getStatus();
+        if (teamStatusEntity != null) status = new TeamStatusDTO(teamStatusEntity);
+        UserEntity userEntity = team.getCaptain();
+        if (userEntity != null) captain = new UserDTO(userEntity);
     }
 
     public void setId(Integer id) {

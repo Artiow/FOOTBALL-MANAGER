@@ -12,12 +12,14 @@ import java.util.List;
 
 @Service
 public class LeaseService {
+
     private PlaygroundDAO playgroundDAO;
 
     @Autowired
     public void setPlaygroundDAO(PlaygroundDAO playgroundDAO) {
         this.playgroundDAO = playgroundDAO;
     }
+
 
     @Transactional(readOnly = true)
     public List<PlaygroundDTO> getPlaygroundList() {

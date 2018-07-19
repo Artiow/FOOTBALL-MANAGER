@@ -1,17 +1,17 @@
 package ru.vldf.sportsportal.dto.tourney;
 
-import ru.vldf.sportsportal.domain.tourney.CompositionStatusEntity;
+import ru.vldf.sportsportal.domain.tourney.TourStatusEntity;
 
-public class CompositionStatusDTO {
+public class TourStatusDTO {
     private Integer id;
     private String code;
     private String description;
 
-    public CompositionStatusDTO() {
+    public TourStatusDTO() {
 
     }
 
-    public CompositionStatusDTO(CompositionStatusEntity status) {
+    public TourStatusDTO(TourStatusEntity status) {
         id = status.getId();
         code = status.getCode();
         description = status.getDescription();
@@ -46,7 +46,7 @@ public class CompositionStatusDTO {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        CompositionStatusDTO that = (CompositionStatusDTO) o;
+        TourStatusDTO that = (TourStatusDTO) o;
 
         return id != null ? id.equals(that.id) : that.id == null;
     }
@@ -58,7 +58,7 @@ public class CompositionStatusDTO {
 
     @Override
     public String toString() {
-        return "CompositionStatusDTO{" +
+        return "TourStatusDTO{" +
                 "id=" + id +
                 ", code='" + code + '\'' +
                 '}';
