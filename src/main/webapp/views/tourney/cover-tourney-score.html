@@ -71,7 +71,8 @@
             </div>
             <div class="col-md-5 col-md-offset-1">
                 <nav style="margin-top: 50px" class="navbar navbar-default">
-                    <h3 style="margin-left: 15px" th:text="${tourneyCur.name}">NAME</h3>
+                    <h3 style="margin-left: 15px" th:text="${tourneyCur.name}">TOURNEY</h3>
+                    <h3 style="margin-left: 15px" th:text="${tourCur.num + ' ТУР'}">TOUR</h3>
                     <a style="margin-left: 10px" class="btn btn-default navbar-btn" th:href="${'/tourney' + tourneyCur.id + '/table'}">К таблице</a>
                 </nav>
                 <table class="table">

@@ -59,6 +59,9 @@ public class TourneyController {
         List<TourneyDTO> tourneyList = tourneyService.getTourneyList();
         map.addAttribute("tourneyList", tourneyList);
 
+        TourDTO tourCur = tourneyService.getTour(tourID);
+        map.addAttribute("tourCur", tourCur);
+
         List<TourDTO> tourList = tourneyService.getTourList(tourneyID);
         map.addAttribute("tourList", tourList);
 
